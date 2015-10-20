@@ -82,7 +82,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 			Sheet sheet = workbook.getSheet(0);
 			int linhas = sheet.getRows();
 			ExemplarConflitante exemplarConflitante = new ExemplarConflitante();
-			for (int i = 1; i < linhas-1; i++) {
+			for (int i = 1; i < linhas; i++) {
 				
 				exemplarConflitante = validarLinha(sheet,i);
 				exemplarConflitante.setLinha(i);
@@ -163,14 +163,14 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 			exemplarConflitante.setTipo(sheet.getCell(TIPO,i).getContents());
 		}else{
 			exemplarConflitante.setTipo(sheet.getCell(TIPO,i).getContents());
-			erros = validadorTipo;
+			erros = validadorTipo + ",";
 		}
 				
 		if(!formatarNomeTitulo(sheet,i).isEmpty()){
 			exemplarConflitante = preencherCamposNomeTitulo(sheet,i,exemplarConflitante);
 		}else {
 			exemplarConflitante = preencherCamposNomeTitulo(sheet,i,exemplarConflitante);
-			erros +=" Nome do título não especificado";
+			erros +=" Nome do título não especificado, ";
 		}
 		
 		String validadorCodExemplar = formatarCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
@@ -178,7 +178,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 			exemplarConflitante.setCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
 		}else{
 			exemplarConflitante.setCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
-			erros+= " "+validadorCodExemplar;
+			erros+= " "+validadorCodExemplar + ", ";
 		}
 		
 		String isbn = extrairIsbnDaCelula(sheet.getCell(COLUNA_ISBN,i).getContents());
@@ -187,7 +187,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 			exemplarConflitante.setIsbn(isbn);
 		}else{
 			exemplarConflitante.setIsbn(isbn);
-			erros+=" "+validadorIsbn;
+			erros+=" "+validadorIsbn+ ", ";
 		}
 		exemplarConflitante.setDescricaoErro(erros);
 		return exemplarConflitante;

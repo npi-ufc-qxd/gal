@@ -34,6 +34,7 @@
 			    <label for="tipo" class="col-sm-1 control-label">Tipo</label>
 			    <div class="col-sm-8">
 			    	<form:select path="tipo" class="form-control">
+			    		<form:option value="">Vazio</form:option>
 			    		<form:option value="0">Físico</form:option>
 			    		<form:option value="1">Virtual</form:option>
 			    	</form:select>
@@ -52,7 +53,7 @@
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">autor</label>
 			    <div class="col-sm-8">
-			    	<form:input id="autor" class="form-control" placeholder="Código" path="autor" />
+			    	<form:input id="autor" class="form-control" placeholder="autor" path="autor" />
 			    	<form:errors path="autor" cssClass="error" />
 			    </div>
 			</div>
@@ -119,14 +120,6 @@
 			    <div class="col-sm-8">
 			    	<form:input id="edicao" class="form-control" placeholder="edicao" path="edicao"/>
 			    	<form:errors path="edicao" cssClass="error" />
-			    </div>
-			</div>
-			
-			<div class="form-group">
-			    <label for="codigo" class="col-sm-1 control-label">publicador</label>
-			    <div class="col-sm-8">
-			    	<form:input id="publicador" class="form-control" placeholder="publicador" path="publicador"/>
-			    	<form:errors path="publicador" cssClass="error" />
 			    </div>
 			</div>
 			
