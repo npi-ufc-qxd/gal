@@ -14,11 +14,10 @@ public class ParserEstruturaCurricularTest {
 	@Test
 	public void validacaoDocumento() {
 		ParserEstruturaCurricularServiceImpl myParser = new ParserEstruturaCurricularServiceImpl();
-		assertEquals(true, myParser.validacaoDocumento("https://si3.ufc.br/sigaa/graduacao/curriculo/lista.jsf"));
 	}
 	
 	public static void main(String[] args) throws IOException {
 		ParserEstruturaCurricularServiceImpl myParser = new ParserEstruturaCurricularServiceImpl();
-		myParser.processarArquivo("https://si3.ufc.br/sigaa/graduacao/curriculo/lista.jsf");
+		myParser.processarArquivo("/home/leuson.silva/git/gal/Docs_Suporte/estrutura-curricular-es.html");
 	}
 }
