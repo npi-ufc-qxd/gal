@@ -166,7 +166,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 			erros = validadorTipo + ",";
 		}
 				
-		if(!formatarNomeTitulo(sheet,i).isEmpty()){
+		if(!formatarNomeTituloVerificacao(sheet,i).isEmpty()){
 			exemplarConflitante = preencherCamposNomeTitulo(sheet,i,exemplarConflitante);
 		}else {
 			exemplarConflitante = preencherCamposNomeTitulo(sheet,i,exemplarConflitante);
@@ -231,10 +231,23 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 				+" "+sheet.getCell(COLUNA_REF_ARTIGO,i)+" "+sheet.getCell(COLUNA_EDICAO,i)+" "+sheet.getCell(COLUNA_PUBLICADOR,i);
 	}
 	
+	private String formatarNomeTituloVerificacao(Sheet sheet, int i) {
+		// concatena os campos que compoem o titulo
+		return sheet.getCell(COLUNA_AUTOR, i).getContents() + sheet.getCell(COLUNA_TITULO, i) + sheet.getCell(COLUNA_TITULO_N, i) + 
+				sheet.getCell(COLUNA_SUB_TITULO,i) + sheet.getCell(COLUNA_TITULO_REVISTA, i) + sheet.getCell(COLUNA_PAGINA,i)
+				+ sheet.getCell(COLUNA_REF_ARTIGO,i) + sheet.getCell(COLUNA_EDICAO,i) + sheet.getCell(COLUNA_PUBLICADOR,i);
+	}
+	
 	private String formatarNomeTitulo(ExemplarConflitante exemplar) {
 		return exemplar.getAutor() + " " + exemplar.getTitulo() + " " + exemplar.getTitulo_n() + " " +
 				exemplar.getSubTitulo() + " " + exemplar.getTituloRevista() + " " + exemplar.getPagina() + " " +
 				exemplar.getRefArtigo() + " " + exemplar.getEdicao() + " " + exemplar.getPublicador();
+	}
+	
+	private String formatarNomeTituloVerificacao(ExemplarConflitante exemplar) {
+		return exemplar.getAutor() + exemplar.getTitulo() + exemplar.getTitulo_n() + exemplar.getSubTitulo() + 
+			   exemplar.getTituloRevista() + exemplar.getPagina() + exemplar.getRefArtigo() + 
+			   exemplar.getEdicao() + exemplar.getPublicador();
 	}
 
 	private Exemplar formatarExemplar(Sheet sheet, int i) {
@@ -294,13 +307,18 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		
 		String validadorCodExemplar = formatarCodigoExemplar(exemplarConflitante.getCodigoExemplar());
 		if(!validadorCodExemplar.equals("valido")){
-			erros+= " "+validadorCodExemplar;
+			erros+= "; "+validadorCodExemplar;
 		}
 		
 		String isbn = extrairIsbnDaCelula(exemplarConflitante.getIsbn());
 		String validadorIsbn = formatarIsbn(isbn);
 		if(!validadorIsbn.equals("valido")){
-			erros+=" "+validadorIsbn;
+			erros+="; "+validadorIsbn;
+		}
+		
+		String titulo = formatarNomeTituloVerificacao(exemplarConflitante);
+		if (titulo.isEmpty()) {
+			erros+= "; " + "Nome do título não especificado";
 		}
 		
 		exemplarConflitante.setDescricaoErro(erros);

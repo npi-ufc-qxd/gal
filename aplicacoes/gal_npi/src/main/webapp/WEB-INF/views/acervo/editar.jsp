@@ -38,6 +38,22 @@
 			</div>
 			
 			<div class="form-group">
+			    <label for="codigo" class="col-sm-1 control-label">Titulo_n</label>
+			    <div class="col-sm-8">
+			    	<form:input id="titulo_n" class="form-control" placeholder="titulo_n" path="titulo_n"/>
+			    	<form:errors path="titulo_n" cssClass="error" />
+			    </div>
+			</div>
+			
+			<div class="form-group">
+			    <label for="codigo" class="col-sm-1 control-label">Sub_titulo</label>
+			    <div class="col-sm-8">
+			    	<form:input id="sub_titulo" class="form-control" placeholder="sub_titulo" path="subTitulo"/>
+			    	<form:errors path="subTitulo" cssClass="error" />
+			    </div>
+			</div>
+			
+			<div class="form-group">
 			    <label for="tipo" class="col-sm-1 control-label">Tipo</label>
 			    <div class="col-sm-8">
 			    	<form:select path="tipo" class="form-control">
@@ -72,23 +88,7 @@
 			    	<form:errors path="codigoExemplar" cssClass="error" />
 
 			    </div>
-			</div>
-			
-			<div class="form-group">
-			    <label for="codigo" class="col-sm-1 control-label">Titulo_n</label>
-			    <div class="col-sm-8">
-			    	<form:input id="titulo_n" class="form-control" placeholder="titulo_n" path="titulo_n"/>
-			    	<form:errors path="titulo_n" cssClass="error" />
-			    </div>
-			</div>
-			
-			<div class="form-group">
-			    <label for="codigo" class="col-sm-1 control-label">Sub_titulo</label>
-			    <div class="col-sm-8">
-			    	<form:input id="sub_titulo" class="form-control" placeholder="sub_titulo" path="subTitulo"/>
-			    	<form:errors path="subTitulo" cssClass="error" />
-			    </div>
-			</div>
+			</div>					
 			
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Titulo_revista</label>
