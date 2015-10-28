@@ -1,23 +1,31 @@
 package br.ufc.npi.gal.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "integracao_curricular")
 @IdClass(IntegracaoCurricularId.class)
 public class IntegracaoCurricular {
-	
+
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "id_curriculo")
 	private EstruturaCurricular estruturaCurricular;
-	
+
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "id_disciplina")
@@ -28,7 +36,29 @@ public class IntegracaoCurricular {
 
 	@Column(name = "semestre_oferta")
 	private Integer semestreOferta;
+
+	@Column(name = "natureza")
+	private String natureza;
 	
+	@OneToMany(mappedBy = "integracaoCurricular", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY, cascade=CascadeType.REMOVE)
+	private List<IntegracaoCurricular> preRequisitos;
+	
+	public List<IntegracaoCurricular> getPreRequisitos() {
+		return preRequisitos;
+	}
+
+	public void setPreRequisitos(List<IntegracaoCurricular> preRequisitos) {
+		this.preRequisitos = preRequisitos;
+	}
+
+	public String getNatureza() {
+		return natureza;
+	}
+
+	public void setNatureza(String natureza) {
+		this.natureza = natureza;
+	}
+
 	public EstruturaCurricular getEstruturaCurricular() {
 		return estruturaCurricular;
 	}
@@ -40,7 +70,6 @@ public class IntegracaoCurricular {
 	public Disciplina getDisciplina() {
 		return disciplina;
 	}
-
 
 	public void setDisciplina(Disciplina disciplina) {
 		this.disciplina = disciplina;
@@ -62,14 +91,10 @@ public class IntegracaoCurricular {
 		this.semestreOferta = semestreOferta;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "IntegracaoCurricular [estruturaCurricular="
-				+ estruturaCurricular + ", disciplina=" + disciplina
-				+ ", quantidadeAlunos=" + quantidadeAlunos
-				+ ", semestreOferta=" + semestreOferta + "]";
+		return "IntegracaoCurricular [estruturaCurricular=" + estruturaCurricular + ", disciplina=" + disciplina
+				+ ", quantidadeAlunos=" + quantidadeAlunos + ", semestreOferta=" + semestreOferta + "]";
 	}
 
 }
