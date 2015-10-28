@@ -2,6 +2,7 @@ package br.ufc.npi.gal.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -50,10 +51,10 @@ public class Titulo {
 	@NotEmpty(message="Campo obrigatório")
 	private String tipo;
 	
-	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)
 	private List<Bibliografia> bibliografias;
 	
-	@OneToMany(mappedBy = "titulo", targetEntity = Exemplar.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "titulo", targetEntity = Exemplar.class, fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)
 	private List<Exemplar> exemplares;
 	
 	public List<Bibliografia> getBibliografias() {

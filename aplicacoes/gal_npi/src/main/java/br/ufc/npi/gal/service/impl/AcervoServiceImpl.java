@@ -253,7 +253,6 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	private Exemplar formatarExemplar(Sheet sheet, int i) {
 		Titulo titulo = new Titulo();
 		titulo.setIsbn(extrairIsbnDaCelula(sheet.getCell(COLUNA_ISBN, i).getContents()));
-		System.out.println("isbn do titulo:" +titulo.getIsbn());
 		titulo.setNome(formatarNomeTitulo(sheet,i));
 		titulo.setTipo("Físico");
 		Exemplar exemplar = new Exemplar();
