@@ -148,6 +148,9 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	
 	private void adicionarConflito(ExemplarConflitante conflito) {
 		try{
+			if (exemplarConflitanteReposiroty.getExemplarConflitanteByCodigo(conflito.getCodigoExemplar())!=null) {
+				//salvar verificar e rever exemplares conflitantes
+			}
 			exemplarConflitanteReposiroty.save(conflito);
 		}catch(Exception e){
 			System.err.println("Exemplar ja existente! Código do exemplar: " +conflito.getCodigoExemplar());
@@ -176,6 +179,9 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		String validadorCodExemplar = formatarCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
 		if(validadorCodExemplar.equals("valido")){
 			exemplarConflitante.setCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
+			if (exemplarRepository.getExemplarByCodigo(validadorCodExemplar)!=null) {
+				erros+= " codigo de exemplar já existe no banco,";
+			}
 		}else{
 			exemplarConflitante.setCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
 			erros+= " "+validadorCodExemplar + ", ";
@@ -226,16 +232,16 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 
 	private String formatarNomeTitulo(Sheet sheet, int i) {
 		// concatena os campos que compoem o titulo
-		return sheet.getCell(COLUNA_AUTOR, i).getContents() + " "+sheet.getCell(COLUNA_TITULO, i)+" "+ sheet.getCell(COLUNA_TITULO_N, i)+" "
-				+sheet.getCell(COLUNA_SUB_TITULO,i) +" "+sheet.getCell(COLUNA_TITULO_REVISTA, i)+" "+sheet.getCell(COLUNA_PAGINA,i)
-				+" "+sheet.getCell(COLUNA_REF_ARTIGO,i)+" "+sheet.getCell(COLUNA_EDICAO,i)+" "+sheet.getCell(COLUNA_PUBLICADOR,i);
+		return sheet.getCell(COLUNA_AUTOR, i).getContents() + " "+sheet.getCell(COLUNA_TITULO, i).getContents() +" "+ sheet.getCell(COLUNA_TITULO_N, i).getContents()+" "
+				+sheet.getCell(COLUNA_SUB_TITULO,i).getContents() +" "+sheet.getCell(COLUNA_TITULO_REVISTA, i).getContents() +" "+sheet.getCell(COLUNA_PAGINA,i).getContents()
+				+" "+sheet.getCell(COLUNA_REF_ARTIGO,i).getContents() +" "+sheet.getCell(COLUNA_EDICAO,i).getContents() +" "+sheet.getCell(COLUNA_PUBLICADOR,i).getContents();
 	}
 	
 	private String formatarNomeTituloVerificacao(Sheet sheet, int i) {
 		// concatena os campos que compoem o titulo
-		return sheet.getCell(COLUNA_AUTOR, i).getContents() + sheet.getCell(COLUNA_TITULO, i) + sheet.getCell(COLUNA_TITULO_N, i) + 
-				sheet.getCell(COLUNA_SUB_TITULO,i) + sheet.getCell(COLUNA_TITULO_REVISTA, i) + sheet.getCell(COLUNA_PAGINA,i)
-				+ sheet.getCell(COLUNA_REF_ARTIGO,i) + sheet.getCell(COLUNA_EDICAO,i) + sheet.getCell(COLUNA_PUBLICADOR,i);
+		return sheet.getCell(COLUNA_AUTOR, i).getContents() + sheet.getCell(COLUNA_TITULO, i).getContents() + sheet.getCell(COLUNA_TITULO_N, i).getContents() + 
+				sheet.getCell(COLUNA_SUB_TITULO,i).getContents() + sheet.getCell(COLUNA_TITULO_REVISTA, i).getContents() + sheet.getCell(COLUNA_PAGINA,i).getContents()
+				+ sheet.getCell(COLUNA_REF_ARTIGO,i).getContents() + sheet.getCell(COLUNA_EDICAO,i).getContents() + sheet.getCell(COLUNA_PUBLICADOR,i).getContents();
 	}
 	
 	private String formatarNomeTitulo(ExemplarConflitante exemplar) {
@@ -307,6 +313,10 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		String validadorCodExemplar = formatarCodigoExemplar(exemplarConflitante.getCodigoExemplar());
 		if(!validadorCodExemplar.equals("valido")){
 			erros+= "; "+validadorCodExemplar;
+		} else {
+			if (exemplarRepository.getExemplarByCodigo(validadorCodExemplar)!=null) {
+				erros+= " codigo de exemplar já existe no banco,";
+			}
 		}
 		
 		String isbn = extrairIsbnDaCelula(exemplarConflitante.getIsbn());
@@ -323,7 +333,6 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		exemplarConflitante.setDescricaoErro(erros);
 		if(exemplarConflitante.getDescricaoErro().equals("")) {
 			Exemplar exemplar = formatarExemplar(exemplarConflitante);
-			System.out.println("aqui");
 			realizarAtualização(exemplar);
 			exemplarConflitanteReposiroty.delete(exemplarConflitante);
 			return true;
