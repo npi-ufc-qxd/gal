@@ -24,6 +24,11 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	}
 
 	@Override
+	/*
+	 * Este método é responsável por dar um get das informações de uma estrutura
+	 * curricular Estas informações são dadas a partir de um HTML Caso a
+	 * estrutura do HTML mude possivelmente este parser precisará ser atualizado
+	 */
 	public void processarArquivo(String urlEstruturaCurrcicular) throws IOException {
 		/*
 		 * if (validacaoDocumento(urlEstruturaCurrcicular)) { Document doc =
@@ -33,7 +38,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 
 		fileHtml = new File(urlEstruturaCurrcicular);
 		docFromHtml = Jsoup.parse(fileHtml, null, "http://example.com/");
-		infoCurriculo = parserCurriculo();
+		infoCurriculo = parserEstruturaCurricular();
 
 		for (String info : infoCurriculo) {
 			System.out.println(info);
@@ -57,8 +62,47 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		return info;
 	}
 
-	private void parserEstruturaCurricular() {
+	private ArrayList<String> parserEstruturaCurricular() {
+		ArrayList<String> info = new ArrayList<String>();
+		// A quinta tabela do HTML é responsável por apresentar as informações
+		// referentes aos componenetes de cada semestre. Mudanças no HTML poderá
+		// ser necessário atualizar
+		Element tabelaComponentes = docFromHtml.select("table").get(4);
+		Elements linhas = tabelaComponentes.select("tr");
+
+		for (int i = 0; i < linhas.size(); i++) {
+			Element linha = linhas.get(i);
+			if (!(linha.className().equals("header"))) {
+				if (linha.className().equals("tituloRelatorio")) {
+					System.out.println();
+					System.out.println(linha.select("td").text());
+				}else if (linha.select("td").size() > 1) {
+					parserComponente(linha.select("td"));
+					System.out.println();
+				}
+			}
+		}
+		return info;
 
 	}
 
+	private void parserComponente(Elements colunasComponente) {
+		/*
+		 * for (int j = 0; j < colunasComponente.size(); j++) {
+		 * System.out.print(colunasComponente.get(j)); }
+		 */
+		System.out.print(colunasComponente.get(0).text() + " | " + colunasComponente.get(1).text() + " | "
+				+ colunasComponente.get(2).text() + " | " + colunasComponente.get(4).text() + " | "
+				+ colunasComponente.get(6).text() + " | " + colunasComponente.get(7).text() + " | "
+				+ colunasComponente.get(6).text());
+	}
+
 }
+
+/*
+ * Informações a serem extraídas de cada componente curricular...
+ * 
+ * 0 - ID 1 - Titulo + CH + Cr. + Periodo letivo 2 - CH Pratica + CH Lab 4 -
+ * Natureza 6 - pre-requisitos 7 - equivalentes 8 - co-requisito
+ * 
+ */
