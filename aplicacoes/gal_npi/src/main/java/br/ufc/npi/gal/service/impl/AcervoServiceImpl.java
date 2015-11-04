@@ -148,10 +148,17 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	
 	private void adicionarConflito(ExemplarConflitante conflito) {
 		try{
-			if (exemplarConflitanteReposiroty.getExemplarConflitanteByCodigo(conflito.getCodigoExemplar())!=null) {
+			ExemplarConflitante aux = exemplarConflitanteReposiroty.getExemplarConflitanteByCodigo(conflito.getCodigoExemplar());
+			if (aux!=null) {
 				//salvar verificar e rever exemplares conflitantes
+				if (conflito.equals(aux)==false) {
+					conflito.setDescricaoErro(conflito.getDescricaoErro()+ " Codigo de exemplar duplicado");
+					exemplarConflitanteReposiroty.save(conflito);
+					System.out.println("exemplar de codigo duplicado/n/n/n");
+				}
+			} else {
+				exemplarConflitanteReposiroty.save(conflito);
 			}
-			exemplarConflitanteReposiroty.save(conflito);
 		}catch(Exception e){
 			System.err.println("Exemplar ja existente! Código do exemplar: " +conflito.getCodigoExemplar());
 		}
@@ -179,7 +186,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		String validadorCodExemplar = formatarCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
 		if(validadorCodExemplar.equals("valido")){
 			exemplarConflitante.setCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
-			if (exemplarRepository.getExemplarByCodigo(validadorCodExemplar)!=null) {
+			if (exemplarRepository.getExemplarByCodigo(exemplarConflitante.getCodigoExemplar())!=null) {
 				erros+= " codigo de exemplar já existe no banco,";
 			}
 		}else{
@@ -313,8 +320,8 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		String validadorCodExemplar = formatarCodigoExemplar(exemplarConflitante.getCodigoExemplar());
 		if(!validadorCodExemplar.equals("valido")){
 			erros+= "; "+validadorCodExemplar;
-		} else {
-			if (exemplarRepository.getExemplarByCodigo(validadorCodExemplar)!=null) {
+		} else {			
+			if (exemplarRepository.getExemplarByCodigo(exemplarConflitante.getCodigoExemplar())!=null) {
 				erros+= " codigo de exemplar já existe no banco,";
 			}
 		}
