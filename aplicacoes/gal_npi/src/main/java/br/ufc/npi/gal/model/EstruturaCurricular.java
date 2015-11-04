@@ -65,13 +65,13 @@ public class EstruturaCurricular {
 	@Column(name = "prazo_conclusao_maximo")
 	private String prazoConclusaoMaximo;
 
-	@Column(name = "ch_peiodo_minimo")
+	@Column(name = "ch_periodo_minimo")
 	private String chPeriodoMinimo;
 
-	@Column(name = "ch_peiodo_medio")
+	@Column(name = "ch_periodo_medio")
 	private String chPeriodoMedio;
 
-	@Column(name = "ch_peiodo_maximo")
+	@Column(name = "ch_periodo_maximo")
 	private String chPeriodoMaximo;
 
 	public EstruturaCurricular() {

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.jsoup.Jsoup;
@@ -11,6 +12,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import br.ufc.npi.gal.model.Disciplina;
+import br.ufc.npi.gal.repository.DisciplinaRepository;
+import br.ufc.npi.gal.repository.jpa.JpaDisciplinaRepository;
+import br.ufc.npi.gal.service.DisciplinaService;
 import br.ufc.npi.gal.service.ParserEstruturaCurricularService;
 
 @Named
@@ -18,9 +23,10 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	private File fileHtml;
 	private Document docFromHtml;
 	private ArrayList<String> infoCurriculo;
+	@Inject
+	private DisciplinaService disciplinaService;
 
 	public ParserEstruturaCurricularServiceImpl() {
-
 	}
 
 	@Override
@@ -76,7 +82,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 				if (linha.className().equals("tituloRelatorio")) {
 					System.out.println();
 					System.out.println(linha.select("td").text());
-				}else if (linha.select("td").size() > 1) {
+				} else if (linha.select("td").size() > 1) {
 					parserComponente(linha.select("td"));
 					System.out.println();
 				}
@@ -87,14 +93,14 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	}
 
 	private void parserComponente(Elements colunasComponente) {
-		/*
-		 * for (int j = 0; j < colunasComponente.size(); j++) {
-		 * System.out.print(colunasComponente.get(j)); }
-		 */
+
 		System.out.print(colunasComponente.get(0).text() + " | " + colunasComponente.get(1).text() + " | "
 				+ colunasComponente.get(2).text() + " | " + colunasComponente.get(4).text() + " | "
 				+ colunasComponente.get(6).text() + " | " + colunasComponente.get(7).text() + " | "
 				+ colunasComponente.get(6).text());
+
+		System.out.print(disciplinaService.getDisciplinaByCodigo(colunasComponente.get(0).text()).getCodigo());
+
 	}
 
 }
