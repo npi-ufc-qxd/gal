@@ -20,7 +20,7 @@ public class ExemplarConflitante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(unique = true ,name = "cod_ef")	
+	@Column(name = "cod_ef",unique = true)
 	private String codigoExemplar;
 	
 	@Column(name = "linhaErro")
@@ -182,4 +182,23 @@ public class ExemplarConflitante {
 	public void setPublicador(String publicador) {
 		this.publicador = publicador;
 	}
+	
+	@Override
+	public String toString() {
+		return getAutor()+ " " + getTitulo()+ " " + getTitulo_n()+ " " + getSubTitulo()+ " " + 
+			   getTituloRevista() + " " + getPagina()+ " " + getRefArtigo() + " " + 
+			   getEdicao() + " " + getPublicador();
+	}
+	
+	public boolean equals(ExemplarConflitante exemplar) {
+		if (getAutor().equals(exemplar.getAutor()) && getTitulo().equals(exemplar.getTitulo()) &&
+			getTitulo_n().equals(exemplar.getTitulo_n()) && getSubTitulo().equals(exemplar.getSubTitulo()) &&
+			getTituloRevista().equals(exemplar.getTituloRevista()) && getPagina().equals(exemplar.getPagina()) &&
+			getRefArtigo().equals(exemplar.getRefArtigo()) && getEdicao().equals(exemplar.getEdicao()) &&
+			getPublicador().equals(exemplar.getPublicador())) {
+			return true;
+		}
+		return false;
+	}
+	
 }
