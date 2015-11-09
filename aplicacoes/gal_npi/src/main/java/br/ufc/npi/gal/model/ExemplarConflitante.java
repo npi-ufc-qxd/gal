@@ -20,7 +20,7 @@ public class ExemplarConflitante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "cod_ef")	
+	@Column(name = "cod_ef",unique = true)
 	private String codigoExemplar;
 	
 	@Column(name = "linhaErro")
@@ -185,9 +185,9 @@ public class ExemplarConflitante {
 	
 	@Override
 	public String toString() {
-		return getAutor() + getTitulo() + getTitulo_n() + getSubTitulo() + 
-			   getTituloRevista() + getPagina() + getRefArtigo() + 
-			   getEdicao() + getPublicador();
+		return getAutor()+ " " + getTitulo()+ " " + getTitulo_n()+ " " + getSubTitulo()+ " " + 
+			   getTituloRevista() + " " + getPagina()+ " " + getRefArtigo() + " " + 
+			   getEdicao() + " " + getPublicador();
 	}
 	
 	public boolean equals(ExemplarConflitante exemplar) {

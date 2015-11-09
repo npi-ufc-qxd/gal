@@ -154,7 +154,6 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 				if (conflito.equals(aux)==false) {
 					conflito.setDescricaoErro(conflito.getDescricaoErro()+ " Codigo de exemplar duplicado");
 					exemplarConflitanteReposiroty.save(conflito);
-					System.out.println("exemplar de codigo duplicado/n/n/n");
 				}
 			} else {
 				exemplarConflitanteReposiroty.save(conflito);
@@ -186,9 +185,9 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		String validadorCodExemplar = formatarCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
 		if(validadorCodExemplar.equals("valido")){
 			exemplarConflitante.setCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
-			if (exemplarRepository.getExemplarByCodigo(exemplarConflitante.getCodigoExemplar())!=null) {
-				erros+= " codigo de exemplar já existe no banco,";
-			}
+			//if (exemplarRepository.getExemplarByCodigo(exemplarConflitante.getCodigoExemplar())!=null) {
+				//erros+= " codigo de exemplar já existe no banco,";
+			//}
 		}else{
 			exemplarConflitante.setCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
 			erros+= " "+validadorCodExemplar + ", ";
@@ -208,7 +207,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	}
 
 	private String formatarIsbn(String contents) {
-		if(contents.matches("([0-9]{13})|([0-9]{9}X)|([0-9]{12}X)|([0-9]{10})")){
+		if(contents.matches("([0-9]+)") || contents.matches("[0-9]+[X|x]")) {
 			return "valido";
 		}
 		return "ISBN inválido";
