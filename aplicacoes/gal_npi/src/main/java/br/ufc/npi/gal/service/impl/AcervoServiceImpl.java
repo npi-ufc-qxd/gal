@@ -207,7 +207,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	}
 
 	private String formatarIsbn(String contents) {
-		if(contents.matches("([0-9]+)") || contents.matches("[0-9]+[X|x]")) {
+		if(contents.matches("([0-9]{7,13})") || contents.matches("[0-9]{7,13}[X|x]")) {
 			return "valido";
 		}
 		return "ISBN inválido";
