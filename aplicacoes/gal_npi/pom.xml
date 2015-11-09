@@ -303,7 +303,7 @@
 
 	</dependencies>
 	<build>
-		<finalName>gal_npi</finalName>
+		<finalName>gal</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
