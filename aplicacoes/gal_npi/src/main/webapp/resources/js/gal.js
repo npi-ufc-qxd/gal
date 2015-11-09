@@ -92,7 +92,7 @@ $( document ).ready(function() {
 				"sSortDescending" : ": Ordenar colunas de forma descendente"
 			}
 		},
-		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 4,7,10 ] }],
+//		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 0,1 ] }],
 		"bDestroy": true
 	})
 
