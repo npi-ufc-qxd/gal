@@ -1,5 +1,6 @@
 package br.ufc.npi.gal.web;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,9 @@ import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.Disciplina;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.DisciplinaService;
+import br.ufc.npi.gal.service.ParserEstruturaCurricularService;
 import br.ufc.npi.gal.service.TituloService;
+import br.ufc.npi.gal.service.impl.ParserEstruturaCurricularServiceImpl;
 import br.ufc.quixada.npi.service.GenericService;
 
 @Controller
@@ -28,19 +31,20 @@ import br.ufc.quixada.npi.service.GenericService;
 public class DisciplinaController {
 
 	@Inject
-	private DisciplinaService disciplinaService;
-	
+	private DisciplinaService disciplinaService;	
 	@Inject
 	private TituloService tituloService;
-
 	@Inject
 	private GenericService<Bibliografia> bibliografiaService;
+	@Inject
+	private ParserEstruturaCurricularServiceImpl parserEstruturaCurricular;
 
 	private static final String COMPLEMENTAR = "Complementar";
 	private static final String BASICA = "Básica";
 	
 	@RequestMapping(value = "/listar")
-	public String listar(ModelMap modelMap, HttpSession session) {
+	public String listar(ModelMap modelMap, HttpSession session) throws IOException {
+		parserEstruturaCurricular.processarArquivoHTML("/home/leuson.silva/git/gal/Docs_Suporte/estrutura-curricular-es.html");
 		modelMap.addAttribute("disciplinas", this.disciplinaService.find(Disciplina.class));
 		return "disciplina/listar";
 	}

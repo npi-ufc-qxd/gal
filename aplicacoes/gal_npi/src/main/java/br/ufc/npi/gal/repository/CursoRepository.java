@@ -13,5 +13,7 @@ public interface CursoRepository extends GenericRepository<Curso> {
 	public abstract Curso getOutroCursoBySigla(Integer id, String sigla);
 	
 	public abstract Curso getOutroCursoByCodigo(Integer id, Integer codigo);
+	
+	public abstract Curso getCursoByNome(String nome);
 
 }
