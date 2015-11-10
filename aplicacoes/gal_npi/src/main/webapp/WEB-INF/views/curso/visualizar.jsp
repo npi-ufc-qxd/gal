@@ -33,7 +33,6 @@
 				<c:out value="${info}"></c:out>
 			</div>
 		</c:if>
-	
 		<div class="panel-body">
 		<ul class="nav nav-tabs" role="tablist">
 			<c:forEach items="${curso.curriculos}" var="curriculo" varStatus="ct">
@@ -42,7 +41,7 @@
 
 				<c:if test="${ct.index != 0}"> <c:set var="act" value=""></c:set> </c:if>
 
-				<li class="${act }"><a href="#${curriculo.id }" role="tab" data-toggle="tab">${curriculo.anoSemestre}</a></li>
+				<li class="${act }"><a href="#${curriculo.id }" role="tab" data-toggle="tab">${curriculo.codigo}</a></li>
 
 			</c:forEach>
 
@@ -61,7 +60,7 @@
 				
 				<c:if test="${count.index != 0}"> <c:set var="active" value=""></c:set> </c:if>
 				
-				<div class="tab-pane ${active }" id="${curriculo.anoSemestre }"></div>
+				<div class="tab-pane ${active }" id="${curriculo.codigo }"></div>
 
 				<div id="${curriculo.id}" class="tab-pane ${active }">
 

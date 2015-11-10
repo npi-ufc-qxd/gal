@@ -35,7 +35,7 @@ public class CalculadorMeta {
 
 					for (IntegracaoCurricular integracaoCurricular : bibliografia.getDisciplina().getCurriculos()) {
 						detalheMeta = new DetalheMetaCalculada();
-						detalheMeta.setCurriculo(integracaoCurricular.getEstruturaCurricular().getAnoSemestre());
+						detalheMeta.setCurriculo(integracaoCurricular.getEstruturaCurricular().getCodigo());
 						detalheMeta.setCurso(integracaoCurricular.getEstruturaCurricular().getCurso().getNome());
 
 						
