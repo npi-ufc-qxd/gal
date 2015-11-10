@@ -92,7 +92,7 @@ $( document ).ready(function() {
 				"sSortDescending" : ": Ordenar colunas de forma descendente"
 			}
 		},
-		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 4,7,10 ] }],
+//		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 0,1 ] }],
 		"bDestroy": true
 	})
 
@@ -148,17 +148,15 @@ $( document ).ready(function() {
 				});
 		return columns;
 	}
-	
+
 	$('#btn-get').click(function() {
 		var data = {
 			basica : getItems('#drag-and-drop')[0],
 			complementar : getItems('#drag-and-drop')[1],
 			idDiciplina : $('#disciplinaId').val()
 		};
-		$.get('/gal_npi/disciplina/vincular', data).success(function(data) {
-			alert('OK');
-			window.location.replace('/gal_npi/disciplina/listar');
-		});
+
+		$.get('/' + getAppName() + '/disciplina/vincular', data);
 	});
 
 	$('#drag-and-drop .sortable-list').sortable({
@@ -167,15 +165,13 @@ $( document ).ready(function() {
 
 	$("select#seleciona").change(function() { 
 		var option = $("#seleciona").val();
-		var url = location.pathname; // pega endereço que esta no
-		// navegador
-		url = url.split("/"); // quebra o endeço de acordo com a / (barra)
-		if(option==-1){
-			newUrl = "/"+url[1]+"/meta/listar";
+
+		if(option == -1){
+			newUrl = "/" + getAppName() + "/meta/listar";
 		}else{
-			newUrl = "/"+url[1]+"/meta/"+(option)+"/listar";
+			newUrl = "/" + getAppName() + "/meta/"+(option)+"/listar";
 		}
-		
+
 		$(location).attr("href", newUrl);
 	});
 	
@@ -208,4 +204,10 @@ function execmascara(){
 
 function soNumeros(v){
     return v.replace(/\D/g,"")
+}
+
+function getAppName() {
+	var url = location.pathname;
+	url = url.split("/");
+	return url[1];
 }
