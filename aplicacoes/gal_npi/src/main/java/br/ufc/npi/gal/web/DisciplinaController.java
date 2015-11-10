@@ -44,7 +44,7 @@ public class DisciplinaController {
 	
 	@RequestMapping(value = "/listar")
 	public String listar(ModelMap modelMap, HttpSession session) throws IOException {
-		parserEstruturaCurricular.processarArquivoHTML("/home/leuson.silva/git/gal/Docs_Suporte/estrutura-curricular-es.html");
+		parserEstruturaCurricular.processarArquivoHTML("/home/leuson.silva/git/gal/Docs_Suporte/estrutura-curricular-ac.html");
 		modelMap.addAttribute("disciplinas", this.disciplinaService.find(Disciplina.class));
 		return "disciplina/listar";
 	}

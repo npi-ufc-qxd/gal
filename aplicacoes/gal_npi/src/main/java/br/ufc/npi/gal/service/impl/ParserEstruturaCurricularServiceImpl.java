@@ -3,6 +3,7 @@ package br.ufc.npi.gal.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,11 +16,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.ufc.npi.gal.model.Curso;
 import br.ufc.npi.gal.model.Disciplina;
+import br.ufc.npi.gal.model.EstruturaCurricular;
 import br.ufc.npi.gal.repository.DisciplinaRepository;
 import br.ufc.npi.gal.repository.jpa.JpaCursoRepository;
 import br.ufc.npi.gal.repository.jpa.JpaDisciplinaRepository;
 import br.ufc.npi.gal.repository.jpa.JpaEstruturaCurricularRepositoryImpl;
 import br.ufc.npi.gal.service.DisciplinaService;
+import br.ufc.npi.gal.service.EstruturaCurricularService;
 import br.ufc.npi.gal.service.ParserEstruturaCurricularService;
 
 @Named
@@ -28,73 +31,113 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	@Inject
 	private DisciplinaService disciplinaService;
 	@Inject
+	private EstruturaCurricularService estruturaCurricluarService;
+	@Inject
 	private JpaEstruturaCurricularRepositoryImpl jpaEstruturaCurricularRepository;
 	@Inject
 	private JpaCursoRepository jpaCursoRepository;
-	
+
 	public ParserEstruturaCurricularServiceImpl() {
 	}
 
-	@Override
 	/*
 	 * Este método é responsável por dar um get das informações de uma estrutura
 	 * curricular Estas informações são dadas a partir de um HTML Caso a
 	 * estrutura do HTML mude possivelmente este parser precisará ser atualizado
 	 */
-	public void processarArquivo(MultipartFile multipartFile){
+	@Override
+	public boolean processarArquivo(MultipartFile multipartFile) {
 		File fileHtml = new File("estrutura.html");
 		try {
 			multipartFile.transferTo(fileHtml);
 			docFromHtml = Jsoup.parse(fileHtml, null, "");
-			parserCurriculo();
-			parserEstruturaCurricular();
+			boolean statusParser = parserCurriculo();
+			if (!statusParser)
+				parserEstruturaCurricular();
+			return true;
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 
 	}
 
-	private ArrayList<String> parserCurriculo() {
+	private boolean parserCurriculo() {
+
+		String codigoEstrutura = null;
+		String nomeCurso = null;
+
 		ArrayList<String> info = new ArrayList<String>();
 		Element tabela = docFromHtml.select("table").get(0);
 		Elements linhas = tabela.select("tr");
-		String codigoEstrutura = null;
-		String nomeCurso = null;
-		
+
 		for (int i = 0; i < 14; i++) {
 			if (i != 12) {
 				Element linha = linhas.get(i);
 				Elements colunas = linha.select("td");
 				Element coluna = colunas.get(0);
-				if(i==0){
+				if (i == 0) {
 					codigoEstrutura = colunas.get(0).text();
 				}
-				if(i==1){
+				if (i == 1) {
 					nomeCurso = colunas.get(0).text();
 				}
-				//System.out.println(colunas.get(0).text());
 				info.add(coluna.text());
+				System.out.println(coluna.text());
 			}
 		}
-		// verificar no banco se a estruttura curricular já encontra-se cadastrada
-		// usar as duas primeiras informações para verificar no banco 
+
+		// verificar no banco se a estruttura curricular já encontra-se
+		// cadastrada
+		// usar as duas primeiras informações para verificar no banco
 		int limiteNomeCurso = nomeCurso.indexOf("-");
-		nomeCurso = nomeCurso.substring(0, (limiteNomeCurso-1));
-		System.out.println(verificaExistenciaEstruturaCurricular(nomeCurso, codigoEstrutura));
-		return info;
+		nomeCurso = nomeCurso.substring(0, (limiteNomeCurso - 1));
+		System.out.println(nomeCurso);
+
+		/*if (!(verificaExistenciaEstruturaCurricular(jpaCursoRepository.getCursoByNome(nomeCurso).getId(),
+				codigoEstrutura))) {
+			adicionarEstruturaBanco(info);
+			return true;
+		}*/
+		adicionarEstruturaBanco(info);
+
+		return false;
 	}
-	
-	private boolean verificaExistenciaEstruturaCurricular(String nomeCurso, String idEstrutura){
-		Curso curso = jpaCursoRepository.getCursoByNome(nomeCurso);
+
+	private boolean adicionarEstruturaBanco(List<String> estrutura) {
+		EstruturaCurricular estruturaCurricular = new EstruturaCurricular();
+		estruturaCurricular.setAnoSemestre(estrutura.get(0));
+		estruturaCurricular.setMatrizCurricular(estrutura.get(1));
+		estruturaCurricular.setUnidadeVinculacao(estrutura.get(2));
+		estruturaCurricular.setMunicipio(estrutura.get(3));
+		estruturaCurricular.setSemestreEntradaVigor(estrutura.get(4));
+		estruturaCurricular.setChOptMinima(estrutura.get(5));
 		
-		if(curso != null){
-			if(jpaEstruturaCurricularRepository.getOutraEstruturaCurricularByAnoSemestre(curso.getId(), idEstrutura) != null){
-				return true;
-			}else{
-				return false;
-			}
+		int idMinino, idMedio, idMaximo;
+		
+		idMinino = estrutura.get(11).indexOf("Mínimo");
+		idMedio = estrutura.get(11).indexOf("Médio");
+		idMaximo = estrutura.get(11).indexOf("Máximo");
+		estruturaCurricular.setPrazoConclusaoMinimo(estrutura.get(11).substring(idMinino+6, 8));
+		estruturaCurricular.setPrazoConclusaoMedio(estrutura.get(11).substring(idMedio+5, 16));
+		estruturaCurricular.setPrazoConclusaoMaximo(estrutura.get(11).substring(idMaximo+6, estrutura.get(11).length()));
+		
+		idMinino = estrutura.get(12).indexOf("Mínima");
+		idMedio = estrutura.get(12).indexOf("Média");
+		idMaximo = estrutura.get(12).indexOf("Máxima");
+		estruturaCurricular.setChPeriodoMinimo(estrutura.get(12).substring(idMinino+6, idMedio-2));
+		estruturaCurricular.setChPeriodoMedio(estrutura.get(12).substring(idMedio+5, idMaximo-2));
+		estruturaCurricular.setChPeriodoMaximo(estrutura.get(12).substring(idMaximo+6, estrutura.get(12).length()-1));
+		//estruturaCurricluarService.save(estruturaCurricular);
+		return true;
+	}
+
+	private boolean verificaExistenciaEstruturaCurricular(int idCurso, String idEstrutura) {
+		if (jpaEstruturaCurricularRepository.getOutraEstruturaCurricularByAnoSemestre(idCurso, idEstrutura) != null) {
+			return true;
 		}
 		return false;
 	}

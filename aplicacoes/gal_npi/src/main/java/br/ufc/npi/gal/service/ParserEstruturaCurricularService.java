@@ -8,6 +8,6 @@ public interface ParserEstruturaCurricularService {
 	
 	public abstract void processarArquivoHTML(String urlEstruturaCurrcicular) throws IOException;
 
-	public abstract void processarArquivo(MultipartFile multipartFile) throws IOException;
+	public abstract boolean processarArquivo(MultipartFile multipartFile) throws IOException;
 	
 }
