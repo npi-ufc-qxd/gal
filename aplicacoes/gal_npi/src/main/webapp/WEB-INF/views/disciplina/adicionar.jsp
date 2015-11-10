@@ -21,7 +21,7 @@
 			<div class="form-group">
 				<label for="codigo" class="col-sm-1 control-label">Código</label>
 				<div class="col-sm-10">
-					<form:input id="codigo" class="form-control" placeholder="Código"
+					<form:input id="codigo" class="form-control" placeholder="Ex.: QXD0000"
 						path="codigo" />
 					<form:errors path="codigo" cssClass="error" />
 				</div>
@@ -32,6 +32,38 @@
 					<form:input id="nome" class="form-control" placeholder="Nome"
 						path="nome" />
 					<form:errors path="nome" cssClass="error" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="tipo" class="col-sm-1 control-label">Tipo</label>
+				<div class="col-sm-10">
+					<form:select path="tipo" class="form-control">
+						<form:option value="Disciplina">Disciplina</form:option>
+						<form:option value="Atividade Complementar">Atividade Complementar</form:option>
+						<form:option value="TCC">TCC</form:option>
+						<form:option value="Estágio">Estágio</form:option>
+					</form:select>
+					<form:errors path="tipo" cssClass="error" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="chPratica" class="col-sm-1 control-label">CH
+					Prática</label>
+				<div class="col-sm-10">
+					<form:input id="chPratica" class="form-control"
+						placeholder="Carga Horária Pŕatica" path="chPratica" />
+					<form:errors path="chPratica" cssClass="error" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="chTeorica" class="col-sm-1 control-label">CH
+					Teórica</label>
+				<div class="col-sm-10">
+					<form:input id="chTeorica" class="form-control"
+						placeholder="Carga Horária Teórica" path="chTeorica" />
+					<form:errors path="chTeorica" cssClass="error" />
 				</div>
 			</div>
 

@@ -32,7 +32,7 @@ $( document ).ready(function() {
 				"sSortDescending" : ": Ordenar colunas de forma descendente"
 			}
 		},
-		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 2,3,4 ] }],
+		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 5,6,7 ] }],
 		"bDestroy": true
 	});
 	
