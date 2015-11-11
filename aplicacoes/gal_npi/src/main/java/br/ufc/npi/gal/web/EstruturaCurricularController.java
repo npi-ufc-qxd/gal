@@ -1,6 +1,8 @@
 package br.ufc.npi.gal.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -91,11 +93,41 @@ public class EstruturaCurricularController {
 		return "estrutura/adicionar";
 	}
 
-	@RequestMapping(value = "/upload-estrutura-curricular/", method = RequestMethod.POST)
-	public String uploadEstruturaCurricular(@ModelAttribute("curriculo") EstruturaCurricular estruturaCurricular,
+	@RequestMapping(value = "/{id}/adicionar/", method = RequestMethod.POST)
+	public String uploadEstruturaCurricular(@PathVariable("id") Integer id, @ModelAttribute("curriculo") EstruturaCurricular estruturaCurricular,
 			@RequestParam("file") MultipartFile request, BindingResult result, RedirectAttributes redirectAttributes) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		List<String> infoCurriculo = new ArrayList<String>();
+		boolean erros = false;		
+		if (request.isEmpty()) {
+			result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo",
+					"Arquivo enviado inexistente");
+			erros = true;
+		} else if (!TestFormato(request)) {
+			result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo",
+					"Formato de arquivo incorreto, por favor selecionar um arquivo html");
+			erros = true;
+		}
+		if (erros) {
+			return "acervo/atualizar";
+		}
+		try {
+			infoCurriculo = parserEstruturaCurricular.processarArquivo(request, id);
+		} catch (Exception e) {
+			System.err.println("Erro ao processar arquivo: "
+					+ e.getStackTrace());
+		}
+		parserEstruturaCurricular.registrarNovaEstruturaCurricular(infoCurriculo, cursoService.getCursoById(id));
 		return null;
+	}
+
+	private boolean TestFormato(MultipartFile request) {
+		String nome = request.getOriginalFilename();
+		String extencao = (String) nome.subSequence(nome.length() - 5, nome.length());
+		if (extencao.equals(".html")) {
+			return true;
+		}
+		return false;
 	}
 
 	@RequestMapping(value = "/{id}/adicionar", method = RequestMethod.POST)

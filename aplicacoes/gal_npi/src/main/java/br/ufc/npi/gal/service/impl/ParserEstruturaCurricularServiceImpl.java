@@ -46,26 +46,26 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	 * estrutura do HTML mude possivelmente este parser precisará ser atualizado
 	 */
 	@Override
-	public boolean processarArquivo(MultipartFile multipartFile) {
+	public List<String> processarArquivo(MultipartFile multipartFile, Integer id) {
 		File fileHtml = new File("estrutura.html");
 		try {
 			multipartFile.transferTo(fileHtml);
 			docFromHtml = Jsoup.parse(fileHtml, null, "");
-			boolean statusParser = parserCurriculo();
-			if (!statusParser)
-				parserEstruturaCurricular();
-			return true;
+			List<String> statusParser = parserCurriculo();
+			if (statusParser != null)
+			return parserCurriculo();
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
+		return null;
 
 	}
 
-	private boolean parserCurriculo() {
+	private List<String> parserCurriculo() {
 
 		String codigoEstrutura = null;
 		String nomeCurso = null;
@@ -97,42 +97,48 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		nomeCurso = nomeCurso.substring(0, (limiteNomeCurso - 1));
 		System.out.println(nomeCurso);
 
-		/*if (!(verificaExistenciaEstruturaCurricular(jpaCursoRepository.getCursoByNome(nomeCurso).getId(),
-				codigoEstrutura))) {
-			adicionarEstruturaBanco(info);
-			return true;
-		}*/
-		adicionarEstruturaBanco(info);
+		/*
+		 * if (!(verificaExistenciaEstruturaCurricular(jpaCursoRepository.
+		 * getCursoByNome(nomeCurso).getId(), codigoEstrutura))) {
+		 * adicionarEstruturaBanco(info); return true; }
+		 */
+		// Isso é responsabilidade do controller
+		// Adicionar esta chamada posteriormente
+		registrarNovaEstruturaCurricular(info, jpaCursoRepository.getCursoByCodigo(2));
 
-		return false;
+		return info;
 	}
 
-	private boolean adicionarEstruturaBanco(List<String> estrutura) {
+	public EstruturaCurricular registrarNovaEstruturaCurricular(List<String> estrutura, Curso curso) {
 		EstruturaCurricular estruturaCurricular = new EstruturaCurricular();
 		estruturaCurricular.setAnoSemestre(estrutura.get(0));
 		estruturaCurricular.setMatrizCurricular(estrutura.get(1));
 		estruturaCurricular.setUnidadeVinculacao(estrutura.get(2));
 		estruturaCurricular.setMunicipio(estrutura.get(3));
-		estruturaCurricular.setSemestreEntradaVigor(estrutura.get(4));
+		estruturaCurricular.setSemestreEntradaVigor(estrutura.get(4).replaceAll("\\ ", ""));
 		estruturaCurricular.setChOptMinima(estrutura.get(5));
-		
+
 		int idMinino, idMedio, idMaximo;
-		
+
 		idMinino = estrutura.get(11).indexOf("Mínimo");
 		idMedio = estrutura.get(11).indexOf("Médio");
 		idMaximo = estrutura.get(11).indexOf("Máximo");
-		estruturaCurricular.setPrazoConclusaoMinimo(estrutura.get(11).substring(idMinino+6, 8));
-		estruturaCurricular.setPrazoConclusaoMedio(estrutura.get(11).substring(idMedio+5, 16));
-		estruturaCurricular.setPrazoConclusaoMaximo(estrutura.get(11).substring(idMaximo+6, estrutura.get(11).length()));
-		
+		estruturaCurricular.setPrazoConclusaoMinimo(estrutura.get(11).substring(idMinino + 6, 8));
+		estruturaCurricular.setPrazoConclusaoMedio(estrutura.get(11).substring(idMedio + 5, 16));
+		estruturaCurricular
+				.setPrazoConclusaoMaximo(estrutura.get(11).substring(idMaximo + 6, estrutura.get(11).length()));
+
 		idMinino = estrutura.get(12).indexOf("Mínima");
 		idMedio = estrutura.get(12).indexOf("Média");
 		idMaximo = estrutura.get(12).indexOf("Máxima");
-		estruturaCurricular.setChPeriodoMinimo(estrutura.get(12).substring(idMinino+6, idMedio-2));
-		estruturaCurricular.setChPeriodoMedio(estrutura.get(12).substring(idMedio+5, idMaximo-2));
-		estruturaCurricular.setChPeriodoMaximo(estrutura.get(12).substring(idMaximo+6, estrutura.get(12).length()-1));
-		//estruturaCurricluarService.save(estruturaCurricular);
-		return true;
+		estruturaCurricular.setChPeriodoMinimo(estrutura.get(12).substring(idMinino + 6, idMedio - 2));
+		estruturaCurricular.setChPeriodoMedio(estrutura.get(12).substring(idMedio + 5, idMaximo - 2));
+		estruturaCurricular
+				.setChPeriodoMaximo(estrutura.get(12).substring(idMaximo + 6, estrutura.get(12).length() - 1));
+		estruturaCurricular.setCurso(curso);
+		System.out.println(estruturaCurricular.getCurso().getId());
+		estruturaCurricluarService.save(estruturaCurricular);
+		return estruturaCurricular;
 	}
 
 	private boolean verificaExistenciaEstruturaCurricular(int idCurso, String idEstrutura) {
