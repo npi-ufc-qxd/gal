@@ -52,8 +52,7 @@ public class DisciplinaController {
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
 	public String editar(@PathVariable("id") Integer id, ModelMap modelMap) {
 
-		Disciplina disciplina = this.disciplinaService.find(Disciplina.class,
-				id);
+		Disciplina disciplina = this.disciplinaService.find(Disciplina.class, id);
 
 		if (disciplina == null) {
 			return "redirect:/disciplina/listar";
@@ -222,7 +221,7 @@ public class DisciplinaController {
 		for (int i = 0; i < bibliografiaLista.size(); i++) {
 			bibliografiaService.delete(bibliografiaLista.get(i));
 		}
-		return "/gal_npi/disciplina/listar";
+		return "/disciplina/listar";
 	}
 
 }

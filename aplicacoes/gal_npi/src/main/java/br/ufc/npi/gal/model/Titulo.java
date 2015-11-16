@@ -2,6 +2,7 @@ package br.ufc.npi.gal.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,8 +40,7 @@ public class Titulo {
 	private String nome;
 	
 	@Pattern.List({
-		@Pattern(regexp = "([^\\s]{0,})", message = "O isbn não pode conter espaços"), 
-		@Pattern(regexp = "(.){13}|(.){10}", message = "O isbn deve conter 10 ou 13 caracteres"),
+		@Pattern(regexp = "([^\\s]{0,})", message = "O isbn não pode conter espaços"),
 		@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù0-9]{0,}", message = "O campo não pode contar caracteres especiais")
 	})
 	@NotEmpty(message="Campo obrigatório")
@@ -50,10 +50,10 @@ public class Titulo {
 	@NotEmpty(message="Campo obrigatório")
 	private String tipo;
 	
-	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)
 	private List<Bibliografia> bibliografias;
 	
-	@OneToMany(mappedBy = "titulo", targetEntity = Exemplar.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "titulo", targetEntity = Exemplar.class, fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)
 	private List<Exemplar> exemplares;
 	
 	public List<Bibliografia> getBibliografias() {

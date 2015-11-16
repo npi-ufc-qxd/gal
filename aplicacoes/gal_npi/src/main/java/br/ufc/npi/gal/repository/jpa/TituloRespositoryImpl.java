@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.inject.Named;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.repository.TituloRespository;
 import br.ufc.quixada.npi.enumeration.QueryType;
