@@ -82,7 +82,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 			Sheet sheet = workbook.getSheet(0);
 			int linhas = sheet.getRows();
 			ExemplarConflitante exemplarConflitante = new ExemplarConflitante();
-			for (int i = 1; i < linhas-1; i++) {
+			for (int i = 1; i < linhas; i++) {
 				
 				exemplarConflitante = validarLinha(sheet,i);
 				exemplarConflitante.setLinha(i);
@@ -148,7 +148,16 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	
 	private void adicionarConflito(ExemplarConflitante conflito) {
 		try{
-			exemplarConflitanteReposiroty.save(conflito);
+			ExemplarConflitante aux = exemplarConflitanteReposiroty.getExemplarConflitanteByCodigo(conflito.getCodigoExemplar());
+			if (aux!=null) {
+				//salvar verificar e rever exemplares conflitantes
+				if (conflito.equals(aux)==false) {
+					conflito.setDescricaoErro(conflito.getDescricaoErro()+ " Codigo de exemplar duplicado");
+					exemplarConflitanteReposiroty.save(conflito);
+				}
+			} else {
+				exemplarConflitanteReposiroty.save(conflito);
+			}
 		}catch(Exception e){
 			System.err.println("Exemplar ja existente! Código do exemplar: " +conflito.getCodigoExemplar());
 		}
@@ -163,14 +172,14 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 			exemplarConflitante.setTipo(sheet.getCell(TIPO,i).getContents());
 		}else{
 			exemplarConflitante.setTipo(sheet.getCell(TIPO,i).getContents());
-			erros = validadorTipo;
+			erros = validadorTipo + ",";
 		}
 				
-		if(!formatarNomeTitulo(sheet,i).isEmpty()){
+		if(!formatarNomeTituloVerificacao(sheet,i).isEmpty()){
 			exemplarConflitante = preencherCamposNomeTitulo(sheet,i,exemplarConflitante);
 		}else {
 			exemplarConflitante = preencherCamposNomeTitulo(sheet,i,exemplarConflitante);
-			erros +=" Nome do título não especificado";
+			erros +=" Nome do título não especificado, ";
 		}
 		
 		String validadorCodExemplar = formatarCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
@@ -187,7 +196,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 			exemplarConflitante.setIsbn(isbn);
 		}else{
 			exemplarConflitante.setIsbn(isbn);
-			erros+=" "+validadorIsbn;
+			erros+=" "+validadorIsbn+ ", ";
 		}
 		exemplarConflitante.setDescricaoErro(erros);
 		return exemplarConflitante;
@@ -195,7 +204,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	}
 
 	private String formatarIsbn(String contents) {
-		if(contents.matches("([0-9]{13})|([0-9]{9}X)|([0-9]{12}X)|([0-9]{10})")){
+		if(contents.matches("([0-9]{7,13})") || contents.matches("[0-9]{7,13}[X|x]")) {
 			return "valido";
 		}
 		return "ISBN inválido";
@@ -226,9 +235,16 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 
 	private String formatarNomeTitulo(Sheet sheet, int i) {
 		// concatena os campos que compoem o titulo
-		return sheet.getCell(COLUNA_AUTOR, i).getContents() + " "+sheet.getCell(COLUNA_TITULO, i)+" "+ sheet.getCell(COLUNA_TITULO_N, i)+" "
-				+sheet.getCell(COLUNA_SUB_TITULO,i) +" "+sheet.getCell(COLUNA_TITULO_REVISTA, i)+" "+sheet.getCell(COLUNA_PAGINA,i)
-				+" "+sheet.getCell(COLUNA_REF_ARTIGO,i)+" "+sheet.getCell(COLUNA_EDICAO,i)+" "+sheet.getCell(COLUNA_PUBLICADOR,i);
+		return sheet.getCell(COLUNA_AUTOR, i).getContents() + " "+sheet.getCell(COLUNA_TITULO, i).getContents() +" "+ sheet.getCell(COLUNA_TITULO_N, i).getContents()+" "
+				+sheet.getCell(COLUNA_SUB_TITULO,i).getContents() +" "+sheet.getCell(COLUNA_TITULO_REVISTA, i).getContents() +" "+sheet.getCell(COLUNA_PAGINA,i).getContents()
+				+" "+sheet.getCell(COLUNA_REF_ARTIGO,i).getContents() +" "+sheet.getCell(COLUNA_EDICAO,i).getContents() +" "+sheet.getCell(COLUNA_PUBLICADOR,i).getContents();
+	}
+	
+	private String formatarNomeTituloVerificacao(Sheet sheet, int i) {
+		// concatena os campos que compoem o titulo
+		return sheet.getCell(COLUNA_AUTOR, i).getContents() + sheet.getCell(COLUNA_TITULO, i).getContents() + sheet.getCell(COLUNA_TITULO_N, i).getContents() + 
+				sheet.getCell(COLUNA_SUB_TITULO,i).getContents() + sheet.getCell(COLUNA_TITULO_REVISTA, i).getContents() + sheet.getCell(COLUNA_PAGINA,i).getContents()
+				+ sheet.getCell(COLUNA_REF_ARTIGO,i).getContents() + sheet.getCell(COLUNA_EDICAO,i).getContents() + sheet.getCell(COLUNA_PUBLICADOR,i).getContents();
 	}
 	
 	private String formatarNomeTitulo(ExemplarConflitante exemplar) {
@@ -236,11 +252,16 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 				exemplar.getSubTitulo() + " " + exemplar.getTituloRevista() + " " + exemplar.getPagina() + " " +
 				exemplar.getRefArtigo() + " " + exemplar.getEdicao() + " " + exemplar.getPublicador();
 	}
+	
+	private String formatarNomeTituloVerificacao(ExemplarConflitante exemplar) {
+		return exemplar.getAutor() + exemplar.getTitulo() + exemplar.getTitulo_n() + exemplar.getSubTitulo() + 
+			   exemplar.getTituloRevista() + exemplar.getPagina() + exemplar.getRefArtigo() + 
+			   exemplar.getEdicao() + exemplar.getPublicador();
+	}
 
 	private Exemplar formatarExemplar(Sheet sheet, int i) {
 		Titulo titulo = new Titulo();
 		titulo.setIsbn(extrairIsbnDaCelula(sheet.getCell(COLUNA_ISBN, i).getContents()));
-		System.out.println("isbn do titulo:" +titulo.getIsbn());
 		titulo.setNome(formatarNomeTitulo(sheet,i));
 		titulo.setTipo("Físico");
 		Exemplar exemplar = new Exemplar();
@@ -294,19 +315,27 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		
 		String validadorCodExemplar = formatarCodigoExemplar(exemplarConflitante.getCodigoExemplar());
 		if(!validadorCodExemplar.equals("valido")){
-			erros+= " "+validadorCodExemplar;
+			erros+= "; "+validadorCodExemplar;
+		} else {			
+			if (exemplarRepository.getExemplarByCodigo(exemplarConflitante.getCodigoExemplar())!=null) {
+				erros+= " codigo de exemplar já existe no banco,";
+			}
 		}
 		
 		String isbn = extrairIsbnDaCelula(exemplarConflitante.getIsbn());
 		String validadorIsbn = formatarIsbn(isbn);
 		if(!validadorIsbn.equals("valido")){
-			erros+=" "+validadorIsbn;
+			erros+="; "+validadorIsbn;
+		}
+		
+		String titulo = formatarNomeTituloVerificacao(exemplarConflitante);
+		if (titulo.isEmpty()) {
+			erros+= "; " + "Nome do título não especificado";
 		}
 		
 		exemplarConflitante.setDescricaoErro(erros);
 		if(exemplarConflitante.getDescricaoErro().equals("")) {
 			Exemplar exemplar = formatarExemplar(exemplarConflitante);
-			System.out.println("aqui");
 			realizarAtualização(exemplar);
 			exemplarConflitanteReposiroty.delete(exemplarConflitante);
 			return true;

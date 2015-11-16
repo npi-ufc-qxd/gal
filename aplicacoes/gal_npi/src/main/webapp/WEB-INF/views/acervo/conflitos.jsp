@@ -37,18 +37,16 @@
 					row="exemplar" theme="bootstrap2" cssClass="table table-striped">
 					
 					<datatables:column title="Título do exemplar com conflito">
-						<c:out value="${exemplar.titulo} "></c:out>
+						<c:out value="${exemplar.titulo} ${exemplar.titulo_n} ${exemplar.subTitulo}"></c:out>
 					</datatables:column>
 				
 					<datatables:column title="Código do exemplar com conflito">
 						<c:out value="${exemplar.codigoExemplar} "></c:out>
 					</datatables:column>
 					
-					<datatables:column title="Editar">
+					<datatables:column title="Resolver conflito">
 						<a class="btn btn-primary" href="<c:url value="../acervo/${exemplar.id }/editar" ></c:url>"><span class="glyphicon glyphicon-edit"></span></a>
 					</datatables:column>
-					
-					<!-- href="<c:url value="/acervo/${exemplar.id }/salvar" ></c:url>" /////////////// href="<c:url value="/acervo/${exemplar.id }/editar" ></c:url>"-->
 			</datatables:table>
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
