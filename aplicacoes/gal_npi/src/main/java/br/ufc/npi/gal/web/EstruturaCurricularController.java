@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.security.core.Authentication;
@@ -54,7 +55,7 @@ public class EstruturaCurricularController {
 		modelMap.addAttribute("estruturaCurricular", estruturaCurricular);
 		return "estrutura/editar";
 	}
-
+	
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.POST)
 	public String atualizar(@Valid EstruturaCurricular estrutura, BindingResult result,
 			RedirectAttributes redirectAttributes, @PathVariable("id") Integer id, ModelMap modelMap) {
@@ -93,7 +94,7 @@ public class EstruturaCurricularController {
 		return "estrutura/adicionar";
 	}
 
-	@RequestMapping(value = "/{id}/adicionar/", method = RequestMethod.POST)
+	@RequestMapping(value = "/{id}/importar/", method = RequestMethod.POST)
 	public String uploadEstruturaCurricular(@PathVariable("id") Integer id, @ModelAttribute("curriculo") EstruturaCurricular estruturaCurricular,
 			@RequestParam("file") MultipartFile request, BindingResult result, RedirectAttributes redirectAttributes) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
