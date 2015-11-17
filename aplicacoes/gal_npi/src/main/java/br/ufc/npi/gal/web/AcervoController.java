@@ -47,9 +47,10 @@ public class AcervoController {
 	public String atualizarAcervo(ModelMap modelMap, HttpSession session) {
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
-		List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService
+		/*List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService
 				.atualizacoesPorUsuario(usuarioService.getUsuarioByLogin(auth
-						.getName()));
+						.getName()));*/
+		List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService.find(AcervoDocumento.class);
 		modelMap.addAttribute("atualizacoesRealizadas", atualizacoesRealizadas);
 		modelMap.addAttribute("atualizacaoAcervo", new AcervoDocumento());
 		return "acervo/atualizar";
