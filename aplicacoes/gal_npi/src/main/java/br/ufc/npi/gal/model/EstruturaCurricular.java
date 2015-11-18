@@ -26,9 +26,9 @@ public class EstruturaCurricular {
 	private Integer id;
 
 	@Column(name = "codigo")
-
 	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]{4}+[.][1-2]{1})", message = "O campo deve conter formato xxxx.1 ou xxxx.2"), })
 	private String codigo;
 
@@ -40,38 +40,77 @@ public class EstruturaCurricular {
 	private List<IntegracaoCurricular> curriculos;
 
 	@Column(name = "matriz_curricular")
+	@NotEmpty(message = "Campo obrigatório")
+	@Pattern.List({
+		@Pattern(regexp = "([A-z\\s]+$)", message = "O campo deve conter apenas letras"),
+	})
 	private String matrizCurricular;
 
 	@Column(name = "unidade_vinculacao")
+	@NotEmpty(message = "Campo obrigatório")
 	private String unidadeVinculacao;
 
 	@Column(name = "municipio")
+	@NotEmpty(message = "Campo obrigatório")
+	@Pattern.List({
+		@Pattern(regexp = "([A-z\\s]+[-]+[A-z\\s]{2})", message = "Formato inválido"),
+	})
 	private String municipio;
 
 	@Column(name = "semestre_vigor")
-	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@NotEmpty(message = "Campo obrigatório")
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]{4}+[.][1-2]{1})", message = "O campo deve conter formato xxxx.1 ou xxxx.2"), })
 	private String semestreEntradaVigor;
 
 	@Column(name = "ch_opt_minima")
+	@NotEmpty(message = "Campo obrigatório")
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
 	private String chOptMinima;
 
 	@Column(name = "prazo_conclusao_minimo")
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
+	@NotEmpty(message = "Campo obrigatório")
 	private String prazoConclusaoMinimo;
 
 	@Column(name = "prazo_conclusao_medio")
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
+	@NotEmpty(message = "Campo obrigatório")
 	private String prazoConclusaoMedio;
 
 	@Column(name = "prazo_conclusao_maximo")
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
+	@NotEmpty(message = "Campo obrigatório")
 	private String prazoConclusaoMaximo;
 
 	@Column(name = "ch_periodo_minima")
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
+	@NotEmpty(message = "Campo obrigatório")
 	private String chPeriodoMinimo;
 
 	@Column(name = "ch_periodo_media")
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
+	@NotEmpty(message = "Campo obrigatório")
 	private String chPeriodoMedio;
 
 	@Column(name = "ch_periodo_maxima")
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
+	@NotEmpty(message = "Campo obrigatório")
 	private String chPeriodoMaximo;
 
 	public EstruturaCurricular() {

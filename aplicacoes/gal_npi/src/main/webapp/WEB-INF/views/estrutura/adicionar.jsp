@@ -12,7 +12,7 @@
 	<div id="container" style="width: 1000px; margin: 0 auto;">
 		<jsp:include page="../fragments/header.jsp" />
 		<form:form
-			servletRelativeAction="/estrutura/${curso.codigo}/adicionar"
+			servletRelativeAction="/estrutura/${curso.id}/adicionar"
 			method="post" modelAttribute="estruturaCurricular" role="form"
 			class="form-horizontal">
 			<form:input path="id" type="hidden" />
@@ -71,13 +71,52 @@
 					<form:errors path="semestreEntradaVigor" cssClass="error" />
 				</div>
 			</div>
+			<div class="form-group">
+				<label for="chOptMinima" class="col-sm-1 control-label">CH Opt. Mínima</label>
+				<div class="col-sm-10">
+					<form:input id="chOptMinima" class="form-control"
+						placeholder="Carga Horária Optativa Mínima"
+						path="chOptMinima" />
+					<form:errors path="chOptMinima" cssClass="error" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-1 control-label">Prazo Conclusão</label>
+				<div class="col-sm-10">
+					<form:input id="prazoConclusaoMinimo" class="sidebyside"
+						placeholder="Mínimo"
+						path="prazoConclusaoMinimo" />
+					<form:errors path="prazoConclusaoMinimo" cssClass="error" />
+					<form:input id="prazoConclusaoMedio" class="sidebyside"
+						placeholder="Médio"
+						path="prazoConclusaoMedio" />
+					<form:errors path="prazoConclusaoMedio" cssClass="error" />
+					<form:input id="prazoConclusaoMaximo" class="sidebyside"
+						placeholder="Máximo"
+						path="prazoConclusaoMaximo" />
+					<form:errors path="prazoConclusaoMaximo" cssClass="error" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-1 control-label">CH Periodo</label>
+				<div class="col-sm-10">
+					<form:input id="chPeriodoMinimo" class="sidebyside"
+						placeholder="Mínima"
+						path="chPeriodoMinimo" />
+					<form:errors path="chPeriodoMinimo" cssClass="error" />
+					<form:input id="chPeriodoMedio" class="sidebyside"
+						placeholder="Média"
+						path="chPeriodoMedio" />
+					<form:errors path="chPeriodoMedio" cssClass="error" />
+					<form:input id="chPeriodoMaximo" class="sidebyside"
+						placeholder="Máxima"
+						path="chPeriodoMaximo" />
+					<form:errors path="chPeriodoMaximo" cssClass="error" />
+				</div>
+			</div>
 
 
 			<div class="controls">
-			<div class="form-group"><label for="codigo" class="col-sm-1 control-label">Html</label>
-				<form action="upload.do" enctype="multipart/form-data" method="post">
-					<input type="file" name="file" id="file">
-				</form></div>
 				<input id="criar" class="btn btn-primary" type="submit"
 					value="Adicionar" /> <a
 					href="<c:url value="/curso/listar"></c:url>"
