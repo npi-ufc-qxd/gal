@@ -7,6 +7,8 @@ public interface EstruturaCurricularRepository extends GenericRepository<Estrutu
 
 	EstruturaCurricular getOutraEstruturaCurricularByAnoSemestre(Integer id,
 			String anoSemestre);
+
+	EstruturaCurricular getOutraEstruturaCurricularByCurso(Integer idCurso);
 	
 	
 }

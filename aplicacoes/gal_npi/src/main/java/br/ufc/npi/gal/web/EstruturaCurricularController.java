@@ -101,28 +101,38 @@ public class EstruturaCurricularController {
 		return "acervo/atualizar";
 	}
 
+	// public String uploadEstruturaCurricular(@PathVariable("idCurso") Integer
+	// id, @RequestParam("file") MultipartFile request, BindingResult result,
+	// RedirectAttributes redirectAttributes) {
 	@RequestMapping(value = "/{idCurso}/importar", method = RequestMethod.POST)
-//	public String uploadEstruturaCurricular(@PathVariable("idCurso") Integer id, @RequestParam("file") MultipartFile request, BindingResult result, RedirectAttributes redirectAttributes) {
-		public String uploadEstruturaCurricular(@PathVariable("codCurso") Integer idCurso, @RequestParam("file") MultipartFile request, RedirectAttributes redirectAttributes) {
+	public String uploadEstruturaCurricular(@PathVariable("idCurso") Integer idCurso,
+			@RequestParam("file") MultipartFile request, RedirectAttributes redirectAttributes) {
 
 		List<String> infoCurriculo = new ArrayList<String>();
-		
 
 		if (request == null || request.getSize() <= 0) {
-			redirectAttributes.addAttribute("error", "Arquivo obrigatório");
-			return "redirect:/curso/" + idCurso +"/visualizar";
-		}
-		
-		try {
-			infoCurriculo = parserEstruturaCurricular.processarArquivo(request, idCurso);
-					} catch (Exception e) {
-			System.err.println("Erro ao processar arquivo: " + e.getStackTrace());
-			return "redirect:/curso/" + idCurso+"/visualizar";
+			redirectAttributes.addFlashAttribute("error", "Arquivo obrigatório");
+			return "redirect:/curso/" + idCurso + "/visualizar";
+			// return "redirect:/curso/listar";
 		}
 
-		Curso curso = cursoService.find(Curso.class, idCurso);
-		parserEstruturaCurricular.registrarNovaEstruturaCurricular(infoCurriculo, curso);
-		return "redirect:/curso/" + idCurso+"/visualizar";
+		try {
+			infoCurriculo = parserEstruturaCurricular.processarArquivo(request, idCurso);
+		} catch (Exception e) {
+			System.err.println("Erro ao processar arquivo: " + e.getStackTrace());
+			return "redirect:/curso/" + idCurso + "/visualizar";
+		}
+
+		Curso curso = cursoService.getCursoByCodigo(idCurso);
+		if (estruturaCurricularService.getOutraEstruturaCurricularByAnoSemestre(curso.getId(),
+				infoCurriculo.get(0)) == null) {
+			parserEstruturaCurricular.registrarNovaEstruturaCurricular(infoCurriculo, curso);
+			redirectAttributes.addFlashAttribute("info", "Estrutura cadastrada com sucesso");
+		} else {
+			redirectAttributes.addFlashAttribute("error", "Estrutura já cadastrada");
+		}
+
+		return "redirect:/curso/" + idCurso + "/visualizar";
 	}
 
 	private boolean TestFormato(MultipartFile request) {

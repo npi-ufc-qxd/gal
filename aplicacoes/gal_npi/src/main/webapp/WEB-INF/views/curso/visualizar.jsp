@@ -65,7 +65,7 @@
 							</button>
 						</a>
 
-						<form id="importarCurriculo" method="POST" action="<c:url value="/estrutura/${curso.id}/importar"></c:url>" class="form-horizontal" enctype="multipart/form-data" style="float: right;">
+						<form id="importarCurriculo" method="POST" action="<c:url value="/estrutura/${curso.codigo}/importar"></c:url>" class="form-horizontal" enctype="multipart/form-data" style="float: right;">
 							<input type="file" name="file" id="file" accept="text/html" style="float: right;"/>
 							<input type="submit" name="submit" class="btn btn-primary" value="Importar" />
 						</form>

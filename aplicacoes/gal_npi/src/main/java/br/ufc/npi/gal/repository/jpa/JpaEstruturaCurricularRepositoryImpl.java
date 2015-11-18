@@ -25,4 +25,15 @@ public class JpaEstruturaCurricularRepositoryImpl extends JpaGenericRepositoryIm
 		}
 		return null;
 	}
+
+	@Override
+	public EstruturaCurricular getOutraEstruturaCurricularByCurso(Integer idCurso) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("id_curso", idCurso);
+		List<EstruturaCurricular> result = find(QueryType.JPQL,"from EstruturaCurricular where id_curso = :id_curso", params);
+		if(result != null && !result.isEmpty()){
+			return result.get(0);
+		}
+		return null;
+	}
 }

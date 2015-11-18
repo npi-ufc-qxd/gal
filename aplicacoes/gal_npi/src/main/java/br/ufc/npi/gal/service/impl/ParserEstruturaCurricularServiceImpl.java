@@ -1,8 +1,6 @@
 package br.ufc.npi.gal.service.impl;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +48,9 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		try {
 			multipartFile.transferTo(fileHtml);
 			docFromHtml = Jsoup.parse(fileHtml, null, "");
-			List<String> statusParser = parserCurriculo();
+			List<String> statusParser = parserCurriculo(id);
 			if (statusParser != null)
-			return parserCurriculo();
+			return statusParser;
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 			return null;
@@ -64,7 +62,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 
 	}
 
-	private List<String> parserCurriculo() {
+	private List<String> parserCurriculo(Integer id) {
 
 		String codigoEstrutura = "";
 		String nomeCurso = "";
@@ -94,16 +92,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		// usar as duas primeiras informações para verificar no banco
 		int limiteNomeCurso = nomeCurso.indexOf("-");
 		nomeCurso = nomeCurso.substring(0, (limiteNomeCurso - 1));
-		System.out.println(nomeCurso);
-
-		/*
-		 * if (!(verificaExistenciaEstruturaCurricular(jpaCursoRepository.
-		 * getCursoByNome(nomeCurso).getId(), codigoEstrutura))) {
-		 * adicionarEstruturaBanco(info); return true; }
-		 */
-		// Isso é responsabilidade do controller
-		// Adicionar esta chamada posteriormente
-		registrarNovaEstruturaCurricular(info, jpaCursoRepository.getCursoByCodigo(2));
 
 		return info;
 	}
@@ -209,7 +197,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		File fileHtml = new File(urlEstruturaCurrcicular);
 
 		docFromHtml = Jsoup.parse(fileHtml, null, "");
-		parserCurriculo();
+		//parserCurriculo();
 		parserEstruturaCurricular();
 	}
 
