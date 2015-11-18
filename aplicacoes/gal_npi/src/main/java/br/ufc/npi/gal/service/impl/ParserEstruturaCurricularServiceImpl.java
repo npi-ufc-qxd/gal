@@ -1,6 +1,8 @@
 package br.ufc.npi.gal.service.impl;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +17,8 @@ import org.jsoup.select.Elements;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.ufc.npi.gal.model.Curso;
-import br.ufc.npi.gal.model.Disciplina;
 import br.ufc.npi.gal.model.EstruturaCurricular;
-import br.ufc.npi.gal.repository.DisciplinaRepository;
 import br.ufc.npi.gal.repository.jpa.JpaCursoRepository;
-import br.ufc.npi.gal.repository.jpa.JpaDisciplinaRepository;
 import br.ufc.npi.gal.repository.jpa.JpaEstruturaCurricularRepositoryImpl;
 import br.ufc.npi.gal.service.DisciplinaService;
 import br.ufc.npi.gal.service.EstruturaCurricularService;
@@ -67,8 +66,8 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 
 	private List<String> parserCurriculo() {
 
-		String codigoEstrutura = null;
-		String nomeCurso = null;
+		String codigoEstrutura = "";
+		String nomeCurso = "";
 
 		ArrayList<String> info = new ArrayList<String>();
 		Element tabela = docFromHtml.select("table").get(0);

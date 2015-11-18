@@ -65,18 +65,10 @@
 							</button>
 						</a>
 
-							<form:form id="importarCurriculo" role="form"
-								modelAttribute="curriculo"
-								servletRelativeAction="/estrutura/importar" method="POST"
-								cssClass="form-horizontal" enctype="multipart/form-data"
-								style="float: right;">
-
-								<input type="file" name="file" id="file" accept="text/html"
-									style="float: right;">
-								<form:errors path="arquivo" cssClass="error" />
-							</form:form>
-							<input type="submit" name="submit" class="btn btn-primary"
-									value="Importar" />
+						<form id="importarCurriculo" method="POST" action="<c:url value="/estrutura/${curso.id}/importar"></c:url>" class="form-horizontal" enctype="multipart/form-data" style="float: right;">
+							<input type="file" name="file" id="file" accept="text/html" style="float: right;"/>
+							<input type="submit" name="submit" class="btn btn-primary" value="Importar" />
+						</form>
 
 					</div>
 				</sec:authorize>

@@ -1,5 +1,8 @@
 package br.ufc.npi.gal.web;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.ufc.npi.gal.model.AcervoDocumento;
 import br.ufc.npi.gal.model.Curso;
 import br.ufc.npi.gal.model.EstruturaCurricular;
 import br.ufc.npi.gal.service.CursoService;
@@ -55,7 +56,7 @@ public class EstruturaCurricularController {
 		modelMap.addAttribute("estruturaCurricular", estruturaCurricular);
 		return "estrutura/editar";
 	}
-	
+
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.POST)
 	public String atualizar(@Valid EstruturaCurricular estrutura, BindingResult result,
 			RedirectAttributes redirectAttributes, @PathVariable("id") Integer id, ModelMap modelMap) {
@@ -94,32 +95,34 @@ public class EstruturaCurricularController {
 		return "estrutura/adicionar";
 	}
 
-	@RequestMapping(value = "/{id}/importar/", method = RequestMethod.POST)
-	public String uploadEstruturaCurricular(@PathVariable("id") Integer id, @ModelAttribute("curriculo") EstruturaCurricular estruturaCurricular,
-			@RequestParam("file") MultipartFile request, BindingResult result, RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "")
+	public String uploadArquivo(ModelMap modelMap, HttpSession session) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return "acervo/atualizar";
+	}
+
+	@RequestMapping(value = "/{idCurso}/importar", method = RequestMethod.POST)
+//	public String uploadEstruturaCurricular(@PathVariable("idCurso") Integer id, @RequestParam("file") MultipartFile request, BindingResult result, RedirectAttributes redirectAttributes) {
+		public String uploadEstruturaCurricular(@PathVariable("codCurso") Integer idCurso, @RequestParam("file") MultipartFile request, RedirectAttributes redirectAttributes) {
+
 		List<String> infoCurriculo = new ArrayList<String>();
-		boolean erros = false;		
-		if (request.isEmpty()) {
-			result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo",
-					"Arquivo enviado inexistente");
-			erros = true;
-		} else if (!TestFormato(request)) {
-			result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo",
-					"Formato de arquivo incorreto, por favor selecionar um arquivo html");
-			erros = true;
+		
+
+		if (request == null || request.getSize() <= 0) {
+			redirectAttributes.addAttribute("error", "Arquivo obrigatório");
+			return "redirect:/curso/" + idCurso +"/visualizar";
 		}
-		if (erros) {
-			return "acervo/atualizar";
-		}
+		
 		try {
-			infoCurriculo = parserEstruturaCurricular.processarArquivo(request, id);
-		} catch (Exception e) {
-			System.err.println("Erro ao processar arquivo: "
-					+ e.getStackTrace());
+			infoCurriculo = parserEstruturaCurricular.processarArquivo(request, idCurso);
+					} catch (Exception e) {
+			System.err.println("Erro ao processar arquivo: " + e.getStackTrace());
+			return "redirect:/curso/" + idCurso+"/visualizar";
 		}
-		parserEstruturaCurricular.registrarNovaEstruturaCurricular(infoCurriculo, cursoService.getCursoById(id));
-		return null;
+
+		Curso curso = cursoService.find(Curso.class, idCurso);
+		parserEstruturaCurricular.registrarNovaEstruturaCurricular(infoCurriculo, curso);
+		return "redirect:/curso/" + idCurso+"/visualizar";
 	}
 
 	private boolean TestFormato(MultipartFile request) {
