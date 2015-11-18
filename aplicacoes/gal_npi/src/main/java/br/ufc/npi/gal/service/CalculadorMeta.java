@@ -52,11 +52,15 @@ public class CalculadorMeta {
 
 							detalheMeta.setTipoBibliografia(bibliografia.getTipoBibliografia());
 							detalheMeta.setDisciplina(bibliografia.getDisciplina().getNome());
+							detalheMeta.setSemestre(integracaoCurricular.getSemestreOferta());
+							detalheMeta.setCodigoDisciplina(bibliografia.getDisciplina().getCodigo());
+							detalheMeta.setQuantidadeAlunos(integracaoCurricular.getQuantidadeAlunos());
 							detalhePares.add(detalheMeta);
 						} else {
 
 							detalheMeta.setTipoBibliografia(bibliografia.getTipoBibliografia());
 							detalheMeta.setDisciplina(bibliografia.getDisciplina().getNome());
+							detalheMeta.setSemestre(integracaoCurricular.getSemestreOferta());
 							detalheImpares.add(detalheMeta);
 						}
 
