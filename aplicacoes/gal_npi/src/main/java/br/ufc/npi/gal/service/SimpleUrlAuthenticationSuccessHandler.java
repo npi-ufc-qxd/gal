@@ -36,7 +36,7 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
 		boolean usuarioValido = false;
         for (GrantedAuthority grantedAuthority : authorities) {
         	usuarioValido = true;
-            if (grantedAuthority.getAuthority().equals("ROLE_" + Constants.AFFILIATION_BIBLIOTECARIO) || grantedAuthority.getAuthority().equals("ROLE_" + Constants.AFFILIATION_COORDENADOR_CURSO)) {
+            if (grantedAuthority.getAuthority().equals("BIBLIOTECARIO") || grantedAuthority.getAuthority().equals("COORDENADOR_CURSO")) {
             	usuarioValido = true;
                 break;
             }
