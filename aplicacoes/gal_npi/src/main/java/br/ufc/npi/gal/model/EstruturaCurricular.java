@@ -42,7 +42,7 @@ public class EstruturaCurricular {
 	@Column(name = "matriz_curricular")
 	@NotEmpty(message = "Campo obrigatório")
 	@Pattern.List({
-		@Pattern(regexp = "([A-z\\s]+$)", message = "O campo deve conter apenas letras"),
+		@Pattern(regexp = "([A-z\\s\\-]+$)", message = "O campo deve conter apenas letras"),
 	})
 	private String matrizCurricular;
 

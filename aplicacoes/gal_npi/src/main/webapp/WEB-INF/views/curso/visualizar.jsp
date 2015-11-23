@@ -80,7 +80,30 @@
 						</a>
 
 					</div>
-
+					<div class="halfContainer">
+						<b>Código: </b> ${curriculo.codigo} <br>
+						<b>Matriz Curricular:</b> ${curriculo.matrizCurricular}<br>
+						<b>Unidade de Vinculação: </b>${curriculo.unidadeVinculacao }<br>
+						<b>Município de funcionamento: </b> ${curriculo.municipio }<br>
+						<b>Período Letivo de Entrada em Vigor: </b>${curriculo.semestreEntradaVigor}<br>
+						<b>Carga Horária Optativa Minima: </b>${curriculo.chOptMinima }<br>
+						
+						<br>
+						
+					
+					</div><div class="halfContainer">
+						<b>Prazos para Conclusão em Períodos Letivos </b><br>
+						<b>Mínimo: </b>${curriculo.prazoConclusaoMinimo }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<b>Médio: </b>${curriculo.prazoConclusaoMedio }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<b>Máximo: </b>${curriculo.prazoConclusaoMaximo }<br>
+						<b>Carga Horária por Período Letivo</b><br>
+						<b>Mínima: </b>${curriculo.chPeriodoMinimo }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<b>Média: </b>${curriculo.chPeriodoMedio }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<b>Máxima: </b>${curriculo.chPeriodoMaximo }<br>
+						
+						<br>
+						
+					</div>
 					<div class="panel panel-default">
 						<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="true" row="integracao" theme="bootstrap2" cssClass="table table-striped estrutura">
 
