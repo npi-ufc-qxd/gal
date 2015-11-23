@@ -41,7 +41,7 @@ public class SimpleUrlAuthenticationSuccessHandler implements AuthenticationSucc
                 break;
             }
         }
-        if(!usuarioValido) {
+        if(!usuarioValido ) {
         	redirectStrategy.sendRedirect(request, response, "/loginfailed");
         }
         
