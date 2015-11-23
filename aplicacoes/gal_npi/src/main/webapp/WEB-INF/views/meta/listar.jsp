@@ -18,12 +18,20 @@
 
 		<jsp:include page="../fragments/header.jsp" />
 
-		<input id="idCurso" type="hidden" value="${idCurso}" /> 
+		<input id="idCurso" type="hidden" value="${idCurso}" />
+		<input id="idDisciplina" type="hidden" value="${idDisciplina}" /> 
 
 		<select id="seleciona">
 			<option value="-1">Todos os Cursos</option>
 			<c:forEach items="${cursos}" var="curso">
 				<option value="${curso.id}">${curso.nome}</option>
+			</c:forEach>
+		</select>
+		
+		<select id="selecionaDisciplina">
+			<option value="-1">Todas as Disciplinas</option>
+			<c:forEach items="${disciplinas}" var="disciplina">
+				<option value="${disciplina.id}">${disciplina.nome}</option>
 			</c:forEach>
 		</select>
 
@@ -45,7 +53,7 @@
 		</c:if>
 
 		<div style="text-align: center;">
-			<label class="control-label" style="font-size: 20px;">Metas</label>
+			<label class="control-label" style="font-size: 20px; margin-top: 25px">Metas</label>
 		</div>
 
 		<c:if test="${empty resultados}">
