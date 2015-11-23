@@ -62,8 +62,8 @@
 
 		<c:if test="${not empty resultados}">
 
-			<datatables:table id="resultadoTable" data="${resultados}" cdn="true"
-				row="resultado" theme="bootstrap2" cssClass="table table-striped">
+			<datatables:table id="resultadoTable" data="${resultados}" cdn="false"
+				row="resultado" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="4 7 10" default-sort="0 asc">
 
 				<datatables:column title="Titulo">
 					<c:out value="${resultado.titulo.nome}"></c:out>
