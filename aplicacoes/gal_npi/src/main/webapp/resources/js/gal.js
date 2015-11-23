@@ -175,8 +175,21 @@ $( document ).ready(function() {
 		$(location).attr("href", newUrl);
 	});
 	
+	$("select#selecionaDisciplina").change(function() { 
+		var option = $(this).val();
+
+		if(option == -1){
+			newUrl = "/" + getAppName() + "/meta/listar";
+		}else{
+			newUrl = "/" + getAppName() + "/meta/disciplina/"+(option)+"/listar";
+		}
+
+		$(location).attr("href", newUrl);
+	});
+	
 
 	$("#seleciona").val($("#idCurso").val());
+	$("#selecionaDisciplina").val($("#idDisciplina").val());
 
 	
 	$(document).on("click", ".open-AddBookDialog", function() {
