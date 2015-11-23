@@ -86,12 +86,19 @@
 						<b>Unidade de Vinculação: </b>${curriculo.unidadeVinculacao }<br>
 						<b>Município de funcionamento: </b> ${curriculo.municipio }<br>
 						<b>Período Letivo de Entrada em Vigor: </b>${curriculo.semestreEntradaVigor}<br>
-						<b>Carga Horária Optativa Minima: </b>${curriculo.chOptMinima }<br>
+						<b>Carga Horária Obrigatória</b><br>
+						<b>Total: </b>${curriculo.chTotalMinima }&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+						<b>( </b>${curriculo.chObgTeorica } <b>Práticas ) / ( </b> ${curriculo.chObgPratica } <b> Teóricas )</b><br>
+						
 						
 						<br>
 						
 					
 					</div><div class="halfContainer">
+						<b>Carga Horária Total Mínima: </b>${curriculo.chTotalMinima }<br>
+						<b>Carga Horária Optativa Minima: </b>${curriculo.chOptMinima }<br>
+						<b>Carga Horária Obrigatória de Atividade Acadêmica Específica: </b>${curriculo.chAtvAcademicaEspecifica }<br>
+						<b>Carga Horária Máxima de Componentes Curriculares Optativos Livres: </b>${curriculo.chCompOptLivres }<br>
 						<b>Prazos para Conclusão em Períodos Letivos </b><br>
 						<b>Mínimo: </b>${curriculo.prazoConclusaoMinimo }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<b>Médio: </b>${curriculo.prazoConclusaoMedio }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

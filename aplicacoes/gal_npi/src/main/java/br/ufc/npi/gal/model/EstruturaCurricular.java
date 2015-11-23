@@ -41,9 +41,7 @@ public class EstruturaCurricular {
 
 	@Column(name = "matriz_curricular")
 	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({
-		@Pattern(regexp = "([A-z\\s\\-]+$)", message = "O campo deve conter apenas letras"),
-	})
+	@Pattern.List({ @Pattern(regexp = "([A-z\\s]+$)", message = "O campo deve conter apenas letras"), })
 	private String matrizCurricular;
 
 	@Column(name = "unidade_vinculacao")
@@ -52,9 +50,7 @@ public class EstruturaCurricular {
 
 	@Column(name = "municipio")
 	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({
-		@Pattern(regexp = "([A-z\\s]+[-]+[A-z\\s]{2})", message = "Formato inválido"),
-	})
+	@Pattern.List({ @Pattern(regexp = "([A-z\\s]+[-]+[A-z\\s]{2})", message = "Formato inválido"), })
 	private String municipio;
 
 	@Column(name = "semestre_vigor")
@@ -112,6 +108,76 @@ public class EstruturaCurricular {
 			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
 	@NotEmpty(message = "Campo obrigatório")
 	private String chPeriodoMaximo;
+
+	@Column(name = "ch_total_mínima")
+	private String chTotalMinima;
+
+	@Column(name = "ch_obrigatoria")
+	private String chObrigatoria;
+
+	@Column(name = "ch_obg_teorica")
+	private String chObgTeorica;
+
+	@Column(name = "ch_obg_pratica")
+	private String chObgPratica;
+
+	@Column(name = "ch_atv_academica_especifica")
+	private String chAtvAcademicaEspecifica;
+
+	@Column(name = "ch_comp_opt_livres")
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
+	@NotEmpty(message = "Campo obrigatório")
+	private String chCompOptLivres;
+
+	public String getChObgTeorica() {
+		return chObgTeorica;
+	}
+
+	public void setChObgTeorica(String chObgTeorica) {
+		this.chObgTeorica = chObgTeorica;
+	}
+
+	public String getChObgPratica() {
+		return chObgPratica;
+	}
+
+	public void setChObgPratica(String chObgPratica) {
+		this.chObgPratica = chObgPratica;
+	}
+
+	public String getChTotalMinima() {
+		return chTotalMinima;
+	}
+
+	public void setChTotalMinima(String chTotalMinima) {
+		this.chTotalMinima = chTotalMinima;
+	}
+
+	public String getChObrigatoria() {
+		return chObrigatoria;
+	}
+
+	public void setChObrigatoria(String chObrigatoria) {
+		this.chObrigatoria = chObrigatoria;
+	}
+
+	public String getChAtvAcademicaEspecifica() {
+		return chAtvAcademicaEspecifica;
+	}
+
+	public void setChAtvAcademicaEspecifica(String chAtvAcademicaEspecifica) {
+		this.chAtvAcademicaEspecifica = chAtvAcademicaEspecifica;
+	}
+
+	public String getChCompOptLivres() {
+		return chCompOptLivres;
+	}
+
+	public void setChCompOptLivres(String chCompOptLivres) {
+		this.chCompOptLivres = chCompOptLivres;
+	}
 
 	public EstruturaCurricular() {
 

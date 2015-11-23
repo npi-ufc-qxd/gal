@@ -26,8 +26,7 @@
 			<div class="form-group">
 				<label for="codigo" class="col-sm-1 control-label">Código</label>
 				<div class="col-sm-10">
-					<form:input id="codigo" class="form-control"
-						placeholder="Ex.: 2010.1" path="codigo" />
+					<form:input id="codigo" class="form-control" placeholder="Ex.: 2010.1" path="codigo" />
 					<form:errors path="codigo" cssClass="error" />
 				</div>
 			</div>
@@ -80,6 +79,17 @@
 					<form:errors path="chOptMinima" cssClass="error" />
 				</div>
 			</div>
+			
+			<div class="form-group">
+				<label for="chCompOptLivres" class="col-sm-1 control-label">CH Max Livre</label>
+				<div class="col-sm-10">
+					<form:input id="chCompOptLivres" class="form-control"
+						placeholder="Carga Horária Máxima de Componentes Curriculares Optativos Livres"
+						path="chCompOptLivres" />
+					<form:errors path="chCompOptLivres" cssClass="error" />
+				</div>
+			</div>
+			
 			<div class="form-group">
 				<label class="col-sm-1 control-label">Prazo Conclusão</label>
 				<div class="col-sm-10">

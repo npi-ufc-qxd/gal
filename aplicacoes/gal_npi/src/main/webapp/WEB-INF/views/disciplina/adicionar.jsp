@@ -38,10 +38,10 @@
 				<label for="tipo" class="col-sm-1 control-label">Tipo</label>
 				<div class="col-sm-10">
 					<form:select path="tipo" class="form-control">
-						<form:option value="Disciplina">Disciplina</form:option>
-						<form:option value="Atividade Complementar">Atividade Complementar</form:option>
-						<form:option value="TCC">TCC</form:option>
-						<form:option value="Estágio">Estágio</form:option>
+						<form:option value="DISCIPLINA">Disciplina</form:option>
+						<form:option value="ATIVIDADES COMPLEMENTARES">Atividade Complementar</form:option>
+						<form:option value="TRABALHO DE CONCLUSÃO DE CURSO">TCC</form:option>
+						<form:option value="ESTÁGIO">Estágio</form:option>
 					</form:select>
 					<form:errors path="tipo" cssClass="error" />
 				</div>
