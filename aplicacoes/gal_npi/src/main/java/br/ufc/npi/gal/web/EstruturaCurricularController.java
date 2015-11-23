@@ -101,9 +101,6 @@ public class EstruturaCurricularController {
 		return "acervo/atualizar";
 	}
 
-	// public String uploadEstruturaCurricular(@PathVariable("idCurso") Integer
-	// id, @RequestParam("file") MultipartFile request, BindingResult result,
-	// RedirectAttributes redirectAttributes) {
 	@RequestMapping(value = "/{idCurso}/importar", method = RequestMethod.POST)
 	public String uploadEstruturaCurricular(@PathVariable("idCurso") Integer idCurso,
 			@RequestParam("file") MultipartFile request, RedirectAttributes redirectAttributes) {
@@ -113,13 +110,12 @@ public class EstruturaCurricularController {
 		if (request == null || request.getSize() <= 0) {
 			redirectAttributes.addFlashAttribute("error", "Arquivo obrigatório");
 			return "redirect:/curso/" + idCurso + "/visualizar";
-			// return "redirect:/curso/listar";
 		}
 
 		try {
 			infoCurriculo = parserEstruturaCurricular.processarArquivo(request, idCurso);
 		} catch (Exception e) {
-			System.err.println("Erro ao processar arquivo: " + e.getStackTrace());
+			System.err.println("Erro ao processar arquivo: " + e.getMessage());
 			return "redirect:/curso/" + idCurso + "/visualizar";
 		}
 
@@ -133,15 +129,6 @@ public class EstruturaCurricularController {
 		}
 
 		return "redirect:/curso/" + idCurso + "/visualizar";
-	}
-
-	private boolean TestFormato(MultipartFile request) {
-		String nome = request.getOriginalFilename();
-		String extencao = (String) nome.subSequence(nome.length() - 5, nome.length());
-		if (extencao.equals(".html")) {
-			return true;
-		}
-		return false;
 	}
 
 	@RequestMapping(value = "/{id}/adicionar", method = RequestMethod.POST)

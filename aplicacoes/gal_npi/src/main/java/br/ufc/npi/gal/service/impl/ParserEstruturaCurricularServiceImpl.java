@@ -12,10 +12,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.ufc.npi.gal.model.Curso;
+import br.ufc.npi.gal.model.Disciplina;
 import br.ufc.npi.gal.model.EstruturaCurricular;
+import br.ufc.npi.gal.model.IntegracaoCurricular;
 import br.ufc.npi.gal.repository.jpa.JpaCursoRepository;
 import br.ufc.npi.gal.repository.jpa.JpaEstruturaCurricularRepositoryImpl;
 import br.ufc.npi.gal.service.DisciplinaService;
@@ -33,8 +36,10 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	private JpaEstruturaCurricularRepositoryImpl jpaEstruturaCurricularRepository;
 	@Inject
 	private JpaCursoRepository jpaCursoRepository;
+	private EstruturaCurricular estruturaCurricular;
 
 	public ParserEstruturaCurricularServiceImpl() {
+		estruturaCurricular = new EstruturaCurricular();
 	}
 
 	/*
@@ -50,6 +55,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			docFromHtml = Jsoup.parse(fileHtml, null, "");
 			List<String> statusParser = parserCurriculo(id);
 			if (statusParser != null)
+				parserEstruturaCurricular();
 			return statusParser;
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
@@ -58,7 +64,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			e.printStackTrace();
 			return null;
 		}
-		return null;
 
 	}
 
@@ -97,7 +102,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	}
 
 	public EstruturaCurricular registrarNovaEstruturaCurricular(List<String> estrutura, Curso curso) {
-		EstruturaCurricular estruturaCurricular = new EstruturaCurricular();
+
 		estruturaCurricular.setAnoSemestre(estrutura.get(0));
 		estruturaCurricular.setMatrizCurricular(estrutura.get(1));
 		estruturaCurricular.setUnidadeVinculacao(estrutura.get(2));
@@ -128,13 +133,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		return estruturaCurricular;
 	}
 
-	private boolean verificaExistenciaEstruturaCurricular(int idCurso, String idEstrutura) {
-		if (jpaEstruturaCurricularRepository.getOutraEstruturaCurricularByAnoSemestre(idCurso, idEstrutura) != null) {
-			return true;
-		}
-		return false;
-	}
-
 	private ArrayList<String> parserEstruturaCurricular() {
 		ArrayList<String> info = new ArrayList<String>();
 		// A quinta tabela do HTML é responsável por apresentar as informações
@@ -144,6 +142,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		Element tabelaComponentes = docFromHtml.select("table").get(4);
 		Elements linhas = tabelaComponentes.select("tr");
 		System.out.println(linhas.size());
+		int periodoOferta = 0;
 
 		for (int i = 0; i < linhas.size(); i++) {
 			Element linha = linhas.get(i);
@@ -151,14 +150,15 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			// As demais devem ser ignoradas
 			if (!(linha.className().equals("header"))) {
 				if (linha.className().equals("tituloRelatorio")) {
-					System.out.println();
-					System.out.println(linha.select("td").text());
+					// pegando o período de oferta da integracao
+					System.out.println(linha.select("td").text().substring(0, 1));
+					periodoOferta = Integer.parseInt(linha.select("td").text().substring(0, 1));
 				}
 				// O valor tem de ser igual a oito porque há algumas linhas que
 				// são retornadas
 				// que possuem menos elementos
 				else if (linha.select("td").size() == 8) {
-					parserComponente(linha.select("td"));
+					parserComponente(linha.select("td"), periodoOferta);
 					System.out.println(linha.select("td").size());
 					System.out.println();
 				}
@@ -176,17 +176,51 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	 * 
 	 */
 
-	private void parserComponente(Elements colunasComponente) {
+	private void parserComponente(Elements colunasComponente, int periodoOferta) {
 
 		System.out.println(colunasComponente.get(0).text() + " | " + colunasComponente.get(1).text() + " | "
-				+ colunasComponente.get(2).text() + " | " + colunasComponente.get(4).text() + " | "
-				+ colunasComponente.get(6).text() + " | " + colunasComponente.get(7).text() + " | "
-				+ colunasComponente.get(6).text());
+				+ colunasComponente.get(2).text() + " | " + colunasComponente.get(3).text() + " | "
+				+ colunasComponente.get(4).text() + " | " + colunasComponente.get(6).text() + " | "
+				+ colunasComponente.get(7).text() + " | " + colunasComponente.get(6).text());
+		// ED0204 | SÉRIES TEMPORAIS APLICADAS - 64h (4cr) - 1 período letivo |
+		// 32h aula (2cr) 32h lab.(2cr) | OPTATIVA | ( ED0174 OU CC0214 ) | | (
+		// ED0174 OU CC0214 )
+		Disciplina disciplina = new Disciplina();
+		disciplina = disciplinaService.getDisciplinaByCodigo(colunasComponente.get(0).text());
 
-		if (disciplinaService.getDisciplinaByCodigo(colunasComponente.get(0).text()) == null) {
-			System.out.println("Add no banco");
-		} else {
-			System.out.println(disciplinaService.getDisciplinaByCodigo(colunasComponente.get(0).text()).getNome());
+		if (disciplina == null) {
+			int valorParada, valorParada2 = 0;
+
+			disciplina = new Disciplina();
+			disciplina.setCodigo(colunasComponente.get(0).text());
+			valorParada = colunasComponente.get(1).text().indexOf("-");
+			disciplina.setNome(colunasComponente.get(1).text().substring(0, valorParada - 1));
+			System.out.println(colunasComponente.get(1).text().substring(0, valorParada - 1));
+			disciplina.setTipo(colunasComponente.get(4).text());
+			System.out.println(colunasComponente.get(4).text());
+			valorParada = colunasComponente.get(2).text().indexOf("aula");
+			disciplina.setChTeorica(colunasComponente.get(2).text().substring(0, valorParada - 1));
+			System.out.println(colunasComponente.get(2).text().substring(0, valorParada - 1));
+
+			if ((colunasComponente.get(3).text().equals("DISCIPLINA"))) {
+
+				valorParada = colunasComponente.get(2).text().indexOf("cr)");
+				valorParada2 = colunasComponente.get(2).text().indexOf("lab");
+				disciplina.setChPratica(colunasComponente.get(2).text().substring(valorParada + 4, valorParada2 - 1));
+				System.out.println(colunasComponente.get(2).text().substring(valorParada + 4, valorParada2 - 1));
+			} else {
+				valorParada2 = colunasComponente.get(2).text().indexOf("lab");
+				disciplina.setChPratica(colunasComponente.get(2).text().substring(valorParada + 5, valorParada2 - 1));
+				System.out.println(colunasComponente.get(2).text().substring(valorParada + 5, valorParada2 - 1));
+			}
+			disciplinaService.save(disciplina);
+			/*
+			 * IntegracaoCurricular integracao = new IntegracaoCurricular();
+			 * integracao.setDisciplina(disciplina);
+			 * integracao.setEstruturaCurricular(estruturaCurricular);
+			 * integracao.setNatureza(colunasComponente.get(4).text());
+			 * integracao.setSemestreOferta(periodoOferta);
+			 */
 		}
 
 	}
@@ -197,7 +231,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		File fileHtml = new File(urlEstruturaCurrcicular);
 
 		docFromHtml = Jsoup.parse(fileHtml, null, "");
-		//parserCurriculo();
+		// parserCurriculo();
 		parserEstruturaCurricular();
 	}
 
