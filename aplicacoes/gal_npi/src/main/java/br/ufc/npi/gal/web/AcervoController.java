@@ -45,11 +45,7 @@ public class AcervoController {
 
 	@RequestMapping(value = "/atualizar_acervo", method = RequestMethod.GET)
 	public String atualizarAcervo(ModelMap modelMap, HttpSession session) {
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService
-				.atualizacoesPorUsuario(usuarioService.getUsuarioByLogin(auth
-						.getName()));
+		List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService.find(AcervoDocumento.class);
 		modelMap.addAttribute("atualizacoesRealizadas", atualizacoesRealizadas);
 		modelMap.addAttribute("atualizacaoAcervo", new AcervoDocumento());
 		return "acervo/atualizar";
@@ -64,9 +60,9 @@ public class AcervoController {
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public String uploadDoArquivoXls(
+	public String uploadDoArquivoXls(ModelMap modelMap,
 			@ModelAttribute("atualizacaoAcervo") AcervoDocumento atualizacaoAcervo,
-			@RequestParam("file") MultipartFile request, BindingResult result, RedirectAttributes redirectAttributes) {
+			@RequestParam("file") MultipartFile request,BindingResult result , RedirectAttributes redirectAttributes) {
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Boolean erros = false;
@@ -91,7 +87,13 @@ public class AcervoController {
 					"formato do arquivo incorreto, por favor selecionar um arquivo xls");
 			erros = true;
 		}
-		if (erros) {
+		if (erros) {/*
+			List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService
+					.atualizacoesPorUsuario(usuarioService.getUsuarioByLogin(auth
+							.getName()));
+			modelMap.addAttribute("atualizacoesRealizadas", atualizacoesRealizadas);
+			modelMap.addAttribute("atualizacaoAcervo", new AcervoDocumento());
+			return "redirect:/acervo/atualizar_acervo";*/
 			return "acervo/atualizar";
 		}
 		try {
@@ -128,12 +130,15 @@ public class AcervoController {
 	}
 
 	@RequestMapping(value = "/editar", method = RequestMethod.POST)
-	public String atualizar(@Valid ExemplarConflitante exemplar,
+	public String atualizar(ModelMap modelMap, @Valid ExemplarConflitante exemplar,
 			BindingResult result, RedirectAttributes redirectAttributes) {
 		if (acervoService.submeterExemplarConflitante(exemplar)) {
+			redirectAttributes.addFlashAttribute("info",
+					"Conflito resolvido com sucesso.");
 			return "redirect:/acervo/resolver_conflitos";
 		} else {
-			return "redirect:/acervo/resolver_conflitos";
+			modelMap.addAttribute("exemplar", exemplar);
+			return "/acervo/editar";
 		}
 
 	}

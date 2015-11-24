@@ -1,10 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="datatables"
-	uri="http://github.com/dandelion/datatables"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="datatables" uri="http://github.com/dandelion/datatables"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html>
@@ -34,24 +33,25 @@
 			</div>
 		</c:if>
 		<div class="panel-body">
-		<ul class="nav nav-tabs" role="tablist">
-			<c:forEach items="${curso.curriculos}" var="curriculo" varStatus="ct">
-
-				<c:if test="${ct.index == 0}"> <c:set var="act" value="active"></c:set> </c:if>
-
-				<c:if test="${ct.index != 0}"> <c:set var="act" value=""></c:set> </c:if>
-
-				<li class="${act }"><a href="#${curriculo.id }" role="tab" data-toggle="tab">${curriculo.codigo}</a></li>
-
-			</c:forEach>
-
-			<div id="button-add">
-				<a href="<c:url value="/estrutura/${curso.id}/adicionar" ></c:url>">
-					<button class="btn btn-primary"> <span class="glyphicon glyphicon-plus"></span> Adicionar Curriculo </button>
-				</a>
-			</div>
-			
-		</ul>
+			<ul class="nav nav-tabs" role="tablist">
+				<c:forEach items="${curso.curriculos}" var="curriculo" varStatus="ct">
+	
+					<c:if test="${ct.index == 0}"> <c:set var="act" value="active"></c:set> </c:if>
+	
+					<c:if test="${ct.index != 0}"> <c:set var="act" value=""></c:set> </c:if>
+	
+					<li class="${act }"><a href="#${curriculo.id }" role="tab" data-toggle="tab">${curriculo.codigo}</a></li>
+	
+				</c:forEach>
+				<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
+				<div id="button-add">
+					<a href="<c:url value="/estrutura/${curso.id}/adicionar" ></c:url>">
+						<button class="btn btn-primary"> <span class="glyphicon glyphicon-plus"></span> Adicionar Curriculo </button>
+					</a>
+				</div>
+				</sec:authorize>
+				
+			</ul>
 
 		<div class="tab-content">
 			<c:forEach items="${curso.curriculos}" var="curriculo" varStatus="count">
@@ -63,7 +63,7 @@
 				<div class="tab-pane ${active }" id="${curriculo.codigo }"></div>
 
 				<div id="${curriculo.id}" class="tab-pane ${active }">
-
+					<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
 					<div id="button-add">
 						<a style="float: left;" class="btn btn-success" href="<c:url value="/integracao/${curriculo.id}/adicionar" ></c:url>">
 							<span class="glyphicon glyphicon-link"></span> Vincular Disciplina
@@ -78,7 +78,6 @@
 								<span class="glyphicon glyphicon-plus"></span> Editar Curriculo
 							</button>
 						</a>
-
 					</div>
 					<div class="halfContainer">
 						<b>Código: </b> ${curriculo.codigo} <br>
@@ -111,8 +110,10 @@
 						<br>
 						
 					</div>
+					</sec:authorize>
+
 					<div class="panel panel-default">
-						<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="true" row="integracao" theme="bootstrap2" cssClass="table table-striped estrutura">
+						<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="1 2 4 5" default-sort="3 desc">
 
 							<datatables:column title="Disciplina">
 								<c:out value="${integracao.disciplina.nome}"></c:out>
@@ -130,7 +131,8 @@
 							<datatables:column title="Semestre oferta">
 								<c:out value="${integracao.semestreOferta}"></c:out>
 							</datatables:column>
-
+							
+							<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
 							<datatables:column title="Editar">
 								<a class="btn btn-primary" href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/editar" ></c:url>">
 									<span class="glyphicon glyphicon-edit"></span>
@@ -142,6 +144,7 @@
 									<span class="glyphicon glyphicon-trash"></span>
 								</a>
 							</datatables:column>
+							</sec:authorize>
 							
 						</datatables:table>
 					</div>
@@ -149,7 +152,7 @@
 			</c:forEach>
 		</div>
 	</div>
-	</div>
+
 	
 	<jsp:include page="../fragments/footer.jsp" />
 	
@@ -290,6 +293,7 @@
 
 			</div>
 		</div>
+	</div>
 	</div>
 </body>
 </html>

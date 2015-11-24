@@ -71,15 +71,17 @@ public class ExemplarController {
 	}
 	
 	@RequestMapping(value = "/{id}/editar", method=RequestMethod.POST)
-	public String atualizar( @Valid Exemplar exemplar, BindingResult result, RedirectAttributes redirectAttributes,@PathVariable("id") Integer id){
+	public String atualizar(ModelMap modelMap, @Valid Exemplar exemplar, BindingResult result, RedirectAttributes redirectAttributes,@PathVariable("id") Integer id){
 		Titulo titulo = this.tituloService.find(Titulo.class, id);
 		if (result.hasErrors()) {
+			modelMap.addAttribute("exemplar", exemplar);
 			return "exemplar/editar";
 		}
 
 		if (exemplarService.getExemplarByCodigo(exemplar.getCodigoExemplar())!= null) {
 			result.rejectValue("codigoExemplar", "Repeat.exemplar.codigoExemplar",
 					"Já existe um exemplar com esse codigo");
+			modelMap.addAttribute("exemplar", exemplar);
 			return "exemplar/editar";
 		}
 		
