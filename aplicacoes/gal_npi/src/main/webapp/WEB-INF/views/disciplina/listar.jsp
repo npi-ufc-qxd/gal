@@ -48,7 +48,7 @@
 			<datatables:table id="disciplinaTable" data="${disciplinas}" cdn="false"
 				row="disciplina" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 3 4" default-sort="0 asc">
 				<datatables:column title="Nome">
-					<c:out value="${disciplina.nome}"></c:out>
+					<a class="adark" href="<c:url value="/disciplina/${disciplina.id }/visualizar" ></c:url>" ><c:out value="${disciplina.nome}"></c:out></a>
 				</datatables:column>
 	
 				<datatables:column title="Codigo">

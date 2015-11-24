@@ -165,6 +165,33 @@ public class DisciplinaController {
 		modelMap.addAttribute("disciplina", disciplina);
 		return "disciplina/vincularBibliografia";
 	}
+	
+	@RequestMapping(value = "/{id}/visualizar", method = RequestMethod.GET)
+	public String visualizar(@PathVariable("id") Integer id, ModelMap modelMap) {
+		Disciplina disciplina = this.disciplinaService.find(Disciplina.class, id);
+		
+		if (disciplina == null)
+			return "redirect:/disciplina/listar";
+		
+		List<Titulo> basica = new ArrayList<Titulo>();
+		List<Titulo> complementar = new ArrayList<Titulo>();
+		
+		List<Bibliografia> bibliografias = disciplina.getBibliografias();
+		
+		for (Bibliografia b : bibliografias) {
+			if (b.getTipoBibliografia().equals(DisciplinaController.BASICA))
+				basica.add(b.getTitulo());
+			
+			else if (b.getTipoBibliografia().equals(DisciplinaController.COMPLEMENTAR))
+				complementar.add(b.getTitulo());
+		}
+		
+		modelMap.addAttribute("basica", basica);
+		modelMap.addAttribute("complementar", complementar);
+		modelMap.addAttribute("disciplina", disciplina);
+		
+		return "disciplina/visualizar";
+	}
 
 
 	public List<Bibliografia> atualizaOuCriaBibligrafia (String[] listaIdTitulo, List<Bibliografia> bibliografiasAseremModificadas, Disciplina disciplina, String tipoBibliografia){
