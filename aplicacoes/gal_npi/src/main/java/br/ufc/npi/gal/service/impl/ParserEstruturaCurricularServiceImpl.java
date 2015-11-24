@@ -21,6 +21,7 @@ import br.ufc.npi.gal.model.EstruturaCurricular;
 import br.ufc.npi.gal.model.IntegracaoCurricular;
 import br.ufc.npi.gal.repository.jpa.JpaCursoRepository;
 import br.ufc.npi.gal.repository.jpa.JpaEstruturaCurricularRepositoryImpl;
+import br.ufc.npi.gal.repository.jpa.JpaIntegracaoCurricularRepositoryImpl;
 import br.ufc.npi.gal.service.DisciplinaService;
 import br.ufc.npi.gal.service.EstruturaCurricularService;
 import br.ufc.npi.gal.service.ParserEstruturaCurricularService;
@@ -36,16 +37,16 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	private JpaEstruturaCurricularRepositoryImpl jpaEstruturaCurricularRepository;
 	@Inject
 	private JpaCursoRepository jpaCursoRepository;
+	@Inject
+	private JpaIntegracaoCurricularRepositoryImpl jpaIntegracaoCurricularRepositoryImpl;
 	private EstruturaCurricular estruturaCurricular;
 
 	public ParserEstruturaCurricularServiceImpl() {
 		estruturaCurricular = new EstruturaCurricular();
 	}
 
-	/*
-	 * Este método é responsável por dar um get das informações de uma estrutura
-	 * curricular Estas informações são dadas a partir de um HTML Caso a
-	 * estrutura do HTML mude possivelmente este parser precisará ser atualizado
+	/**
+	 * 
 	 */
 	@Override
 	public List<String> processarArquivo(MultipartFile multipartFile, Integer id) {
@@ -55,8 +56,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			docFromHtml = Jsoup.parse(fileHtml, null, "");
 			List<String> statusParser = parserCurriculo(id);
 			if (statusParser != null)
-				parserEstruturaCurricular();
-			return statusParser;
+				return statusParser;
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 			return null;
@@ -64,9 +64,17 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			e.printStackTrace();
 			return null;
 		}
+		return null;
 
 	}
 
+	/**
+	 * 
+	 * @param id,
+	 *            id do curso relacionado com a nova estrutura curricular
+	 * @return retorna um array com as informações do currículo que foram
+	 *         adicionadas
+	 */
 	private List<String> parserCurriculo(Integer id) {
 
 		String codigoEstrutura = "";
@@ -101,38 +109,54 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		return info;
 	}
 
+	/**
+	 * 
+	 * @param estrutura,
+	 *            lista de informações coletadas no método private
+	 *            parserCurriculo que traz as informações a serem salvas no
+	 *            banco
+	 * @param curso,
+	 *            curso relacionado com a estrutura curricular
+	 * @return retorna a nova estrutura curricular adicionada no banco
+	 */
 	public EstruturaCurricular registrarNovaEstruturaCurricular(List<String> estrutura, Curso curso) {
-
-		estruturaCurricular.setAnoSemestre(estrutura.get(0));
-		estruturaCurricular.setMatrizCurricular(estrutura.get(1));
-		estruturaCurricular.setUnidadeVinculacao(estrutura.get(2));
-		estruturaCurricular.setMunicipio(estrutura.get(3));
-		estruturaCurricular.setSemestreEntradaVigor(estrutura.get(4).replaceAll("\\ ", ""));
-		estruturaCurricular.setChOptMinima(estrutura.get(5));
+		EstruturaCurricular novaEstrutura = new EstruturaCurricular();
+		novaEstrutura.setAnoSemestre(estrutura.get(0));
+		novaEstrutura.setMatrizCurricular(estrutura.get(1));
+		novaEstrutura.setUnidadeVinculacao(estrutura.get(2));
+		novaEstrutura.setMunicipio(estrutura.get(3));
+		novaEstrutura.setSemestreEntradaVigor(estrutura.get(4).replaceAll("\\ ", ""));
+		novaEstrutura.setChOptMinima(estrutura.get(5));
 
 		int idMinino, idMedio, idMaximo;
 
 		idMinino = estrutura.get(11).indexOf("Mínimo");
 		idMedio = estrutura.get(11).indexOf("Médio");
 		idMaximo = estrutura.get(11).indexOf("Máximo");
-		estruturaCurricular.setPrazoConclusaoMinimo(estrutura.get(11).substring(idMinino + 6, 8));
-		estruturaCurricular.setPrazoConclusaoMedio(estrutura.get(11).substring(idMedio + 5, 16));
-		estruturaCurricular
-				.setPrazoConclusaoMaximo(estrutura.get(11).substring(idMaximo + 6, estrutura.get(11).length()));
+		novaEstrutura.setPrazoConclusaoMinimo(estrutura.get(11).substring(idMinino + 6, 8));
+		novaEstrutura.setPrazoConclusaoMedio(estrutura.get(11).substring(idMedio + 5, 16));
+		novaEstrutura.setPrazoConclusaoMaximo(estrutura.get(11).substring(idMaximo + 6, estrutura.get(11).length()));
 
 		idMinino = estrutura.get(12).indexOf("Mínima");
 		idMedio = estrutura.get(12).indexOf("Média");
 		idMaximo = estrutura.get(12).indexOf("Máxima");
-		estruturaCurricular.setChPeriodoMinimo(estrutura.get(12).substring(idMinino + 6, idMedio - 2));
-		estruturaCurricular.setChPeriodoMedio(estrutura.get(12).substring(idMedio + 5, idMaximo - 2));
-		estruturaCurricular
-				.setChPeriodoMaximo(estrutura.get(12).substring(idMaximo + 6, estrutura.get(12).length() - 1));
-		estruturaCurricular.setCurso(curso);
-		System.out.println(estruturaCurricular.getCurso().getId());
-		estruturaCurricluarService.save(estruturaCurricular);
-		return estruturaCurricular;
+		novaEstrutura.setChPeriodoMinimo(estrutura.get(12).substring(idMinino + 6, idMedio - 2));
+		novaEstrutura.setChPeriodoMedio(estrutura.get(12).substring(idMedio + 5, idMaximo - 2));
+		novaEstrutura.setChPeriodoMaximo(estrutura.get(12).substring(idMaximo + 6, estrutura.get(12).length() - 1));
+		novaEstrutura.setCurso(curso);
+		System.out.println(novaEstrutura.getCurso().getId());
+		estruturaCurricular = novaEstrutura;
+		estruturaCurricluarService.save(novaEstrutura);
+		parserEstruturaCurricular();
+		return novaEstrutura;
 	}
 
+	/**
+	 * 
+	 * @return deve retornar a lista de todas as disciplinas cadastradas no
+	 *         banco da nova estrutura curricular. Estas informações serão úteis
+	 *         no momento de dar um log do processo de importação que foi feito
+	 */
 	private ArrayList<String> parserEstruturaCurricular() {
 		ArrayList<String> info = new ArrayList<String>();
 		// A quinta tabela do HTML é responsável por apresentar as informações
@@ -168,23 +192,24 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 
 	}
 
-	/*
-	 * Informações a serem extraídas de cada componente curricular...
+	/**
 	 * 
-	 * 0 - ID 1 - Titulo + CH + Cr. + Periodo letivo 2 - CH Pratica + CH Lab 4 -
-	 * Natureza 6 - pre-requisitos 7 - equivalentes 8 - co-requisito
-	 * 
+	 * @param colunasComponente,
+	 *            representa uma integração curricular específica do arquivo
+	 *            HTML com todas as informaçẽos necessárias para criar uma nova
+	 *            disciplina no banco quanto uma nova integração curricular
+	 * @param periodoOferta,
+	 *            corresponde ao semestre que a integração curricular é
+	 *            ofertado. Esta informação vem de um elemento da tabela de
+	 *            componentes
 	 */
-
 	private void parserComponente(Elements colunasComponente, int periodoOferta) {
 
 		System.out.println(colunasComponente.get(0).text() + " | " + colunasComponente.get(1).text() + " | "
 				+ colunasComponente.get(2).text() + " | " + colunasComponente.get(3).text() + " | "
 				+ colunasComponente.get(4).text() + " | " + colunasComponente.get(6).text() + " | "
 				+ colunasComponente.get(7).text() + " | " + colunasComponente.get(6).text());
-		// ED0204 | SÉRIES TEMPORAIS APLICADAS - 64h (4cr) - 1 período letivo |
-		// 32h aula (2cr) 32h lab.(2cr) | OPTATIVA | ( ED0174 OU CC0214 ) | | (
-		// ED0174 OU CC0214 )
+
 		Disciplina disciplina = new Disciplina();
 		disciplina = disciplinaService.getDisciplinaByCodigo(colunasComponente.get(0).text());
 
@@ -214,25 +239,53 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 				System.out.println(colunasComponente.get(2).text().substring(valorParada + 5, valorParada2 - 1));
 			}
 			disciplinaService.save(disciplina);
-			/*
-			 * IntegracaoCurricular integracao = new IntegracaoCurricular();
-			 * integracao.setDisciplina(disciplina);
-			 * integracao.setEstruturaCurricular(estruturaCurricular);
-			 * integracao.setNatureza(colunasComponente.get(4).text());
-			 * integracao.setSemestreOferta(periodoOferta);
-			 */
+
 		}
+		adicionarIntegracaoCurricular(disciplina, periodoOferta, colunasComponente.get(4).text(),
+				colunasComponente.get(7).text(), colunasComponente.get(5).text(), colunasComponente.get(6).text());
 
 	}
 
-	@Override
-	public void processarArquivoHTML(String urlEstruturaCurrcicular) throws IOException {
-		// TODO Auto-generated method stub
-		File fileHtml = new File(urlEstruturaCurrcicular);
+	public void adicionarIntegracaoCurricular(Disciplina disciplina, int periodoOferta, String natureza,
+			String coRequisitos, String preRequisitos, String equivalencias) {
+		IntegracaoCurricular integracaoCurricular = new IntegracaoCurricular();
+		integracaoCurricular.setDisciplina(disciplina);
+		integracaoCurricular.setEstruturaCurricular(estruturaCurricular);
+		integracaoCurricular.setNatureza(natureza);
+		integracaoCurricular.setSemestreOferta(periodoOferta);
+		integracaoCurricular.setQuantidadeAlunos(50);
+		System.out.println(integracaoCurricular.toString());
+		jpaIntegracaoCurricularRepositoryImpl.save(integracaoCurricular);
+	}
 
-		docFromHtml = Jsoup.parse(fileHtml, null, "");
-		// parserCurriculo();
-		parserEstruturaCurricular();
+	/**
+	 * Este método será um método genérico a ser utilizado para a existência de
+	 * quivalências, co- e pré-requisitos entre integrações curriculares
+	 * 
+	 * @param consulta, string que vem do HTML
+	 * @return, deve retornar a lista de integrações referente a uma outra integração curricular
+	 */
+	public List<IntegracaoCurricular> verificaExistenciaIntegracao(String consulta) {
+		List<IntegracaoCurricular> listIntegracao = new ArrayList<IntegracaoCurricular>();
+		int i = 1, indiceConsulta = 0;
+		Disciplina disciplinaIntegracao = new Disciplina();
+		String codigoIntegracao = "";
+		if (consulta.length() > 0) {
+			while (i < consulta.length()) {
+				indiceConsulta = consulta.indexOf("OU", i);
+				codigoIntegracao = consulta.substring(i, indiceConsulta);
+				disciplinaIntegracao = disciplinaService.getDisciplinaByCodigo(codigoIntegracao);
+				if (disciplinaIntegracao != null) {
+
+				}
+			}
+			return listIntegracao;
+		} else
+
+		{
+			return null;
+		}
+
 	}
 
 }
