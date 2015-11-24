@@ -9,17 +9,23 @@ import br.ufc.quixada.npi.ldap.model.Usuario;
 import br.ufc.quixada.npi.ldap.service.UsuarioService;
 
 public class UsuarioEntityListener {
+	private Usuario usuario;
 	
 	@PostLoad
 	public void loadUsuario(br.ufc.npi.gal.model.Usuario user) {
 		@SuppressWarnings("resource")
+		Usuario aux = new Usuario();
 		BeanFactory context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		UsuarioService usuarioService = (UsuarioService) context.getBean(UsuarioService.class);
-		Usuario usuario = usuarioService.getByCpf(user.getCpf());
+		usuario = usuarioService.getByCpf(user.getCpf());
 		
-		user.setEmail(usuario.getEmail());
-		user.setNome(usuario.getNome());
-		user.setSiape(usuario.getSiape());
+		if(usuario!=null) {
+			user.setEmail(usuario.getEmail());
+			user.setNome(usuario.getNome());
+			user.setSiape(usuario.getSiape());
+		} else {
+			user.setNome(user.getCpf());
+		}
 	}
 
 }

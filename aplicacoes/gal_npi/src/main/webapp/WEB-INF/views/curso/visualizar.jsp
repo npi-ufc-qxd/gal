@@ -7,7 +7,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +16,6 @@
 <body>
 	<div id="container">
 		<jsp:include page="../fragments/header.jsp" />
-
 		<c:if test="${not empty error}">
 			<div class="alert alert-danger alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert">
@@ -26,7 +24,6 @@
 				<c:out value="${error}"></c:out>
 			</div>
 		</c:if>
-
 		<c:if test="${not empty info}">
 			<div class="alert alert-info alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert">
@@ -35,25 +32,19 @@
 				<c:out value="${info}"></c:out>
 			</div>
 		</c:if>
-
 		<div class="panel-body">
 			<ul class="nav nav-tabs" role="tablist">
 				<c:forEach items="${curso.curriculos}" var="curriculo"
 					varStatus="ct">
-
 					<c:if test="${ct.index == 0}">
 						<c:set var="act" value="active"></c:set>
 					</c:if>
-
 					<c:if test="${ct.index != 0}">
 						<c:set var="act" value=""></c:set>
 					</c:if>
-
 					<li class="${act }"><a href="#${curriculo.id }" role="tab"
 						data-toggle="tab">${curriculo.anoSemestre}</a></li>
-
 				</c:forEach>
-
 				<sec:authorize
 					access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
 					<div id="button-add">
@@ -64,31 +55,28 @@
 								Curriculo
 							</button>
 						</a>
-
-						<form id="importarCurriculo" method="POST" action="<c:url value="/estrutura/${curso.codigo}/importar"></c:url>" class="form-horizontal" enctype="multipart/form-data" style="float: right;">
-							<input type="file" name="file" id="file" accept="text/html" style="float: right;"/>
-							<input type="submit" name="submit" class="btn btn-primary" value="Importar" />
+						<form id="importarCurriculo" method="POST"
+							action="<c:url value="/estrutura/${curso.codigo}/importar"></c:url>"
+							class="form-horizontal" enctype="multipart/form-data"
+							style="float: right;">
+							<input type="file" name="file" id="file" accept="text/html"
+								style="float: right;" /> <input type="submit" name="submit"
+								class="btn btn-primary" value="Importar" />
 						</form>
 
 					</div>
 				</sec:authorize>
-
 			</ul>
-
 			<div class="tab-content">
 				<c:forEach items="${curso.curriculos}" var="curriculo"
 					varStatus="count">
-
 					<c:if test="${count.index == 0}">
 						<c:set var="active" value="active"></c:set>
 					</c:if>
-
 					<c:if test="${count.index != 0}">
 						<c:set var="active" value=""></c:set>
 					</c:if>
-
 					<div class="tab-pane ${active }" id="${curriculo.anoSemestre }"></div>
-
 					<div id="${curriculo.id}" class="tab-pane ${active }">
 						<sec:authorize
 							access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
@@ -109,238 +97,205 @@
 										Curriculo
 									</button>
 								</a>
+							</div>
 						</sec:authorize>
-
-					</div>
-
-					<div class="panel panel-default">
-						<datatables:table id="estrutura${curso.id}"
-							data="${curriculo.curriculos}" cdn="true" row="integracao"
-							theme="bootstrap2" cssClass="table table-striped estrutura">
-
-							<datatables:column title="Disciplina">
-								<c:out value="${integracao.disciplina.nome}"></c:out>
-							</datatables:column>
-
-							<datatables:column title="Código disciplina">
-								<c:out value="${integracao.disciplina.codigo}"></c:out>
-							</datatables:column>
-
-
-							<datatables:column title="Quantidade aluno">
-								<c:out value="${integracao.quantidadeAlunos}"></c:out>
-							</datatables:column>
-
-							<datatables:column title="Semestre oferta">
-								<c:out value="${integracao.semestreOferta}"></c:out>
-							</datatables:column>
-
-							<sec:authorize
-								access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
-								<datatables:column title="Editar">
-									<a class="btn btn-primary"
-										href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/editar" ></c:url>">
-										<span class="glyphicon glyphicon-edit"></span>
-									</a>
+						<div class="panel panel-default">
+							<datatables:table id="estrutura${curso.id}"
+								data="${curriculo.curriculos}" cdn="false" row="integracao"
+								theme="bootstrap2"
+								cssClass="table table-striped table-orderable"
+								no-sort-fields="1 2 4 5" default-sort="3 desc">
+								<datatables:column title="Disciplina">
+									<c:out value="${integracao.disciplina.nome}"></c:out>
 								</datatables:column>
-
-								<datatables:column title="Excluir">
-									<a id="excluir" class="btn btn-danger" data-toggle="modal"
-										data-target="#confirm-delete" href="#"
-										data-href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/excluir" ></c:url>">
-										<span class="glyphicon glyphicon-trash"></span>
-									</a>
+								<datatables:column title="Código disciplina">
+									<c:out value="${integracao.disciplina.codigo}"></c:out>
 								</datatables:column>
-							</sec:authorize>
-
-						</datatables:table>
+								<datatables:column title="Quantidade aluno">
+									<c:out value="${integracao.quantidadeAlunos}"></c:out>
+								</datatables:column>
+								<datatables:column title="Semestre oferta">
+									<c:out value="${integracao.semestreOferta}"></c:out>
+								</datatables:column>
+								<sec:authorize
+									access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
+									<datatables:column title="Editar">
+										<a class="btn btn-primary"
+											href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/editar" ></c:url>">
+											<span class="glyphicon glyphicon-edit"></span>
+										</a>
+									</datatables:column>
+									<datatables:column title="Excluir">
+										<a id="excluir" class="btn btn-danger" data-toggle="modal"
+											data-target="#confirm-delete" href="#"
+											data-href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/excluir" ></c:url>">
+											<span class="glyphicon glyphicon-trash"></span>
+										</a>
+									</datatables:column>
+								</sec:authorize>
+							</datatables:table>
+						</div>
 					</div>
+				</c:forEach>
 			</div>
-			</c:forEach>
 		</div>
-	</div>
-	</div>
-
-	<jsp:include page="../fragments/footer.jsp" />
-
-	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">Excluir</div>
-				<div class="modal-body">Tem certeza de que deseja excluir esse
-					curso?</div>
-				<div class="modal-footer">
-					<a href="integracao/excluir" class="btn btn-danger">Excluir</a>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+		<jsp:include page="../fragments/footer.jsp" />
+		<div class="modal fade" id="confirm-delete" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">Excluir</div>
+					<div class="modal-body">Tem certeza de que deseja excluir
+						esse curso?</div>
+					<div class="modal-footer">
+						<a href="integracao/excluir" class="btn btn-danger">Excluir</a>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<div class="modal fade" id="confirm-delete-integracao" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">Excluir</div>
-				<div class="modal-body">Tem certeza de que deseja excluir essa
-					integração?</div>
-				<div class="modal-footer">
-					<a href="#" class="btn btn-danger">Excluir</a>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+		<div class="modal fade" id="confirm-delete-integracao" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">Excluir</div>
+					<div class="modal-body">Tem certeza de que deseja excluir
+						essa integração?</div>
+					<div class="modal-footer">
+						<a href="#" class="btn btn-danger">Excluir</a>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<div class="modal fade " id="add-disciplina" tabindex="-1"
-		role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-		<div class="modal-dialog ">
-			<div class="modal-content">
-				<div class="modal-header">Adicionar disciplina</div>
-				<div class="modal-body" style="text-align: center;">
-					<form:form servletRelativeAction="/integracao/adicionar"
-						method="get" modelAttribute="integracao" role="form"
-						class="form-horizontal">
-						<input type="hidden" name="id" id="id" value="" />
-
-						<div class="form-group">
-							<label class="control-label" style="font-size: 20px;">Adicionar
-								Disciplina</label>
-						</div>
-
-						<div class="form-group">
-							<label for="disciplinaInput2" class="col-sm-2 control-label">Código
-								Disciplina</label>
-							<div class="col-sm-10">
-								<form:input id="disciplinaInput2" class="form-control"
-									style="width: 150px;" placeholder="Código disciplina"
-									path="disciplina" required="true" />
-								<form:errors path="disciplina" cssClass="error" />
+		<div class="modal fade " id="add-disciplina" tabindex="-1"
+			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog ">
+				<div class="modal-content">
+					<div class="modal-header">Adicionar disciplina</div>
+					<div class="modal-body" style="text-align: center;">
+						<form:form servletRelativeAction="/integracao/adicionar"
+							method="get" modelAttribute="integracao" role="form"
+							class="form-horizontal">
+							<input type="hidden" name="id" id="id" value="" />
+							<div class="form-group">
+								<label class="control-label" style="font-size: 20px;">Adicionar
+									Disciplina</label>
 							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="quantidadeAlunos" class="col-sm-2 control-label">Quantidade
-								alunos</label>
-							<div class="col-sm-10">
-								<form:input id="quantidadedeAlunos" class="form-control numeros"
-									style="width: 150px;" placeholder="Quantidade alunos"
-									path="quantidadeAlunos" onkeypress="mascara(this,soNumeros)"
-									onchange="mascara(this,soNumeros)" required="true" />
-								<form:errors path="quantidadeAlunos" cssClass="error" />
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="semestreOferta" class="col-sm-2 control-label">Semestre
-								oferta</label>
-							<div class="col-sm-10">
-								<form:input id="semestreOferta" class="form-control numeros"
-									style="width: 150px;" placeholder="Semestre oferta"
-									path="semestreOferta" onkeypress="mascara(this,soNumeros)"
-									onchange="mascara(this,soNumeros)" required="true" />
-								<form:errors path="semestreOferta" cssClass="error" />
-							</div>
-						</div>
-
-
-						<div class="modal fade " id="add-disciplina" tabindex="-1"
-							role="dialog" aria-labelledby="myLargeModalLabel"
-							aria-hidden="true">
-							<div class="modal-dialog ">
-								<div class="modal-content">
-									<div class="modal-header">Adicionar disciplina</div>
-									<div class="modal-body" style="text-align: center;">
-										<form:form servletRelativeAction="/integracao/adicionar"
-											method="get" modelAttribute="integracao" role="form"
-											class="form-horizontal">
-											<input type="hidden" name="id" id="id" value="" />
-
-											<div class="form-group">
-												<label class="control-label" style="font-size: 20px;">Adicionar
-													Disciplina</label>
-											</div>
-
-											<div class="form-group">
-												<label for="disciplinaInput3" class="col-sm-2 control-label">Código
-													Disciplina</label>
-												<div class="col-sm-10">
-													<form:input id="disciplinaInput3" class="form-control"
-														style="width: 150px;" placeholder="Código disciplina"
-														path="disciplina" required="true" />
-													<form:errors path="disciplina" cssClass="error" />
-												</div>
-											</div>
-
-											<div class="form-group">
-												<label for="quantidadeAlunos" class="col-sm-2 control-label">Quantidade
-													alunos</label>
-												<div class="col-sm-10">
-													<form:input id="quantidadedeAlunos"
-														class="form-control numeros" style="width: 150px;"
-														placeholder="Quantidade alunos" path="quantidadeAlunos"
-														onkeypress="mascara(this,soNumeros)"
-														onchange="mascara(this,soNumeros)" required="true" />
-													<form:errors path="quantidadeAlunos" cssClass="error" />
-												</div>
-											</div>
-
-											<div class="form-group">
-												<label for="semestreOferta" class="col-sm-2 control-label">Semestre
-													oferta</label>
-												<div class="col-sm-10">
-													<form:input id="semestreOferta"
-														class="form-control numeros" style="width: 150px;"
-														placeholder="Semestre oferta" path="semestreOferta"
-														onkeypress="mascara(this,soNumeros)"
-														onchange="mascara(this,soNumeros)" required="true" />
-													<form:errors path="semestreOferta" cssClass="error" />
-												</div>
-											</div>
-
-											<div class="controls">
-												<input id="criar" class="btn btn-primary" type="submit"
-													value="Adicionar" /> <a
-													href="<c:url value="/curso/listar"></c:url>"
-													class="btn btn-default">Cancelar</a>
-											</div>
-
-										</form:form>
-									</div>
-
-									<div class="modal-body">Tem certeza de que deseja
-										excluir?</div>
-
-									<div class="modal-footer">
-										<a href="#" class="btn btn-danger">Excluir</a>
-										<button type="button" class="btn btn-default"
-											data-dismiss="modal">Cancelar</button>
-									</div>
-
+							<div class="form-group">
+								<label for="disciplinaInput2" class="col-sm-2 control-label">Código
+									Disciplina</label>
+								<div class="col-sm-10">
+									<form:input id="disciplinaInput2" class="form-control"
+										style="width: 150px;" placeholder="Código disciplina"
+										path="disciplina" required="true" />
+									<form:errors path="disciplina" cssClass="error" />
 								</div>
 							</div>
-						</div>
-						<div class="controls">
-							<input id="criar" class="btn btn-primary" type="submit"
-								value="Adicionar" /> <a
-								href="<c:url value="/curso/listar"></c:url>"
-								class="btn btn-default">Cancelar</a>
-						</div>
-
-
-					</form:form>
+							<div class="form-group">
+								<label for="quantidadeAlunos" class="col-sm-2 control-label">Quantidade
+									alunos</label>
+								<div class="col-sm-10">
+									<form:input id="quantidadedeAlunos"
+										class="form-control numeros" style="width: 150px;"
+										placeholder="Quantidade alunos" path="quantidadeAlunos"
+										onkeypress="mascara(this,soNumeros)"
+										onchange="mascara(this,soNumeros)" required="true" />
+									<form:errors path="quantidadeAlunos" cssClass="error" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="semestreOferta" class="col-sm-2 control-label">Semestre
+									oferta</label>
+								<div class="col-sm-10">
+									<form:input id="semestreOferta" class="form-control numeros"
+										style="width: 150px;" placeholder="Semestre oferta"
+										path="semestreOferta" onkeypress="mascara(this,soNumeros)"
+										onchange="mascara(this,soNumeros)" required="true" />
+									<form:errors path="semestreOferta" cssClass="error" />
+								</div>
+							</div>
+							<div class="modal fade " id="add-disciplina" tabindex="-1"
+								role="dialog" aria-labelledby="myLargeModalLabel"
+								aria-hidden="true">
+								<div class="modal-dialog ">
+									<div class="modal-content">
+										<div class="modal-header">Adicionar disciplina</div>
+										<div class="modal-body" style="text-align: center;">
+											<form:form servletRelativeAction="/integracao/adicionar"
+												method="get" modelAttribute="integracao" role="form"
+												class="form-horizontal">
+												<input type="hidden" name="id" id="id" value="" />
+												<div class="form-group">
+													<label class="control-label" style="font-size: 20px;">Adicionar
+														Disciplina</label>
+												</div>
+												<div class="form-group">
+													<label for="disciplinaInput3"
+														class="col-sm-2 control-label">Código Disciplina</label>
+													<div class="col-sm-10">
+														<form:input id="disciplinaInput3" class="form-control"
+															style="width: 150px;" placeholder="Código disciplina"
+															path="disciplina" required="true" />
+														<form:errors path="disciplina" cssClass="error" />
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="quantidadeAlunos"
+														class="col-sm-2 control-label">Quantidade alunos</label>
+													<div class="col-sm-10">
+														<form:input id="quantidadedeAlunos"
+															class="form-control numeros" style="width: 150px;"
+															placeholder="Quantidade alunos" path="quantidadeAlunos"
+															onkeypress="mascara(this,soNumeros)"
+															onchange="mascara(this,soNumeros)" required="true" />
+														<form:errors path="quantidadeAlunos" cssClass="error" />
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="semestreOferta" class="col-sm-2 control-label">Semestre
+														oferta</label>
+													<div class="col-sm-10">
+														<form:input id="semestreOferta"
+															class="form-control numeros" style="width: 150px;"
+															placeholder="Semestre oferta" path="semestreOferta"
+															onkeypress="mascara(this,soNumeros)"
+															onchange="mascara(this,soNumeros)" required="true" />
+														<form:errors path="semestreOferta" cssClass="error" />
+													</div>
+												</div>
+												<div class="controls">
+													<input id="criar" class="btn btn-primary" type="submit"
+														value="Adicionar" /> <a
+														href="<c:url value="/curso/listar"></c:url>"
+														class="btn btn-default">Cancelar</a>
+												</div>
+											</form:form>
+										</div>
+										<div class="modal-body">Tem certeza de que deseja
+											excluir?</div>
+										<div class="modal-footer">
+											<a href="#" class="btn btn-danger">Excluir</a>
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">Cancelar</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="controls">
+								<input id="criar" class="btn btn-primary" type="submit"
+									value="Adicionar" /> <a
+									href="<c:url value="/curso/listar"></c:url>"
+									class="btn btn-default">Cancelar</a>
+							</div>
+						</form:form>
+					</div>
+					<div class="modal-body">Tem certeza de que deseja excluir?</div>
+					<div class="modal-footer">
+						<a href="#" class="btn btn-danger">Excluir</a>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					</div>
 				</div>
-
-
-
-				<div class="modal-body">Tem certeza de que deseja excluir?</div>
-
-				<div class="modal-footer">
-					<a href="#" class="btn btn-danger">Excluir</a>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				</div>
-
 			</div>
 		</div>
 	</div>

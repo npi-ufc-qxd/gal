@@ -45,11 +45,7 @@ public class AcervoController {
 
 	@RequestMapping(value = "/atualizar_acervo", method = RequestMethod.GET)
 	public String atualizarAcervo(ModelMap modelMap, HttpSession session) {
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService
-				.atualizacoesPorUsuario(usuarioService.getUsuarioByLogin(auth
-						.getName()));
+		List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService.find(AcervoDocumento.class);
 		modelMap.addAttribute("atualizacoesRealizadas", atualizacoesRealizadas);
 		modelMap.addAttribute("atualizacaoAcervo", new AcervoDocumento());
 		return "acervo/atualizar";
@@ -58,33 +54,29 @@ public class AcervoController {
 	@RequestMapping(value = "/resolver_conflitos", method = RequestMethod.GET)
 	public String resolverConflitos(ModelMap modelMap) {
 
-		modelMap.addAttribute("exemplares",
-				acervoService.find(ExemplarConflitante.class));
+		modelMap.addAttribute("exemplares", acervoService.find(ExemplarConflitante.class));
 		return "acervo/conflitos";
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public String uploadDoArquivoXls(ModelMap modelMap,
 			@ModelAttribute("atualizacaoAcervo") AcervoDocumento atualizacaoAcervo,
-			@RequestParam("file") MultipartFile request, BindingResult result , RedirectAttributes redirectAttributes) {
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
+			@RequestParam("file") MultipartFile request, BindingResult result, RedirectAttributes redirectAttributes) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Boolean erros = false;
 		if (atualizacaoAcervo.getInicioPeridoDelta() == null) {
-			result.rejectValue("inicioPeridoDelta",
-					"Repeat.AcervoDocumento.inicioPeridoDelta",
+			result.rejectValue("inicioPeridoDelta", "Repeat.AcervoDocumento.inicioPeridoDelta",
 					"Inicio do delta não foi determinado");
 			erros = true;
 		}
 		if (atualizacaoAcervo.getFinalPeridoDelta() == null) {
-			result.rejectValue("finalPeridoDelta",
-					"Repeat.AcervoDocumento.finalPeridoDelta",
+			result.rejectValue("finalPeridoDelta", "Repeat.AcervoDocumento.finalPeridoDelta",
 					"Final do delta não foi determinado");
 			erros = true;
 		}
 		if (request.isEmpty()) {
-			result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo",
-					"Arquivo enviado inexistente");
+			result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo", "Arquivo enviado inexistente");
 			erros = true;
 		} else if (!TestFormato(request)) {
 			result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo",
@@ -92,30 +84,31 @@ public class AcervoController {
 			erros = true;
 		}
 		if (erros) {/*
-			List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService
-					.atualizacoesPorUsuario(usuarioService.getUsuarioByLogin(auth
-							.getName()));
-			modelMap.addAttribute("atualizacoesRealizadas", atualizacoesRealizadas);
-			modelMap.addAttribute("atualizacaoAcervo", new AcervoDocumento());
-			return "redirect:/acervo/atualizar_acervo";*/
+					 * List<AcervoDocumento> atualizacoesRealizadas =
+					 * acervoDocumentoService
+					 * .atualizacoesPorUsuario(usuarioService.getUsuarioByLogin(
+					 * auth .getName()));
+					 * modelMap.addAttribute("atualizacoesRealizadas",
+					 * atualizacoesRealizadas);
+					 * modelMap.addAttribute("atualizacaoAcervo", new
+					 * AcervoDocumento()); return
+					 * "redirect:/acervo/atualizar_acervo";
+					 */
 			return "acervo/atualizar";
 		}
 		try {
 			atualizacaoAcervo.setArquivo(request.getBytes());
 			acervoService.processarArquivo(request);
 		} catch (IOException e) {
-			System.err.println("Erro ao processar arquivo: "
-					+ e.getStackTrace());
+			System.err.println("Erro ao processar arquivo: " + e.getStackTrace());
 			// avisar ao usuario do erro
 		}
-		atualizacaoAcervo.setUsuario(usuarioService.getUsuarioByLogin(auth
-				.getName()));
+		atualizacaoAcervo.setUsuario(usuarioService.getUsuarioByLogin(auth.getName()));
 		atualizacaoAcervo.setExtensao(request.getContentType());
 		acervoService.registrarAtualizacao(atualizacaoAcervo);
-		
-		redirectAttributes.addFlashAttribute("info",
-				"Atualização realizada com sucesso.");
-		
+
+		redirectAttributes.addFlashAttribute("info", "Atualização realizada com sucesso.");
+
 		return "redirect:/acervo/resolver_conflitos";
 
 	}
@@ -123,8 +116,7 @@ public class AcervoController {
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
 	public String editar(@PathVariable("id") Integer id, ModelMap modelMap) {
 
-		ExemplarConflitante exemplar = this.acervoService.find(
-				ExemplarConflitante.class, id);
+		ExemplarConflitante exemplar = this.acervoService.find(ExemplarConflitante.class, id);
 
 		if (exemplar == null) {
 			return "/acervo/conflitos";
@@ -134,11 +126,10 @@ public class AcervoController {
 	}
 
 	@RequestMapping(value = "/editar", method = RequestMethod.POST)
-	public String atualizar(ModelMap modelMap, @Valid ExemplarConflitante exemplar,
-			BindingResult result, RedirectAttributes redirectAttributes) {
+	public String atualizar(ModelMap modelMap, @Valid ExemplarConflitante exemplar, BindingResult result,
+			RedirectAttributes redirectAttributes) {
 		if (acervoService.submeterExemplarConflitante(exemplar)) {
-			redirectAttributes.addFlashAttribute("info",
-					"Conflito resolvido com sucesso.");
+			redirectAttributes.addFlashAttribute("info", "Conflito resolvido com sucesso.");
 			return "redirect:/acervo/resolver_conflitos";
 		} else {
 			modelMap.addAttribute("exemplar", exemplar);
@@ -149,26 +140,24 @@ public class AcervoController {
 
 	private boolean TestFormato(MultipartFile request) {
 		String nome = request.getOriginalFilename();
-		String extencao = (String) nome.subSequence(nome.length() - 4,
-				nome.length());
+		String extencao = (String) nome.subSequence(nome.length() - 4, nome.length());
 		if (extencao.equals(".xls")) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	@RequestMapping(value = "/download/{idArquivo}", method = RequestMethod.GET)
-	public void getArquivo(@PathVariable("idArquivo") int idArquivo,
-			HttpServletResponse response, HttpSession session) {
+	public void getArquivo(@PathVariable("idArquivo") int idArquivo, HttpServletResponse response,
+			HttpSession session) {
 		try {
 			AcervoDocumento documento = this.acervoDocumentoService.find(AcervoDocumento.class, idArquivo);
-			
+
 			if (documento != null) {
-				InputStream is = new ByteArrayInputStream(
-						documento.getArquivo());
+				InputStream is = new ByteArrayInputStream(documento.getArquivo());
 				response.setContentType(documento.getExtensao());
-				response.setHeader("Content-Disposition",
-						"attachment; filename=Delta - " + documento.getInicioPeridoDelta()+" à "+documento.getFinalPeridoDelta());
+				response.setHeader("Content-Disposition", "attachment; filename=Delta - "
+						+ documento.getInicioPeridoDelta() + " à " + documento.getFinalPeridoDelta());
 				IOUtils.copy(is, response.getOutputStream());
 				response.flushBuffer();
 			}
