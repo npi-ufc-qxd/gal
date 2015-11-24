@@ -28,8 +28,10 @@ import br.ufc.npi.gal.model.DetalheMetaCalculada;
 import br.ufc.npi.gal.model.Meta;
 import br.ufc.npi.gal.model.MetaForm;
 import br.ufc.npi.gal.model.Titulo;
+import br.ufc.npi.gal.model.Disciplina;
 import br.ufc.npi.gal.service.CalculoMetaService;
 import br.ufc.npi.gal.service.CursoService;
+import br.ufc.npi.gal.service.DisciplinaService;
 import br.ufc.npi.gal.service.MetaCalculada;
 import br.ufc.npi.gal.service.MetaService;
 import br.ufc.npi.gal.service.ResultadoCalculo;
@@ -47,16 +49,21 @@ public class MetaController {
 
 	@Inject
 	private CursoService cursoService;
-
+	
 	@Inject
 	private MetaService metaService;
+	
+	@Inject
+	private DisciplinaService disciplinaService;
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(ModelMap modelMap) {
 
 		modelMap.addAttribute("resultados", calculo.gerarCalculo());
 		modelMap.addAttribute("cursos", cursoService.find(Curso.class));
+		modelMap.addAttribute("disciplinas", disciplinaService.find(Disciplina.class));
 		modelMap.addAttribute("idCurso", -1);
+		modelMap.addAttribute("idDisciplina", -1);
 
 		return "meta/listar";
 	}
@@ -66,6 +73,7 @@ public class MetaController {
 			RedirectAttributes redirectAttributes) {
 
 		List<Curso> cursos = cursoService.find(Curso.class);
+		List<Disciplina> disciplinas = disciplinaService.find(Disciplina.class);
 		List<ResultadoCalculo> resultados = calculo.gerarCalculo();
 		Curso curso = cursoService.find(Curso.class, id);
 
@@ -109,11 +117,73 @@ public class MetaController {
 		}
 
 		modelMap.addAttribute("idCurso", curso.getId());
+		modelMap.addAttribute("idDisciplina", -1);
 		modelMap.addAttribute("cursos", cursos);
+		modelMap.addAttribute("disciplinas", disciplinas);
 		modelMap.addAttribute("resultados", resultadosCurso);
 
 		return "meta/listar";
 
+	}
+	
+	@RequestMapping(value = "/disciplina/{id}/listar", method = RequestMethod.GET)
+	public String listarByDisciplina(@PathVariable("id") Integer id, ModelMap modelMap) {
+
+		List<Curso> cursos = cursoService.find(Curso.class);
+		List<Disciplina> disciplinas = disciplinaService.find(Disciplina.class);
+		List<ResultadoCalculo> resultados = calculo.gerarCalculo();
+		Disciplina disciplina = disciplinaService.find(Disciplina.class, id);
+
+		List<ResultadoCalculo> resultadosCurso = new ArrayList<ResultadoCalculo>();
+		List<MetaCalculada> metasCalculadas;
+
+		for (ResultadoCalculo resultadoCalculo : resultados) {
+			metasCalculadas = new ArrayList<MetaCalculada>();
+
+			for (MetaCalculada metaCalculada : resultadoCalculo
+					.getMetasCalculadas()) {
+				boolean flag = false;
+				for (DetalheMetaCalculada detalhePar : metaCalculada
+						.getDetalhePar()) {
+
+					if (detalhePar.getDisciplina().equals(disciplina.getNome())) {
+						flag = true;
+						break;
+
+					}
+
+				}
+				for (DetalheMetaCalculada detalheImpar : metaCalculada
+						.getDetalheImpar()) {
+
+					if (detalheImpar.getDisciplina().equals(disciplina.getNome())) {
+						flag = true;
+						break;
+
+					}
+
+				}
+				if (flag) {
+					metasCalculadas.add(metaCalculada);
+
+					flag = false;
+
+				}
+			}
+			if (!metasCalculadas.isEmpty()) {
+				resultadosCurso.add(new ResultadoCalculo(resultadoCalculo
+						.getTitulo(), metasCalculadas));
+			}
+
+		}
+
+		modelMap.addAttribute("idCurso", -1);
+		modelMap.addAttribute("idDisciplina", disciplina.getId());
+		modelMap.addAttribute("cursos", cursos);
+		modelMap.addAttribute("disciplinas", disciplinas);
+		modelMap.addAttribute("resultados", resultadosCurso);
+
+		return "meta/listar";
 	}
 
 	@RequestMapping(value = "/{id}/detalhe/{meta}", method = RequestMethod.GET)

@@ -71,6 +71,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	}
 
 	public List<Exemplar> arquivoParaLista(File planilha) {
+		int valorlinhas = 0;
 		Workbook workbook;
 		List<Exemplar> relatorioDeExemplares = new ArrayList<Exemplar>();
 		try{
@@ -82,15 +83,19 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 			Sheet sheet = workbook.getSheet(0);
 			int linhas = sheet.getRows();
 			ExemplarConflitante exemplarConflitante = new ExemplarConflitante();
+			
 			for (int i = 1; i < linhas; i++) {
 				
-				exemplarConflitante = validarLinha(sheet,i);
-				exemplarConflitante.setLinha(i);
-				if(exemplarConflitante.getDescricaoErro().isEmpty() ){
-					relatorioDeExemplares.add(formatarExemplar(sheet,i));
+				if(sheet.getCell(TIPO,i).getContents().equals("0")) {
+					exemplarConflitante = validarLinha(sheet,i);
+					exemplarConflitante.setLinha(i);
+					if(exemplarConflitante.getDescricaoErro().isEmpty() ){
+						relatorioDeExemplares.add(formatarExemplar(sheet,i));
+					}else{
+						adicionarConflito(exemplarConflitante);
+					}
+				} else {
 					
-				}else{
-					adicionarConflito(exemplarConflitante);
 				}
 			}
 		workbook.close();	
@@ -101,6 +106,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 
 			e.printStackTrace();
 		}
+		System.out.println(valorlinhas);
 		return relatorioDeExemplares;
 	}
 	
@@ -214,10 +220,12 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	}
 
 	private String validacaoDeTipo(String tipo) {
-		if(tipo.equals("0") || tipo.equals("1")){
+		if(tipo.equals("0") ){
 			return "valido";
 		}else if(tipo.equals("")){
 			return "Tipo de exemplar não especificado";
+		} else if (tipo.equals("1")) {
+			return "tipo virtual";
 		}
 		return "Tipo de exemplar inválido";
 	}
