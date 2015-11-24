@@ -56,14 +56,10 @@
 		</c:if>
 
 		<c:if test="${not empty disciplinas}">
-<<<<<<< HEAD
-			<datatables:table id="disciplinaTable" data="${disciplinas}"
-				cdn="true" row="disciplina" theme="bootstrap2"
-				cssClass="table table-striped">
-=======
+
 			<datatables:table id="disciplinaTable" data="${disciplinas}" cdn="false"
 				row="disciplina" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 3 4" default-sort="0 asc">
->>>>>>> refs/heads/master
+
 				<datatables:column title="Nome">
 					<c:out value="${disciplina.nome}"></c:out>
 				</datatables:column>
