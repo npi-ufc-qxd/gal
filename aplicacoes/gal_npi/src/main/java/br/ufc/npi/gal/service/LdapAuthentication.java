@@ -35,7 +35,7 @@ public class LdapAuthentication implements AuthenticationProvider{
         Usuario user = usuarioService.getByCpf(username);
         
         Collection<? extends GrantedAuthority> authorities = user.getAffiliations();
-        System.out.println(authentication.getAuthorities()+ " " + user.getAuthorities().indexOf(0) + " "+ usuarioService.autentica(username, password));
+        System.out.println(authentication.getAuthorities()+ " " + user.getAuthorities().toString() + " "+ usuarioService.autentica(username, password));
         
         for (GrantedAuthority grantedAuthority : authorities) {
         	usuarioValido = true;

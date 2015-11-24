@@ -24,7 +24,7 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Disciplina<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO', 'ROLE_BIBLIOTECARIO')">
+						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 							<li><a href="<c:url value='/disciplina/adicionar'/>">Adicionar</a></li>
 							<li class="divider"></li>
 						</sec:authorize>
@@ -33,7 +33,7 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Curso<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
+						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 							<li><a href="<c:url value='/curso/adicionar'/>">Adicionar</a></li>
 							<li class="divider"></li>
 						</sec:authorize>
@@ -42,14 +42,13 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Título<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<sec:authorize
-							access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
+						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 							<li><a href="<c:url value='/titulo/adicionar'/>">Adicionar</a></li>
 							<li class="divider"></li>
 						</sec:authorize>
 						<li><a href="<c:url value='/titulo/listar'/>">Listar</a></li>
 					</ul></li>
-				<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
+				<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">Meta<b class="caret"></b></a>
 						<ul class="dropdown-menu">

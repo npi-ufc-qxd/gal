@@ -44,7 +44,7 @@
 					<li class="${act }"><a href="#${curriculo.id }" role="tab" data-toggle="tab">${curriculo.anoSemestre}</a></li>
 	
 				</c:forEach>
-				<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
+				<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 				<div id="button-add">
 					<a href="<c:url value="/estrutura/${curso.id}/adicionar" ></c:url>">
 						<button class="btn btn-primary"> <span class="glyphicon glyphicon-plus"></span> Adicionar Curriculo </button>
@@ -64,7 +64,7 @@
 				<div class="tab-pane ${active }" id="${curriculo.anoSemestre }"></div>
 
 				<div id="${curriculo.id}" class="tab-pane ${active }">
-					<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
+					<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 					<div id="button-add">
 						<a style="float: left;" class="btn btn-success" href="<c:url value="/integracao/${curriculo.id}/adicionar" ></c:url>">
 							<span class="glyphicon glyphicon-link"></span> Vincular Disciplina
@@ -102,7 +102,7 @@
 								<c:out value="${integracao.semestreOferta}"></c:out>
 							</datatables:column>
 							
-							<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
+							<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 							<datatables:column title="Editar">
 								<a class="btn btn-primary" href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/editar" ></c:url>">
 									<span class="glyphicon glyphicon-edit"></span>

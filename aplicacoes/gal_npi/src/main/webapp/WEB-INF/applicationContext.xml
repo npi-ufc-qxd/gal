@@ -72,6 +72,9 @@
         <constructor-arg ref="contextSource" />
     </bean>
     
+    <bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+    
+    
     <bean id="base" class="java.lang.String">
         <constructor-arg ref="ldapOu" />
     </bean>

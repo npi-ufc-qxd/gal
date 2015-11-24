@@ -29,7 +29,7 @@
 		</c:if>
 		
 		<div id="button-add">
-			<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
+			<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 				<a href="<c:url value="/exemplar/${titulo.id}/adicionar" ></c:url>">
 					<button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Adicionar</button>
 				</a>
@@ -54,7 +54,7 @@
 					<c:out value="${exemplar.codigoExemplar}"></c:out>
 				</datatables:column>
 				
-				<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
+				<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 					<datatables:column title="Editar">
 						<a class="btn btn-primary" href="<c:url value = "/exemplar/${exemplar.id}/editar"></c:url>">
 							<span class="glyphicon glyphicon-edit"></span>
