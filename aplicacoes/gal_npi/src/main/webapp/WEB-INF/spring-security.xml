@@ -27,7 +27,6 @@
  		<intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" /> 
  		<intercept-url pattern="/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
  		<intercept-url pattern="/webjars/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
- 		<intercept-url pattern="/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
  		
  		<intercept-url pattern="/contatos" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/inicio" access="IS_AUTHENTICATED_ANONYMOUSLY" />
@@ -51,6 +50,8 @@
 		<intercept-url pattern="/exemplar/listar**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/exemplar/{id}/listar**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/exemplar/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
+		
+		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
  		 
 		<form-login login-page="/login" default-target-url="/" 
  			authentication-failure-url="/loginfailed" />

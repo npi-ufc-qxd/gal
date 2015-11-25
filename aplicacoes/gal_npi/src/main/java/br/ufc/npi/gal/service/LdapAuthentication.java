@@ -37,16 +37,7 @@ public class LdapAuthentication implements AuthenticationProvider{
         Collection<? extends GrantedAuthority> authorities = user.getAffiliations();
         System.out.println(authentication.getAuthorities()+ " " + user.getAuthorities().toString() + " "+ usuarioService.autentica(username, password));
         
-        for (GrantedAuthority grantedAuthority : authorities) {
-        	usuarioValido = true;
-            if (grantedAuthority.getAuthority().equals("BIBLIOTECARIO") || grantedAuthority.getAuthority().equals("COORDENADOR_CURSO")) {
-            	usuarioValido = true;
-                break;
-            }
-        }
-        
         if (user == null || !usuarioService.autentica(username, password) || authorities.isEmpty()) {
-        	System.out.println("lol");
         	throw new BadCredentialsException(LOGIN_INVALIDO);
         }
 		
