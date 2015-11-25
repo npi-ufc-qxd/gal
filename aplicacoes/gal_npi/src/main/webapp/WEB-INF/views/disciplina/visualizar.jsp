@@ -32,7 +32,7 @@
 		
 		<button class="btn btn-default btn-sm" onclick="goBack()">
 			<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-			Voltar para Disciplinas
+			Voltar
 		</button>
 		
 		<c:if test="${empty disciplina}">
@@ -49,8 +49,9 @@
 			
 			<hr>
 			
-			<button id="expandirTodosAccordions" class="btn btn-default btn-xs">Expandir Todos</button>
-			<button id="esconderTodosAccordions" class="btn btn-default btn-xs">Esconder Todos</button>
+			<h4>Bibliografias</h4>
+			<button id="expandirTodosAccordions" class="btn btn-default btn-xs">Expandir Todas</button>
+			<button id="esconderTodosAccordions" class="btn btn-default btn-xs">Esconder Todas</button>
 			
 			<hr>
 			
