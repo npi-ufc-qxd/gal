@@ -140,7 +140,7 @@
 			
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit" value="Resolver Conflito"/>
-				<a href="<c:url value="/acervo/resolver_conflitos"></c:url>" class="btn btn-default">Cancelar</a>
+				<a href="<c:url value="/acervo/conflitos"></c:url>" class="btn btn-default">Cancelar</a>
 			</div>
 		</form:form>
 		<jsp:include page="../fragments/footer.jsp" />
