@@ -19,7 +19,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.Disciplina;
 import br.ufc.npi.gal.model.Titulo;
+import br.ufc.npi.gal.service.CalculoMetaService;
 import br.ufc.npi.gal.service.DisciplinaService;
+import br.ufc.npi.gal.service.ResultadoCalculo;
 import br.ufc.npi.gal.service.TituloService;
 import br.ufc.quixada.npi.service.GenericService;
 
@@ -32,6 +34,9 @@ public class DisciplinaController {
 	
 	@Inject
 	private TituloService tituloService;
+	
+	@Inject
+	private CalculoMetaService calculoService;
 
 	@Inject
 	private GenericService<Bibliografia> bibliografiaService;
@@ -186,8 +191,8 @@ public class DisciplinaController {
 				complementar.add(b.getTitulo());
 		}
 		
-		modelMap.addAttribute("basica", basica);
-		modelMap.addAttribute("complementar", complementar);
+		modelMap.addAttribute("bibliografia_basica", basica);
+		modelMap.addAttribute("bibliografia_complementar", complementar);
 		modelMap.addAttribute("disciplina", disciplina);
 		
 		return "disciplina/visualizar";
