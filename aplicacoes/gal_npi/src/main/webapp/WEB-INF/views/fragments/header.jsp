@@ -62,10 +62,10 @@
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">Acervo<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="<c:url value='/acervo/atualizar_acervo'/>">Atualizar
+							<li><a href="<c:url value='/acervo/atualizar'/>">Atualizar
 									acervo</a></li>
 							<li class="divider"></li>
-							<li><a href="<c:url value='/acervo/resolver_conflitos'/>">Resolver
+							<li><a href="<c:url value='/acervo/conflitos'/>">Resolver
 									Conflitos</a></li>
 						</ul></li>
 				</sec:authorize>

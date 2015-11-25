@@ -18,12 +18,20 @@
 
 		<jsp:include page="../fragments/header.jsp" />
 
-		<input id="idCurso" type="hidden" value="${idCurso}" /> 
+		<input id="idCurso" type="hidden" value="${idCurso}" />
+		<input id="idDisciplina" type="hidden" value="${idDisciplina}" /> 
 
 		<select id="seleciona">
 			<option value="-1">Todos os Cursos</option>
 			<c:forEach items="${cursos}" var="curso">
 				<option value="${curso.id}">${curso.nome}</option>
+			</c:forEach>
+		</select>
+		
+		<select id="selecionaDisciplina">
+			<option value="-1">Todas as Disciplinas</option>
+			<c:forEach items="${disciplinas}" var="disciplina">
+				<option value="${disciplina.id}">${disciplina.nome}</option>
 			</c:forEach>
 		</select>
 
@@ -45,7 +53,7 @@
 		</c:if>
 
 		<div style="text-align: center;">
-			<label class="control-label" style="font-size: 20px;">Metas</label>
+			<label class="control-label" style="font-size: 20px; margin-top: 25px">Metas</label>
 		</div>
 
 		<c:if test="${empty resultados}">
@@ -54,8 +62,8 @@
 
 		<c:if test="${not empty resultados}">
 
-			<datatables:table id="resultadoTable" data="${resultados}" cdn="true"
-				row="resultado" theme="bootstrap2" cssClass="table table-striped">
+			<datatables:table id="resultadoTable" data="${resultados}" cdn="false"
+				row="resultado" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="4 7 10" default-sort="0 asc">
 
 				<datatables:column title="Titulo">
 					<c:out value="${resultado.titulo.nome}"></c:out>
