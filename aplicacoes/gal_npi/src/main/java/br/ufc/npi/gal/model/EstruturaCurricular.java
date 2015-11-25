@@ -50,7 +50,7 @@ public class EstruturaCurricular {
 
 	@Column(name = "municipio")
 	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({ @Pattern(regexp = "([A-z\\s]+[-]+[A-z\\s]{2})", message = "Formato inválido"), })
+	@Pattern.List({ @Pattern(regexp = "([a-z A-Z à-ú À-Ú\\s -]+$)", message = "Formato inválido"), })
 	private String municipio;
 
 	@Column(name = "semestre_vigor")
