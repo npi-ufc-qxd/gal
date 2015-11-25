@@ -64,15 +64,22 @@ div#container {
 
 .halfContainer{
 	border-width: thin;
-	border-color:
 	margin: 0px auto;
 	width: 50%;
-	background-color:##fff;
 	position: relative;
 	float:left;
 	padding:6px 12px;
 	word-wrap: break-word;
 	line-height:2;
+}
+
+.littleBox{
+	border-style:solid; 
+	border-width:1px;
+	border-color:#E7E7E7; 
+	border-radius: 5px;
+	margin:0px auto; 
+	padding:0px 12px
 }
 
 .sidebyside {

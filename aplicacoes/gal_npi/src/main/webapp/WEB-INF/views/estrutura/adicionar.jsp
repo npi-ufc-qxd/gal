@@ -24,15 +24,15 @@
 
 
 			<div class="form-group">
-				<label for="codigo" class="col-sm-1 control-label">Código</label>
+				<label for="codigo" class="col-sm-1 control-label"style="width:160px;">Código</label>
 				<div class="col-sm-10">
-					<form:input id="codigo" class="form-control" placeholder="Ex.: 2010.1" path="codigo" />
+					<form:input id="codigo" class="form-control" style="float:right;" placeholder="Ex.: 2010.1" path="codigo" />
 					<form:errors path="codigo" cssClass="error" />
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="matrizCurricular" class="col-sm-1 control-label">Matriz
+				<label for="matrizCurricular" class="col-sm-1 control-label"style="width:160px;">Matriz
 					Curricular</label>
 				<div class="col-sm-10">
 					<form:input id="matrizCurricular" class="form-control"
@@ -42,7 +42,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="unidadeVinculacao" class="col-sm-1 control-label">Unidade
+				<label for="unidadeVinculacao" class="col-sm-1 control-label"style="width:160px;">Unidade de
 					Vinculação</label>
 				<div class="col-sm-10">
 					<form:input id="unidadeVinculacao" class="form-control"
@@ -52,8 +52,8 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="municipio" class="col-sm-1 control-label">Município
-					Func.</label>
+				<label for="municipio" class="col-sm-1 control-label"style="width:160px;">Município de
+					Funcionamento</label>
 				<div class="col-sm-10">
 					<form:input id="municipio" class="form-control"
 						placeholder="Ex.: Quixadá-CE" path="municipio" />
@@ -61,17 +61,17 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="semestreEntradaVigor" class="col-sm-1 control-label">Entrada
-					Vigor</label>
+				<label for="semestreEntradaVigor" class="col-sm-1 control-label"style="width:160px;">Período Letivo de Entrada
+					em Vigor</label>
 				<div class="col-sm-10">
 					<form:input id="semestreEntradaVigor" class="form-control"
-						placeholder="Período Letivo de Entrada em Vigor 		Ex.: 2011.2"
+						placeholder="Ex.: 2011.2"
 						path="semestreEntradaVigor" />
 					<form:errors path="semestreEntradaVigor" cssClass="error" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="chOptMinima" class="col-sm-1 control-label">CH Opt. Mínima</label>
+				<label for="chOptMinima" class="col-sm-1 control-label"style="width:160px;">CH Optativa Mínima</label>
 				<div class="col-sm-10">
 					<form:input id="chOptMinima" class="form-control"
 						placeholder="Carga Horária Optativa Mínima"
@@ -81,7 +81,7 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="chCompOptLivres" class="col-sm-1 control-label">CH Max Livre</label>
+				<label for="chCompOptLivres" class="col-sm-1 control-label"style="width:160px;">CH Máxima Comp. Optativos Livres:</label>
 				<div class="col-sm-10">
 					<form:input id="chCompOptLivres" class="form-control"
 						placeholder="Carga Horária Máxima de Componentes Curriculares Optativos Livres"
@@ -91,7 +91,7 @@
 			</div>
 			
 			<div class="form-group">
-				<label class="col-sm-1 control-label">Prazo Conclusão</label>
+				<label class="col-sm-1 control-label"style="width:160px;">Prazos Conclusão Períodos Letivos:</label>
 				<div class="col-sm-10">
 					<form:input id="prazoConclusaoMinimo" class="sidebyside"
 						placeholder="Mínimo"
@@ -108,7 +108,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-1 control-label">CH Periodo</label>
+				<label class="col-sm-1 control-label"style="width:160px;">Carga Horária por Período Letivo:</label>
 				<div class="col-sm-10">
 					<form:input id="chPeriodoMinimo" class="sidebyside"
 						placeholder="Mínima"
