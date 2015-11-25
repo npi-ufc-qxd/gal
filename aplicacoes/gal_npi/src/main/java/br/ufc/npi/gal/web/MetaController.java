@@ -61,7 +61,7 @@ public class MetaController {
 
 		modelMap.addAttribute("resultados", calculo.gerarCalculo());
 		modelMap.addAttribute("cursos", cursoService.find(Curso.class));
-		modelMap.addAttribute("disciplinas", disciplinaService.find(Disciplina.class));
+		modelMap.addAttribute("disciplinas", disciplinaService.getTodasDisciplinas());
 		modelMap.addAttribute("idCurso", -1);
 		modelMap.addAttribute("idDisciplina", -1);
 
@@ -73,7 +73,7 @@ public class MetaController {
 			RedirectAttributes redirectAttributes) {
 
 		List<Curso> cursos = cursoService.find(Curso.class);
-		List<Disciplina> disciplinas = disciplinaService.find(Disciplina.class);
+		List<Disciplina> disciplinas = disciplinaService.getTodasDisciplinas();
 		List<ResultadoCalculo> resultados = calculo.gerarCalculo();
 		Curso curso = cursoService.find(Curso.class, id);
 
@@ -130,7 +130,7 @@ public class MetaController {
 	public String listarByDisciplina(@PathVariable("id") Integer id, ModelMap modelMap) {
 
 		List<Curso> cursos = cursoService.find(Curso.class);
-		List<Disciplina> disciplinas = disciplinaService.find(Disciplina.class);
+		List<Disciplina> disciplinas = disciplinaService.getTodasDisciplinas();
 		List<ResultadoCalculo> resultados = calculo.gerarCalculo();
 		Disciplina disciplina = disciplinaService.find(Disciplina.class, id);
 

@@ -30,6 +30,11 @@
 			</div>
 		</c:if>
 		
+		<button class="btn btn-default btn-sm" onclick="goBack()">
+			<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+			Voltar para Disciplinas
+		</button>
+		
 		<c:if test="${empty disciplina}">
 			<div class="alert alert-warning" role="alert">Disciplina inexistente</div>
 		</c:if>
