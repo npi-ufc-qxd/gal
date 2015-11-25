@@ -22,7 +22,7 @@
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">Disciplina<b class="caret"></b></a>
+					data-toggle="dropdown">Disciplinas<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO', 'ROLE_BIBLIOTECARIO')">
 							<li><a href="<c:url value='/disciplina/adicionar'/>">Adicionar</a></li>
@@ -31,7 +31,7 @@
 						<li><a href="<c:url value='/disciplina/listar'/>">Listar</a></li>
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">Curso<b class="caret"></b></a>
+					data-toggle="dropdown">Cursos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
 							<li><a href="<c:url value='/curso/adicionar'/>">Adicionar</a></li>
@@ -40,7 +40,7 @@
 						<li><a href="<c:url value='/curso/listar'/>">Listar</a></li>
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">Título<b class="caret"></b></a>
+					data-toggle="dropdown">Títulos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<sec:authorize
 							access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
@@ -51,7 +51,7 @@
 					</ul></li>
 				<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Meta<b class="caret"></b></a>
+						data-toggle="dropdown">Cálculos de Metas<b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="<c:url value='/meta/configurar'/>">Configurar</a></li>
 							<li><a href="<c:url value='/meta/listar'/>">Listar</a></li>
@@ -69,7 +69,7 @@
 									Conflitos</a></li>
 						</ul></li>
 				</sec:authorize>
-				<li><a href="<c:url value='/contatos'/>">Contatos</a>
+				<li><a href="<c:url value='/contatos'/>">Contato/Suporte</a>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="<c:url value="/logout" />">Sair<span
