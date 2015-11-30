@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "curriculo")
-public class EstruturaCurricular {
+public class EstruturaCurricular{
 
 	@Id
 	@Column(name = "id_c")
@@ -50,7 +50,7 @@ public class EstruturaCurricular {
 
 	@Column(name = "municipio")
 	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({ @Pattern(regexp = "([A-z\\s]+[-]+[A-z\\s]{2})", message = "Formato inválido"), })
+	@Pattern.List({ @Pattern(regexp = "([a-z A-Z à-ú À-Ú\\s -]+$)", message = "Formato inválido"), })
 	private String municipio;
 
 	@Column(name = "semestre_vigor")
@@ -115,14 +115,6 @@ public class EstruturaCurricular {
 
 	@Column(name = "ch_atv_academica_especifica")
 	private String chAtvAcademicaEspecifica;
-
-	@Column(name = "ch_compt_opt_livres")
-	private String chComptOptLivres;
-
-	private String natureza = "OBRIGATÓRIA";
-	private String estagio = "ESTÁGIO";
-	private String tcc = "TRABALHO DE CONCLUSÃO DE CURSO";
-	private String atvComplementar = "ATIVIDADES COMPLEMENTARES";
 
 	public EstruturaCurricular() {
 
@@ -254,6 +246,46 @@ public class EstruturaCurricular {
 	public void setCurriculos(List<IntegracaoCurricular> curriculos) {
 		this.curriculos = curriculos;
 	}
+	
+	public String getChTotalMinima() {
+		return chTotalMinima;
+	}
+	
+	public void setChTotalMinima(String chTotalMinima) {
+		this.chTotalMinima = chTotalMinima;
+	}
+
+	public String getChObrigatoria() {
+		return chObrigatoria;
+	}
+	
+	public void setChObrigatoria(String chObrigatoria) {
+		this.chObrigatoria = chObrigatoria;
+	}
+
+	public String getChTeorica() {
+		return chTeorica;
+	}
+	
+	public void setChTeorica(String chTeorica) {
+		this.chTeorica = chTeorica;
+	}
+
+	public String getChPratica() {
+		return chPratica;
+	}
+	
+	public void setChPratica(String chPratica) {
+		this.chPratica = chPratica;
+	}
+	
+	public String getChAtvAcademicaEspecifica() {
+		return chAtvAcademicaEspecifica;
+	}
+	
+	public void setChAtvAcademicaEspecifica(String chAtvAcademicaEspecifica) {
+		this.chAtvAcademicaEspecifica = chAtvAcademicaEspecifica;
+	}
 
 	@Override
 	public int hashCode() {
@@ -268,51 +300,48 @@ public class EstruturaCurricular {
 		return "EstruturaCurricular [id=" + id + ", codigo=" + codigo + ", curso=" + curso + "]";
 	}
 
-	private void calcularOutrasCh() {
+	public void calcularOutrasCh() {
 		calcularChObrigatoria();
 		calcularChTotalMinima();
-		calcularchAtvAcademicaEspecifica();
-	}
+		calcularChAtvAcademicaEspecifica();
+		}
 
-	private void calcularchAtvAcademicaEspecifica() {
-		double cont = 0;
+	private void calcularChAtvAcademicaEspecifica() {
+		int cont = 0;
 		
 		for (IntegracaoCurricular curriculo : curriculos) {
-			if (curriculo.getDisciplina().getTipo() == estagio || curriculo.getDisciplina().getTipo() == atvComplementar
-					|| curriculo.getDisciplina().getTipo() == tcc) {
-				cont += Double.parseDouble(curriculo.getDisciplina().getChPratica());
-				cont += Double.parseDouble(curriculo.getDisciplina().getChTeorica());
+			if (curriculo.getDisciplina().getTipo().equals("ESTÁGIO") || 
+					curriculo.getDisciplina().getTipo().equals("TRABALHO DE CONCLUSÃO DE CURSO") || 
+					curriculo.getDisciplina().getTipo().equals("ATIVIDADES COMPLEMENTARES")) {
+				cont += Integer.parseInt(curriculo.getDisciplina().getChPratica());
+				cont += Integer.parseInt(curriculo.getDisciplina().getChTeorica());
 			}
 		}
 		chAtvAcademicaEspecifica = String.valueOf(cont);
 	}
 
 	private void calcularChTotalMinima() {
-		double cont = 0;
-		cont += Double.parseDouble(chObrigatoria);
-		cont += Double.parseDouble(chOptMinima);
+		int cont = 0;
+		cont += Integer.parseInt(chObrigatoria);
+		cont += Integer.parseInt(chOptMinima);
 		chTotalMinima = String.valueOf(cont);
 	}
 
 	private void calcularChObrigatoria() {
-		double contTotal = 0;
-		double contTeorica = 0;
-		double contPratica = 0;
-		String chTotal;
+		int contTotal;
+		int contTeorica = 0;
+		int contPratica = 0;
 
 		for (IntegracaoCurricular curriculo : curriculos) {
-			if (curriculo.getNatureza() == natureza) {
-				chTotal = curriculo.getDisciplina().getChPratica();
-				contPratica += Double.parseDouble(chTotal);
-				chTotal = curriculo.getDisciplina().getChTeorica();
-				contTeorica += Double.parseDouble(chTotal);
+			if (curriculo.getNatureza().equals("OBRIGATÓRIA")) {
+				contPratica += Integer.parseInt(curriculo.getDisciplina().getChPratica());
+				contTeorica += Integer.parseInt(curriculo.getDisciplina().getChTeorica());
 			}
 		}
 
 		contTotal = contTeorica + contPratica;
-		chObrigatoria = String.valueOf(contTotal);
 		chPratica = String.valueOf(contPratica);
 		chTeorica = String.valueOf(contTeorica);
+		chObrigatoria = String.valueOf(contTotal);
 	}
-
 }

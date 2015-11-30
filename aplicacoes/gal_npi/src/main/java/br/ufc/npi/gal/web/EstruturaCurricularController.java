@@ -90,14 +90,14 @@ public class EstruturaCurricularController {
 			return "estrutura/adicionar";
 		}
 		
-		if (estruturaCurricular.getAnoSemestre().trim().isEmpty()) {
+		if (estruturaCurricular.getCodigo().trim().isEmpty()) {
 			result.rejectValue("anoSemestre", "Repeat.estrutura.anoSemestre",
 					"Campo obrigatório.");
 			return "estrutura/adicionar";
 		}
 		
 		
-		if(estruturaCurricularService.getOutraEstruturaCurricularByAnoSemestre(id, estruturaCurricular.getAnoSemestre())!=null){
+		if(estruturaCurricularService.getOutraEstruturaCurricularByAnoSemestre(id, estruturaCurricular.getCodigo())!=null){
 			result.rejectValue("anoSemestre", "Repeat.estruturas.anoSemestre","Ano e Semestre já existe para curso");
 			return "estrutura/adicionar";
 		}

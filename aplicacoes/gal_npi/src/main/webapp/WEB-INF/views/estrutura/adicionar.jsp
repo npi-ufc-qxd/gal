@@ -18,10 +18,10 @@
 			</div>
 			
 			<div class="form-group">
-			    <label for="anoSemestre" class="col-sm-1 control-label">Ano e Semestre</label>
+			    <label for="codigo" class="col-sm-1 control-label">Código</label>
 			    <div class="col-sm-10">
-			    	<form:input id="anoSemestre" class="form-control" placeholder="ano Semestre" path="anoSemestre"/>
-			    	<form:errors path="anoSemestre" cssClass="error" />
+			    	<form:input id="codigo" class="form-control" placeholder="ano Semestre" path="codigo"/>
+			    	<form:errors path="codigo" cssClass="error" />
 			    </div>
 			</div>
 			<div class="controls">

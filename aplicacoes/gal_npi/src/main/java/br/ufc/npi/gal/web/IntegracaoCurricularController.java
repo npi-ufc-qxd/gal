@@ -47,6 +47,9 @@ public class IntegracaoCurricularController {
 		if (integracao != null) {
 			this.integracaoService.delete(integracao);
 			redirectAttributes.addFlashAttribute("info", "Integração Curricular removida com sucesso.");
+			EstruturaCurricular estruturaBD = integracao.getEstruturaCurricular();
+			estruturaBD.calcularOutrasCh();
+			estruturaService.update(estruturaBD);
 		}
 		
 		return "redirect:/curso/" + codigoCurso + "/visualizar";
@@ -65,8 +68,7 @@ public class IntegracaoCurricularController {
 		
 		Disciplina disciplinaBD = disciplinaService.getDisciplinaByCodigo(disciplina);
 		EstruturaCurricular estruturaBD = estruturaService.find(EstruturaCurricular.class, estruturaCurricular);
-		List<IntegracaoCurricular> integracaoList = estruturaBD.getCurriculos();
-		
+		List<IntegracaoCurricular> integracaoList = estruturaBD.getCurriculos();		
 		
 		if(disciplinaBD == null){
 			redirectAttributes.addFlashAttribute("error", "Código da disciplina não existe");
@@ -88,6 +90,8 @@ public class IntegracaoCurricularController {
 		
 		
 		integracaoService.save(integracao);
+		estruturaBD.calcularOutrasCh();
+		estruturaService.update(estruturaBD);
 		
 		redirectAttributes.addFlashAttribute("info", "Integracao Curricular adicionada com sucesso.");
 		return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
@@ -99,6 +103,10 @@ public class IntegracaoCurricularController {
 		modelMap.addAttribute("idCurriculo", idCurriculo);
 		modelMap.addAttribute("disciplinas", disciplinaService.find(Disciplina.class));
 		modelMap.addAttribute("integracao", new IntegracaoCurricular());
+		
+		EstruturaCurricular estruturaBD = estruturaService.find(EstruturaCurricular.class, idCurriculo);
+		estruturaBD.calcularOutrasCh();
+		estruturaService.update(estruturaBD);
 		
 		return "integracao/adicionar";
 	}
