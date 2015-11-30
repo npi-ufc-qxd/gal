@@ -2,6 +2,7 @@ package br.ufc.npi.gal.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -36,7 +38,7 @@ public class EstruturaCurricular {
 	@JoinColumn(name = "id_curso")
 	private Curso curso;
 
-	@OneToMany(mappedBy = "estruturaCurricular", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "estruturaCurricular", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<IntegracaoCurricular> curriculos;
 
 	@Column(name = "matriz_curricular")

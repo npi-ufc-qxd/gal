@@ -3,6 +3,7 @@ package br.ufc.npi.gal.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -12,18 +13,16 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.ufc.npi.gal.model.Curso;
 import br.ufc.npi.gal.model.Disciplina;
 import br.ufc.npi.gal.model.EstruturaCurricular;
 import br.ufc.npi.gal.model.IntegracaoCurricular;
-import br.ufc.npi.gal.repository.jpa.JpaCursoRepository;
-import br.ufc.npi.gal.repository.jpa.JpaEstruturaCurricularRepositoryImpl;
-import br.ufc.npi.gal.repository.jpa.JpaIntegracaoCurricularRepositoryImpl;
+import br.ufc.npi.gal.repository.IntegracaoCurricularRepository;
 import br.ufc.npi.gal.service.DisciplinaService;
 import br.ufc.npi.gal.service.EstruturaCurricularService;
+import br.ufc.npi.gal.service.IntegracaoCurricularService;
 import br.ufc.npi.gal.service.ParserEstruturaCurricularService;
 
 @Named
@@ -34,15 +33,17 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	@Inject
 	private EstruturaCurricularService estruturaCurricluarService;
 	@Inject
-	private JpaEstruturaCurricularRepositoryImpl jpaEstruturaCurricularRepository;
+	private IntegracaoCurricularRepository integracaoCurricularRepository;
 	@Inject
-	private JpaCursoRepository jpaCursoRepository;
-	@Inject
-	private JpaIntegracaoCurricularRepositoryImpl jpaIntegracaoCurricularRepositoryImpl;
+	private IntegracaoCurricularService integracaoCurricularService;
 	private EstruturaCurricular estruturaCurricular;
+	private List<String> disciplinasCurriculo;
+	private HashMap<String, String> disciplinasPreRequisitos;
 
 	public ParserEstruturaCurricularServiceImpl() {
 		estruturaCurricular = new EstruturaCurricular();
+		disciplinasCurriculo = new ArrayList<String>();
+		disciplinasPreRequisitos = new HashMap<String, String>();
 	}
 
 	/**
@@ -188,8 +189,8 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 				}
 			}
 		}
+		verificaExistenciaIntegracao();
 		return info;
-
 	}
 
 	/**
@@ -241,13 +242,15 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			disciplinaService.save(disciplina);
 
 		}
+		disciplinasCurriculo.add(disciplina.getCodigo());
+		disciplinasPreRequisitos.put(disciplina.getCodigo(), colunasComponente.get(5).text());
 		adicionarIntegracaoCurricular(disciplina, periodoOferta, colunasComponente.get(4).text(),
-				colunasComponente.get(7).text(), colunasComponente.get(5).text(), colunasComponente.get(6).text());
+				colunasComponente.get(5).text(), colunasComponente.get(6).text(), colunasComponente.get(7).text());
 
 	}
 
-	public void adicionarIntegracaoCurricular(Disciplina disciplina, int periodoOferta, String natureza,
-			String coRequisitos, String preRequisitos, String equivalencias) {
+	private void adicionarIntegracaoCurricular(Disciplina disciplina, int periodoOferta, String natureza,
+			String preRequisitos, String equivalencias, String coRequisitos) {
 		IntegracaoCurricular integracaoCurricular = new IntegracaoCurricular();
 		integracaoCurricular.setDisciplina(disciplina);
 		integracaoCurricular.setEstruturaCurricular(estruturaCurricular);
@@ -255,37 +258,56 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		integracaoCurricular.setSemestreOferta(periodoOferta);
 		integracaoCurricular.setQuantidadeAlunos(50);
 		System.out.println(integracaoCurricular.toString());
-		jpaIntegracaoCurricularRepositoryImpl.save(integracaoCurricular);
+		integracaoCurricularService.save(integracaoCurricular);
 	}
 
 	/**
 	 * Este método será um método genérico a ser utilizado para a existência de
 	 * quivalências, co- e pré-requisitos entre integrações curriculares
 	 * 
-	 * @param consulta, string que vem do HTML
-	 * @return, deve retornar a lista de integrações referente a uma outra integração curricular
+	 * @param consulta,
+	 *            string que vem do HTML @return, deve retornar a lista de
+	 *            integrações referente a uma outra integração curricular
 	 */
-	public List<IntegracaoCurricular> verificaExistenciaIntegracao(String consulta) {
+	private void verificaExistenciaIntegracao() {
 		List<IntegracaoCurricular> listIntegracao = new ArrayList<IntegracaoCurricular>();
-		int i = 1, indiceConsulta = 0;
+		int i = 0;
 		Disciplina disciplinaIntegracao = new Disciplina();
 		String codigoIntegracao = "";
-		if (consulta.length() > 0) {
-			while (i < consulta.length()) {
-				indiceConsulta = consulta.indexOf("OU", i);
-				codigoIntegracao = consulta.substring(i, indiceConsulta);
-				disciplinaIntegracao = disciplinaService.getDisciplinaByCodigo(codigoIntegracao);
-				if (disciplinaIntegracao != null) {
-
+		String consulta = "";
+		for (String codigoDisciplina : disciplinasCurriculo) {
+			consulta = disciplinasPreRequisitos.get(codigoDisciplina);
+			consulta = consulta.replaceAll("OU", "");
+			consulta = consulta.replaceAll("E", "");
+			consulta = consulta.replace('(', ' ');
+			consulta = consulta.replace(')', ' ');
+			while (consulta.length() > i) {
+				if (consulta.charAt(i) != ' ') {
+					codigoIntegracao += consulta.charAt(i);
+					i++;
+				} else {
+					codigoIntegracao = codigoIntegracao.replaceAll(" ", "");
+					disciplinaIntegracao = disciplinaService.getDisciplinaByCodigo(codigoIntegracao);
+					if (disciplinaIntegracao != null) {
+						listIntegracao.add(integracaoCurricularService.getIntegracaoByIdDisciplinaIdCurriculo(
+								disciplinaIntegracao.getId(), estruturaCurricular.getId()));
+					}
+					codigoIntegracao = "";
+					i += 2;
 				}
 			}
-			return listIntegracao;
-		} else
-
-		{
-			return null;
+			vinculaIntegracaoCurricular(codigoDisciplina, listIntegracao);
+			i = 0;
+			codigoIntegracao = "";
 		}
 
+	}
+
+	private void vinculaIntegracaoCurricular(String idIntegracao, List<IntegracaoCurricular> vinculacoes) {
+		IntegracaoCurricular integracao = integracaoCurricularRepository.getIntegracao(
+				disciplinaService.getDisciplinaByCodigo(idIntegracao).getId(), estruturaCurricular.getId());
+		integracao.setPreRequisitos(vinculacoes);
+		integracaoCurricularService.save(integracao);
 	}
 
 }
