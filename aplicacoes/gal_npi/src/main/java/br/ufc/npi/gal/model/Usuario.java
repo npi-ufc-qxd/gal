@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 
 @Entity
 @EntityListeners(UsuarioEntityListener.class)
-
 public class Usuario {
 
 	@Id

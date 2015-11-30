@@ -46,7 +46,7 @@ public class AcervoController {
 
 	@RequestMapping(value = "/atualizar_acervo", method = RequestMethod.GET)
 	public String atualizarAcervo(ModelMap modelMap) {
-		List<AcervoDocumento> atualizacoesRealizadas = new ArrayList<AcervoDocumento>();
+		List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService.find(AcervoDocumento.class);
 		modelMap.addAttribute("atualizacoesRealizadas", atualizacoesRealizadas);
 		modelMap.addAttribute("atualizacaoAcervo", new AcervoDocumento());
 		return "acervo/atualizar";
@@ -106,8 +106,7 @@ public class AcervoController {
 					+ e.getStackTrace());
 			// avisar ao usuario do erro
 		}
-		atualizacaoAcervo.setUsuario(usuarioService.getUsuarioByLogin(auth
-				.getName()));
+		atualizacaoAcervo.setUsuario(usuarioService.getUsuarioByLogin(auth.getName()));
 		atualizacaoAcervo.setExtensao(request.getContentType());
 		acervoService.registrarAtualizacao(atualizacaoAcervo);
 		
