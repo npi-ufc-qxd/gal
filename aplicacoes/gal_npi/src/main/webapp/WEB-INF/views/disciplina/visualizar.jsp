@@ -106,6 +106,12 @@
 							<div id="${basica.id}" class="panel-collapse collapse" role="tabpanel">
 								<div class="panel-body">
 						      		Acervo: ${basica.acervo}
+						      		<c:forEach var="meta" items="${metasCalculadas}">
+						      			<c:if test="${meta.key.titulo.nome == basica.nome}">
+						      				<p>${meta.key}</p>
+						      				<p>${meta.value}</p>
+						      			</c:if>
+						      		</c:forEach>
 								</div>
 							</div>
 						</div>
@@ -133,6 +139,12 @@
 							<div id="${complementar.id}" class="panel-collapse collapse" role="tabpanel">
 								<div class="panel-body">
 						      		Acervo: ${complementar.acervo}
+						      		<c:forEach var="meta" items="${metasCalculadas}">
+						      			<c:if test="${meta.key.titulo.nome == complementar.nome}">
+						      				<p>${meta.key}</p>
+						      				<p>${meta.value}</p>
+						      			</c:if>
+						      		</c:forEach>
 								</div>
 							</div>
 						</div>
