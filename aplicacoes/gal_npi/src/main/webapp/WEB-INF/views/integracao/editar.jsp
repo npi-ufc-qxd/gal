@@ -63,9 +63,9 @@
 
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit"
-					value="Adicionar" /> 
+					value="Salvar" /> 
 					
-				<a	href="<c:url value="/curso/listar"></c:url>"
+				<a	href="<c:url value="javascript:window.history.go(-1)"></c:url>"
 					class="btn btn-default">Cancelar</a>
 			</div>
 

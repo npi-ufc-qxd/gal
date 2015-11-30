@@ -331,7 +331,7 @@ public class EstruturaCurricular{
 		int contTotal;
 		int contTeorica = 0;
 		int contPratica = 0;
-
+		
 		for (IntegracaoCurricular curriculo : curriculos) {
 			if (curriculo.getNatureza().equals("OBRIGATÓRIA")) {
 				contPratica += Integer.parseInt(curriculo.getDisciplina().getChPratica());
@@ -343,5 +343,6 @@ public class EstruturaCurricular{
 		chPratica = String.valueOf(contPratica);
 		chTeorica = String.valueOf(contTeorica);
 		chObrigatoria = String.valueOf(contTotal);
+		System.out.println(chObrigatoria);
 	}
 }

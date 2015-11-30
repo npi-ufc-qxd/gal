@@ -7,6 +7,9 @@ public class DetalheMetaCalculada {
 	private String tipoBibliografia;
 	private String curriculo;
 	private double calculo;
+	private Integer semestre;
+	private int quantidadeAlunos;
+	private String codigoDisciplina;
 
 	public String getDisciplina() {
 		return disciplina;
@@ -50,9 +53,31 @@ public class DetalheMetaCalculada {
 
 	@Override
 	public String toString() {
-		return "DetalheMetaCalculadaPar [disciplina=" + disciplina + ", curso="
-				+ curso + ", tipoBibliografia=" + tipoBibliografia
-				+ ", curriculo=" + curriculo + ", calculo=" + calculo + "]";
+		return "DetalheMetaCalculadaPar [disciplina=" + disciplina + ", curso=" + curso + ", tipoBibliografia="
+				+ tipoBibliografia + ", curriculo=" + curriculo + ", calculo=" + calculo + "]";
 	}
 
+	public Integer getSemestre() {
+		return semestre;
+	}
+
+	public void setSemestre(Integer semestre) {
+		this.semestre = semestre;
+	}
+
+	public int getQuantidadeAlunos() {
+		return quantidadeAlunos;
+	}
+
+	public void setQuantidadeAlunos(int quantidadeAlunos) {
+		this.quantidadeAlunos = quantidadeAlunos;
+	}
+
+	public String getCodigoDisciplina() {
+		return codigoDisciplina;
+	}
+
+	public void setCodigoDisciplina(String codigoDisciplina) {
+		this.codigoDisciplina = codigoDisciplina;
+	}
 }

@@ -43,7 +43,7 @@ public class AcervoController {
 	@Inject
 	private AcervoDocumentoService acervoDocumentoService;
 
-	@RequestMapping(value = "/atualizar_acervo", method = RequestMethod.GET)
+	@RequestMapping(value = "/atualizar", method = RequestMethod.GET)
 	public String atualizarAcervo(ModelMap modelMap, HttpSession session) {
 		List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService.find(AcervoDocumento.class);
 		modelMap.addAttribute("atualizacoesRealizadas", atualizacoesRealizadas);
@@ -51,7 +51,7 @@ public class AcervoController {
 		return "acervo/atualizar";
 	}
 
-	@RequestMapping(value = "/resolver_conflitos", method = RequestMethod.GET)
+	@RequestMapping(value = "/conflitos", method = RequestMethod.GET)
 	public String resolverConflitos(ModelMap modelMap) {
 
 		modelMap.addAttribute("exemplares",
@@ -87,13 +87,7 @@ public class AcervoController {
 					"formato do arquivo incorreto, por favor selecionar um arquivo xls");
 			erros = true;
 		}
-		if (erros) {/*
-			List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService
-					.atualizacoesPorUsuario(usuarioService.getUsuarioByLogin(auth
-							.getName()));
-			modelMap.addAttribute("atualizacoesRealizadas", atualizacoesRealizadas);
-			modelMap.addAttribute("atualizacaoAcervo", new AcervoDocumento());
-			return "redirect:/acervo/atualizar_acervo";*/
+		if (erros) {
 			return "acervo/atualizar";
 		}
 		try {
@@ -112,7 +106,7 @@ public class AcervoController {
 		redirectAttributes.addFlashAttribute("info",
 				"Atualização realizada com sucesso.");
 		
-		return "redirect:/acervo/resolver_conflitos";
+		return "redirect:/acervo/conflitos";
 
 	}
 
@@ -135,7 +129,7 @@ public class AcervoController {
 		if (acervoService.submeterExemplarConflitante(exemplar)) {
 			redirectAttributes.addFlashAttribute("info",
 					"Conflito resolvido com sucesso.");
-			return "redirect:/acervo/resolver_conflitos";
+			return "redirect:/acervo/conflitos";
 		} else {
 			modelMap.addAttribute("exemplar", exemplar);
 			return "/acervo/editar";
