@@ -1,7 +1,5 @@
 package br.ufc.npi.gal.model;
 
-import java.util.Optional;
-
 import javax.persistence.PostLoad;
 
 import org.springframework.beans.BeansException;
@@ -31,6 +29,7 @@ public class UsuarioEntityListener implements ApplicationContextAware {
 			user.setEmail(usuario.getEmail());
 			user.setNome(usuario.getNome());
 			user.setSiape(usuario.getSiape());
+			user.setCpf(usuario.getCpf());
 		} else {
 			user.setNome(user.getCpf());
 		}

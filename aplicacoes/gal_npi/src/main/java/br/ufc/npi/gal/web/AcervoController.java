@@ -3,6 +3,7 @@ package br.ufc.npi.gal.web;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,8 +45,8 @@ public class AcervoController {
 	private AcervoDocumentoService acervoDocumentoService;
 
 	@RequestMapping(value = "/atualizar_acervo", method = RequestMethod.GET)
-	public String atualizarAcervo(ModelMap modelMap, HttpSession session) {
-		List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService.find(AcervoDocumento.class);
+	public String atualizarAcervo(ModelMap modelMap) {
+		List<AcervoDocumento> atualizacoesRealizadas = new ArrayList<AcervoDocumento>();
 		modelMap.addAttribute("atualizacoesRealizadas", atualizacoesRealizadas);
 		modelMap.addAttribute("atualizacaoAcervo", new AcervoDocumento());
 		return "acervo/atualizar";
@@ -65,6 +66,7 @@ public class AcervoController {
 			@RequestParam("file") MultipartFile request,BindingResult result , RedirectAttributes redirectAttributes) {
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
+		
 		Boolean erros = false;
 		if (atualizacaoAcervo.getInicioPeridoDelta() == null) {
 			result.rejectValue("inicioPeridoDelta",
