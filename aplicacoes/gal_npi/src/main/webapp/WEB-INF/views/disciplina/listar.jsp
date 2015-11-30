@@ -69,6 +69,16 @@
 					</a>
 					</datatables:column>
 				</sec:authorize>
+				
+				<datatables:column title="Codigo">
+					
+				</datatables:column>
+				<datatables:column title="Codigo">
+					
+				</datatables:column>
+				<datatables:column title="Codigo">
+					
+				</datatables:column>
 			</datatables:table>
 		</c:if>
 
