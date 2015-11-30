@@ -15,12 +15,8 @@
 		<jsp:include page="fragments/header.jsp" />
 
 		<div id="informacao">
-			<p>Atendimento: Sala 2 - Segunda a Sexta</p>
-			<p>Contatos:</p>
-			<p>Rayson Santos: rayson.ufc@gmail.com</p>
-			<p>Prof. Camilo: camilo@es.ufc.br</p>
-
-
+			<p>Atendimento presencial: Bloco 2, Térreo, de Segunda a Sexta</p>
+			<p>Contato: npi@quixada.ufc.br</p>
 		</div>
 
 		<jsp:include page="fragments/footer.jsp" />

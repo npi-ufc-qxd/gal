@@ -57,7 +57,7 @@ public class EstruturaCurricularController {
 		
 		estruturaCurricularService.update(estrutura);
 		redirectAttributes.addFlashAttribute("info","Estrutura Curricular atualizada com sucesso");
-		return "redirect:/curso/listar";
+		return "redirect:/curso/" + curso.getCodigo() + "/visualizar";
 	}
 	
 	@RequestMapping(value="/{id}/excluir")
@@ -69,7 +69,7 @@ public class EstruturaCurricularController {
 			
 		}
 		redirectAttributes.addFlashAttribute("info","Estrutura Curricular removida com sucesso");
-		return "redirect:/curso/listar";
+		return "redirect:/curso/" + estruturaCurricular.getCurso().getCodigo() + "/visualizar";
 	}
 	
 	@RequestMapping(value="/{id}/adicionar",method = RequestMethod.GET)
@@ -111,6 +111,6 @@ public class EstruturaCurricularController {
 		
 		redirectAttributes.addFlashAttribute("info",
 				"Estrutura Curricular adicionada com sucesso.");
-		return "redirect:/curso/listar";
+		return "redirect:/curso/" + curso.getCodigo() + "/visualizar";
 	}
 }

@@ -63,6 +63,9 @@
 				<datatables:table id="atualizacao" data="${atualizacoesRealizadas}"
 					cdn="true" row="atualizacao" theme="bootstrap2"
 					cssClass="table table-striped">
+					<datatables:column title="Autor">
+						<c:out value="${atualizacao.usuario.nome}"></c:out>
+					</datatables:column>
 					<datatables:column title="Inicio">
 						<c:out value="${atualizacao.inicioPeridoDelta}"></c:out>
 					</datatables:column>

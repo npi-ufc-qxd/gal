@@ -24,17 +24,17 @@
 
 
 			<div class="form-group">
-				<label for="codigo" class="col-sm-1 control-label"style="width:160px;">Código</label>
-				<div class="col-sm-10">
+				<label for="codigo" class="col-sm-1 control-label"style="width:210px;">Código</label>
+				<div class="col-sm-9">
 					<form:input id="codigo" class="form-control" style="float:right;" placeholder="Ex.: 2010.1" path="codigo" />
 					<form:errors path="codigo" cssClass="error" />
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label for="matrizCurricular" class="col-sm-1 control-label"style="width:160px;">Matriz
+				<label for="matrizCurricular" class="col-sm-1 control-label"style="width:210px;">Matriz
 					Curricular</label>
-				<div class="col-sm-10">
+				<div class="col-sm-9">
 					<form:input id="matrizCurricular" class="form-control"
 						placeholder="Ex.: ENGENHARIA DE SOFTWARE - QUIXADÁ - Presencial - BACHARELADO EM ENGENHARIA DE SOFTWARE - MT - BACHARELADO"
 						path="matrizCurricular" />
@@ -42,9 +42,9 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="unidadeVinculacao" class="col-sm-1 control-label"style="width:160px;">Unidade de
+				<label for="unidadeVinculacao" class="col-sm-1 control-label"style="width:210px;">Unidade de
 					Vinculação</label>
-				<div class="col-sm-10">
+				<div class="col-sm-9">
 					<form:input id="unidadeVinculacao" class="form-control"
 						placeholder="Ex.: Campus da UFC em Quixadá/Diretoria (11.00.01.31)"
 						path="unidadeVinculacao" />
@@ -52,18 +52,18 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="municipio" class="col-sm-1 control-label"style="width:160px;">Município de
+				<label for="municipio" class="col-sm-1 control-label"style="width:210px;">Município de
 					Funcionamento</label>
-				<div class="col-sm-10">
+				<div class="col-sm-9">
 					<form:input id="municipio" class="form-control"
 						placeholder="Ex.: Quixadá-CE" path="municipio" />
 					<form:errors path="municipio" cssClass="error" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="semestreEntradaVigor" class="col-sm-1 control-label"style="width:160px;">Período Letivo de Entrada
+				<label for="semestreEntradaVigor" class="col-sm-1 control-label"style="width:210px;">Período Letivo de Entrada
 					em Vigor</label>
-				<div class="col-sm-10">
+				<div class="col-sm-9">
 					<form:input id="semestreEntradaVigor" class="form-control"
 						placeholder="Ex.: 2011.2"
 						path="semestreEntradaVigor" />
@@ -71,8 +71,8 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="chOptMinima" class="col-sm-1 control-label"style="width:160px;">CH Optativa Mínima</label>
-				<div class="col-sm-10">
+				<label for="chOptMinima" class="col-sm-1 control-label"style="width:210px;">C.H. Optativa Mínima (hrs)</label>
+				<div class="col-sm-9">
 					<form:input id="chOptMinima" class="form-control"
 						placeholder="Carga Horária Optativa Mínima"
 						path="chOptMinima" />
@@ -81,8 +81,8 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="chCompOptLivres" class="col-sm-1 control-label"style="width:160px;">CH Máxima Comp. Optativos Livres:</label>
-				<div class="col-sm-10">
+				<label for="chCompOptLivres" class="col-sm-1 control-label"style="width:210px;">C.H. Máxima Comps. Optativos Livres (hrs):</label>
+				<div class="col-sm-9">
 					<form:input id="chCompOptLivres" class="form-control"
 						placeholder="Carga Horária Máxima de Componentes Curriculares Optativos Livres"
 						path="chCompOptLivres" />
@@ -91,33 +91,39 @@
 			</div>
 			
 			<div class="form-group">
-				<label class="col-sm-1 control-label"style="width:160px;">Prazos Conclusão Períodos Letivos:</label>
-				<div class="col-sm-10">
-					<form:input id="prazoConclusaoMinimo" class="sidebyside"
+				<label class="col-sm-1 control-label"style="width:210px;">Prazos Conclusão Períodos Letivos</label>
+				<div class="col-sm-9">
+				<label for="prazoConclusaoMinimo">Mínimo:</label>
+					<form:input id="prazoConclusaoMinimo" class="sidebyside" 
 						placeholder="Mínimo"
 						path="prazoConclusaoMinimo" />
 					<form:errors path="prazoConclusaoMinimo" cssClass="error" />
-					<form:input id="prazoConclusaoMedio" class="sidebyside"
+				<label for="prazoConclusaoMedio">Médio:</label>
+					<form:input id="prazoConclusaoMedio" class="sidebyside" 
 						placeholder="Médio"
 						path="prazoConclusaoMedio" />
 					<form:errors path="prazoConclusaoMedio" cssClass="error" />
-					<form:input id="prazoConclusaoMaximo" class="sidebyside"
+				<label for="prazoConclusaoMaximo">Máximo:</label>
+					<form:input id="prazoConclusaoMaximo" class="sidebyside" 
 						placeholder="Máximo"
 						path="prazoConclusaoMaximo" />
 					<form:errors path="prazoConclusaoMaximo" cssClass="error" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-1 control-label"style="width:160px;">Carga Horária por Período Letivo:</label>
-				<div class="col-sm-10">
+				<label class="col-sm-1 control-label"style="width:210px;">C.H. por Período Letivo (hrs)</label>
+				<div class="col-sm-9">
+				<label for="chPeriodoMinimo">Mínima:</label>
 					<form:input id="chPeriodoMinimo" class="sidebyside"
 						placeholder="Mínima"
 						path="chPeriodoMinimo" />
 					<form:errors path="chPeriodoMinimo" cssClass="error" />
+				<label for="chPeriodoMedio">Média:</label>
 					<form:input id="chPeriodoMedio" class="sidebyside"
 						placeholder="Média"
 						path="chPeriodoMedio" />
 					<form:errors path="chPeriodoMedio" cssClass="error" />
+				<label for="chPeriodoMaximo">Máxima:</label>
 					<form:input id="chPeriodoMaximo" class="sidebyside"
 						placeholder="Máxima"
 						path="chPeriodoMaximo" />
@@ -128,8 +134,8 @@
 
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit"
-					value="Adicionar" /> <a
-					href="<c:url value="/curso/listar"></c:url>"
+					value="Adicionar" /> 
+					<a	href="<c:url value="javascript:window.history.go(-1)"> </c:url>"
 					class="btn btn-default">Cancelar</a>
 			</div>
 		</form:form>
