@@ -49,6 +49,39 @@
 			
 			<hr>
 			
+			<h4>Integrações Curriculares</h4>
+			<c:if test="${empty curriculos}">
+				<div class="alert alert-warning" role="alert">Esta disciplina não possui integrações curriculares cadastradas</div>
+			</c:if>
+			
+			<c:if test="${not empty curriculos}">
+				<div class="row">
+					<div class="col-md-6">
+						<table class="table table-condensed table-striped table-bordered">
+							<thead>
+								<tr>
+									<th>Curso</th>
+									<th>Semestre de Oferta</th>
+									<th>Quantidade de Alunos</th>
+								</tr>
+							</thead>
+							
+							<tbody>
+								<c:forEach var="curriculo" items="${curriculos}">
+									<tr>
+										<td>${curriculo.estruturaCurricular.curso.nome}</td>
+										<td>${curriculo.semestreOferta}</td>
+										<td>${curriculo.quantidadeAlunos}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</c:if>
+			
+			<hr>
+			
 			<h4>Bibliografias</h4>
 			<button id="expandirTodosAccordions" class="btn btn-default btn-xs">Expandir Todas</button>
 			<button id="esconderTodosAccordions" class="btn btn-default btn-xs">Esconder Todas</button>
@@ -57,7 +90,7 @@
 			
 			<h4>Bibliografia Básica</h4>
 			<c:if test="${empty bibliografia_basica}">
-			
+				<div class="alert alert-warning" role="alert">Esta disciplina não possui bibliografia básica cadastrada.</div>
 			</c:if>
 			<c:if test="${not empty bibliografia_basica}">
 				<div class="panel-group" id="accordionBasica" role="tablist" aria-multiselectable="true">
@@ -84,7 +117,7 @@
 			
 			<h4>Bibliografia Complementar</h4>
 			<c:if test="${empty bibliografia_complementar}">
-			
+				<div class="alert alert-warning" role="alert">Esta disciplina não possui bibliografia complementar cadastrada.</div>
 			</c:if>
 			<c:if test="${not empty bibliografia_complementar}">
 				<div class="panel-group" id="accordionComplementar" role="tablist" aria-multiselectable="true">

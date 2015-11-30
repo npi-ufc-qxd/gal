@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.Disciplina;
+import br.ufc.npi.gal.model.IntegracaoCurricular;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.CalculoMetaService;
 import br.ufc.npi.gal.service.DisciplinaService;
@@ -191,8 +192,11 @@ public class DisciplinaController {
 				complementar.add(b.getTitulo());
 		}
 		
+		List<IntegracaoCurricular> curriculos = disciplina.getCurriculos();
+		
 		modelMap.addAttribute("bibliografia_basica", basica);
 		modelMap.addAttribute("bibliografia_complementar", complementar);
+		modelMap.addAttribute("curriculos", curriculos);
 		modelMap.addAttribute("disciplina", disciplina);
 		
 		return "disciplina/visualizar";
