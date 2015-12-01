@@ -45,41 +45,47 @@
 		</c:if>
 		
 		<c:if test="${not empty disciplinas}">
-			<datatables:table id="disciplinaTable" data="${disciplinas}" cdn="false"
-				row="disciplina" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 3 4" default-sort="0 asc">
-				<datatables:column title="Nome">
-					<c:out value="${disciplina.nome}"></c:out>
-				</datatables:column>
-	
-				<datatables:column title="Codigo">
-					<c:out value="${disciplina.codigo}"></c:out>
-				</datatables:column>
-				<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
-					<datatables:column title="Vincular">
-						<a class="btn btn-success" href="<c:url value="/disciplina/${disciplina.id }/vincular" ></c:url>"><span class="glyphicon glyphicon-link"></span></a>
-					</datatables:column>
-					
-					<datatables:column title="Editar">
-						<a class="btn btn-primary" href="<c:url value="/disciplina/${disciplina.id }/editar" ></c:url>"><span class="glyphicon glyphicon-edit"></span></a>
-					</datatables:column>
-		
-					<datatables:column title="Excluir">
-					<a id="excluir" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/disciplina/${disciplina.id}/excluir" ></c:url>">
-						<span class="glyphicon glyphicon-trash"></span>
-					</a>
-					</datatables:column>
-				</sec:authorize>
+			<c:choose>
+				<c:when test="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+					<datatables:table id="disciplinaTable" data="${disciplinas}" cdn="false"
+						row="disciplina" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 3 4" default-sort="0 asc">
+						<datatables:column title="Nome">
+							<c:out value="${disciplina.nome}"></c:out>
+						</datatables:column>
+			
+						<datatables:column title="Codigo">
+							<c:out value="${disciplina.codigo}"></c:out>
+						</datatables:column>
+						
+						<datatables:column title="Vincular">
+							<a class="btn btn-success" href="<c:url value="/disciplina/${disciplina.id }/vincular" ></c:url>"><span class="glyphicon glyphicon-link"></span></a>
+						</datatables:column>
+							
+						<datatables:column title="Editar">
+							<a class="btn btn-primary" href="<c:url value="/disciplina/${disciplina.id }/editar" ></c:url>"><span class="glyphicon glyphicon-edit"></span></a>
+						</datatables:column>
 				
-				<datatables:column title="Codigo">
-					
-				</datatables:column>
-				<datatables:column title="Codigo">
-					
-				</datatables:column>
-				<datatables:column title="Codigo">
-					
-				</datatables:column>
-			</datatables:table>
+						<datatables:column title="Excluir">
+							<a id="excluir" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/disciplina/${disciplina.id}/excluir" ></c:url>">
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>	
+						</datatables:column>
+					</datatables:table>
+				</c:when>
+				<c:otherwise>
+					<datatables:table id="disciplinaTable" data="${disciplinas}" cdn="false"
+						row="disciplina" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="" default-sort="0 asc">
+						<datatables:column title="Nome">
+							<c:out value="${disciplina.nome}"></c:out>
+						</datatables:column>
+			
+						<datatables:column title="Codigo">
+							<c:out value="${disciplina.codigo}"></c:out>
+						</datatables:column>
+						
+					</datatables:table>
+				</c:otherwise>
+			</c:choose>
 		</c:if>
 
 		<jsp:include page="../fragments/footer.jsp" />
