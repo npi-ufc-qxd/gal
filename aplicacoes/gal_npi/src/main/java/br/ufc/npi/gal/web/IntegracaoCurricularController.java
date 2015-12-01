@@ -42,7 +42,7 @@ public class IntegracaoCurricularController {
 			this.integracaoService.delete(integracao);
 			redirectAttributes.addFlashAttribute("info", "Integração Curricular removida com sucesso.");
 			EstruturaCurricular estruturaBD = integracao.getEstruturaCurricular();
-			estruturaBD.calcularOutrasCh();
+			estruturaBD.calcularChCalculaveis();
 			estruturaService.update(estruturaBD);
 		}
 		
@@ -86,7 +86,7 @@ public class IntegracaoCurricularController {
 		integracaoService.save(integracao);
 		integracaoList.add(integracao);
 		estruturaBD.setCurriculos(integracaoList);
-		estruturaBD.calcularOutrasCh();
+		estruturaBD.calcularChCalculaveis();
 		estruturaService.update(estruturaBD);
 		
 		redirectAttributes.addFlashAttribute("info", "Integracao Curricular adicionada com sucesso.");

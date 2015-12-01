@@ -124,7 +124,7 @@ public class EstruturaCurricular{
 		super();
 		this.codigo = codigo;
 		this.curso = curso;
-		calcularOutrasCh();
+		calcularChCalculaveis();
 	}
 
 	public String getMatrizCurricular() {
@@ -300,7 +300,7 @@ public class EstruturaCurricular{
 		return "EstruturaCurricular [id=" + id + ", codigo=" + codigo + ", curso=" + curso + "]";
 	}
 
-	public void calcularOutrasCh() {
+	public void calcularChCalculaveis() {
 		calcularChObrigatoria();
 		calcularChTotalMinima();
 		calcularChAtvAcademicaEspecifica();
@@ -343,6 +343,5 @@ public class EstruturaCurricular{
 		chPratica = String.valueOf(contPratica);
 		chTeorica = String.valueOf(contTeorica);
 		chObrigatoria = String.valueOf(contTotal);
-		System.out.println(chObrigatoria);
 	}
 }
