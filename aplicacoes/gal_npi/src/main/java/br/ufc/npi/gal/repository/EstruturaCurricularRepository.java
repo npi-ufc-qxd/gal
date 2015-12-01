@@ -5,8 +5,8 @@ import br.ufc.quixada.npi.repository.GenericRepository;
 
 public interface EstruturaCurricularRepository extends GenericRepository<EstruturaCurricular> {
 
-	EstruturaCurricular getOutraEstruturaCurricularByAnoSemestre(Integer id,
-			String anoSemestre);
+	EstruturaCurricular getOutraEstruturaCurricularByCodigo(Integer id,
+			String codigo);
 	
 	
 }

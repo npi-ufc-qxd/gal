@@ -15,10 +15,10 @@ public class EstruturaCurricularServiceImpl extends GenericServiceImpl<Estrutura
 	@Inject
 	private EstruturaCurricularRepository estruturaRepository;
 	@Override
-	public EstruturaCurricular getOutraEstruturaCurricularByAnoSemestre(
-			Integer id, String anoSemestre) {
+	public EstruturaCurricular getOutraEstruturaCurricularByCodigo(
+			Integer id, String codigo) {
 		
-		return estruturaRepository.getOutraEstruturaCurricularByAnoSemestre(id, anoSemestre);
+		return estruturaRepository.getOutraEstruturaCurricularByCodigo(id, codigo);
 	}
 	
 }
