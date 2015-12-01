@@ -32,7 +32,6 @@
 				<c:out value="${info}"></c:out>
 			</div>
 		</c:if>
-	
 		<div class="panel-body">
 			<ul class="nav nav-tabs" role="tablist">
 				<c:forEach items="${curso.curriculos}" var="curriculo" varStatus="ct">
@@ -41,7 +40,7 @@
 	
 					<c:if test="${ct.index != 0}"> <c:set var="act" value=""></c:set> </c:if>
 	
-					<li class="${act }"><a href="#${curriculo.id }" role="tab" data-toggle="tab">${curriculo.anoSemestre}</a></li>
+					<li class="${act }"><a href="#${curriculo.id }" role="tab" data-toggle="tab">${curriculo.codigo}</a></li>
 	
 				</c:forEach>
 				<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
@@ -61,7 +60,7 @@
 				
 				<c:if test="${count.index != 0}"> <c:set var="active" value=""></c:set> </c:if>
 				
-				<div class="tab-pane ${active }" id="${curriculo.anoSemestre }"></div>
+				<div class="tab-pane ${active }" id="${curriculo.codigo }"></div>
 
 				<div id="${curriculo.id}" class="tab-pane ${active }">
 					<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
@@ -80,8 +79,51 @@
 							</button>
 						</a>
 					</div>
+					<div >
+					<div class="halfContainer">
+						<b>Código: </b> ${curriculo.codigo} <br>
+						<b>Matriz Curricular:</b> ${curriculo.matrizCurricular}<br>
+						<b>Unidade de Vinculação: </b>${curriculo.unidadeVinculacao }<br>
+						<b>Município de funcionamento: </b> ${curriculo.municipio }<br>
+						<b>Período Letivo de Entrada em Vigor: </b>${curriculo.semestreEntradaVigor}<br>
+						<b>Carga Horária Optativa Minima: </b>${curriculo.chOptMinima }<b> hrs</b><br>
+						<b>Carga Horária Máxima de Componentes Curriculares Optativos Livres: </b>${curriculo.chCompOptLivres }<b> hrs</b><br>
+						
+						
+						<br>
+					</div>
+					
+					<div class="halfContainer">
+					<div class="littleBox">
+						<b>Prazos para Conclusão em Períodos Letivos </b><br>
+						<b>Mínimo: </b>${curriculo.prazoConclusaoMinimo }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<b>Médio: </b>${curriculo.prazoConclusaoMedio }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<b>Máximo: </b>${curriculo.prazoConclusaoMaximo }<br>
+					</div><div class="littleBox" style="border-top:0px">
+						<b>Carga Horária por Período Letivo</b><br>
+						<b>Mínima: </b>${curriculo.chPeriodoMinimo }<b> hrs</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<b>Média: </b>${curriculo.chPeriodoMedio }<b> hrs</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<b>Máxima: </b>${curriculo.chPeriodoMaximo }<b> hrs</b><br>
+						</div>
+						<hr width="102%">
+						<div class="littleBox">
+						<b>Carga Horária Obrigatória</b><br>
+						<b>Total: </b>${curriculo.chTotalMinima }<b> hrs</b>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+						<b>( </b>${curriculo.chObgTeorica }<b> hrs</b> <b>Práticas ) / ( </b> ${curriculo.chObgPratica }<b> hrs</b> <b> Teóricas )</b><br>
+						</div>
+						<div style="padding:0px 12px;">
+						<b>Carga Horária Total Mínima: </b>${curriculo.chTotalMinima }<b> hrs</b><br>
+						<b>Carga Horária Obrigatória de Atividade Acadêmica Específica: </b>${curriculo.chAtvAcademicaEspecifica }<b> hrs</b><br>
+						</div>
+						
+						
+						<br>
+					</div>
+					</div>
+						
+					
 					</sec:authorize>
-
+					
 					<div class="panel panel-default">
 						<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="1 2 4 5" default-sort="3 desc">
 
@@ -122,6 +164,7 @@
 			</c:forEach>
 		</div>
 	</div>
+
 	
 	<jsp:include page="../fragments/footer.jsp" />
 	
