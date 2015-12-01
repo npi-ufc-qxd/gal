@@ -28,7 +28,8 @@ public class EstruturaCurricular{
 
 	@Column(name = "codigo")
 	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]{4}+[.][1-2]{1})", message = "O campo deve conter formato xxxx.1 ou xxxx.2"), })
 	private String codigo;
 
@@ -41,7 +42,7 @@ public class EstruturaCurricular{
 
 	@Column(name = "matriz_curricular")
 	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({ @Pattern(regexp = "([A-z\\s]+$)", message = "O campo deve conter apenas letras"), })
+	@Pattern.List({ @Pattern(regexp = "([a-z A-Z à-ú À-Ú\\s -]+$)", message = "O campo deve conter apenas letras"), })
 	private String matrizCurricular;
 
 	@Column(name = "unidade_vinculacao")
@@ -55,69 +56,83 @@ public class EstruturaCurricular{
 
 	@Column(name = "semestre_vigor")
 	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]{4}+[.][1-2]{1})", message = "O campo deve conter formato xxxx.1 ou xxxx.2"), })
 	private String semestreEntradaVigor;
 
 	@Column(name = "ch_opt_minima")
 	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
 	private String chOptMinima;
 
 	@Column(name = "prazo_conclusao_minimo")
-	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
 	@NotEmpty(message = "Campo obrigatório")
 	private String prazoConclusaoMinimo;
 
 	@Column(name = "prazo_conclusao_medio")
-	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
 	@NotEmpty(message = "Campo obrigatório")
 	private String prazoConclusaoMedio;
 
 	@Column(name = "prazo_conclusao_maximo")
-	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
 	@NotEmpty(message = "Campo obrigatório")
 	private String prazoConclusaoMaximo;
 
 	@Column(name = "ch_periodo_minima")
-	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
 	@NotEmpty(message = "Campo obrigatório")
 	private String chPeriodoMinimo;
 
 	@Column(name = "ch_periodo_media")
-	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
 	@NotEmpty(message = "Campo obrigatório")
 	private String chPeriodoMedio;
 
 	@Column(name = "ch_periodo_maxima")
-	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
 	@NotEmpty(message = "Campo obrigatório")
 	private String chPeriodoMaximo;
 
-	@Column(name = "ch_total_minima")
+	@Column(name = "ch_total_mínima")
 	private String chTotalMinima;
 
 	@Column(name = "ch_obrigatoria")
 	private String chObrigatoria;
 
-	@Column(name = "ch_teorica")
-	private String chTeorica;
+	@Column(name = "ch_obg_teorica")
+	private String chObgTeorica;
 
-	@Column(name = "ch_pratica")
-	private String chPratica;
+	@Column(name = "ch_obg_pratica")
+	private String chObgPratica;
 
 	@Column(name = "ch_atv_academica_especifica")
 	private String chAtvAcademicaEspecifica;
 
+	@Column(name = "ch_comp_opt_livres")
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
+	@NotEmpty(message = "Campo obrigatório")
+	private String chCompOptLivres;
+	
 	public EstruturaCurricular() {
-
 	}
 
 	public EstruturaCurricular(String codigo, Curso curso) {
@@ -125,6 +140,54 @@ public class EstruturaCurricular{
 		this.codigo = codigo;
 		this.curso = curso;
 		calcularChCalculaveis();
+	}
+
+	public String getChObgTeorica() {
+		return chObgTeorica;
+	}
+
+	public void setChObgTeorica(String chObgTeorica) {
+		this.chObgTeorica = chObgTeorica;
+	}
+
+	public String getChObgPratica() {
+		return chObgPratica;
+	}
+
+	public void setChObgPratica(String chObgPratica) {
+		this.chObgPratica = chObgPratica;
+	}
+
+	public String getChTotalMinima() {
+		return chTotalMinima;
+	}
+
+	public void setChTotalMinima(String chTotalMinima) {
+		this.chTotalMinima = chTotalMinima;
+	}
+
+	public String getChObrigatoria() {
+		return chObrigatoria;
+	}
+
+	public void setChObrigatoria(String chObrigatoria) {
+		this.chObrigatoria = chObrigatoria;
+	}
+
+	public String getChAtvAcademicaEspecifica() {
+		return chAtvAcademicaEspecifica;
+	}
+
+	public void setChAtvAcademicaEspecifica(String chAtvAcademicaEspecifica) {
+		this.chAtvAcademicaEspecifica = chAtvAcademicaEspecifica;
+	}
+
+	public String getChCompOptLivres() {
+		return chCompOptLivres;
+	}
+
+	public void setChCompOptLivres(String chCompOptLivres) {
+		this.chCompOptLivres = chCompOptLivres;
 	}
 
 	public String getMatrizCurricular() {
@@ -246,46 +309,6 @@ public class EstruturaCurricular{
 	public void setCurriculos(List<IntegracaoCurricular> curriculos) {
 		this.curriculos = curriculos;
 	}
-	
-	public String getChTotalMinima() {
-		return chTotalMinima;
-	}
-	
-	public void setChTotalMinima(String chTotalMinima) {
-		this.chTotalMinima = chTotalMinima;
-	}
-
-	public String getChObrigatoria() {
-		return chObrigatoria;
-	}
-	
-	public void setChObrigatoria(String chObrigatoria) {
-		this.chObrigatoria = chObrigatoria;
-	}
-
-	public String getChTeorica() {
-		return chTeorica;
-	}
-	
-	public void setChTeorica(String chTeorica) {
-		this.chTeorica = chTeorica;
-	}
-
-	public String getChPratica() {
-		return chPratica;
-	}
-	
-	public void setChPratica(String chPratica) {
-		this.chPratica = chPratica;
-	}
-	
-	public String getChAtvAcademicaEspecifica() {
-		return chAtvAcademicaEspecifica;
-	}
-	
-	public void setChAtvAcademicaEspecifica(String chAtvAcademicaEspecifica) {
-		this.chAtvAcademicaEspecifica = chAtvAcademicaEspecifica;
-	}
 
 	@Override
 	public int hashCode() {
@@ -297,7 +320,8 @@ public class EstruturaCurricular{
 
 	@Override
 	public String toString() {
-		return "EstruturaCurricular [id=" + id + ", codigo=" + codigo + ", curso=" + curso + "]";
+		return "EstruturaCurricular [id=" + id + ", codigo=" + codigo
+				+ ", curso=" + curso + "]";
 	}
 
 	public void calcularChCalculaveis() {
@@ -340,8 +364,8 @@ public class EstruturaCurricular{
 		}
 
 		contTotal = contTeorica + contPratica;
-		chPratica = String.valueOf(contPratica);
-		chTeorica = String.valueOf(contTeorica);
+		chObgPratica = String.valueOf(contPratica);
+		chObgTeorica = String.valueOf(contTeorica);
 		chObrigatoria = String.valueOf(contTotal);
 	}
 }
