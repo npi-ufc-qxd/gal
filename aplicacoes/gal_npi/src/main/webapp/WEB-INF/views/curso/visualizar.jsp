@@ -108,7 +108,7 @@
 						<hr width="102%">
 						<div class="littleBox">
 						<b>Carga Horária Obrigatória</b><br>
-						<b>Total: </b>${curriculo.chTotalMinima }<b> hrs</b>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+						<b>Total: </b>${curriculo.chObrigatoria}<b> hrs</b>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
 						<b>( </b>${curriculo.chObgTeorica }<b> hrs</b> <b>Práticas ) / ( </b> ${curriculo.chObgPratica }<b> hrs</b> <b> Teóricas )</b><br>
 						</div>
 						<div style="padding:0px 12px;">
