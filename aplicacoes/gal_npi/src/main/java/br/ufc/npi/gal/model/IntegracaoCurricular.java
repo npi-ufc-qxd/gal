@@ -36,36 +36,25 @@ public class IntegracaoCurricular {
 	@Column(name = "natureza")
 	private String natureza;
 	
-	@ManyToOne
-	private IntegracaoCurricular integracao;
+	@OneToMany(targetEntity = Disciplina.class)
+	private List<Disciplina> preRequisitos;
 	
-	@OneToMany(mappedBy = "integracao", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
-	private List<IntegracaoCurricular> preRequisitos;
+	/*@OneToMany(targetEntity = Disciplina.class, fetch = FetchType.LAZY)
+	private List<Disciplina> coRequisitos;
 	
-	@OneToMany(mappedBy = "integracao", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
-	private List<IntegracaoCurricular> coRequisitos;
-	
-	public List<IntegracaoCurricular> getCoRequisitos() {
+	public List<Disciplina> getCoRequisitos() {
 		return coRequisitos;
 	}
 
-	public void setCoRequisitos(List<IntegracaoCurricular> coRequisitos) {
+	public void setCoRequisitos(List<Disciplina> coRequisitos) {
 		this.coRequisitos = coRequisitos;
-	}
-
-	public IntegracaoCurricular getIntegracao() {
-		return integracao;
-	}
-
-	public void setIntegracao(IntegracaoCurricular integracao) {
-		this.integracao = integracao;
-	}
-
-	public List<IntegracaoCurricular> getPreRequisitos() {
+	}*/
+	
+	public List<Disciplina> getPreRequisitos() {
 		return preRequisitos;
 	}
 
-	public void setPreRequisitos(List<IntegracaoCurricular> preRequisitos) {
+	public void setPreRequisitos(List<Disciplina> preRequisitos) {
 		this.preRequisitos = preRequisitos;
 	}
 

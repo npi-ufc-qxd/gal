@@ -189,7 +189,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 				}
 			}
 		}
-		verificaExistenciaIntegracao();
+		verificaDependenciaIntegracao();
 		return info;
 	}
 
@@ -254,7 +254,11 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		IntegracaoCurricular integracaoCurricular = new IntegracaoCurricular();
 		integracaoCurricular.setDisciplina(disciplina);
 		integracaoCurricular.setEstruturaCurricular(estruturaCurricular);
-		integracaoCurricular.setNatureza(natureza);
+		if (natureza.equals("OBRIGATÓRIA")) {
+			integracaoCurricular.setNatureza("OBRIGATORIA");
+		} else if (natureza.equals("OPTATIVA")) {
+			integracaoCurricular.setNatureza("OPTATIVA");
+		}
 		integracaoCurricular.setSemestreOferta(periodoOferta);
 		integracaoCurricular.setQuantidadeAlunos(50);
 		System.out.println(integracaoCurricular.toString());
@@ -269,16 +273,16 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	 *            string que vem do HTML @return, deve retornar a lista de
 	 *            integrações referente a uma outra integração curricular
 	 */
-	private void verificaExistenciaIntegracao() {
-		List<IntegracaoCurricular> listIntegracao = new ArrayList<IntegracaoCurricular>();
+	private void verificaDependenciaIntegracao() {
+		List<Disciplina> listIntegracao = new ArrayList<Disciplina>();
 		int i = 0;
 		Disciplina disciplinaIntegracao = new Disciplina();
 		String codigoIntegracao = "";
 		String consulta = "";
 		for (String codigoDisciplina : disciplinasCurriculo) {
 			consulta = disciplinasPreRequisitos.get(codigoDisciplina);
-			consulta = consulta.replaceAll("OU", "");
-			consulta = consulta.replaceAll("E", "");
+			consulta = consulta.replaceAll("OU ", "");
+			consulta = consulta.replaceAll("E ", "");
 			consulta = consulta.replace('(', ' ');
 			consulta = consulta.replace(')', ' ');
 			while (consulta.length() > i) {
@@ -289,25 +293,24 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 					codigoIntegracao = codigoIntegracao.replaceAll(" ", "");
 					disciplinaIntegracao = disciplinaService.getDisciplinaByCodigo(codigoIntegracao);
 					if (disciplinaIntegracao != null) {
-						listIntegracao.add(integracaoCurricularService.getIntegracaoByIdDisciplinaIdCurriculo(
-								disciplinaIntegracao.getId(), estruturaCurricular.getId()));
+						listIntegracao.add(disciplinaIntegracao);	
 					}
 					codigoIntegracao = "";
-					i += 2;
+					i++;
 				}
 			}
-			vinculaIntegracaoCurricular(codigoDisciplina, listIntegracao);
+			//vinculaIntegracaoCurricular(codigoDisciplina, listIntegracao);
 			i = 0;
 			codigoIntegracao = "";
 		}
 
 	}
 
-	private void vinculaIntegracaoCurricular(String idIntegracao, List<IntegracaoCurricular> vinculacoes) {
+	private void vinculaIntegracaoCurricular(String idIntegracao, List<Disciplina> vinculacoes) {
 		IntegracaoCurricular integracao = integracaoCurricularRepository.getIntegracao(
 				disciplinaService.getDisciplinaByCodigo(idIntegracao).getId(), estruturaCurricular.getId());
 		integracao.setPreRequisitos(vinculacoes);
-		integracaoCurricularService.save(integracao);
+		integracaoCurricularService.update(integracao);
 	}
 
 }
