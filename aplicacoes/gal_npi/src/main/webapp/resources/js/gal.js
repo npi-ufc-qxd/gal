@@ -5,7 +5,7 @@ $( document ).ready(function() {
 		autoclose: true,
 		format: "dd/mm/yyyy",
 	});
-
+	
 	$('#resultadoParTable').dataTable( {
 		iDisplayLength: 25,
 		sPaginationType : "full_numbers",

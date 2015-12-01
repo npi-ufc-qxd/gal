@@ -105,7 +105,7 @@ public class EstruturaCurricularController {
 		
 		
 		estruturaCurricular.setCurso(curso);
-		//estruturaCurricular.setIdnheart1(null);
+		estruturaCurricular.setId(null);
 			
 		estruturaCurricularService.save(estruturaCurricular);
 		

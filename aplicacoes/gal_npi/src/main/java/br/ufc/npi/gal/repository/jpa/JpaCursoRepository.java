@@ -24,8 +24,6 @@ public class JpaCursoRepository extends JpaGenericRepositoryImpl<Curso> implemen
 		}
 		return null;
 	}
-	
-	
 
 	@Override
 	public Curso getCursoByCodigo(Integer codigo) {
@@ -61,30 +59,5 @@ public class JpaCursoRepository extends JpaGenericRepositoryImpl<Curso> implemen
 		}
 		return null;
 	}
-
-	@Override
-	public Curso getCursoByNome(String nome) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("nome", nome);
-		List<Curso> result = find(QueryType.JPQL, "from Curso where nome_c = :nome", params);
-		if(result != null && !result.isEmpty()){
-			return result.get(0);
-		}
-		return null;
-	}
-
-
-
-	@Override
-	public Curso getCursoById(Integer id) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("id", id);
-		List<Curso> result = find(QueryType.JPQL, "from Curso where id_crs = :id", params);
-		if(result != null && !result.isEmpty()){
-			return result.get(0);
-		}
-		return null;
-	}
-	
 	
 }

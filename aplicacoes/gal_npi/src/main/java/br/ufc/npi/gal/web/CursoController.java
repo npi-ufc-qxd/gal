@@ -1,7 +1,5 @@
 package br.ufc.npi.gal.web;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.validation.Valid;
 

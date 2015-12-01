@@ -34,10 +34,5 @@ public class CursoServiceImpl extends GenericServiceImpl<Curso> implements Curso
 		return cursoRepository.getOutroCursoByCodigo(id, codigo);
 	}
 
-	@Override
-	public Curso getCursoById(Integer id) {
-		return null;
-	}
-
 	
 }

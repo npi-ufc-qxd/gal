@@ -7,8 +7,6 @@ public interface CursoService extends GenericService<Curso> {
     
 	public abstract Curso getCursoBySigla(String sigla);
 	
-	public abstract Curso getCursoById(Integer id);
-	
 	public abstract Curso getCursoByCodigo(Integer codigo);
 	
 	public abstract Curso getOutroCursoBySigla(Integer id, String sigla);
