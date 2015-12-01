@@ -40,8 +40,8 @@
 					<form:select path="tipo" class="form-control">
 						<form:option value="DISCIPLINA">Disciplina</form:option>
 						<form:option value="ATIVIDADES COMPLEMENTARES">Atividade Complementar</form:option>
-						<form:option value="TRABALHO DE CONCLUSÃO DE CURSO">TCC</form:option>
-						<form:option value="ESTÁGIO">Estágio</form:option>
+						<form:option value="TCC">Trabalho de Conclusão de Curso</form:option>
+						<form:option value="ESTAGIO">Estágio</form:option>
 					</form:select>
 					<form:errors path="tipo" cssClass="error" />
 				</div>

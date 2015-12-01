@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -131,6 +133,10 @@ public class EstruturaCurricular{
 			@Pattern(regexp = "([0-9]*)", message = "O campo deve conter apenas números"), })
 	@NotEmpty(message = "Campo obrigatório")
 	private String chCompOptLivres;
+	
+	public static final String NATUREZA = "OBRIGATORIA";
+	public static final List<String> TIPO_ATV_ESPECIFICA = new ArrayList<String>(
+			Arrays.asList("ESTAGIO", "TCC", "ATIVIDADES COMPLEMENTARES"));
 	
 	public EstruturaCurricular() {
 	}
@@ -331,41 +337,39 @@ public class EstruturaCurricular{
 		}
 
 	private void calcularChAtvAcademicaEspecifica() {
-		int cont = 0;
+		int contChAtvAcademicaEspecifica = 0;
 		
 		for (IntegracaoCurricular curriculo : curriculos) {
-			if (curriculo.getDisciplina().getTipo().equals("ESTÁGIO") || 
-					curriculo.getDisciplina().getTipo().equals("TRABALHO DE CONCLUSÃO DE CURSO") || 
-					curriculo.getDisciplina().getTipo().equals("ATIVIDADES COMPLEMENTARES")) {
-				cont += Integer.parseInt(curriculo.getDisciplina().getChPratica());
-				cont += Integer.parseInt(curriculo.getDisciplina().getChTeorica());
+			if (TIPO_ATV_ESPECIFICA.contains(curriculo.getDisciplina().getTipo())) {
+				contChAtvAcademicaEspecifica += Integer.parseInt(curriculo.getDisciplina().getChPratica());
+				contChAtvAcademicaEspecifica += Integer.parseInt(curriculo.getDisciplina().getChTeorica());
 			}
 		}
-		chAtvAcademicaEspecifica = String.valueOf(cont);
+		chAtvAcademicaEspecifica = String.valueOf(contChAtvAcademicaEspecifica);
 	}
 
 	private void calcularChTotalMinima() {
-		int cont = 0;
-		cont += Integer.parseInt(chObrigatoria);
-		cont += Integer.parseInt(chOptMinima);
-		chTotalMinima = String.valueOf(cont);
+		int contChTotalMinima = 0;
+		contChTotalMinima += Integer.parseInt(chObrigatoria);
+		contChTotalMinima += Integer.parseInt(chOptMinima);
+		chTotalMinima = String.valueOf(contChTotalMinima);
 	}
 
 	private void calcularChObrigatoria() {
-		int contTotal;
-		int contTeorica = 0;
-		int contPratica = 0;
+		int contChObrigatoria;
+		int contChObgTeorica = 0;
+		int contChObgPratica = 0;
 		
 		for (IntegracaoCurricular curriculo : curriculos) {
-			if (curriculo.getNatureza().equals("OBRIGATÓRIA")) {
-				contPratica += Integer.parseInt(curriculo.getDisciplina().getChPratica());
-				contTeorica += Integer.parseInt(curriculo.getDisciplina().getChTeorica());
+			if (NATUREZA.equals(curriculo.getNatureza())) {
+				contChObgPratica += Integer.parseInt(curriculo.getDisciplina().getChPratica());
+				contChObgTeorica += Integer.parseInt(curriculo.getDisciplina().getChTeorica());
 			}
 		}
 
-		contTotal = contTeorica + contPratica;
-		chObgPratica = String.valueOf(contPratica);
-		chObgTeorica = String.valueOf(contTeorica);
-		chObrigatoria = String.valueOf(contTotal);
+		contChObrigatoria = contChObgTeorica + contChObgPratica;
+		chObgPratica = String.valueOf(contChObgPratica);
+		chObgTeorica = String.valueOf(contChObgTeorica);
+		chObrigatoria = String.valueOf(contChObrigatoria);
 	}
 }
