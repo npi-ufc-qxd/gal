@@ -197,21 +197,27 @@ public class DisciplinaController {
 		
 		List<IntegracaoCurricular> curriculos = disciplina.getCurriculos();
 		
-		HashMap<ResultadoCalculo, DetalheMetaCalculada> metasCalculadasPorTitulo = new HashMap<ResultadoCalculo, DetalheMetaCalculada>();
+		HashMap<String, MetaCalculada> metasCalculadasPorTitulo = new HashMap<String, MetaCalculada>();
 		
 		List<ResultadoCalculo> resultados = calculoService.gerarCalculo();
-		for (ResultadoCalculo resultadoCalculo : resultados) {
-			for(Bibliografia b : bibliografias){
+		for (Bibliografia b : bibliografias) {
+			for(ResultadoCalculo resultadoCalculo : resultados){
 				if(resultadoCalculo.getTitulo().getId().equals(b.getTitulo().getId())){
 					for(MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()){
 						for(DetalheMetaCalculada detalheMetaCalculada: metaCalculada.getDetalhePar()){
 							if(detalheMetaCalculada.getDisciplina().equals(disciplina.getNome())){
-								metasCalculadasPorTitulo.put(resultadoCalculo, detalheMetaCalculada);
+								System.out.print(resultadoCalculo.getTitulo().getNome() + " - ");
+								System.out.print(metaCalculada.getNome() + " - PAR - ");
+								System.out.println(detalheMetaCalculada);
+								metasCalculadasPorTitulo.put(resultadoCalculo.getTitulo().getNome(), metaCalculada);
 							}
 						}
 						for(DetalheMetaCalculada detalheMetaCalculada: metaCalculada.getDetalheImpar()){
 							if(detalheMetaCalculada.getDisciplina().equals(disciplina.getNome())){
-								metasCalculadasPorTitulo.put(resultadoCalculo, detalheMetaCalculada);
+								System.out.print(resultadoCalculo.getTitulo().getNome() + " - ");
+								System.out.print(metaCalculada.getNome() + " - IMPAR - ");
+								System.out.println(detalheMetaCalculada);
+								metasCalculadasPorTitulo.put(resultadoCalculo.getTitulo().getNome(), metaCalculada);
 							}
 						}
 					}
@@ -221,8 +227,8 @@ public class DisciplinaController {
 		
 		modelMap.addAttribute("bibliografia_basica", basica);
 		modelMap.addAttribute("bibliografia_complementar", complementar);
-		modelMap.addAttribute("curriculos", curriculos);
 		modelMap.addAttribute("metasCalculadas", metasCalculadasPorTitulo);
+		modelMap.addAttribute("curriculos", curriculos);
 		modelMap.addAttribute("disciplina", disciplina);
 		
 		return "disciplina/visualizar";

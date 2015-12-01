@@ -30,8 +30,7 @@
 			</div>
 		</c:if>
 		
-		<button class="btn btn-default btn-sm" onclick="goBack()">
-			<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+		<button class="btn btn-default" onclick="goBack()">
 			Voltar
 		</button>
 		
@@ -104,14 +103,8 @@
 								</h4>
 							</div>
 							<div id="${basica.id}" class="panel-collapse collapse" role="tabpanel">
-								<div class="panel-body">
+								<div class="disciplina-panel-body panel-body">
 						      		Acervo: ${basica.acervo}
-						      		<c:forEach var="meta" items="${metasCalculadas}">
-						      			<c:if test="${meta.key.titulo.nome == basica.nome}">
-						      				<p>${meta.key}</p>
-						      				<p>${meta.value}</p>
-						      			</c:if>
-						      		</c:forEach>
 								</div>
 							</div>
 						</div>
@@ -137,14 +130,8 @@
 								</div>
 							</div>
 							<div id="${complementar.id}" class="panel-collapse collapse" role="tabpanel">
-								<div class="panel-body">
+								<div class="disciplina-panel-body panel-body">
 						      		Acervo: ${complementar.acervo}
-						      		<c:forEach var="meta" items="${metasCalculadas}">
-						      			<c:if test="${meta.key.titulo.nome == complementar.nome}">
-						      				<p>${meta.key}</p>
-						      				<p>${meta.value}</p>
-						      			</c:if>
-						      		</c:forEach>
 								</div>
 							</div>
 						</div>
@@ -156,5 +143,6 @@
 
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
+	<pre>${metasCalculadas}</pre>
 </body>
 </html>
