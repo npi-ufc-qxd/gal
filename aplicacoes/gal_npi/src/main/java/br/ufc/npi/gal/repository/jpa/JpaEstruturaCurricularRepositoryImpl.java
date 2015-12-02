@@ -15,11 +15,11 @@ import br.ufc.quixada.npi.repository.jpa.JpaGenericRepositoryImpl;
 public class JpaEstruturaCurricularRepositoryImpl extends JpaGenericRepositoryImpl<EstruturaCurricular> implements EstruturaCurricularRepository{
 
 	@Override
-	public EstruturaCurricular getOutraEstruturaCurricularByAnoSemestre(Integer id, String anoSemestre) {
+	public EstruturaCurricular getOutraEstruturaCurricularByCodigo(Integer id, String codigo) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("ano_semestre", anoSemestre);
+		params.put("codigo", codigo);
 		params.put("id_curso", id);
-		List<EstruturaCurricular> result = find(QueryType.JPQL,"from EstruturaCurricular where id_curso = :id_curso and ano_semestre = :ano_semestre", params);
+		List<EstruturaCurricular> result = find(QueryType.JPQL,"from EstruturaCurricular where id_curso = :id_curso and codigo = :codigo", params);
 		if(result != null && !result.isEmpty()){
 			return result.get(0);
 		}
