@@ -14,6 +14,8 @@
 		   http://www.springframework.org/schema/jee 
            http://www.springframework.org/schema/jee/spring-jee-3.2.xsd">
 
+	<bean id="applicationContextProvder" class="br.ufc.npi.gal.model.UsuarioEntityListener" />
+	
 	<bean id="emf"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="gal" />
@@ -71,6 +73,9 @@
     <bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
         <constructor-arg ref="contextSource" />
     </bean>
+    
+    <bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+    
     
     <bean id="base" class="java.lang.String">
         <constructor-arg ref="ldapOu" />
