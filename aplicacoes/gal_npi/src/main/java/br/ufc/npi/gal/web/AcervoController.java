@@ -3,7 +3,6 @@ package br.ufc.npi.gal.web;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,7 +43,6 @@ public class AcervoController {
 	@Inject
 	private AcervoDocumentoService acervoDocumentoService;
 
-
 	@RequestMapping(value = "/atualizar", method = RequestMethod.GET)
 	public String atualizarAcervo(ModelMap modelMap, HttpSession session) {
 		List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService.find(AcervoDocumento.class);
@@ -67,7 +65,6 @@ public class AcervoController {
 			@RequestParam("file") MultipartFile request,BindingResult result , RedirectAttributes redirectAttributes) {
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
-		
 		Boolean erros = false;
 		if (atualizacaoAcervo.getInicioPeridoDelta() == null) {
 			result.rejectValue("inicioPeridoDelta",
@@ -101,7 +98,8 @@ public class AcervoController {
 					+ e.getStackTrace());
 			// avisar ao usuario do erro
 		}
-		atualizacaoAcervo.setUsuario(usuarioService.getUsuarioByLogin(auth.getName()));
+		atualizacaoAcervo.setUsuario(usuarioService.getUsuarioByLogin(auth
+				.getName()));
 		atualizacaoAcervo.setExtensao(request.getContentType());
 		acervoService.registrarAtualizacao(atualizacaoAcervo);
 		
