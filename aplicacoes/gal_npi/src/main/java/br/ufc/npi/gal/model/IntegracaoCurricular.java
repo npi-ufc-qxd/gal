@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -35,21 +35,20 @@ public class IntegracaoCurricular {
 
 	@Column(name = "natureza")
 	private String natureza;
-	
-	@OneToMany(targetEntity = Disciplina.class)
-	private List<Disciplina> preRequisitos;
-	
-	/*@OneToMany(targetEntity = Disciplina.class, fetch = FetchType.LAZY)
-	private List<Disciplina> coRequisitos;
-	
-	public List<Disciplina> getCoRequisitos() {
-		return coRequisitos;
-	}
 
-	public void setCoRequisitos(List<Disciplina> coRequisitos) {
-		this.coRequisitos = coRequisitos;
-	}*/
-	
+	@OneToMany
+	private List<Disciplina> preRequisitos;
+
+	/*
+	 * @OneToMany(targetEntity = Disciplina.class, fetch = FetchType.LAZY)
+	 * private List<Disciplina> coRequisitos;
+	 * 
+	 * public List<Disciplina> getCoRequisitos() { return coRequisitos; }
+	 * 
+	 * public void setCoRequisitos(List<Disciplina> coRequisitos) {
+	 * this.coRequisitos = coRequisitos; }
+	 */
+
 	public List<Disciplina> getPreRequisitos() {
 		return preRequisitos;
 	}

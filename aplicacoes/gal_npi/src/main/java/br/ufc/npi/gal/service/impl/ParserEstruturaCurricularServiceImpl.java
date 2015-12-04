@@ -308,7 +308,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			}
 			i = 0;
 			codigoIntegracao = "";
-			listIntegracao.clear();
+			listIntegracao.removeAll(listIntegracao);
 		}
 
 	}
