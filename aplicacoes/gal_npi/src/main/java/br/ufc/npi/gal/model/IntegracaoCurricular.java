@@ -36,27 +36,6 @@ public class IntegracaoCurricular {
 	@Column(name = "natureza")
 	private String natureza;
 
-	@OneToMany
-	private List<Disciplina> preRequisitos;
-
-	/*
-	 * @OneToMany(targetEntity = Disciplina.class, fetch = FetchType.LAZY)
-	 * private List<Disciplina> coRequisitos;
-	 * 
-	 * public List<Disciplina> getCoRequisitos() { return coRequisitos; }
-	 * 
-	 * public void setCoRequisitos(List<Disciplina> coRequisitos) {
-	 * this.coRequisitos = coRequisitos; }
-	 */
-
-	public List<Disciplina> getPreRequisitos() {
-		return preRequisitos;
-	}
-
-	public void setPreRequisitos(List<Disciplina> preRequisitos) {
-		this.preRequisitos = preRequisitos;
-	}
-
 	public String getNatureza() {
 		return natureza;
 	}

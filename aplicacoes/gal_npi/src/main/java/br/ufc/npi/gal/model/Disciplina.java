@@ -46,27 +46,27 @@ public class Disciplina {
 	private List<Bibliografia> bibliografias;
 
 	@Column(name = "ch_pratica")
-	private String chPratica;
+	private Integer chPratica;
 
 	@Column(name = "ch_teorica")
-	private String chTeorica;
+	private Integer chTeorica;
 
 	@Column(name = "tipo")
 	private String tipo;
 
-	public String getChPratica() {
+	public Integer getChPratica() {
 		return chPratica;
 	}
 
-	public void setChPratica(String chPratica) {
+	public void setChPratica(Integer chPratica) {
 		this.chPratica = chPratica;
 	}
 
-	public String getChTeorica() {
+	public Integer getChTeorica() {
 		return chTeorica;
 	}
 
-	public void setChTeorica(String chTeorica) {
+	public void setChTeorica(Integer chTeorica) {
 		this.chTeorica = chTeorica;
 	}
 

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.jboss.logging.annotations.Param;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -34,17 +35,11 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	@Inject
 	private EstruturaCurricularService estruturaCurricluarService;
 	@Inject
-	private IntegracaoCurricularRepository integracaoCurricularRepository;
-	@Inject
 	private IntegracaoCurricularService integracaoCurricularService;
 	private EstruturaCurricular estruturaCurricular;
-	private List<String> disciplinasCurriculo;
-	private HashMap<String, String> disciplinasPreRequisitos;
 
 	public ParserEstruturaCurricularServiceImpl() {
 		estruturaCurricular = new EstruturaCurricular();
-		disciplinasCurriculo = new ArrayList<String>();
-		disciplinasPreRequisitos = new HashMap<String, String>();
 	}
 
 	/**
@@ -102,12 +97,13 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			}
 		}
 
-		// verificar no banco se a estruttura curricular já encontra-se
-		// cadastrada
-		// usar as duas primeiras informações para verificar no banco
+		/**
+		 * verificar no banco se a estruttura curricular já encontra-se
+		 * cadastrada usar as duas primeiras informações para verificar no banco
+		 */
 		int limiteNomeCurso = nomeCurso.indexOf("-");
 		nomeCurso = nomeCurso.substring(0, (limiteNomeCurso - 1));
-
+		
 		return info;
 	}
 
@@ -161,9 +157,12 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	 */
 	private ArrayList<String> parserEstruturaCurricular() {
 		ArrayList<String> info = new ArrayList<String>();
-		// A quinta tabela do HTML é responsável por apresentar as informações
-		// referentes aos componenetes de cada semestre. Mudanças no HTML poderá
-		// ser necessário atualizar
+
+		/**
+		 * A quinta tabela do HTML é responsável por apresentar as informações
+		 * referentes aos componenetes de cada semestre. Mudanças no HTML poderá
+		 * ser necessário atualizar
+		 */
 
 		Element tabelaComponentes = docFromHtml.select("table").get(4);
 		Elements linhas = tabelaComponentes.select("tr");
@@ -172,17 +171,22 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 
 		for (int i = 0; i < linhas.size(); i++) {
 			Element linha = linhas.get(i);
-			// apenas tables referentes a componentes são válidas.
-			// As demais devem ser ignoradas
+			/**
+			 * apenas tables referentes a componentes são válidas. As demais
+			 * devem ser ignoradas
+			 */
 			if (!(linha.className().equals("header"))) {
 				if (linha.className().equals("tituloRelatorio")) {
-					// pegando o período de oferta da integracao
+					/**
+					 * pegando o período de oferta da integracao
+					 */
 					System.out.println(linha.select("td").text().substring(0, 1));
 					periodoOferta = Integer.parseInt(linha.select("td").text().substring(0, 1));
 				}
-				// O valor tem de ser igual a oito porque há algumas linhas que
-				// são retornadas
-				// que possuem menos elementos
+				/**
+				 * O valor tem de ser igual a oito porque há algumas linhas que
+				 * são retornadas que possuem menos elementos
+				 */
 				else if (linha.select("td").size() == 8) {
 					parserComponente(linha.select("td"), periodoOferta);
 					System.out.println(linha.select("td").size());
@@ -190,7 +194,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 				}
 			}
 		}
-		verificaDependenciaIntegracao();
 		return info;
 	}
 
@@ -214,6 +217,8 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 
 		Disciplina disciplina = new Disciplina();
 		disciplina = disciplinaService.getDisciplinaByCodigo(colunasComponente.get(0).text());
+		int chPratica, chTeorica;
+		String aux;
 
 		if (disciplina == null) {
 			int valorParada, valorParada2 = 0;
@@ -223,28 +228,32 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			valorParada = colunasComponente.get(1).text().indexOf("-");
 			disciplina.setNome(colunasComponente.get(1).text().substring(0, valorParada - 1));
 			System.out.println(colunasComponente.get(1).text().substring(0, valorParada - 1));
-			disciplina.setTipo(colunasComponente.get(4).text());
+
+			disciplina.setTipo(tipoDisciplina(colunasComponente.get(3).text()));
 			System.out.println(colunasComponente.get(4).text());
 			valorParada = colunasComponente.get(2).text().indexOf("aula");
-			disciplina.setChTeorica(colunasComponente.get(2).text().substring(0, valorParada - 1));
+			aux = colunasComponente.get(2).text().substring(0, valorParada - 1).replaceAll("h", "");
+			chTeorica = Integer.parseInt(aux);
+			disciplina.setChTeorica(chTeorica);
 			System.out.println(colunasComponente.get(2).text().substring(0, valorParada - 1));
 
 			if ((colunasComponente.get(3).text().equals("DISCIPLINA"))) {
 
 				valorParada = colunasComponente.get(2).text().indexOf("cr)");
 				valorParada2 = colunasComponente.get(2).text().indexOf("lab");
-				disciplina.setChPratica(colunasComponente.get(2).text().substring(valorParada + 4, valorParada2 - 1));
+				aux = colunasComponente.get(2).text().substring(valorParada + 4, valorParada2 - 1).replaceAll("h", "");
+				chPratica = Integer.parseInt(aux);
+				disciplina.setChPratica(chPratica);
 				System.out.println(colunasComponente.get(2).text().substring(valorParada + 4, valorParada2 - 1));
 			} else {
 				valorParada2 = colunasComponente.get(2).text().indexOf("lab");
-				disciplina.setChPratica(colunasComponente.get(2).text().substring(valorParada + 5, valorParada2 - 1));
+				aux = colunasComponente.get(2).text().substring(valorParada + 5, valorParada2 - 1).replaceAll("h", "");
+				chPratica = Integer.parseInt(aux);
+				disciplina.setChPratica(chPratica);
 				System.out.println(colunasComponente.get(2).text().substring(valorParada + 5, valorParada2 - 1));
 			}
 			disciplinaService.save(disciplina);
 
-		}
-		if (colunasComponente.get(5).text().length() > 0) {
-			disciplinasPreRequisitos.put(disciplina.getCodigo(), colunasComponente.get(5).text());
 		}
 		adicionarIntegracaoCurricular(disciplina, periodoOferta, colunasComponente.get(4).text(),
 				colunasComponente.get(5).text(), colunasComponente.get(6).text(), colunasComponente.get(7).text());
@@ -256,67 +265,32 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		IntegracaoCurricular integracaoCurricular = new IntegracaoCurricular();
 		integracaoCurricular.setDisciplina(disciplina);
 		integracaoCurricular.setEstruturaCurricular(estruturaCurricular);
-		if (natureza.equals("OBRIGATÓRIA")) {
-			integracaoCurricular.setNatureza("OBRIGATORIA");
-		} else if (natureza.equals("OPTATIVA")) {
-			integracaoCurricular.setNatureza("OPTATIVA");
-		}
+		integracaoCurricular.setNatureza(naturezaIntegracao(natureza));
 		integracaoCurricular.setSemestreOferta(periodoOferta);
 		integracaoCurricular.setQuantidadeAlunos(50);
 		System.out.println(integracaoCurricular.toString());
 		integracaoCurricularService.save(integracaoCurricular);
 	}
 
-	/**
-	 * Este método será um método genérico a ser utilizado para a existência de
-	 * quivalências, co- e pré-requisitos entre integrações curriculares
-	 * 
-	 * @param consulta,
-	 *            string que vem do HTML @return, deve retornar a lista de
-	 *            integrações referente a uma outra integração curricular
-	 */
-	private void verificaDependenciaIntegracao() {
-		List<Disciplina> listIntegracao = new ArrayList<Disciplina>();
-		Collection<String> disciplinasComDependencias = disciplinasPreRequisitos.keySet();
-		int i = 0;
-
-		Disciplina disciplinaIntegracao = new Disciplina();
-		String codigoIntegracao = "";
-		String consulta = "";
-		for (String codigoDisciplina : disciplinasComDependencias) {
-			consulta = disciplinasPreRequisitos.get(codigoDisciplina);
-			consulta = consulta.replaceAll("OU ", "");
-			consulta = consulta.replaceAll("E ", "");
-			consulta = consulta.replace('(', ' ');
-			consulta = consulta.replace(')', ' ');
-			while (consulta.length() > i) {
-				if (consulta.charAt(i) != ' ') {
-					codigoIntegracao += consulta.charAt(i);
-					i++;
-				} else {
-					codigoIntegracao = codigoIntegracao.replaceAll(" ", "");
-					disciplinaIntegracao = disciplinaService.getDisciplinaByCodigo(codigoIntegracao);
-					if (disciplinaIntegracao != null) {
-						listIntegracao.add(disciplinaIntegracao);
-					}
-					codigoIntegracao = "";
-					i++;
-				}
-			}
-			if (listIntegracao.size() > 0) {
-				vinculaIntegracaoCurricular(codigoDisciplina, listIntegracao);
-			}
-			i = 0;
-			codigoIntegracao = "";
-			listIntegracao.removeAll(listIntegracao);
+	private String tipoDisciplina(String tipoDisciplina) {
+		if (tipoDisciplina.equals("DISCIPLINA")) {
+			return "DISCIPLINA";
+		} else if (tipoDisciplina.equals("ATIVIDADES COMPLEMENTARES")) {
+			return "ATIVIDADES COMPLEMENTARES";
+		} else if (tipoDisciplina.equals("ESTÁGIO")) {
+			return "ESTAGIO";
+		}else if (tipoDisciplina.equals("TRABALHO DE CONCLUSÃO DE CURSO")) {
+			return "TCC";
 		}
-
+		return "";
 	}
 
-	private void vinculaIntegracaoCurricular(String idIntegracao, List<Disciplina> vinculacoes) {
-		IntegracaoCurricular integracao = integracaoCurricularRepository.getIntegracao(disciplinaService.getDisciplinaByCodigo(idIntegracao).getId(), estruturaCurricular.getId());
-		integracao.setPreRequisitos(vinculacoes);
-		integracaoCurricularService.update(integracao);
+	private String naturezaIntegracao(String natureza) {
+		if (natureza.equals("OBRIGATÓRIA")) {
+			return "ORBIGATORIA";
+		} else if (natureza.equals("OPTATIVA")) {
+			return "OPTATIVA";
+		}
+		return "";
 	}
-
 }

@@ -11,5 +11,6 @@ import br.ufc.npi.gal.model.EstruturaCurricular;
 public interface ParserEstruturaCurricularService {
 
 	public abstract List<String> processarArquivo(MultipartFile multipartFile, Integer id) throws IOException;
+	public EstruturaCurricular registrarNovaEstruturaCurricular(List<String> estrutura, Curso curso);
 	
 }
