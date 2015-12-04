@@ -2,15 +2,13 @@ package br.ufc.npi.gal.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.jboss.logging.annotations.Param;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,7 +19,7 @@ import br.ufc.npi.gal.model.Curso;
 import br.ufc.npi.gal.model.Disciplina;
 import br.ufc.npi.gal.model.EstruturaCurricular;
 import br.ufc.npi.gal.model.IntegracaoCurricular;
-import br.ufc.npi.gal.repository.IntegracaoCurricularRepository;
+import br.ufc.npi.gal.service.CursoService;
 import br.ufc.npi.gal.service.DisciplinaService;
 import br.ufc.npi.gal.service.EstruturaCurricularService;
 import br.ufc.npi.gal.service.IntegracaoCurricularService;
@@ -36,33 +34,49 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	private EstruturaCurricularService estruturaCurricluarService;
 	@Inject
 	private IntegracaoCurricularService integracaoCurricularService;
+	@Inject
+	private CursoService cursoService;
 	private EstruturaCurricular estruturaCurricular;
 
 	public ParserEstruturaCurricularServiceImpl() {
 		estruturaCurricular = new EstruturaCurricular();
 	}
 
-	/**
-	 * 
-	 */
 	@Override
-	public List<String> processarArquivo(MultipartFile multipartFile, Integer id) {
-		File fileHtml = new File("estrutura.html");
+	public List<String> processarArquivo(Integer id) {
 		try {
-			multipartFile.transferTo(fileHtml);
-			docFromHtml = Jsoup.parse(fileHtml, null, "");
 			List<String> statusParser = parserCurriculo(id);
 			if (statusParser != null)
 				return statusParser;
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 			return null;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
 		}
 		return null;
+	}
 
+	@Override
+	public boolean verificaConformidadeDocumeto(MultipartFile multipartFile, Integer id) throws IOException {
+		File fileHtml = new File("estrutura.html");
+		String nomeCurso = "";
+		int indice = 0;
+
+		try {
+			multipartFile.transferTo(fileHtml);
+			docFromHtml = Jsoup.parse(fileHtml, null, "");
+			List<String> statusParser = parserCurriculo(id);
+			indice = statusParser.get(1).indexOf(" -");
+			nomeCurso = removeAcentos(statusParser.get(1).substring(0, indice).toUpperCase());
+
+			Curso curso = cursoService.getCursoByCodigo(id);
+			if (nomeCurso.equals(curso.getNome())) {
+				return true;
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return false;
 	}
 
 	/**
@@ -73,10 +87,8 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	 *         adicionadas
 	 */
 	private List<String> parserCurriculo(Integer id) {
-
 		String codigoEstrutura = "";
 		String nomeCurso = "";
-
 		ArrayList<String> info = new ArrayList<String>();
 		Element tabela = docFromHtml.select("table").get(0);
 		Elements linhas = tabela.select("tr");
@@ -93,7 +105,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 					nomeCurso = colunas.get(0).text();
 				}
 				info.add(coluna.text());
-				System.out.println(coluna.text());
 			}
 		}
 
@@ -103,7 +114,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		 */
 		int limiteNomeCurso = nomeCurso.indexOf("-");
 		nomeCurso = nomeCurso.substring(0, (limiteNomeCurso - 1));
-		
 		return info;
 	}
 
@@ -142,7 +152,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		novaEstrutura.setChPeriodoMedio(estrutura.get(12).substring(idMedio + 5, idMaximo - 2));
 		novaEstrutura.setChPeriodoMaximo(estrutura.get(12).substring(idMaximo + 6, estrutura.get(12).length() - 1));
 		novaEstrutura.setCurso(curso);
-		System.out.println(novaEstrutura.getCurso().getId());
 		estruturaCurricular = novaEstrutura;
 		estruturaCurricluarService.save(novaEstrutura);
 		parserEstruturaCurricular();
@@ -166,7 +175,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 
 		Element tabelaComponentes = docFromHtml.select("table").get(4);
 		Elements linhas = tabelaComponentes.select("tr");
-		System.out.println(linhas.size());
 		int periodoOferta = 0;
 
 		for (int i = 0; i < linhas.size(); i++) {
@@ -180,7 +188,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 					/**
 					 * pegando o período de oferta da integracao
 					 */
-					System.out.println(linha.select("td").text().substring(0, 1));
 					periodoOferta = Integer.parseInt(linha.select("td").text().substring(0, 1));
 				}
 				/**
@@ -189,8 +196,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 				 */
 				else if (linha.select("td").size() == 8) {
 					parserComponente(linha.select("td"), periodoOferta);
-					System.out.println(linha.select("td").size());
-					System.out.println();
 				}
 			}
 		}
@@ -210,11 +215,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	 */
 	private void parserComponente(Elements colunasComponente, int periodoOferta) {
 
-		System.out.println(colunasComponente.get(0).text() + " | " + colunasComponente.get(1).text() + " | "
-				+ colunasComponente.get(2).text() + " | " + colunasComponente.get(3).text() + " | "
-				+ colunasComponente.get(4).text() + " | " + colunasComponente.get(6).text() + " | "
-				+ colunasComponente.get(7).text() + " | " + colunasComponente.get(6).text());
-
 		Disciplina disciplina = new Disciplina();
 		disciplina = disciplinaService.getDisciplinaByCodigo(colunasComponente.get(0).text());
 		int chPratica, chTeorica;
@@ -227,15 +227,11 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			disciplina.setCodigo(colunasComponente.get(0).text());
 			valorParada = colunasComponente.get(1).text().indexOf("-");
 			disciplina.setNome(colunasComponente.get(1).text().substring(0, valorParada - 1));
-			System.out.println(colunasComponente.get(1).text().substring(0, valorParada - 1));
-
 			disciplina.setTipo(tipoDisciplina(colunasComponente.get(3).text()));
-			System.out.println(colunasComponente.get(4).text());
 			valorParada = colunasComponente.get(2).text().indexOf("aula");
 			aux = colunasComponente.get(2).text().substring(0, valorParada - 1).replaceAll("h", "");
 			chTeorica = Integer.parseInt(aux);
 			disciplina.setChTeorica(chTeorica);
-			System.out.println(colunasComponente.get(2).text().substring(0, valorParada - 1));
 
 			if ((colunasComponente.get(3).text().equals("DISCIPLINA"))) {
 
@@ -244,13 +240,11 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 				aux = colunasComponente.get(2).text().substring(valorParada + 4, valorParada2 - 1).replaceAll("h", "");
 				chPratica = Integer.parseInt(aux);
 				disciplina.setChPratica(chPratica);
-				System.out.println(colunasComponente.get(2).text().substring(valorParada + 4, valorParada2 - 1));
 			} else {
 				valorParada2 = colunasComponente.get(2).text().indexOf("lab");
 				aux = colunasComponente.get(2).text().substring(valorParada + 5, valorParada2 - 1).replaceAll("h", "");
 				chPratica = Integer.parseInt(aux);
 				disciplina.setChPratica(chPratica);
-				System.out.println(colunasComponente.get(2).text().substring(valorParada + 5, valorParada2 - 1));
 			}
 			disciplinaService.save(disciplina);
 
@@ -268,7 +262,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		integracaoCurricular.setNatureza(naturezaIntegracao(natureza));
 		integracaoCurricular.setSemestreOferta(periodoOferta);
 		integracaoCurricular.setQuantidadeAlunos(50);
-		System.out.println(integracaoCurricular.toString());
 		integracaoCurricularService.save(integracaoCurricular);
 	}
 
@@ -279,7 +272,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			return "ATIVIDADES COMPLEMENTARES";
 		} else if (tipoDisciplina.equals("ESTÁGIO")) {
 			return "ESTAGIO";
-		}else if (tipoDisciplina.equals("TRABALHO DE CONCLUSÃO DE CURSO")) {
+		} else if (tipoDisciplina.equals("TRABALHO DE CONCLUSÃO DE CURSO")) {
 			return "TCC";
 		}
 		return "";
@@ -293,4 +286,13 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		}
 		return "";
 	}
+
+	public String removeAcentos(String string) {
+		if (string != null) {
+			string = Normalizer.normalize(string, Normalizer.Form.NFD);
+			string = string.replaceAll("[^\\p{ASCII}]", "");
+		}
+		return string;
+	}
+
 }

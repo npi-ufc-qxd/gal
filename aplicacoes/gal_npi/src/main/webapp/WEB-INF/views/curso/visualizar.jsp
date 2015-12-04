@@ -59,7 +59,7 @@
 							action="<c:url value="/estrutura/${curso.codigo}/importar"></c:url>"
 							class="form-horizontal" enctype="multipart/form-data"
 							style="float: right;">
-							<input type="file" name="file" id="file" accept="text/html"
+							<input type="file" name="file" id="fileupload" accept="text/html" class="file"
 								style="float: right;" /> <input type="submit" name="submit"
 								class="btn btn-primary" value="Importar" />
 						</form>

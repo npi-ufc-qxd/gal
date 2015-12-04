@@ -113,7 +113,18 @@ public class EstruturaCurricularController {
 		}
 
 		try {
-			infoCurriculo = parserEstruturaCurricular.processarArquivo(request, idCurso);
+			if (parserEstruturaCurricular.verificaConformidadeDocumeto(request, idCurso) == false) {
+				redirectAttributes.addFlashAttribute("error",
+						"O documento enviado não apresenta uma estrutura curricular do Curso de "
+								+ cursoService.getCursoByCodigo(idCurso).getNome());
+				return "redirect:/curso/" + idCurso + "/visualizar";
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		try {
+			infoCurriculo = parserEstruturaCurricular.processarArquivo(idCurso);
 		} catch (Exception e) {
 			System.err.println("Erro ao processar arquivo: " + e.getMessage());
 			return "redirect:/curso/" + idCurso + "/visualizar";
