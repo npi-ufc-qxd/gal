@@ -15,8 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.Transient;
 
 @Entity
 @Table(name = "curriculo")
@@ -29,8 +29,7 @@ public class EstruturaCurricular {
 
 	@Column(name = "codigo")
 	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({
-			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]{4}+[.][1-2]{1})", message = "O campo deve conter formato xxxx.1 ou xxxx.2"), })
 	private String codigo;
 
@@ -75,9 +74,24 @@ public class EstruturaCurricular {
 
 	@Column(name = "ch_periodo_maxima")
 	private Integer chPeriodoMaximo;
-	
+
 	@Column(name = "ch_max_componentes_livres")
 	private Integer chCompOptLivres;
+
+	@javax.persistence.Transient
+	private Integer chTotalMinima;
+
+	@javax.persistence.Transient
+	private Integer chObrigatoria;
+
+	@javax.persistence.Transient
+	private Integer chObgTeorica;
+
+	@javax.persistence.Transient
+	private Integer chObgPratica;
+
+	@javax.persistence.Transient
+	private Integer chAtvAcademicaEspecifica;
 
 	public EstruturaCurricular() {
 
@@ -216,6 +230,48 @@ public class EstruturaCurricular {
 	public void setChCompOptLivres(Integer chCompOptLivres) {
 		this.chCompOptLivres = chCompOptLivres;
 	}
+	
+	
+
+	public Integer getChTotalMinima() {
+		return chTotalMinima;
+	}
+
+	public void setChTotalMinima(Integer chTotalMinima) {
+		this.chTotalMinima = chTotalMinima;
+	}
+
+	public Integer getChObrigatoria() {
+		return chObrigatoria;
+	}
+
+	public void setChObrigatoria(Integer chObrigatoria) {
+		this.chObrigatoria = chObrigatoria;
+	}
+
+	public Integer getChObgTeorica() {
+		return chObgTeorica;
+	}
+
+	public void setChObgTeorica(Integer chObgTeorica) {
+		this.chObgTeorica = chObgTeorica;
+	}
+
+	public Integer getChObgPratica() {
+		return chObgPratica;
+	}
+
+	public void setChObgPratica(Integer chObgPratica) {
+		this.chObgPratica = chObgPratica;
+	}
+
+	public Integer getChAtvAcademicaEspecifica() {
+		return chAtvAcademicaEspecifica;
+	}
+
+	public void setChAtvAcademicaEspecifica(Integer chAtvAcademicaEspecifica) {
+		this.chAtvAcademicaEspecifica = chAtvAcademicaEspecifica;
+	}
 
 	@Override
 	public int hashCode() {
@@ -227,8 +283,7 @@ public class EstruturaCurricular {
 
 	@Override
 	public String toString() {
-		return "EstruturaCurricular [id=" + id + ", codigo=" + codigo
-				+ ", curso=" + curso + "]";
+		return "EstruturaCurricular [id=" + id + ", codigo=" + codigo + ", curso=" + curso + "]";
 	}
 
 }
