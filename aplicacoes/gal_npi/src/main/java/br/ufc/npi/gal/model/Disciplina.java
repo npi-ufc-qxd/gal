@@ -26,7 +26,6 @@ public class Disciplina {
 	@Column(name = "id_d")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
 	@NotEmpty(message = "Campo obrigatório")
 	@Column(name = "nome")
 	@Size(min = 6, message = "O nome deve ter no mínimo 6 caracteres")

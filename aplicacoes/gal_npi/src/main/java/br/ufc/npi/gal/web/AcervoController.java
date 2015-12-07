@@ -43,7 +43,7 @@ public class AcervoController {
 	@Inject
 	private AcervoDocumentoService acervoDocumentoService;
 
-	@RequestMapping(value = "/atualizar_acervo", method = RequestMethod.GET)
+	@RequestMapping(value = "/atualizar", method = RequestMethod.GET)
 	public String atualizarAcervo(ModelMap modelMap, HttpSession session) {
 		List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService.find(AcervoDocumento.class);
 		modelMap.addAttribute("atualizacoesRealizadas", atualizacoesRealizadas);
@@ -51,7 +51,7 @@ public class AcervoController {
 		return "acervo/atualizar";
 	}
 
-	@RequestMapping(value = "/resolver_conflitos", method = RequestMethod.GET)
+	@RequestMapping(value = "/conflitos", method = RequestMethod.GET)
 	public String resolverConflitos(ModelMap modelMap) {
 
 		modelMap.addAttribute("exemplares", acervoService.find(ExemplarConflitante.class));
@@ -83,17 +83,7 @@ public class AcervoController {
 					"formato do arquivo incorreto, por favor selecionar um arquivo xls");
 			erros = true;
 		}
-		if (erros) {/*
-					 * List<AcervoDocumento> atualizacoesRealizadas =
-					 * acervoDocumentoService
-					 * .atualizacoesPorUsuario(usuarioService.getUsuarioByLogin(
-					 * auth .getName()));
-					 * modelMap.addAttribute("atualizacoesRealizadas",
-					 * atualizacoesRealizadas);
-					 * modelMap.addAttribute("atualizacaoAcervo", new
-					 * AcervoDocumento()); return
-					 * "redirect:/acervo/atualizar_acervo";
-					 */
+		if (erros) {
 			return "acervo/atualizar";
 		}
 		try {
@@ -106,11 +96,11 @@ public class AcervoController {
 		atualizacaoAcervo.setUsuario(usuarioService.getUsuarioByLogin(auth.getName()));
 		atualizacaoAcervo.setExtensao(request.getContentType());
 		acervoService.registrarAtualizacao(atualizacaoAcervo);
-
-		redirectAttributes.addFlashAttribute("info", "Atualização realizada com sucesso.");
-
-		return "redirect:/acervo/resolver_conflitos";
-
+		
+		redirectAttributes.addFlashAttribute("info",
+				"Atualização realizada com sucesso.");
+		
+		return "redirect:/acervo/conflitos";
 	}
 
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
@@ -129,8 +119,9 @@ public class AcervoController {
 	public String atualizar(ModelMap modelMap, @Valid ExemplarConflitante exemplar, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		if (acervoService.submeterExemplarConflitante(exemplar)) {
-			redirectAttributes.addFlashAttribute("info", "Conflito resolvido com sucesso.");
-			return "redirect:/acervo/resolver_conflitos";
+			redirectAttributes.addFlashAttribute("info",
+					"Conflito resolvido com sucesso.");
+			return "redirect:/acervo/conflitos";
 		} else {
 			modelMap.addAttribute("exemplar", exemplar);
 			return "/acervo/editar";

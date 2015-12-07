@@ -129,13 +129,13 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	 */
 	public EstruturaCurricular registrarNovaEstruturaCurricular(List<String> estrutura, Curso curso) {
 		EstruturaCurricular novaEstrutura = new EstruturaCurricular();
-		novaEstrutura.setAnoSemestre(estrutura.get(0));
+		novaEstrutura.setCodigo(estrutura.get(0));
 		novaEstrutura.setMatrizCurricular(estrutura.get(1));
 		novaEstrutura.setUnidadeVinculacao(estrutura.get(2));
 		novaEstrutura.setMunicipio(estrutura.get(3));
 		novaEstrutura.setSemestreEntradaVigor(estrutura.get(4).replaceAll("\\ ", ""));
 		novaEstrutura.setChOptMinima(trasnformaStringInteger(estrutura.get(8).replaceAll("hrs", "")));
-		novaEstrutura.setChMaximaComponentesLivres(trasnformaStringInteger(estrutura.get(10).replaceAll("hrs", "")));
+		novaEstrutura.setChCompOptLivres(trasnformaStringInteger(estrutura.get(10).replaceAll("hrs", "")));
 
 		int idMinino, idMedio, idMaximo;
 

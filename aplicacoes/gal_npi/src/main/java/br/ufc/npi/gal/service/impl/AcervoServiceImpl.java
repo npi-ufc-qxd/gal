@@ -28,18 +28,18 @@ import br.ufc.quixada.npi.service.impl.GenericServiceImpl;
 
 @Named
 public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> implements AcervoService {
-	private static final int COLUNA_ISBN = 45;
 	private static final int COLUNA_COD_EXEMPLAR = 2;
 	private static final int TIPO = 26;  //0 tipo = fisico - 1 midia digital
 	//CAMPOS DO NOME TITULO
 	private static final int COLUNA_AUTOR = 36;
-	private static final int COLUNA_TITULO = 37;
+	private static final int COLUNA_TITULO = 37;	
 	private static final int COLUNA_TITULO_N = 38;
 	private static final int COLUNA_SUB_TITULO = 39;
 	private static final int COLUNA_TITULO_REVISTA = 40;
 	private static final int COLUNA_PAGINA = 41;
 	private static final int COLUNA_REF_ARTIGO = 42;
 	private static final int COLUNA_EDICAO = 43;
+	private static final int COLUNA_ISBN = 45;
 	private static final int COLUNA_PUBLICADOR = 46;
 	
 	@Inject

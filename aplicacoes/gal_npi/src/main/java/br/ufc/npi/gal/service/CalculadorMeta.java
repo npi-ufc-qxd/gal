@@ -35,7 +35,7 @@ public class CalculadorMeta {
 
 					for (IntegracaoCurricular integracaoCurricular : bibliografia.getDisciplina().getCurriculos()) {
 						detalheMeta = new DetalheMetaCalculada();
-						detalheMeta.setCurriculo(integracaoCurricular.getEstruturaCurricular().getAnoSemestre());
+						detalheMeta.setCurriculo(integracaoCurricular.getEstruturaCurricular().getCodigo());
 						detalheMeta.setCurso(integracaoCurricular.getEstruturaCurricular().getCurso().getNome());
 
 						
@@ -52,11 +52,17 @@ public class CalculadorMeta {
 
 							detalheMeta.setTipoBibliografia(bibliografia.getTipoBibliografia());
 							detalheMeta.setDisciplina(bibliografia.getDisciplina().getNome());
+							detalheMeta.setSemestre(integracaoCurricular.getSemestreOferta());
+							detalheMeta.setCodigoDisciplina(bibliografia.getDisciplina().getCodigo());
+							detalheMeta.setQuantidadeAlunos(integracaoCurricular.getQuantidadeAlunos());
 							detalhePares.add(detalheMeta);
 						} else {
 
 							detalheMeta.setTipoBibliografia(bibliografia.getTipoBibliografia());
 							detalheMeta.setDisciplina(bibliografia.getDisciplina().getNome());
+							detalheMeta.setSemestre(integracaoCurricular.getSemestreOferta());
+							detalheMeta.setCodigoDisciplina(bibliografia.getDisciplina().getCodigo());
+							detalheMeta.setQuantidadeAlunos(integracaoCurricular.getQuantidadeAlunos());
 							detalheImpares.add(detalheMeta);
 						}
 

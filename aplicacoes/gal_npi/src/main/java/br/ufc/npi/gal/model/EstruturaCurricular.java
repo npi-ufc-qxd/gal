@@ -27,12 +27,12 @@ public class EstruturaCurricular {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "ano_semestre")
-
+	@Column(name = "codigo")
 	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@Pattern.List({
+			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]{4}+[.][1-2]{1})", message = "O campo deve conter formato xxxx.1 ou xxxx.2"), })
-	private String anoSemestre;
+	private String codigo;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_curso")
@@ -77,7 +77,7 @@ public class EstruturaCurricular {
 	private Integer chPeriodoMaximo;
 	
 	@Column(name = "ch_max_componentes_livres")
-	private Integer chMaximaComponentesLivres;
+	private Integer chCompOptLivres;
 
 	public EstruturaCurricular() {
 
@@ -171,9 +171,9 @@ public class EstruturaCurricular {
 		this.chPeriodoMaximo = chPeriodoMaximo;
 	}
 
-	public EstruturaCurricular(String anoSemestre, Curso curso) {
+	public EstruturaCurricular(String codigo, Curso curso) {
 		super();
-		this.anoSemestre = anoSemestre;
+		this.codigo = codigo;
 		this.curso = curso;
 	}
 
@@ -185,12 +185,12 @@ public class EstruturaCurricular {
 		this.id = id;
 	}
 
-	public String getAnoSemestre() {
-		return anoSemestre;
+	public String getCodigo() {
+		return codigo;
 	}
 
-	public void setAnoSemestre(String anoSemestre) {
-		this.anoSemestre = anoSemestre;
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public Curso getCurso() {
@@ -209,12 +209,12 @@ public class EstruturaCurricular {
 		this.curriculos = curriculos;
 	}
 
-	public Integer getChMaximaComponentesLivres() {
-		return chMaximaComponentesLivres;
+	public Integer getChCompOptLivres() {
+		return chCompOptLivres;
 	}
 
-	public void setChMaximaComponentesLivres(Integer chMaximaComponentesLivres) {
-		this.chMaximaComponentesLivres = chMaximaComponentesLivres;
+	public void setChCompOptLivres(Integer chCompOptLivres) {
+		this.chCompOptLivres = chCompOptLivres;
 	}
 
 	@Override
@@ -227,7 +227,8 @@ public class EstruturaCurricular {
 
 	@Override
 	public String toString() {
-		return "EstruturaCurricular [id=" + id + ", anoSemestre=" + anoSemestre + ", curso=" + curso + "]";
+		return "EstruturaCurricular [id=" + id + ", codigo=" + codigo
+				+ ", curso=" + curso + "]";
 	}
 
 }

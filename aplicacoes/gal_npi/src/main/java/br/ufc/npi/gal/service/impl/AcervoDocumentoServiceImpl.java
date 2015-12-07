@@ -8,6 +8,7 @@ import javax.inject.Named;
 import br.ufc.npi.gal.model.AcervoDocumento;
 import br.ufc.npi.gal.model.Usuario;
 import br.ufc.npi.gal.repository.AcervoDocumentoRepository;
+import br.ufc.npi.gal.repository.jpa.AcervoDocumentoRepositoryImpl;
 import br.ufc.npi.gal.service.AcervoDocumentoService;
 import br.ufc.quixada.npi.service.impl.GenericServiceImpl;
 

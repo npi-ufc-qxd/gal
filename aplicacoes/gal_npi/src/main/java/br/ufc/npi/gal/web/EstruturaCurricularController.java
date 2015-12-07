@@ -70,8 +70,8 @@ public class EstruturaCurricularController {
 		estrutura.setCurso(curso);
 
 		estruturaCurricularService.update(estrutura);
-		redirectAttributes.addFlashAttribute("info", "Estrutura Curricular atualizada com sucesso");
-		return "redirect:/curso/listar";
+		redirectAttributes.addFlashAttribute("info","Estrutura Curricular atualizada com sucesso");
+		return "redirect:/curso/" + curso.getCodigo() + "/visualizar";
 	}
 
 	@RequestMapping(value = "/{id}/excluir")
@@ -82,8 +82,8 @@ public class EstruturaCurricularController {
 			this.estruturaCurricularService.delete(estruturaCurricular);
 
 		}
-		redirectAttributes.addFlashAttribute("info", "Estrutura Curricular removida com sucesso");
-		return "redirect:/curso/listar";
+		redirectAttributes.addFlashAttribute("info","Estrutura Curricular removida com sucesso");
+		return "redirect:/curso/" + estruturaCurricular.getCurso().getCodigo() + "/visualizar";
 	}
 
 	@RequestMapping(value = "/{id}/adicionar", method = RequestMethod.GET)
@@ -131,7 +131,7 @@ public class EstruturaCurricularController {
 		}
 
 		Curso curso = cursoService.getCursoByCodigo(idCurso);
-		if (estruturaCurricularService.getOutraEstruturaCurricularByAnoSemestre(curso.getId(),
+		if (estruturaCurricularService.getOutraEstruturaCurricularByCodigo(curso.getId(),
 				infoCurriculo.get(0)) == null) {
 			parserEstruturaCurricular.registrarNovaEstruturaCurricular(infoCurriculo, curso);
 			redirectAttributes.addFlashAttribute("info", "Estrutura cadastrada com sucesso");
@@ -150,15 +150,14 @@ public class EstruturaCurricularController {
 		if (result.hasErrors()) {
 			return "estrutura/adicionar";
 		}
-
-		if (estruturaCurricular.getAnoSemestre().trim().isEmpty()) {
-			result.rejectValue("anoSemestre", "Repeat.estrutura.anoSemestre", "Campo obrigatório.");
+		if (estruturaCurricular.getCodigo().trim().isEmpty()) {
+			result.rejectValue("codigo", "Repeat.estrutura.codigo",
+					"Campo obrigatório.");
 			return "estrutura/adicionar";
 		}
-
-		if (estruturaCurricularService.getOutraEstruturaCurricularByAnoSemestre(id,
-				estruturaCurricular.getAnoSemestre()) != null) {
-			result.rejectValue("anoSemestre", "Repeat.estruturas.anoSemestre", "Ano e Semestre já existe para curso");
+		
+		if(estruturaCurricularService.getOutraEstruturaCurricularByCodigo(id, estruturaCurricular.getCodigo())!=null){
+			result.rejectValue("codigo", "Repeat.estruturas.codigo","Ano e Semestre já existe para curso");
 			return "estrutura/adicionar";
 		}
 
@@ -166,8 +165,9 @@ public class EstruturaCurricularController {
 		estruturaCurricular.setId(null);
 
 		estruturaCurricularService.save(estruturaCurricular);
-
-		redirectAttributes.addFlashAttribute("info", "Estrutura Curricular adicionada com sucesso.");
-		return "redirect:/curso/listar";
+		
+		redirectAttributes.addFlashAttribute("info",
+				"Estrutura Curricular adicionada com sucesso.");
+		return "redirect:/curso/" + curso.getCodigo() + "/visualizar";
 	}
 }
