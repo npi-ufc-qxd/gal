@@ -56,25 +56,28 @@ public class EstruturaCurricular {
 	private String semestreEntradaVigor;
 
 	@Column(name = "ch_opt_minima")
-	private String chOptMinima;
+	private Integer chOptMinima;
 
 	@Column(name = "prazo_conclusao_minimo")
-	private String prazoConclusaoMinimo;
+	private Integer prazoConclusaoMinimo;
 
 	@Column(name = "prazo_conclusao_medio")
-	private String prazoConclusaoMedio;
+	private Integer prazoConclusaoMedio;
 
 	@Column(name = "prazo_conclusao_maximo")
-	private String prazoConclusaoMaximo;
+	private Integer prazoConclusaoMaximo;
 
 	@Column(name = "ch_periodo_minima")
-	private String chPeriodoMinimo;
+	private Integer chPeriodoMinimo;
 
 	@Column(name = "ch_periodo_media")
-	private String chPeriodoMedio;
+	private Integer chPeriodoMedio;
 
 	@Column(name = "ch_periodo_maxima")
-	private String chPeriodoMaximo;
+	private Integer chPeriodoMaximo;
+	
+	@Column(name = "ch_max_componentes_livres")
+	private Integer chMaximaComponentesLivres;
 
 	public EstruturaCurricular() {
 
@@ -112,59 +115,59 @@ public class EstruturaCurricular {
 		this.semestreEntradaVigor = semestreEntradaVigor;
 	}
 
-	public String getChOptMinima() {
+	public Integer getChOptMinima() {
 		return chOptMinima;
 	}
 
-	public void setChOptMinima(String chOptMinima) {
+	public void setChOptMinima(Integer chOptMinima) {
 		this.chOptMinima = chOptMinima;
 	}
 
-	public String getPrazoConclusaoMinimo() {
+	public Integer getPrazoConclusaoMinimo() {
 		return prazoConclusaoMinimo;
 	}
 
-	public void setPrazoConclusaoMinimo(String prazoConclusaoMinimo) {
+	public void setPrazoConclusaoMinimo(Integer prazoConclusaoMinimo) {
 		this.prazoConclusaoMinimo = prazoConclusaoMinimo;
 	}
 
-	public String getPrazoConclusaoMedio() {
+	public Integer getPrazoConclusaoMedio() {
 		return prazoConclusaoMedio;
 	}
 
-	public void setPrazoConclusaoMedio(String prazoConclusaoMedio) {
+	public void setPrazoConclusaoMedio(Integer prazoConclusaoMedio) {
 		this.prazoConclusaoMedio = prazoConclusaoMedio;
 	}
 
-	public String getPrazoConclusaoMaximo() {
+	public Integer getPrazoConclusaoMaximo() {
 		return prazoConclusaoMaximo;
 	}
 
-	public void setPrazoConclusaoMaximo(String prazoConclusaoMaximo) {
+	public void setPrazoConclusaoMaximo(Integer prazoConclusaoMaximo) {
 		this.prazoConclusaoMaximo = prazoConclusaoMaximo;
 	}
 
-	public String getChPeriodoMinimo() {
+	public Integer getChPeriodoMinimo() {
 		return chPeriodoMinimo;
 	}
 
-	public void setChPeriodoMinimo(String chPeriodoMinimo) {
+	public void setChPeriodoMinimo(Integer chPeriodoMinimo) {
 		this.chPeriodoMinimo = chPeriodoMinimo;
 	}
 
-	public String getChPeriodoMedio() {
+	public Integer getChPeriodoMedio() {
 		return chPeriodoMedio;
 	}
 
-	public void setChPeriodoMedio(String chPeriodoMedio) {
+	public void setChPeriodoMedio(Integer chPeriodoMedio) {
 		this.chPeriodoMedio = chPeriodoMedio;
 	}
 
-	public String getChPeriodoMaximo() {
+	public Integer getChPeriodoMaximo() {
 		return chPeriodoMaximo;
 	}
 
-	public void setChPeriodoMaximo(String chPeriodoMaximo) {
+	public void setChPeriodoMaximo(Integer chPeriodoMaximo) {
 		this.chPeriodoMaximo = chPeriodoMaximo;
 	}
 
@@ -204,6 +207,14 @@ public class EstruturaCurricular {
 
 	public void setCurriculos(List<IntegracaoCurricular> curriculos) {
 		this.curriculos = curriculos;
+	}
+
+	public Integer getChMaximaComponentesLivres() {
+		return chMaximaComponentesLivres;
+	}
+
+	public void setChMaximaComponentesLivres(Integer chMaximaComponentesLivres) {
+		this.chMaximaComponentesLivres = chMaximaComponentesLivres;
 	}
 
 	@Override

@@ -29,7 +29,6 @@ public class Disciplina {
 	
 	@NotEmpty(message = "Campo obrigatório")
 	@Column(name = "nome")
-	@Pattern(regexp = "[a-zA-Z:,.\\sà-ùÀ-Ù]{0,}", message = "O campo Nome não pode possuir caracteres especiais ou números.")
 	@Size(min = 6, message = "O nome deve ter no mínimo 6 caracteres")
 	private String nome;
 

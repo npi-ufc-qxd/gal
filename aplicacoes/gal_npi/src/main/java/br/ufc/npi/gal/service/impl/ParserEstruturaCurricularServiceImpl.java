@@ -134,23 +134,30 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		novaEstrutura.setUnidadeVinculacao(estrutura.get(2));
 		novaEstrutura.setMunicipio(estrutura.get(3));
 		novaEstrutura.setSemestreEntradaVigor(estrutura.get(4).replaceAll("\\ ", ""));
-		novaEstrutura.setChOptMinima(estrutura.get(5));
+		novaEstrutura.setChOptMinima(Integer.parseInt(estrutura.get(8).replaceAll(" hrs", "")));
+		novaEstrutura.setChMaximaComponentesLivres(Integer.parseInt(estrutura.get(10).replaceAll(" hrs", "")));
 
 		int idMinino, idMedio, idMaximo;
 
 		idMinino = estrutura.get(11).indexOf("Mínimo");
 		idMedio = estrutura.get(11).indexOf("Médio");
 		idMaximo = estrutura.get(11).indexOf("Máximo");
-		novaEstrutura.setPrazoConclusaoMinimo(estrutura.get(11).substring(idMinino + 6, 8));
-		novaEstrutura.setPrazoConclusaoMedio(estrutura.get(11).substring(idMedio + 5, 16));
-		novaEstrutura.setPrazoConclusaoMaximo(estrutura.get(11).substring(idMaximo + 6, estrutura.get(11).length()));
+		novaEstrutura.setPrazoConclusaoMinimo(
+				Integer.parseInt(estrutura.get(11).substring(idMinino + 6, 8).replaceAll(" ", "")));
+		novaEstrutura.setPrazoConclusaoMedio(
+				Integer.parseInt(estrutura.get(11).substring(idMedio + 5, 16).replaceAll(" ", "")));
+		novaEstrutura.setPrazoConclusaoMaximo(Integer
+				.parseInt(estrutura.get(11).substring(idMaximo + 6, estrutura.get(11).length()).replaceAll(" ", "")));
 
 		idMinino = estrutura.get(12).indexOf("Mínima");
 		idMedio = estrutura.get(12).indexOf("Média");
 		idMaximo = estrutura.get(12).indexOf("Máxima");
-		novaEstrutura.setChPeriodoMinimo(estrutura.get(12).substring(idMinino + 6, idMedio - 2));
-		novaEstrutura.setChPeriodoMedio(estrutura.get(12).substring(idMedio + 5, idMaximo - 2));
-		novaEstrutura.setChPeriodoMaximo(estrutura.get(12).substring(idMaximo + 6, estrutura.get(12).length() - 1));
+		novaEstrutura.setChPeriodoMinimo(Integer.parseInt(
+				estrutura.get(12).substring(idMinino + 6, idMedio - 2).replaceAll("hrs", "").replaceAll(" ", "")));
+		novaEstrutura.setChPeriodoMedio(Integer.parseInt(
+				estrutura.get(12).substring(idMedio + 5, idMaximo - 2).replaceAll("hrs", "").replaceAll(" ", "")));
+		novaEstrutura.setChPeriodoMaximo(Integer.parseInt(estrutura.get(12)
+				.substring(idMaximo + 6, estrutura.get(12).length() - 1).replaceAll("hrs", "").replaceAll(" ", "")));
 		novaEstrutura.setCurso(curso);
 		estruturaCurricular = novaEstrutura;
 		estruturaCurricluarService.save(novaEstrutura);
@@ -225,8 +232,9 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 
 			disciplina = new Disciplina();
 			disciplina.setCodigo(colunasComponente.get(0).text());
-			valorParada = colunasComponente.get(1).text().indexOf("-");
-			disciplina.setNome(colunasComponente.get(1).text().substring(0, valorParada - 1));
+			valorParada = colunasComponente.get(1).text().indexOf(" - ");
+			System.out.println(colunasComponente.get(1).text().substring(0, valorParada));
+			disciplina.setNome(removeAcentos(colunasComponente.get(1).text().substring(0, valorParada)));
 			disciplina.setTipo(tipoDisciplina(colunasComponente.get(3).text()));
 			valorParada = colunasComponente.get(2).text().indexOf("aula");
 			aux = colunasComponente.get(2).text().substring(0, valorParada - 1).replaceAll("h", "");
