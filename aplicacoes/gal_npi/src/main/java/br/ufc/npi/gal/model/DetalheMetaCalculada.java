@@ -53,7 +53,7 @@ public class DetalheMetaCalculada {
 
 	@Override
 	public String toString() {
-		return "DetalheMetaCalculadaPar [disciplina=" + disciplina + ", curso=" + curso + ", tipoBibliografia="
+		return "DetalheMetaCalculada [disciplina=" + disciplina + ", curso=" + curso + ", tipoBibliografia="
 				+ tipoBibliografia + ", curriculo=" + curriculo + ", calculo=" + calculo + "]";
 	}
 

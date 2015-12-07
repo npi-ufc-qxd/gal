@@ -93,7 +93,7 @@
 				</c:when>
 				<c:otherwise>
 					<datatables:table id="tituloTable" data="${titulos}" cdn="false"
-						row="titulo" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="" default-sort="0 asc">
+						row="titulo" theme="bootstrap2" cssClass="table table-striped table-orderable" default-sort="0 asc">
 						<datatables:column title="Nome">
 							<c:out value="${titulo.nome}"></c:out>
 						</datatables:column>

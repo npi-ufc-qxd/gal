@@ -29,14 +29,12 @@ public class LdapAuthentication implements AuthenticationProvider{
 	@Override
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
-		Boolean usuarioValido;
 		String username = authentication.getName();
         String password = (String) authentication.getCredentials();
         
         br.ufc.quixada.npi.ldap.model.Usuario user = usuarioService.getByCpf(username);
         
         Collection<? extends GrantedAuthority> authorities = user.getAffiliations();
-        System.out.println(authentication.getAuthorities()+ " " + user.getAuthorities().toString() + " "+ usuarioService.autentica(username, password));
         
         if (user == null || !usuarioService.autentica(username, password) || authorities.isEmpty()) {
         	throw new BadCredentialsException(LOGIN_INVALIDO);
@@ -60,6 +58,7 @@ public class LdapAuthentication implements AuthenticationProvider{
 
 	@Override
 	public boolean supports(Class<?> arg0) {
+		// TODO Auto-generated method stub
 		return true;
 	}
 

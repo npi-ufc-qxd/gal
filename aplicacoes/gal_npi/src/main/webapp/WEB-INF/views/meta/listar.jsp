@@ -57,7 +57,7 @@
 		</div>
 
 		<c:if test="${empty resultados}">
-			<div class="alert alert-warning" role="alert">Não há metas cadastrados.</div>
+			<div class="alert alert-warning" role="alert">Não há metas cadastradas.</div>
 		</c:if>
 
 		<c:if test="${not empty resultados}">

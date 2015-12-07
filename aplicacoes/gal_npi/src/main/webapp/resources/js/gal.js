@@ -93,6 +93,14 @@ $( document ).ready(function() {
 		});
 	});
 	
+	$('#expandirTodosAccordions').click(function(){
+		$('.panel-collapse').collapse('show');
+	});
+	
+	$('#esconderTodosAccordions').click(function(){
+		$('.panel-collapse').collapse('hide');
+	});
+	
 	$('#confirm-delete').on('show.bs.modal', function(e) {
 	    $(this).find('.btn-danger').attr('href', $(e.relatedTarget).data('href'));
 	});
