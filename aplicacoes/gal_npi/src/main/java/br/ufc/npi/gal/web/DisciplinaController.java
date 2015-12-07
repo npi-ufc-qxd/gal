@@ -197,27 +197,25 @@ public class DisciplinaController {
 		
 		List<IntegracaoCurricular> curriculos = disciplina.getCurriculos();
 		
-		HashMap<String, MetaCalculada> metasCalculadasPorTitulo = new HashMap<String, MetaCalculada>();
+		HashMap<String, List<MetaCalculada>> metasCalculadasPorTitulo = new HashMap<String, List<MetaCalculada>>();
 		
 		List<ResultadoCalculo> resultados = calculoService.gerarCalculo();
+		
 		for (Bibliografia b : bibliografias) {
+			metasCalculadasPorTitulo.put(b.getTitulo().getNome(), new ArrayList<MetaCalculada>());
 			for(ResultadoCalculo resultadoCalculo : resultados){
 				if(resultadoCalculo.getTitulo().getId().equals(b.getTitulo().getId())){
 					for(MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()){
 						for(DetalheMetaCalculada detalheMetaCalculada: metaCalculada.getDetalhePar()){
 							if(detalheMetaCalculada.getDisciplina().equals(disciplina.getNome())){
-								System.out.print(resultadoCalculo.getTitulo().getNome() + " - ");
-								System.out.print(metaCalculada.getNome() + " - PAR - ");
-								System.out.println(detalheMetaCalculada);
-								metasCalculadasPorTitulo.put(resultadoCalculo.getTitulo().getNome(), metaCalculada);
+								metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
+								break;
 							}
 						}
 						for(DetalheMetaCalculada detalheMetaCalculada: metaCalculada.getDetalheImpar()){
 							if(detalheMetaCalculada.getDisciplina().equals(disciplina.getNome())){
-								System.out.print(resultadoCalculo.getTitulo().getNome() + " - ");
-								System.out.print(metaCalculada.getNome() + " - IMPAR - ");
-								System.out.println(detalheMetaCalculada);
-								metasCalculadasPorTitulo.put(resultadoCalculo.getTitulo().getNome(), metaCalculada);
+								metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
+								break;
 							}
 						}
 					}

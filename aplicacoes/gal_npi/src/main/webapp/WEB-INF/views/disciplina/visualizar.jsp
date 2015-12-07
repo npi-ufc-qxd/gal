@@ -4,6 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -104,12 +105,48 @@
 							</div>
 							<div id="${basica.id}" class="panel-collapse collapse" role="tabpanel">
 								<div class="disciplina-panel-body panel-body">
-						      		Acervo: ${basica.acervo}
-								</div>
-							</div>
-						</div>
+						      		<p><b>Acervo</b>: ${basica.acervo}</p>
+						      		<div class="row">
+						      			<div class="col-md-5">
+											<table class="table table-condensed table-striped table-bordered">
+												<thead>
+													<tr>
+														<th>Meta</th>
+														<th>Valor da Meta</th>
+														<th>Déficit</th>
+													</tr>
+												</thead>
+												
+												<tbody>
+													<c:forEach var="titulo" items="${metasCalculadas}">
+										      			<c:if test="${titulo.key == basica.nome}">
+										      				<c:forEach var="meta" items="${titulo.value}">
+										      					<tr>
+											      					<td>${meta.nome}</td>
+											      					<td><fmt:formatNumber type="number" maxFractionDigits="1" value="${meta.calculo}"></fmt:formatNumber></td>
+											      					<td>
+											      						<c:choose>
+												      						<c:when test="${(meta.calculo - basica.acervo) > 0}">
+												      							<fmt:formatNumber type="number" maxFractionDigits="1" value="${meta.calculo - basica.acervo}"></fmt:formatNumber>
+												      						</c:when>
+												      						<c:otherwise>
+												      							0
+												      						</c:otherwise>
+											      						</c:choose>
+											      					</td>
+										      					</tr>
+										      				</c:forEach>
+										      			</c:if>
+										      		</c:forEach>
+												</tbody>
+											</table>
+										</div> <!-- .col-md-5 -->
+									</div> <!-- .row -->
+								</div> <!-- .disciplina-panel-body -->
+							</div> <!-- .panel-collapse -->
+						</div> <!-- .panel -->
 					</c:forEach>
-				</div>
+				</div> <!-- .panel-group -->
 			</c:if>
 			
 			<hr>
@@ -131,18 +168,53 @@
 							</div>
 							<div id="${complementar.id}" class="panel-collapse collapse" role="tabpanel">
 								<div class="disciplina-panel-body panel-body">
-						      		Acervo: ${complementar.acervo}
-								</div>
-							</div>
-						</div>
+						      		<p><b>Acervo</b>: ${complementar.acervo}</p>
+						      		<div class="row">
+						      			<div class="col-md-5">
+											<table class="table table-condensed table-striped table-bordered">
+												<thead>
+													<tr>
+														<th>Meta</th>
+														<th>Valor da Meta</th>
+														<th>Déficit</th>
+													</tr>
+												</thead>
+												
+												<tbody>
+													<c:forEach var="titulo" items="${metasCalculadas}">
+										      			<c:if test="${titulo.key == complementar.nome}">
+										      				<c:forEach var="meta" items="${titulo.value}">
+										      					<tr>
+											      					<td>${meta.nome}</td>
+											      					<td><fmt:formatNumber type="number" maxFractionDigits="1" value="${meta.calculo}"></fmt:formatNumber></td>
+											      					<td>
+											      						<c:choose>
+												      						<c:when test="${(meta.calculo - complementar.acervo) > 0}">
+												      							<fmt:formatNumber type="number" maxFractionDigits="1" value="${meta.calculo - complementar.acervo}"></fmt:formatNumber>
+												      						</c:when>
+												      						<c:otherwise>
+												      							0
+												      						</c:otherwise>
+											      						</c:choose>
+											      					</td>
+										      					</tr>
+										      				</c:forEach>
+										      			</c:if>
+										      		</c:forEach>
+												</tbody>
+											</table>
+										</div> <!-- .col-md-5 -->
+									</div> <!-- .row -->
+								</div> <!-- .disciplina-panel-body -->
+							</div> <!-- .panel-collapse -->
+						</div> <!-- .panel -->
 					</c:forEach>
-				</div>
+				</div> <!-- .panel-group -->
 			</c:if>
 			
 		</c:if>
 
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
-	<pre>${metasCalculadas}</pre>
 </body>
 </html>
