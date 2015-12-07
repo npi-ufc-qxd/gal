@@ -51,63 +51,69 @@
 		</c:if>
 
 		<c:if test="${not empty titulos}">
-			<c:choose>
-				<c:when test="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
-					<datatables:table id="tituloTable" data="${titulos}" cdn="false"
-						row="titulo" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="3 4 5" default-sort="0 asc">
-						<datatables:column title="Nome">
-							<c:out value="${titulo.nome}"></c:out>
-						</datatables:column>
+			<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+				<datatables:table id="tituloTable" data="${titulos}" cdn="false"
+					row="titulo" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="3 4 5" default-sort="0 asc">
+					<datatables:column title="Nome">
+						<c:out value="${titulo.nome}"></c:out>
+					</datatables:column>
 		
-						<datatables:column title="ISBN">
-							<c:out value="${titulo.isbn}"></c:out>
-						</datatables:column>
+					<datatables:column title="ISBN">
+						<c:out value="${titulo.isbn}"></c:out>
+					</datatables:column>
 		
-						<datatables:column title="Tipo">
-							<c:out value="${titulo.tipo}"></c:out>
-						</datatables:column>
+					<datatables:column title="Tipo">
+						<c:out value="${titulo.tipo}"></c:out>
+					</datatables:column>
 						
-						<datatables:column title="Editar">
-							<a class="btn btn-primary"
-								href="<c:url value = "/titulo/${titulo.id}/editar"></c:url>">
-								<span class="glyphicon glyphicon-edit"></span>
-							</a>
-						</datatables:column>
+					<datatables:column title="Editar">
+						<a class="btn btn-primary"
+							href="<c:url value = "/titulo/${titulo.id}/editar"></c:url>">
+							<span class="glyphicon glyphicon-edit"></span>
+						</a>
+					</datatables:column>
 			
-						<datatables:column title="Excluir">
-							<a id="excluir" class="btn btn-danger" data-toggle="modal"
-								data-target="#confirm-delete" href="#"
-								data-href="<c:url value="/titulo/${titulo.id}/excluir" ></c:url>">
-								<span class="glyphicon glyphicon-trash"></span>
-							</a>
-						</datatables:column>
-
-						<datatables:column title="Exemplar">
-							<a href="<c:url value="/exemplar/${titulo.id}/listar" ></c:url>">
-								<button class="btn btn-primary">
-									<span class="glyphicon glyphicon-list"></span> Exemplares
-								</button>
-							</a>
-						</datatables:column>
-					</datatables:table>
-				</c:when>
-				<c:otherwise>
-					<datatables:table id="tituloTable" data="${titulos}" cdn="false"
-						row="titulo" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="" default-sort="0 asc">
-						<datatables:column title="Nome">
-							<c:out value="${titulo.nome}"></c:out>
-						</datatables:column>
+					<datatables:column title="Excluir">
+						<a id="excluir" class="btn btn-danger" data-toggle="modal"
+							data-target="#confirm-delete" href="#"
+							data-href="<c:url value="/titulo/${titulo.id}/excluir" ></c:url>">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+					</datatables:column>
+						
+					<datatables:column title="Exemplar">
+						<a href="<c:url value="/exemplar/${titulo.id}/listar" ></c:url>">
+							<button class="btn btn-primary">
+								<span class="glyphicon glyphicon-list"></span> Exemplares
+							</button>
+						</a>
+					</datatables:column>
+				</datatables:table>
+			</sec:authorize>
+			<sec:authorize access="!hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+				<datatables:table id="tituloTable" data="${titulos}" cdn="false"
+					row="titulo" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="3" default-sort="0 asc">
+					<datatables:column title="Nome">
+						<c:out value="${titulo.nome}"></c:out>
+					</datatables:column>
 		
-						<datatables:column title="ISBN">
-							<c:out value="${titulo.isbn}"></c:out>
-						</datatables:column>
+					<datatables:column title="ISBN">
+						<c:out value="${titulo.isbn}"></c:out>
+					</datatables:column>
 		
-						<datatables:column title="Tipo">
-							<c:out value="${titulo.tipo}"></c:out>
-						</datatables:column>
-					</datatables:table>
-				</c:otherwise>
-			</c:choose>
+					<datatables:column title="Tipo">
+						<c:out value="${titulo.tipo}"></c:out>
+					</datatables:column>
+						
+					<datatables:column title="Exemplar">
+						<a href="<c:url value="/exemplar/${titulo.id}/listar" ></c:url>">
+							<button class="btn btn-primary">
+								<span class="glyphicon glyphicon-list"></span> Exemplares
+							</button>
+						</a>
+					</datatables:column>
+				</datatables:table>
+			</sec:authorize>
 		</c:if>
 
 		<jsp:include page="../fragments/footer.jsp" />
