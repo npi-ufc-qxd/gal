@@ -37,13 +37,9 @@ public class IntegracaoCurricularController {
 	public String excluir(RedirectAttributes redirectAttributes,@PathVariable("idDisciplina") Integer idDisciplina, @PathVariable("idCurriculo") Integer idCurriculo) {
 		IntegracaoCurricular integracao = integracaoService.getIntegracaoByIdDisciplinaIdCurriculo(idDisciplina, idCurriculo);
 		int codigoCurso = integracao.getEstruturaCurricular().getCurso().getCodigo();
-
 		if (integracao != null) {
 			this.integracaoService.delete(integracao);
 			redirectAttributes.addFlashAttribute("info", "Integração Curricular removida com sucesso.");
-			EstruturaCurricular estruturaBD = integracao.getEstruturaCurricular();
-			estruturaBD.calcularChCalculaveis();
-			estruturaService.update(estruturaBD);
 		}
 		
 		return "redirect:/curso/" + codigoCurso + "/visualizar";
@@ -84,10 +80,6 @@ public class IntegracaoCurricularController {
 		integracao.setSemestreOferta(semestreOferta);
 		
 		integracaoService.save(integracao);
-		integracaoList.add(integracao);
-		estruturaBD.setCurriculos(integracaoList);
-		estruturaBD.calcularChCalculaveis();
-		estruturaService.update(estruturaBD);
 		
 		redirectAttributes.addFlashAttribute("info", "Integracao Curricular adicionada com sucesso.");
 		return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
