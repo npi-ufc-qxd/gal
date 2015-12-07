@@ -96,7 +96,6 @@ public class EstruturaCurricularController {
 			return "estrutura/adicionar";
 		}
 		
-		
 		if(estruturaCurricularService.getOutraEstruturaCurricularByCodigo(id, estruturaCurricular.getCodigo())!=null){
 			result.rejectValue("codigo", "Repeat.estruturas.codigo","Ano e Semestre já existe para curso");
 			return "estrutura/adicionar";

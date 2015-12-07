@@ -49,10 +49,10 @@ public class MetaController {
 
 	@Inject
 	private CursoService cursoService;
-	
+
 	@Inject
 	private MetaService metaService;
-	
+
 	@Inject
 	private DisciplinaService disciplinaService;
 
@@ -125,7 +125,7 @@ public class MetaController {
 		return "meta/listar";
 
 	}
-	
+
 	@RequestMapping(value = "/disciplina/{id}/listar", method = RequestMethod.GET)
 	public String listarByDisciplina(@PathVariable("id") Integer id, ModelMap modelMap) {
 
@@ -140,11 +140,9 @@ public class MetaController {
 		for (ResultadoCalculo resultadoCalculo : resultados) {
 			metasCalculadas = new ArrayList<MetaCalculada>();
 
-			for (MetaCalculada metaCalculada : resultadoCalculo
-					.getMetasCalculadas()) {
+			for (MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()) {
 				boolean flag = false;
-				for (DetalheMetaCalculada detalhePar : metaCalculada
-						.getDetalhePar()) {
+				for (DetalheMetaCalculada detalhePar : metaCalculada.getDetalhePar()) {
 
 					if (detalhePar.getDisciplina().equals(disciplina.getNome())) {
 						flag = true;
@@ -153,8 +151,7 @@ public class MetaController {
 					}
 
 				}
-				for (DetalheMetaCalculada detalheImpar : metaCalculada
-						.getDetalheImpar()) {
+				for (DetalheMetaCalculada detalheImpar : metaCalculada.getDetalheImpar()) {
 
 					if (detalheImpar.getDisciplina().equals(disciplina.getNome())) {
 						flag = true;
@@ -171,8 +168,63 @@ public class MetaController {
 				}
 			}
 			if (!metasCalculadas.isEmpty()) {
-				resultadosCurso.add(new ResultadoCalculo(resultadoCalculo
-						.getTitulo(), metasCalculadas));
+				resultadosCurso.add(new ResultadoCalculo(resultadoCalculo.getTitulo(), metasCalculadas));
+			}
+
+		}
+
+		modelMap.addAttribute("idCurso", -1);
+		modelMap.addAttribute("idDisciplina", disciplina.getId());
+		modelMap.addAttribute("cursos", cursos);
+		modelMap.addAttribute("disciplinas", disciplinas);
+		modelMap.addAttribute("resultados", resultadosCurso);
+
+		return "meta/listar";
+	}
+
+	@RequestMapping(value = "/disciplina/{id}/listar", method = RequestMethod.GET)
+	public String listarByDisciplina(@PathVariable("id") Integer id, ModelMap modelMap) {
+
+		List<Curso> cursos = cursoService.find(Curso.class);
+		List<Disciplina> disciplinas = disciplinaService.find(Disciplina.class);
+		List<ResultadoCalculo> resultados = calculo.gerarCalculo();
+		Disciplina disciplina = disciplinaService.find(Disciplina.class, id);
+
+		List<ResultadoCalculo> resultadosCurso = new ArrayList<ResultadoCalculo>();
+		List<MetaCalculada> metasCalculadas;
+
+		for (ResultadoCalculo resultadoCalculo : resultados) {
+			metasCalculadas = new ArrayList<MetaCalculada>();
+
+			for (MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()) {
+				boolean flag = false;
+				for (DetalheMetaCalculada detalhePar : metaCalculada.getDetalhePar()) {
+
+					if (detalhePar.getDisciplina().equals(disciplina.getNome())) {
+						flag = true;
+						break;
+
+					}
+
+				}
+				for (DetalheMetaCalculada detalheImpar : metaCalculada.getDetalheImpar()) {
+
+					if (detalheImpar.getDisciplina().equals(disciplina.getNome())) {
+						flag = true;
+						break;
+
+					}
+
+				}
+				if (flag) {
+					metasCalculadas.add(metaCalculada);
+
+					flag = false;
+
+				}
+			}
+			if (!metasCalculadas.isEmpty()) {
+				resultadosCurso.add(new ResultadoCalculo(resultadoCalculo.getTitulo(), metasCalculadas));
 			}
 
 		}
@@ -308,18 +360,14 @@ public class MetaController {
 			}
 			if (!metacalculada.isEmpty()) {
 				for (DetalheMetaCalculada detalheMetaCalculada : metacalculada) {
-					linha = "\"" + element.getTitulo().getNome() + "\";\"" 
-							+ element.getTitulo().getIsbn()
-							+ "\";\"Impar\";\"" 
-							+ detalheMetaCalculada.getCurso() + "\";\""
+					linha = "\"" + element.getTitulo().getNome() + "\";\"" + element.getTitulo().getIsbn()
+							+ "\";\"Impar\";\"" + detalheMetaCalculada.getCurso() + "\";\""
 							+ detalheMetaCalculada.getDisciplina() + "\";\""
-							+ detalheMetaCalculada.getCodigoDisciplina() + "\";\"" 
-							+ detalheMetaCalculada.getSemestre() + "\";\"" 
-							+ detalheMetaCalculada.getQuantidadeAlunos() + "\";\""
+							+ detalheMetaCalculada.getCodigoDisciplina() + "\";\"" + detalheMetaCalculada.getSemestre()
+							+ "\";\"" + detalheMetaCalculada.getQuantidadeAlunos() + "\";\""
 							+ detalheMetaCalculada.getTipoBibliografia() + "\";\""
-							+ df.format(detalheMetaCalculada.getCalculo()) + "\";\"" 
-							+ element.getTitulo().getAcervo() + "\";\"" 
-							+ df.format(deficit) + "\"";
+							+ df.format(detalheMetaCalculada.getCalculo()) + "\";\"" + element.getTitulo().getAcervo()
+							+ "\";\"" + df.format(deficit) + "\"";
 					cria.escreveFile(str, linha);
 				}
 			}
@@ -328,18 +376,14 @@ public class MetaController {
 			metacalculada = element.getMetaCalculada().getDetalhePar();
 			if (!metacalculada.isEmpty()) {
 				for (DetalheMetaCalculada detalheMetaCalculada : metacalculada) {
-					linha = "\"" + element.getTitulo().getNome() + "\";\"" 
-							+ element.getTitulo().getIsbn()
-							+ "\";\"Par\";\"" 
-							+ detalheMetaCalculada.getCurso() + "\";\""
+					linha = "\"" + element.getTitulo().getNome() + "\";\"" + element.getTitulo().getIsbn()
+							+ "\";\"Par\";\"" + detalheMetaCalculada.getCurso() + "\";\""
 							+ detalheMetaCalculada.getDisciplina() + "\";\""
-							+ detalheMetaCalculada.getCodigoDisciplina() + "\";\"" 
-							+ detalheMetaCalculada.getSemestre() + "\";\"" 
-							+ detalheMetaCalculada.getQuantidadeAlunos() + "\";\""
+							+ detalheMetaCalculada.getCodigoDisciplina() + "\";\"" + detalheMetaCalculada.getSemestre()
+							+ "\";\"" + detalheMetaCalculada.getQuantidadeAlunos() + "\";\""
 							+ detalheMetaCalculada.getTipoBibliografia() + "\";\""
-							+ df.format(detalheMetaCalculada.getCalculo()) + "\";\"" 
-							+ element.getTitulo().getAcervo() + "\";\"" 
-							+ df.format(deficit) + "\"";
+							+ df.format(detalheMetaCalculada.getCalculo()) + "\";\"" + element.getTitulo().getAcervo()
+							+ "\";\"" + df.format(deficit) + "\"";
 					cria.escreveFile(str, linha);
 				}
 			}

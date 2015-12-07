@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -43,29 +44,15 @@ public class Disciplina {
 	private List<Bibliografia> bibliografias;
 
 	@Column(name = "ch_pratica")
-	private String chPratica;
+	@NotNull(message = "Campo obrigatório")
+	private Integer chPratica;
 
 	@Column(name = "ch_teorica")
-	private String chTeorica;
+	@NotNull(message = "Campo obrigatório")
+	private Integer chTeorica;
 
 	@Column(name = "tipo")
 	private String tipo;
-
-	public String getChPratica() {
-		return chPratica;
-	}
-
-	public void setChPratica(String chPratica) {
-		this.chPratica = chPratica;
-	}
-
-	public String getChTeorica() {
-		return chTeorica;
-	}
-
-	public void setChTeorica(String chTeorica) {
-		this.chTeorica = chTeorica;
-	}
 
 	public String getTipo() {
 		return tipo;
@@ -123,5 +110,21 @@ public class Disciplina {
 	@Override
 	public String toString() {
 		return "Disciplina [id=" + id + ", nome=" + nome + ", codigo=" + codigo + "]";
+	}
+
+	public Integer getChPratica() {
+		return chPratica;
+	}
+
+	public void setChPratica(Integer chPratica) {
+		this.chPratica = chPratica;
+	}
+
+	public Integer getChTeorica() {
+		return chTeorica;
+	}
+
+	public void setChTeorica(Integer chTeorica) {
+		this.chTeorica = chTeorica;
 	}
 }
