@@ -1,55 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-http://www.springframework.org/schema/security
-http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
-	<http auto-config="true" use-expressions="true">
+	<beans:bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
+	    <beans:property name="rolePrefix" value=""/>
+	</beans:bean>
+	
+	<beans:bean id="authenticatedVoter" class="org.springframework.security.access.vote.AuthenticatedVoter"/> 
+	
+	<beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+	    <beans:constructor-arg >
+	        <beans:list>
+	            <beans:ref bean="roleVoter"/>
+	            <beans:ref bean="authenticatedVoter"/>
+	        </beans:list>
+	    </beans:constructor-arg>
+	</beans:bean>
+	
+	<http access-decision-manager-ref="accessDecisionManager" auto-config="true">
 		<access-denied-handler error-page="/403" />
- 		<intercept-url pattern="/login*" access="permitAll" /> 
- 		<intercept-url pattern="/webjars/**" access="permitAll" /> 		
- 		<intercept-url pattern="/resources/**" access="permitAll" />
-
-		<intercept-url pattern="/contatos" access="isAuthenticated()" />
-		<intercept-url pattern="/inicio" access="isAuthenticated()" />
-
-		<intercept-url pattern="/curso/listar**" access="isAuthenticated()" />
-		<intercept-url pattern="/curso/{id}/visualizar**" access="isAuthenticated()" />
-		<intercept-url pattern="/curso/**" access="hasAnyRole( 'ROLE_BIBLIOTECARIO', 'ROLE_COORDENADOR_CURSO')" />
+ 		<intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" /> 
+ 		<intercept-url pattern="/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+ 		<intercept-url pattern="/webjars/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+ 		
+ 		<intercept-url pattern="/contatos" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/inicio" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		
-		<intercept-url pattern="/disciplina/listar**" access="isAuthenticated()" />
-		<intercept-url pattern="/disciplina/**" access="hasAnyRole( 'ROLE_BIBLIOTECARIO', 'ROLE_COORDENADOR_CURSO')" />
+		<intercept-url pattern="/curso/listar**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/curso/{id}/visualizar**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/curso/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
 		
-		<intercept-url pattern="/titulo/listar**" access="isAuthenticated()" />
-		<intercept-url pattern="/titulo/**" access="hasAnyRole( 'ROLE_BIBLIOTECARIO', 'ROLE_COORDENADOR_CURSO')" />
+		<intercept-url pattern="/disciplina/listar**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/disciplina/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
 		
+		<intercept-url pattern="/titulo/listar**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/titulo/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
 		
-		<intercept-url pattern="/acervo**" access="hasAnyRole( 'ROLE_BIBLIOTECARIO', 'ROLE_COORDENADOR_CURSO')" />
+		<intercept-url pattern="/acervo**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
 		
-		<intercept-url pattern="/estrutura**" access="hasAnyRole( 'ROLE_BIBLIOTECARIO', 'ROLE_COORDENADOR_CURSO')" />
+		<intercept-url pattern="/estrutura**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
 		
-		<intercept-url pattern="/integracao**" access="hasAnyRole( 'ROLE_BIBLIOTECARIO', 'ROLE_COORDENADOR_CURSO')" />
+		<intercept-url pattern="/integracao**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
 		
-		<intercept-url pattern="/exemplar/listar**" access="isAuthenticated()" />
-		<intercept-url pattern="/exemplar/{id}/listar**" access="isAuthenticated()" />
-		<intercept-url pattern="/exemplar/**" access="hasAnyRole( 'ROLE_BIBLIOTECARIO', 'ROLE_COORDENADOR_CURSO')" />
-
-		<intercept-url pattern="/**" access="hasAnyRole( 'ROLE_BIBLIOTECARIO', 'ROLE_COORDENADOR_CURSO')" />
-
-		<form-login login-page="/login" authentication-success-handler-ref="myAuthenticationSuccessHandler" authentication-failure-url="/loginfailed" />
-		<logout logout-success-url="/login" invalidate-session="true" logout-url="/logout" />
+		<intercept-url pattern="/exemplar/listar**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/exemplar/{id}/listar**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/exemplar/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
+		
+		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+ 		 
+		<form-login login-page="/login" default-target-url="/" 
+ 			authentication-failure-url="/loginfailed" />
+ 		<logout logout-success-url="/login" invalidate-session="true"/>
 	</http>
 	
-	<beans:bean id="myAuthenticationSuccessHandler" class="br.ufc.npi.gal.service.SimpleUrlAuthenticationSuccessHandler" />
-	
-	<beans:bean id="ldapAuthenticationProvider" class="br.ufc.quixada.npi.ldap.service.LdapAuthenticationProvider"></beans:bean>
-	
-	<authentication-manager alias="authenticationManager">
-		<authentication-provider ref="ldapAuthenticationProvider"></authentication-provider>
-	</authentication-manager>
-	
-	<global-method-security secured-annotations="enabled" />
-
+	<beans:bean id="ldapAuthentication" class="br.ufc.npi.gal.service.LdapAuthentication"></beans:bean>
+		<authentication-manager alias="authenticationManager">
+		    <authentication-provider ref="ldapAuthentication"></authentication-provider>
+		</authentication-manager>
+  	<global-method-security  secured-annotations = "enabled"  />
 </beans:beans>

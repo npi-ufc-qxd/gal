@@ -43,7 +43,7 @@
 					<li class="${act }"><a href="#${curriculo.id }" role="tab" data-toggle="tab">${curriculo.codigo}</a></li>
 	
 				</c:forEach>
-				<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
+				<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 				<div id="button-add">
 					<a href="<c:url value="/estrutura/${curso.id}/adicionar" ></c:url>">
 						<button class="btn btn-primary"> <span class="glyphicon glyphicon-plus"></span> Adicionar Curriculo </button>
@@ -63,7 +63,7 @@
 				<div class="tab-pane ${active }" id="${curriculo.codigo }"></div>
 
 				<div id="${curriculo.id}" class="tab-pane ${active }">
-					<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
+					<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 					<div id="button-add">
 						<a style="float: left;" class="btn btn-success" href="<c:url value="/integracao/${curriculo.id}/adicionar" ></c:url>">
 							<span class="glyphicon glyphicon-link"></span> Vincular Disciplina
@@ -120,46 +120,67 @@
 						<br>
 					</div>
 					</div>
-						
-					
 					</sec:authorize>
 					
-					<div class="panel panel-default">
-						<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="1 2 4 5" default-sort="3 desc">
-
-							<datatables:column title="Disciplina">
-								<c:out value="${integracao.disciplina.nome}"></c:out>
-							</datatables:column>
-
-							<datatables:column title="Código disciplina">
-								<c:out value="${integracao.disciplina.codigo}"></c:out>
-							</datatables:column>
-
-
-							<datatables:column title="Quantidade aluno">
-								<c:out value="${integracao.quantidadeAlunos}"></c:out>
-							</datatables:column>
-
-							<datatables:column title="Semestre oferta">
-								<c:out value="${integracao.semestreOferta}"></c:out>
-							</datatables:column>
-							
-							<sec:authorize access="hasAnyRole('ROLE_COORDENADOR_CURSO','ROLE_BIBLIOTECARIO')">
-							<datatables:column title="Editar">
-								<a class="btn btn-primary" href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/editar" ></c:url>">
-									<span class="glyphicon glyphicon-edit"></span>
-								</a>
-							</datatables:column>
-
-							<datatables:column title="Excluir">
-								<a id="excluir" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/excluir" ></c:url>">
-									<span class="glyphicon glyphicon-trash"></span>
-								</a>
-							</datatables:column>
-							</sec:authorize>
-							
-						</datatables:table>
-					</div>
+					<c:choose>
+						<c:when test="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+							<div class="panel panel-default">
+								<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="1 2 4 5" default-sort="3 desc">
+		
+									<datatables:column title="Disciplina">
+										<c:out value="${integracao.disciplina.nome}"></c:out>
+									</datatables:column>
+		
+									<datatables:column title="Código disciplina">
+										<c:out value="${integracao.disciplina.codigo}"></c:out>
+									</datatables:column>
+		
+		
+									<datatables:column title="Quantidade aluno">
+										<c:out value="${integracao.quantidadeAlunos}"></c:out>
+									</datatables:column>
+		
+									<datatables:column title="Semestre oferta">
+										<c:out value="${integracao.semestreOferta}"></c:out>
+									</datatables:column>
+									
+									<datatables:column title="Editar">
+										<a class="btn btn-primary" href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/editar" ></c:url>">
+											<span class="glyphicon glyphicon-edit"></span>
+										</a>
+		
+										<a id="excluir" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/excluir" ></c:url>">
+											<span class="glyphicon glyphicon-trash"></span>
+										</a>
+									</datatables:column>
+									
+								</datatables:table>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="panel panel-default">
+								<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="1 2" default-sort="3 desc">
+		
+									<datatables:column title="Disciplina">
+										<c:out value="${integracao.disciplina.nome}"></c:out>
+									</datatables:column>
+		
+									<datatables:column title="Código disciplina">
+										<c:out value="${integracao.disciplina.codigo}"></c:out>
+									</datatables:column>
+		
+		
+									<datatables:column title="Quantidade aluno">
+										<c:out value="${integracao.quantidadeAlunos}"></c:out>
+									</datatables:column>
+		
+									<datatables:column title="Semestre oferta">
+										<c:out value="${integracao.semestreOferta}"></c:out>
+									</datatables:column>
+								</datatables:table>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</c:forEach>
 		</div>
