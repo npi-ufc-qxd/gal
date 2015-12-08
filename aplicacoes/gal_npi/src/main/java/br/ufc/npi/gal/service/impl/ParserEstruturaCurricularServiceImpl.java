@@ -300,7 +300,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 
 	private String naturezaIntegracao(String natureza) {
 		if (natureza.equals("OBRIGATÓRIA")) {
-			return "ORBIGATORIA";
+			return "OBRIGATORIA";
 		} else if (natureza.equals("OPTATIVA")) {
 			return "OPTATIVA";
 		}
