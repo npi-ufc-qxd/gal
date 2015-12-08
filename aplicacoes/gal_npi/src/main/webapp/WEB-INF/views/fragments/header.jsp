@@ -6,7 +6,7 @@
 		GAL <small>Gestão de Aquisição de Livros</small>
 	</h1>
 </div>
-<div align="right">Olá, ${sessionScope.usuario.nome}!</div>
+<div align="right">Olá, ${pageContext.request.userPrincipal.name}!</div>
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
 		<div class="navbar-header">
