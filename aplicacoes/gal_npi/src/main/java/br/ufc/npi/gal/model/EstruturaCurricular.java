@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.print.DocFlavor.CHAR_ARRAY;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -20,7 +24,7 @@ import org.springframework.data.annotation.Transient;
 
 @Entity
 @Table(name = "curriculo")
-public class EstruturaCurricular {
+public class EstruturaCurricular{
 
 	@Id
 	@Column(name = "id_c")
@@ -55,28 +59,32 @@ public class EstruturaCurricular {
 	private String semestreEntradaVigor;
 
 	@Column(name = "ch_opt_minima")
+	@NotNull(message = "Campo obrigatório")
 	private Integer chOptMinima;
 
 	@Column(name = "prazo_conclusao_minimo")
+	@NotNull(message = "Campo obrigatório")
 	private Integer prazoConclusaoMinimo;
 
 	@Column(name = "prazo_conclusao_medio")
+	@NotNull(message = "Campo obrigatório")
 	private Integer prazoConclusaoMedio;
 
 	@Column(name = "prazo_conclusao_maximo")
+	@NotNull(message = "Campo obrigatório")
 	private Integer prazoConclusaoMaximo;
 
 	@Column(name = "ch_periodo_minima")
+	@NotNull(message = "Campo obrigatório")
 	private Integer chPeriodoMinimo;
 
 	@Column(name = "ch_periodo_media")
+	@NotNull(message = "Campo obrigatório")
 	private Integer chPeriodoMedio;
 
 	@Column(name = "ch_periodo_maxima")
+	@NotNull(message = "Campo obrigatório")
 	private Integer chPeriodoMaximo;
-
-	@Column(name = "ch_max_componentes_livres")
-	private Integer chCompOptLivres;
 
 	@javax.persistence.Transient
 	private Integer chTotalMinima;
@@ -93,8 +101,18 @@ public class EstruturaCurricular {
 	@javax.persistence.Transient
 	private Integer chAtvAcademicaEspecifica;
 
+	@Column(name = "ch_comp_opt_livres")
+	@NotNull(message = "Campo obrigatório")
+	private Integer chCompOptLivres;
+	
+	@javax.persistence.Transient
+	public static final String NATUREZA = "OBRIGATORIA";
+	
+	@javax.persistence.Transient
+	public static final List<String> TIPO_ATV_ESPECIFICA = new ArrayList<String>(
+			Arrays.asList("ESTAGIO", "TCC", "ATIVIDADES COMPLEMENTARES"));
+	
 	public EstruturaCurricular() {
-
 	}
 
 	public String getMatrizCurricular() {
@@ -129,20 +147,65 @@ public class EstruturaCurricular {
 		this.semestreEntradaVigor = semestreEntradaVigor;
 	}
 
-	public Integer getChOptMinima() {
-		return chOptMinima;
-	}
-
-	public void setChOptMinima(Integer chOptMinima) {
-		this.chOptMinima = chOptMinima;
-	}
-
 	public Integer getPrazoConclusaoMinimo() {
 		return prazoConclusaoMinimo;
 	}
 
 	public void setPrazoConclusaoMinimo(Integer prazoConclusaoMinimo) {
 		this.prazoConclusaoMinimo = prazoConclusaoMinimo;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+
+	public List<IntegracaoCurricular> getCurriculos() {
+		return curriculos;
+	}
+
+	public void setCurriculos(List<IntegracaoCurricular> curriculos) {
+		this.curriculos = curriculos;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "EstruturaCurricular [id=" + id + ", codigo=" + codigo + ", curso=" + curso + "]";
+	}
+
+	public Integer getChOptMinima() {
+		return chOptMinima;
+	}
+
+	public void setChOptMinima(Integer chOptMinima) {
+		this.chOptMinima = chOptMinima;
 	}
 
 	public Integer getPrazoConclusaoMedio() {
@@ -185,54 +248,6 @@ public class EstruturaCurricular {
 		this.chPeriodoMaximo = chPeriodoMaximo;
 	}
 
-	public EstruturaCurricular(String codigo, Curso curso) {
-		super();
-		this.codigo = codigo;
-		this.curso = curso;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
-
-	public Curso getCurso() {
-		return curso;
-	}
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
-	}
-
-	public List<IntegracaoCurricular> getCurriculos() {
-		return curriculos;
-	}
-
-	public void setCurriculos(List<IntegracaoCurricular> curriculos) {
-		this.curriculos = curriculos;
-	}
-
-	public Integer getChCompOptLivres() {
-		return chCompOptLivres;
-	}
-
-	public void setChCompOptLivres(Integer chCompOptLivres) {
-		this.chCompOptLivres = chCompOptLivres;
-	}
-	
-	
-
 	public Integer getChTotalMinima() {
 		return chTotalMinima;
 	}
@@ -242,6 +257,7 @@ public class EstruturaCurricular {
 	}
 
 	public Integer getChObrigatoria() {
+		calcularChCalculaveis();
 		return chObrigatoria;
 	}
 
@@ -273,17 +289,51 @@ public class EstruturaCurricular {
 		this.chAtvAcademicaEspecifica = chAtvAcademicaEspecifica;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+	public Integer getChCompOptLivres() {
+		return chCompOptLivres;
 	}
 
-	@Override
-	public String toString() {
-		return "EstruturaCurricular [id=" + id + ", codigo=" + codigo + ", curso=" + curso + "]";
+	public void setChCompOptLivres(Integer chCompOptLivres) {
+		this.chCompOptLivres = chCompOptLivres;
+	}
+	
+	private void calcularChCalculaveis() {
+		calcularChObrigatoria();
+		calcularChTotalMinima();
+		calcularChAtvAcademicaEspecifica();
+		}
+
+	private void calcularChAtvAcademicaEspecifica() {
+		int contChAtvAcademicaEspecifica = 0;
+		
+		for (IntegracaoCurricular curriculo : this.getCurriculos()) {
+			if (TIPO_ATV_ESPECIFICA.contains(curriculo.getDisciplina().getTipo())) {
+				contChAtvAcademicaEspecifica += curriculo.getDisciplina().getChPratica();
+				contChAtvAcademicaEspecifica += curriculo.getDisciplina().getChTeorica();
+			}
+		}
+		this.chAtvAcademicaEspecifica = contChAtvAcademicaEspecifica;
 	}
 
+	private void calcularChTotalMinima() {
+		this.chTotalMinima = chOptMinima + chObrigatoria;
+	}
+
+	private void calcularChObrigatoria() {
+		int contChObrigatoria;
+		int contChObgTeorica = 0;
+		int contChObgPratica = 0;
+		
+		for (IntegracaoCurricular curriculo : this.getCurriculos()) {
+			if (NATUREZA.equals(curriculo.getNatureza())) {
+				contChObgPratica += curriculo.getDisciplina().getChPratica();
+				contChObgTeorica += curriculo.getDisciplina().getChTeorica();
+			}
+		}
+
+		contChObrigatoria = contChObgTeorica + contChObgPratica;
+		this.chObgPratica = contChObgPratica;
+		this.chObgTeorica = contChObgTeorica;
+		this.chObrigatoria = contChObrigatoria;
+	}
 }

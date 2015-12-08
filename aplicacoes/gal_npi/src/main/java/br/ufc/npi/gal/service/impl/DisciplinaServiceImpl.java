@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.service.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -33,6 +35,11 @@ public class DisciplinaServiceImpl extends GenericServiceImpl<Disciplina> implem
 	@Override
 	public Disciplina getOutraDisciplinaByCodigo(Integer id, String codigo) {
 		return disciplinaRepository.getOutraDisciplinaByCodigo(id, codigo);
+	}
+	
+	@Override
+	public List<Disciplina> getTodasDisciplinas() {
+		return disciplinaRepository.getTodasDisciplinas();
 	}
 
 }

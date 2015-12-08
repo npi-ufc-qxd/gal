@@ -2,6 +2,7 @@ package br.ufc.npi.gal.web;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,10 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.npi.gal.model.Bibliografia;
+import br.ufc.npi.gal.model.DetalheMetaCalculada;
 import br.ufc.npi.gal.model.Disciplina;
+import br.ufc.npi.gal.model.IntegracaoCurricular;
 import br.ufc.npi.gal.model.Titulo;
+import br.ufc.npi.gal.service.CalculoMetaService;
 import br.ufc.npi.gal.service.DisciplinaService;
-import br.ufc.npi.gal.service.ParserEstruturaCurricularService;
+import br.ufc.npi.gal.service.MetaCalculada;
+import br.ufc.npi.gal.service.ResultadoCalculo;
 import br.ufc.npi.gal.service.TituloService;
 import br.ufc.npi.gal.service.impl.ParserEstruturaCurricularServiceImpl;
 import br.ufc.quixada.npi.service.GenericService;
@@ -34,6 +39,10 @@ public class DisciplinaController {
 	private DisciplinaService disciplinaService;	
 	@Inject
 	private TituloService tituloService;
+
+	@Inject
+	private CalculoMetaService calculoService;
+
 	@Inject
 	private GenericService<Bibliografia> bibliografiaService;
 	@Inject
@@ -167,6 +176,63 @@ public class DisciplinaController {
 		modelMap.addAttribute("complementar", complementar);
 		modelMap.addAttribute("disciplina", disciplina);
 		return "disciplina/vincularBibliografia";
+	}
+	
+	@RequestMapping(value = "/{id}/visualizar", method = RequestMethod.GET)
+	public String visualizar(@PathVariable("id") Integer id, ModelMap modelMap) {
+		Disciplina disciplina = this.disciplinaService.find(Disciplina.class, id);
+		
+		if (disciplina == null)
+			return "redirect:/disciplina/listar";
+		
+		List<Titulo> basica = new ArrayList<Titulo>();
+		List<Titulo> complementar = new ArrayList<Titulo>();
+		
+		List<Bibliografia> bibliografias = disciplina.getBibliografias();
+		
+		for (Bibliografia b : bibliografias) {
+			if (b.getTipoBibliografia().equals(DisciplinaController.BASICA))
+				basica.add(b.getTitulo());
+			
+			else if (b.getTipoBibliografia().equals(DisciplinaController.COMPLEMENTAR))
+				complementar.add(b.getTitulo());
+		}
+		
+		List<IntegracaoCurricular> curriculos = disciplina.getCurriculos();
+		
+		HashMap<String, List<MetaCalculada>> metasCalculadasPorTitulo = new HashMap<String, List<MetaCalculada>>();
+		
+		List<ResultadoCalculo> resultados = calculoService.gerarCalculo();
+		
+		for (Bibliografia b : bibliografias) {
+			metasCalculadasPorTitulo.put(b.getTitulo().getNome(), new ArrayList<MetaCalculada>());
+			for(ResultadoCalculo resultadoCalculo : resultados){
+				if(resultadoCalculo.getTitulo().getId().equals(b.getTitulo().getId())){
+					for(MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()){
+						for(DetalheMetaCalculada detalheMetaCalculada: metaCalculada.getDetalhePar()){
+							if(detalheMetaCalculada.getDisciplina().equals(disciplina.getNome())){
+								metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
+								break;
+							}
+						}
+						for(DetalheMetaCalculada detalheMetaCalculada: metaCalculada.getDetalheImpar()){
+							if(detalheMetaCalculada.getDisciplina().equals(disciplina.getNome())){
+								metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		modelMap.addAttribute("bibliografia_basica", basica);
+		modelMap.addAttribute("bibliografia_complementar", complementar);
+		modelMap.addAttribute("metasCalculadas", metasCalculadasPorTitulo);
+		modelMap.addAttribute("curriculos", curriculos);
+		modelMap.addAttribute("disciplina", disciplina);
+		
+		return "disciplina/visualizar";
 	}
 
 

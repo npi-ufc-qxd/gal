@@ -81,6 +81,7 @@
 			</div>
 			
 			<div class="form-group">
+
 				<label for="chCompOptLivres" class="col-sm-1 control-label"style="width:210px;">C.H. Máxima Comps. Optativos Livres (hrs):</label>
 				<div class="col-sm-9">
 					<form:input id="chCompOptLivres" class="form-control"

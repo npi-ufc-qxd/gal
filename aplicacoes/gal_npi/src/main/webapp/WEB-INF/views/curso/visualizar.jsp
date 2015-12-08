@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>${curso.sigla}-${curso.nome}</title>
+<title>${curso.sigla}- ${curso.nome}</title>
 <jsp:include page="../fragments/htmlHead.jsp" />
 </head>
 <body>
@@ -51,7 +51,8 @@
 						<a
 							href="<c:url value="/estrutura/${curso.id}/adicionar" ></c:url>">
 							<button class="btn btn-primary">
-								<span class="glyphicon glyphicon-plus"></span> Adicionar Curriculo
+								<span class="glyphicon glyphicon-plus"></span> Adicionar
+								Curriculo
 							</button>
 						</a>
 						<form id="importarCurriculo" method="POST"

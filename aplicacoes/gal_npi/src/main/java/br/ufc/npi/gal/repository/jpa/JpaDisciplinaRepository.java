@@ -60,5 +60,11 @@ public class JpaDisciplinaRepository extends JpaGenericRepositoryImpl<Disciplina
 		return null;
 	}
 
-	
+	public List<Disciplina> getTodasDisciplinas(){
+		List<Disciplina> result = find(QueryType.JPQL, "from Disciplina order by nome asc", null);
+		if(result != null && !result.isEmpty()) {
+			return result;
+		}
+		return null;
+	}
 }
