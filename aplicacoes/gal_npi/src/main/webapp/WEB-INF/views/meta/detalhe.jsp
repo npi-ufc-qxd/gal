@@ -43,14 +43,10 @@
 		</div>
 		<br>
 
-		<div style="text-align: right;">
-			<input class="btn btn-default" onclick="goBack()"
-				style="font-weight: bold;" value="Voltar" />
-
-		</div>
-
-
-
+		<button class="btn btn-default" onclick="goBack()">
+			Voltar
+		</button>
+		
 		<div style="text-align: left;">
 			<label class="control-label" style="font-size: 15px;">Metas
 				de semestres pares.</label>

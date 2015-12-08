@@ -22,12 +22,13 @@ div#button-add {
 	margin-bottom: 10px;
 }
 
+/* Só sobrescreva classes default do bootstrap caso necessario */
 div.panel-heading {
-	padding-bottom: 40px !important;
+	padding-bottom: 44px;/* !important;*/
 }
 
 div.panel-default {
-	margin-top: 10px !important;
+	margin-top: 7px;/* !important;*/
 }
 
 div.panel-heading a#editar {
@@ -148,4 +149,17 @@ div#container {
 	margin-top: 100px; 
 	text-align: center; 
 	font-weight: bold;
+}
+
+.adark, .adark:hover{
+	color: #333;
+}
+
+/* fix accordion visualizar disciplina */
+.disciplina-panel-heading{
+	padding-bottom: 9px !important;
+	background-color: #d3d6ff !important;
+}
+.disciplina-panel-body{
+	background-color: #eaebff !important;
 }

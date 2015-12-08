@@ -6,4 +6,5 @@ import br.ufc.quixada.npi.service.GenericService;
 public interface EstruturaCurricularService extends GenericService<EstruturaCurricular> {
 	
 	public abstract EstruturaCurricular getOutraEstruturaCurricularByCodigo(Integer id, String codigo);
+
 }

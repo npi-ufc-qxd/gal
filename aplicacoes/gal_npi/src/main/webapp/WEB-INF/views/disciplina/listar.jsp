@@ -67,10 +67,10 @@
 						<c:out value="${disciplina.codigo}"></c:out>
 					</datatables:column>
 					
-					<datatables:column title="CH Pratica">
+					<datatables:column title="CH Prática">
 						<c:out value="${disciplina.chPratica}"></c:out>
 					</datatables:column>
-					<datatables:column title="CH Teorica">
+					<datatables:column title="CH Teórica">
 						<c:out value="${disciplina.chTeorica}"></c:out>
 					</datatables:column>
 					<datatables:column title="Tipo">

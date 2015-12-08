@@ -37,7 +37,6 @@ public class IntegracaoCurricularController {
 	public String excluir(RedirectAttributes redirectAttributes,@PathVariable("idDisciplina") Integer idDisciplina, @PathVariable("idCurriculo") Integer idCurriculo) {
 		IntegracaoCurricular integracao = integracaoService.getIntegracaoByIdDisciplinaIdCurriculo(idDisciplina, idCurriculo);
 		int codigoCurso = integracao.getEstruturaCurricular().getCurso().getCodigo();
-
 		if (integracao != null) {
 			this.integracaoService.delete(integracao);
 			redirectAttributes.addFlashAttribute("info", "Integração Curricular removida com sucesso.");
@@ -60,8 +59,7 @@ public class IntegracaoCurricularController {
 		IntegracaoCurricular integracao =  new IntegracaoCurricular();
 		Disciplina disciplinaBD = disciplinaService.getDisciplinaByCodigo(disciplina);
 		
-		List<IntegracaoCurricular> integracaoList = estruturaBD.getCurriculos();
-		
+		List<IntegracaoCurricular> integracaoList = estruturaBD.getCurriculos();		
 		
 		if(disciplinaBD == null){
 			redirectAttributes.addFlashAttribute("error", "Código da disciplina não existe");
@@ -80,7 +78,6 @@ public class IntegracaoCurricularController {
 		
 		integracao.setQuantidadeAlunos(quantidadeAlunos);
 		integracao.setSemestreOferta(semestreOferta);
-		
 		
 		integracaoService.save(integracao);
 		

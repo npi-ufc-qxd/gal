@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.web;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -36,14 +38,17 @@ public class CursoController {
 		modelMap.addAttribute("integracao", new IntegracaoCurricular());
 		modelMap.addAttribute("cursos", this.cursoService.find(Curso.class));
 		modelMap.addAttribute("estruturas", this.estruturaService.find(EstruturaCurricular.class));
-		return "curso/listar";
+		return PATH_CURSO_LISTAR;
 	}
 	
 	@RequestMapping(value = "{codigo}/visualizar")
 	public String visualizar(@PathVariable("codigo") Integer codigo, ModelMap modelMap) {
-		modelMap.addAttribute("curso", this.cursoService.getCursoByCodigo(codigo));
+		
+		Curso curso = this.cursoService.getCursoByCodigo(codigo);
+		modelMap.addAttribute("curso", curso);
 		modelMap.addAttribute("integracao", new IntegracaoCurricular());
-		modelMap.addAttribute("estruturas", this.estruturaService.find(EstruturaCurricular.class));
+		modelMap.addAttribute("estruturas", curso.getCurriculos());
+		
 		return "curso/visualizar";
 	}
 	
