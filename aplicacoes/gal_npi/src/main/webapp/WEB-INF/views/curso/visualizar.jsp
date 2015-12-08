@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>${curso.sigla}- ${curso.nome}</title>
+<title>${curso.sigla}-${curso.nome}</title>
 <jsp:include page="../fragments/htmlHead.jsp" />
 </head>
 <body>
@@ -47,23 +47,30 @@
 				</c:forEach>
 				<sec:authorize
 					access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
-					<div id="button-add">
-						<a
-							href="<c:url value="/estrutura/${curso.id}/adicionar" ></c:url>">
-							<button class="btn btn-primary">
-								<span class="glyphicon glyphicon-plus"></span> Adicionar
-								Curriculo
-							</button>
-						</a>
-						<form id="importarCurriculo" method="POST"
+					<div>
+						<div>
+							<form id="importarCurriculo" method="POST"
 								action="<c:url value="/estrutura/${curso.codigo}/importar"></c:url>"
 								class="form-horizontal" enctype="multipart/form-data"
 								style="float: right;">
-								<input type="file" name="file" id="fileupload"
-									accept="text/html" class="file" style="float: right;" /> <input
-									type="submit" name="submit" class="btn btn-primary"
-									value="Importar Curriculo" />
+								<input type="submit" name="submit" class="btn btn-primary"
+									value="Importar Curriculo" /> <input type="file" name="file"
+									id="fileupload" accept="text/html" class="file"
+									style="float: right;" />
 							</form>
+						</div>
+					</div>
+					<div>
+						<div id="button-add">
+							<a
+								href="<c:url value="/estrutura/${curso.id}/adicionar" ></c:url>">
+								<button class="btn btn-primary">
+									<span class="glyphicon glyphicon-plus"></span> Adicionar
+									Curriculo
+								</button>
+							</a>
+
+						</div>
 					</div>
 				</sec:authorize>
 			</ul>

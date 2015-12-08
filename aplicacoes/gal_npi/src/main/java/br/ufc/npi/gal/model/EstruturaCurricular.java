@@ -34,7 +34,7 @@ public class EstruturaCurricular{
 	@Column(name = "codigo")
 	@NotEmpty(message = "Campo obrigatório")
 	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
-			@Pattern(regexp = "([0-9]{4}+[.][1-2]{1})", message = "O campo deve conter formato xxxx.1 ou xxxx.2"), })
+			@Pattern(regexp = "([0-9]{4}+[.][1-2]{1}+[A-Z]?)", message = "O campo deve conter formato xxxx.1 ou xxxx.2"), })
 	private String codigo;
 
 	@ManyToOne(fetch = FetchType.EAGER)

@@ -143,9 +143,9 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		idMedio = estrutura.get(11).indexOf("Médio");
 		idMaximo = estrutura.get(11).indexOf("Máximo");
 		novaEstrutura.setPrazoConclusaoMinimo(
-				trasnformaStringInteger(estrutura.get(11).substring(idMinino + 6, 8)));
+				trasnformaStringInteger(estrutura.get(11).substring(idMinino + 6, idMedio-1)));
 		novaEstrutura.setPrazoConclusaoMedio(
-				trasnformaStringInteger(estrutura.get(11).substring(idMedio + 5, 16)));
+				trasnformaStringInteger(estrutura.get(11).substring(idMedio + 5, idMaximo-1)));
 		novaEstrutura.setPrazoConclusaoMaximo(trasnformaStringInteger(
 				estrutura.get(11).substring(idMaximo + 6, estrutura.get(11).length())));
 
