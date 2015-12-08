@@ -182,62 +182,6 @@ public class MetaController {
 		return "meta/listar";
 	}
 
-	@RequestMapping(value = "/disciplina/{id}/listar", method = RequestMethod.GET)
-	public String listarByDisciplina(@PathVariable("id") Integer id, ModelMap modelMap) {
-
-		List<Curso> cursos = cursoService.find(Curso.class);
-		List<Disciplina> disciplinas = disciplinaService.find(Disciplina.class);
-		List<ResultadoCalculo> resultados = calculo.gerarCalculo();
-		Disciplina disciplina = disciplinaService.find(Disciplina.class, id);
-
-		List<ResultadoCalculo> resultadosCurso = new ArrayList<ResultadoCalculo>();
-		List<MetaCalculada> metasCalculadas;
-
-		for (ResultadoCalculo resultadoCalculo : resultados) {
-			metasCalculadas = new ArrayList<MetaCalculada>();
-
-			for (MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()) {
-				boolean flag = false;
-				for (DetalheMetaCalculada detalhePar : metaCalculada.getDetalhePar()) {
-
-					if (detalhePar.getDisciplina().equals(disciplina.getNome())) {
-						flag = true;
-						break;
-
-					}
-
-				}
-				for (DetalheMetaCalculada detalheImpar : metaCalculada.getDetalheImpar()) {
-
-					if (detalheImpar.getDisciplina().equals(disciplina.getNome())) {
-						flag = true;
-						break;
-
-					}
-
-				}
-				if (flag) {
-					metasCalculadas.add(metaCalculada);
-
-					flag = false;
-
-				}
-			}
-			if (!metasCalculadas.isEmpty()) {
-				resultadosCurso.add(new ResultadoCalculo(resultadoCalculo.getTitulo(), metasCalculadas));
-			}
-
-		}
-
-		modelMap.addAttribute("idCurso", -1);
-		modelMap.addAttribute("idDisciplina", disciplina.getId());
-		modelMap.addAttribute("cursos", cursos);
-		modelMap.addAttribute("disciplinas", disciplinas);
-		modelMap.addAttribute("resultados", resultadosCurso);
-
-		return "meta/listar";
-	}
-
 	@RequestMapping(value = "/{id}/detalhe/{meta}", method = RequestMethod.GET)
 	public String tituloByDetalhe(@PathVariable("id") Integer id, @PathVariable("meta") String meta, ModelMap modelMap,
 			RedirectAttributes redirectAttributes) {
