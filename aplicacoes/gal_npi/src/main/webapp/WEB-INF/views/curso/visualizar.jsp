@@ -74,141 +74,6 @@
 					</div>
 				</sec:authorize>
 			</ul>
-<<<<<<< HEAD
-			<div class="tab-content">
-				<c:forEach items="${curso.curriculos}" var="curriculo"
-					varStatus="count">
-					<c:if test="${count.index == 0}">
-						<c:set var="active" value="active"></c:set>
-					</c:if>
-					<c:if test="${count.index != 0}">
-						<c:set var="active" value=""></c:set>
-					</c:if>
-					<div class="tab-pane ${active }" id="${curriculo.codigo }"></div>
-					<div id="${curriculo.id}" class="tab-pane ${active }">
-						<sec:authorize
-							access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
-							<div id="button-add">
-								<a style="float: left;" class="btn btn-success"
-									href="<c:url value="/integracao/${curriculo.id}/adicionar" ></c:url>">
-									<span class="glyphicon glyphicon-link"></span> Vincular
-									Disciplina
-								</a> <a id="excluir" style="float: right;" class="btn btn-danger"
-									data-toggle="modal" data-target="#confirm-delete" href="#"
-									data-href="<c:url value="/estrutura/${curriculo.id }/excluir" ></c:url>">
-									<span class="glyphicon glyphicon-trash"></span> Excluir
-									Curriculo
-								</a> <a
-									href="<c:url value="/estrutura/${curriculo.id }/editar" ></c:url>">
-									<button class="btn btn-primary">
-										<span class="glyphicon glyphicon-plus"></span> Editar
-										Curriculo
-									</button>
-								</a>
-							</div>
-							<div>
-								<div class="halfContainer">
-									<b>Código: </b> ${curriculo.codigo} <br> <b>Matriz
-										Curricular:</b> ${curriculo.matrizCurricular}<br> <b>Unidade
-										de Vinculação: </b>${curriculo.unidadeVinculacao }<br> <b>Município
-										de funcionamento: </b> ${curriculo.municipio }<br> <b>Período
-										Letivo de Entrada em Vigor: </b>${curriculo.semestreEntradaVigor}<br>
-									<b>Carga Horária Optativa Minima: </b>${curriculo.chOptMinima }<b>
-										hrs</b><br> <b>Carga Horária Máxima de Componentes
-										Curriculares Optativos Livres: </b>${curriculo.chCompOptLivres }<b>
-										hrs</b><br> <br>
-								</div>
-								<div class="halfContainer">
-									<div class="littleBox">
-										<b>Prazos para Conclusão em Períodos Letivos </b><br> <b>Mínimo:
-										</b>${curriculo.prazoConclusaoMinimo }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<b>Médio: </b>${curriculo.prazoConclusaoMedio }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<b>Máximo: </b>${curriculo.prazoConclusaoMaximo }<br>
-									</div>
-									<div class="littleBox" style="border-top: 0px">
-										<b>Carga Horária por Período Letivo</b><br> <b>Mínima:
-										</b>${curriculo.chPeriodoMinimo }<b> hrs</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<b>Média: </b>${curriculo.chPeriodoMedio }<b> hrs</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<b>Máxima: </b>${curriculo.chPeriodoMaximo }<b> hrs</b><br>
-									</div>
-									<hr width="102%">
-									<div class="littleBox">
-										<b>Carga Horária Obrigatória</b><br> <b>Total: </b>${curriculo.chObrigatoria}<b>
-											hrs</b>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; <b>( </b>${curriculo.chObgPratica }<b>
-											hrs</b> <b>Práticas ) / ( </b> ${curriculo.chObgTeorica }<b>
-											hrs</b> <b> Teóricas )</b><br>
-									</div>
-									<div style="padding: 0px 12px;">
-										<b>Carga Horária Total Mínima: </b>${curriculo.chTotalMinima }<b>
-											hrs</b><br> <b>Carga Horária Obrigatória de Atividade
-											Acadêmica Específica: </b>${curriculo.chAtvAcademicaEspecifica }<b>
-											hrs</b><br>
-									</div>
-									<br>
-								</div>
-							</div>
-						</sec:authorize>
-						<c:choose>
-							<c:when test="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
-								<div class="panel panel-default">
-									<datatables:table id="estrutura${curso.id}"
-										data="${curriculo.curriculos}" cdn="false" row="integracao"
-										theme="bootstrap2"
-										cssClass="table table-striped table-orderable"
-										no-sort-fields="1 2 4 5" default-sort="3 desc">
-										<datatables:column title="Disciplina">
-											<c:out value="${integracao.disciplina.nome}"></c:out>
-										</datatables:column>
-										<datatables:column title="Código disciplina">
-											<c:out value="${integracao.disciplina.codigo}"></c:out>
-										</datatables:column>
-										<datatables:column title="Quantidade aluno">
-											<c:out value="${integracao.quantidadeAlunos}"></c:out>
-										</datatables:column>
-										<datatables:column title="Semestre oferta">
-											<c:out value="${integracao.semestreOferta}"></c:out>
-										</datatables:column>
-										<datatables:column title="Editar">
-											<a class="btn btn-primary"
-												href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/editar" ></c:url>">
-												<span class="glyphicon glyphicon-edit"></span>
-											</a>
-											<a id="excluir" class="btn btn-danger" data-toggle="modal"
-												data-target="#confirm-delete" href="#"
-												data-href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/excluir" ></c:url>">
-												<span class="glyphicon glyphicon-trash"></span>
-											</a>
-										</datatables:column>
-									</datatables:table>
-								</div>
-							</c:when>
-							<c:otherwise>
-								<div class="panel panel-default">
-									<datatables:table id="estrutura${curso.id}"
-										data="${curriculo.curriculos}" cdn="false" row="integracao"
-										theme="bootstrap2"
-										cssClass="table table-striped table-orderable"
-										no-sort-fields="1 2" default-sort="3 desc">
-										<datatables:column title="Disciplina">
-											<c:out value="${integracao.disciplina.nome}"></c:out>
-										</datatables:column>
-										<datatables:column title="Código disciplina">
-											<c:out value="${integracao.disciplina.codigo}"></c:out>
-										</datatables:column>
-										<datatables:column title="Quantidade aluno">
-											<c:out value="${integracao.quantidadeAlunos}"></c:out>
-										</datatables:column>
-										<datatables:column title="Semestre oferta">
-											<c:out value="${integracao.semestreOferta}"></c:out>
-										</datatables:column>
-									</datatables:table>
-								</div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</c:forEach>
-			</div>
-=======
 
 		<div class="tab-content">
 			<c:forEach items="${curso.curriculos}" var="curriculo" varStatus="count">
@@ -281,7 +146,7 @@
 					
 					<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 						<div class="panel panel-default">
-							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="1 2 4 5" default-sort="3 desc">
+							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="1 2 4" default-sort="3 desc">
 		
 								<datatables:column title="Disciplina">
 									<c:out value="${integracao.disciplina.nome}"></c:out>
@@ -339,7 +204,6 @@
 					</sec:authorize>
 				</div>
 			</c:forEach>
->>>>>>> refs/remotes/origin/master
 		</div>
 		<jsp:include page="../fragments/footer.jsp" />
 		<div class="modal fade" id="confirm-delete" tabindex="-1"

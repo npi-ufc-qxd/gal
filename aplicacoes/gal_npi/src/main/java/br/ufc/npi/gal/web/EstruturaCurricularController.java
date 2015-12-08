@@ -70,7 +70,7 @@ public class EstruturaCurricularController {
 		estrutura.setCurso(curso);
 
 		estruturaCurricularService.update(estrutura);
-		redirectAttributes.addFlashAttribute("info","Estrutura Curricular atualizada com sucesso");
+		redirectAttributes.addFlashAttribute("info", "Estrutura Curricular atualizada com sucesso");
 		return "redirect:/curso/" + curso.getCodigo() + "/visualizar";
 	}
 
@@ -82,7 +82,7 @@ public class EstruturaCurricularController {
 			this.estruturaCurricularService.delete(estruturaCurricular);
 
 		}
-		redirectAttributes.addFlashAttribute("info","Estrutura Curricular removida com sucesso");
+		redirectAttributes.addFlashAttribute("info", "Estrutura Curricular removida com sucesso");
 		return "redirect:/curso/" + estruturaCurricular.getCurso().getCodigo() + "/visualizar";
 	}
 
@@ -121,6 +121,9 @@ public class EstruturaCurricularController {
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
+			redirectAttributes.addFlashAttribute("error",
+					"Não foi possível o upload das informações. Por favor tente novamente");
+			return "redirect:/curso/" + idCurso + "/visualizar";
 		}
 
 		try {
@@ -151,13 +154,13 @@ public class EstruturaCurricularController {
 			return "estrutura/adicionar";
 		}
 		if (estruturaCurricular.getCodigo().trim().isEmpty()) {
-			result.rejectValue("codigo", "Repeat.estrutura.codigo",
-					"Campo obrigatório.");
+			result.rejectValue("codigo", "Repeat.estrutura.codigo", "Campo obrigatório.");
 			return "estrutura/adicionar";
 		}
-		
-		if(estruturaCurricularService.getOutraEstruturaCurricularByCodigo(id, estruturaCurricular.getCodigo())!=null){
-			result.rejectValue("codigo", "Repeat.estruturas.codigo","Ano e Semestre já existe para curso");
+
+		if (estruturaCurricularService.getOutraEstruturaCurricularByCodigo(id,
+				estruturaCurricular.getCodigo()) != null) {
+			result.rejectValue("codigo", "Repeat.estruturas.codigo", "Ano e Semestre já existe para curso");
 			return "estrutura/adicionar";
 		}
 
@@ -165,9 +168,8 @@ public class EstruturaCurricularController {
 		estruturaCurricular.setId(null);
 
 		estruturaCurricularService.save(estruturaCurricular);
-		
-		redirectAttributes.addFlashAttribute("info",
-				"Estrutura Curricular adicionada com sucesso.");
+
+		redirectAttributes.addFlashAttribute("info", "Estrutura Curricular adicionada com sucesso.");
 		return "redirect:/curso/" + curso.getCodigo() + "/visualizar";
 	}
 }
