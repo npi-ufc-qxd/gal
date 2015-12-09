@@ -124,7 +124,7 @@
 					
 					<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 						<div class="panel panel-default">
-							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="1 2 4 5" default-sort="3 desc">
+							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 5" default-sort="3 asc">
 		
 								<datatables:column title="Disciplina">
 									<c:out value="${integracao.disciplina.nome}"></c:out>
@@ -141,6 +141,10 @@
 		
 								<datatables:column title="Semestre oferta">
 									<c:out value="${integracao.semestreOferta}"></c:out>
+								</datatables:column>
+								
+								<datatables:column title="Natureza">
+									<c:out value="${integracao.natureza}"></c:out>
 								</datatables:column>
 									
 								<datatables:column title="Editar">
@@ -158,7 +162,7 @@
 					</sec:authorize>
 					<sec:authorize access="!hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 						<div class="panel panel-default">
-							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="1 2" default-sort="3 desc">
+							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2" default-sort="3 asc">
 		
 								<datatables:column title="Disciplina">
 									<c:out value="${integracao.disciplina.nome}"></c:out>
@@ -175,6 +179,10 @@
 		
 								<datatables:column title="Semestre oferta">
 									<c:out value="${integracao.semestreOferta}"></c:out>
+								</datatables:column>
+								
+								<datatables:column title="Natureza">
+									<c:out value="${integracao.natureza}"></c:out>
 								</datatables:column>
 									
 							</datatables:table>
