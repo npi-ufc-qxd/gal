@@ -62,7 +62,7 @@
 							<input type="file" name="file" id="fileupload" accept="text/html"
 								class="file" />
 							<script type="text/javascript">
-								function renomearNome(){
+								
 								document.getElementById("fileupload").onchange = function() {
 									document
 											.getElementById("importarCurriculo")
