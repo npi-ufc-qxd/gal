@@ -60,15 +60,15 @@
 							action="<c:url value="/estrutura/${curso.codigo}/importar"></c:url>"
 							enctype="multipart/form-data" style="float: right;">
 							<input type="file" name="file" id="fileupload" accept="text/html"
-								class="file" />
+								class="filestyle" data-buttonText="Your label here." />
 							<script type="text/javascript">
-								
 								document.getElementById("fileupload").onchange = function() {
 									document
 											.getElementById("importarCurriculo")
 											.submit();
 								}
 							</script>
+
 						</form>
 					</div>
 				</sec:authorize>
@@ -171,6 +171,8 @@
 											href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/editar" ></c:url>">
 											<span class="glyphicon glyphicon-edit"></span>
 										</a>
+									</datatables:column>
+									<datatables:column title="Excluir">
 										<a id="excluir" class="btn btn-danger" data-toggle="modal"
 											data-target="#confirm-delete" href="#"
 											data-href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/excluir" ></c:url>">
