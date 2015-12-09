@@ -1,8 +1,5 @@
 package br.ufc.npi.gal.web;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,12 +60,16 @@ public class EstruturaCurricularController {
 		Curso curso = cursoService.find(Curso.class, id);
 		modelMap.addAttribute("curso", curso);
 
+		EstruturaCurricular oldEstrutura = estruturaCurricularService
+				.getOutraEstruturaCurricularByCodigo(estrutura.getId(), estrutura.getCodigo());
+		
 		if (result.hasErrors()) {
 			return "estrutura/editar";
 		}
 
-		estrutura.setCurso(curso);
-
+		estrutura.setCurso(oldEstrutura.getCurso());
+		estrutura.setCurriculos(oldEstrutura.getCurriculos());
+		
 		estruturaCurricularService.update(estrutura);
 		redirectAttributes.addFlashAttribute("info", "Estrutura Curricular atualizada com sucesso");
 		return "redirect:/curso/" + curso.getCodigo() + "/visualizar";
