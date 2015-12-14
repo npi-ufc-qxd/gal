@@ -124,7 +124,7 @@
 					
 					<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 						<div class="panel panel-default">
-							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 5" default-sort="3 asc">
+							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 5 6" default-sort="3 asc">
 		
 								<datatables:column title="Disciplina">
 									<c:out value="${integracao.disciplina.nome}"></c:out>
