@@ -10,4 +10,6 @@ public interface EstruturaCurricularService extends GenericService<EstruturaCurr
 
 	public abstract EstruturaCurricular getOutraEstruturaCurricularByCodigo(Integer id, String codigo);
 
+	public abstract Object getOutraEstruturaCurricularByCodigoSemestre(Integer id, String string);
+
 }

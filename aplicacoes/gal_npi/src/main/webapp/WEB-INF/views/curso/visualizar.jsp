@@ -60,7 +60,8 @@
 							action="<c:url value="/estrutura/${curso.codigo}/importar"></c:url>"
 							enctype="multipart/form-data" style="float: right;">
 							<input type="file" name="file" id="fileupload" accept="text/html"
-								class="filestyle" data-buttonText="Your label here." />
+								class="file" />
+
 							<script type="text/javascript">
 								document.getElementById("fileupload").onchange = function() {
 									document

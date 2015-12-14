@@ -25,6 +25,18 @@ public class JpaEstruturaCurricularRepositoryImpl extends JpaGenericRepositoryIm
 		}
 		return null;
 	}
+	
+	@Override
+	public EstruturaCurricular getOutraEstruturaCurricularByCodigoSemestre(Integer id, String codigo) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("codigo", codigo);
+		params.put("id_curso", id);
+		List<EstruturaCurricular> result = find(QueryType.JPQL,"from EstruturaCurricular where id_curso = :id_curso and codigo = :codigo", params);
+		if(result != null && !result.isEmpty()){
+			return result.get(0);
+		}
+		return null;
+	}
 
 	@Override
 	public EstruturaCurricular getOutraEstruturaCurricularByCurso(Integer idCurso) {

@@ -135,7 +135,8 @@ public class EstruturaCurricularController {
 		}
 
 		Curso curso = cursoService.getCursoByCodigo(idCurso);
-		if (estruturaCurricularService.getOutraEstruturaCurricularByCodigo(curso.getId(),
+		
+		if (estruturaCurricularService.getOutraEstruturaCurricularByCodigoSemestre(curso.getId(),
 				infoCurriculo.get(0)) == null) {
 			parserEstruturaCurricular.registrarNovaEstruturaCurricular(infoCurriculo, curso);
 			redirectAttributes.addFlashAttribute("info", "Estrutura cadastrada com sucesso");
@@ -158,7 +159,7 @@ public class EstruturaCurricularController {
 			result.rejectValue("codigo", "Repeat.estrutura.codigo", "Campo obrigatório.");
 			return "estrutura/adicionar";
 		}
-
+		
 		if (estruturaCurricularService.getOutraEstruturaCurricularByCodigo(id,
 				estruturaCurricular.getCodigo()) != null) {
 			result.rejectValue("codigo", "Repeat.estruturas.codigo", "Ano e Semestre já existe para curso");

@@ -24,5 +24,10 @@ public class EstruturaCurricularServiceImpl extends GenericServiceImpl<Estrutura
 	public EstruturaCurricular getOutraEstruturaCurricularByCurso(Integer idCurso) {
 		return estruturaRepository.getOutraEstruturaCurricularByCurso(idCurso);
 	}
+	@Override
+	public Object getOutraEstruturaCurricularByCodigoSemestre(Integer id, String codigo) {
+		return estruturaRepository.getOutraEstruturaCurricularByCodigoSemestre(id, codigo);
+	}
+
 	
 }
