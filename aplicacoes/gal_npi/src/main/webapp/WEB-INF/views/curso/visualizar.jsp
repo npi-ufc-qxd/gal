@@ -124,7 +124,7 @@
 					
 					<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 						<div class="panel panel-default">
-							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="1 2 4 5" default-sort="3 desc">
+							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="4" default-sort="3 desc">
 		
 								<datatables:column title="Disciplina">
 									<c:out value="${integracao.disciplina.nome}"></c:out>
@@ -158,7 +158,7 @@
 					</sec:authorize>
 					<sec:authorize access="!hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 						<div class="panel panel-default">
-							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="1 2" default-sort="3 desc">
+							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" default-sort="3 desc">
 		
 								<datatables:column title="Disciplina">
 									<c:out value="${integracao.disciplina.nome}"></c:out>
