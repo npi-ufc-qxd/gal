@@ -211,14 +211,18 @@ public class DisciplinaController {
 					for(MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()){
 						for(DetalheMetaCalculada detalheMetaCalculada: metaCalculada.getDetalhePar()){
 							if(detalheMetaCalculada.getDisciplina().equals(disciplina.getNome())){
-								metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
-								break;
+								if(!metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).contains(metaCalculada)){
+									metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
+									break;
+								}
 							}
 						}
 						for(DetalheMetaCalculada detalheMetaCalculada: metaCalculada.getDetalheImpar()){
 							if(detalheMetaCalculada.getDisciplina().equals(disciplina.getNome())){
-								metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
-								break;
+								if(!metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).contains(metaCalculada)){
+									metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
+									break;
+								}
 							}
 						}
 					}
