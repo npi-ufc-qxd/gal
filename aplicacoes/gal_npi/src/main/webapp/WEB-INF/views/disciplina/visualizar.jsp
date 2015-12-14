@@ -63,6 +63,7 @@
 									<th>Curso</th>
 									<th>Semestre de Oferta</th>
 									<th>Quantidade de Alunos</th>
+									<th>Natureza</th>
 								</tr>
 							</thead>
 							
@@ -72,6 +73,7 @@
 										<td>${curriculo.estruturaCurricular.curso.nome}</td>
 										<td>${curriculo.semestreOferta}</td>
 										<td>${curriculo.quantidadeAlunos}</td>
+										<td>${curriculo.natureza}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
