@@ -60,4 +60,13 @@ public class JpaCursoRepository extends JpaGenericRepositoryImpl<Curso> implemen
 		return null;
 	}
 	
+	@Override
+	public List<Curso> getTodosCursos(){
+		List<Curso> result = find(QueryType.JPQL, "from Curso order by nome asc", null);
+		if(result != null && !result.isEmpty()) {
+			return result;
+		}
+		return null;
+	}
+	
 }
