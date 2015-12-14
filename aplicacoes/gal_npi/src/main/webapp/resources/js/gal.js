@@ -65,6 +65,7 @@ $( document ).ready(function() {
 			"pageLength": 25,
 			"pagingType" : "full_numbers",
 			"language" : {
+				"decimal": ",",
 				"emptyTable" : "Nenhum registro encontrado",
 				"info" : "Mostrando _START_ até _END_ de _TOTAL_ registros",
 				"infoEmpty" : "Mostrar 0 até 0 de 0 Registros",
