@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.service;
 
+import java.util.List;
+
 import br.ufc.npi.gal.model.Curso;
 import br.ufc.quixada.npi.service.GenericService;
 
@@ -15,4 +17,5 @@ public interface CursoService extends GenericService<Curso> {
 	
 	public abstract Curso getOutroCursoByCodigo(Integer id, Integer codigo);
 
+	public abstract List<Curso> getTodosCursos();
 }
