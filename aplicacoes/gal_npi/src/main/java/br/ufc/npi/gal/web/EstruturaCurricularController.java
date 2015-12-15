@@ -72,19 +72,19 @@ public class EstruturaCurricularController {
 		return "redirect:/curso/" + estruturaCurricular.getCurso().getCodigo() + "/visualizar";
 	}
 	
-	@RequestMapping(value="/{id}/adicionar",method = RequestMethod.GET)
-	public String adicionar(@PathVariable("id") Integer id,ModelMap modelMap){
+	@RequestMapping(value="/{codigo}/adicionar",method = RequestMethod.GET)
+	public String adicionar(@PathVariable("codigo") Integer codigo, ModelMap modelMap){
 		
-		Curso curso = this.cursoService.find(Curso.class, id);
+		Curso curso = this.cursoService.getCursoByCodigo(codigo);
 		modelMap.addAttribute("curso",curso);
 		modelMap.addAttribute("estruturaCurricular", new EstruturaCurricular());
 		return "estrutura/adicionar";
 	}
 	
-	@RequestMapping(value="/{id}/adicionar", method = RequestMethod.POST)
-	public String adicionar(@Valid EstruturaCurricular estruturaCurricular, BindingResult result, @PathVariable("id") Integer id,
+	@RequestMapping(value="/{codigo}/adicionar", method = RequestMethod.POST)
+	public String adicionar(@Valid EstruturaCurricular estruturaCurricular, BindingResult result, @PathVariable("codigo") Integer codigo,
 			RedirectAttributes redirectAttributes, ModelMap modelMap) {
-		Curso curso = this.cursoService.find(Curso.class, id);
+		Curso curso = this.cursoService.getCursoByCodigo(codigo);
 		modelMap.addAttribute("curso",curso);
 		if (result.hasErrors()) {
 			return "estrutura/adicionar";
@@ -96,7 +96,7 @@ public class EstruturaCurricularController {
 			return "estrutura/adicionar";
 		}
 		
-		if(estruturaCurricularService.getOutraEstruturaCurricularByCodigo(id, estruturaCurricular.getCodigo())!=null){
+		if(estruturaCurricularService.getOutraEstruturaCurricularByCodigo(curso.getCodigo(), estruturaCurricular.getCodigo())!=null){
 			result.rejectValue("codigo", "Repeat.estruturas.codigo","Ano e Semestre já existe para curso");
 			return "estrutura/adicionar";
 		}

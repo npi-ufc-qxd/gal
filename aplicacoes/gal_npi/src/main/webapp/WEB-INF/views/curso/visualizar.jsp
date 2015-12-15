@@ -45,7 +45,7 @@
 				</c:forEach>
 				<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 				<div id="button-add">
-					<a href="<c:url value="/estrutura/${curso.id}/adicionar" ></c:url>">
+					<a href="<c:url value="/estrutura/${curso.codigo}/adicionar" ></c:url>">
 						<button class="btn btn-primary"> <span class="glyphicon glyphicon-plus"></span> Adicionar Curriculo </button>
 					</a>
 				</div>
