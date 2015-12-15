@@ -66,10 +66,10 @@
 					<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 					<div id="button-add">
 						<a style="float: left;" class="btn btn-success" href="<c:url value="/integracao/${curriculo.id}/adicionar" ></c:url>">
-							<span class="glyphicon glyphicon-link"></span> Vincular Disciplina
+							<span class="glyphicon glyphicon-link"></span> Vincular Componente Curricular
 						</a>
 						
-						<a id="excluir" style="float: right;" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/estrutura/${curriculo.id }/excluir" ></c:url>">
+						<a id="excluir" style="float: right;" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/estrutura/${curriculo.id}/excluir" ></c:url>">
 							<span class="glyphicon glyphicon-trash"></span> Excluir Curriculo
 						</a>
 						 
@@ -108,6 +108,7 @@
 						<hr width="102%">
 						<div class="littleBox">
 						<b>Carga Horária Obrigatória</b><br>
+						
 						<b>Total: </b>${curriculo.chObrigatoria}<b> hrs</b>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
 						<b>( </b>${curriculo.chObgPratica }<b> hrs</b> <b>Práticas ) / ( </b> ${curriculo.chObgTeorica }<b> hrs</b> <b> Teóricas )</b><br>
 						</div>
@@ -126,12 +127,12 @@
 						<div class="panel panel-default">
 							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="1 2 4 5" default-sort="3 desc">
 		
-								<datatables:column title="Disciplina">
-									<c:out value="${integracao.disciplina.nome}"></c:out>
+								<datatables:column title="Componente">
+									<c:out value="${integracao.componente.nome}"></c:out>
 								</datatables:column>
 		
-								<datatables:column title="Código disciplina">
-									<c:out value="${integracao.disciplina.codigo}"></c:out>
+								<datatables:column title="Código componente">
+									<c:out value="${integracao.componente.codigo}"></c:out>
 								</datatables:column>
 		
 		
@@ -144,11 +145,11 @@
 								</datatables:column>
 									
 								<datatables:column title="Editar">
-									<a class="btn btn-primary" href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/editar" ></c:url>">
+									<a class="btn btn-primary" href="<c:url value="/integracao/${integracao.componente.id}/${curriculo.id}/editar" ></c:url>">
 										<span class="glyphicon glyphicon-edit"></span>
 									</a>
 		
-									<a id="excluir" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/integracao/${integracao.disciplina.id}/${curriculo.id}/excluir" ></c:url>">
+									<a id="excluir" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/integracao/${integracao.componente.id}/${curriculo.id}/excluir" ></c:url>">
 										<span class="glyphicon glyphicon-trash"></span>
 									</a>
 								</datatables:column>
@@ -160,12 +161,12 @@
 						<div class="panel panel-default">
 							<datatables:table id="estrutura${curso.id}" data="${curriculo.curriculos}" cdn="false" row="integracao" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="1 2" default-sort="3 desc">
 		
-								<datatables:column title="Disciplina">
-									<c:out value="${integracao.disciplina.nome}"></c:out>
+								<datatables:column title="Componente">
+									<c:out value="${integracao.componente.nome}"></c:out>
 								</datatables:column>
 		
-								<datatables:column title="Código disciplina">
-									<c:out value="${integracao.disciplina.codigo}"></c:out>
+								<datatables:column title="Código componente">
+									<c:out value="${integracao.componente.codigo}"></c:out>
 								</datatables:column>
 		
 		
@@ -217,20 +218,20 @@
 	<div class="modal fade " id="add-disciplina" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog ">
 			<div class="modal-content">
-				<div class="modal-header">Adicionar disciplina</div>
+				<div class="modal-header">Adicionar Componente Curricular</div>
 				<div class="modal-body" style="text-align: center;">
 					<form:form servletRelativeAction="/integracao/adicionar" method="get" modelAttribute="integracao" role="form" class="form-horizontal">
 						<input type="hidden" name="id" id="id" value="" />
 
 						<div class="form-group">
-							<label class="control-label" style="font-size: 20px;">Adicionar Disciplina</label>
+							<label class="control-label" style="font-size: 20px;">Adicionar Componente Curricular</label>
 						</div>
 
 						<div class="form-group">
-							<label for="disciplinaInput2" class="col-sm-2 control-label">Código Disciplina</label>
+							<label for="componenteInput2" class="col-sm-2 control-label">Código Componente</label>
 							<div class="col-sm-10">
-								<form:input id="disciplinaInput2" class="form-control" style="width: 150px;" placeholder="Código disciplina" path="disciplina" required="true" />
-								<form:errors path="disciplina" cssClass="error" />
+								<form:input id="componenteInput2" class="form-control" style="width: 150px;" placeholder="Código componente curricular" path="componente" required="true" />
+								<form:errors path="componente" cssClass="error" />
 							</div>
 						</div>
 
@@ -254,20 +255,20 @@
 <div class="modal fade " id="add-disciplina" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog ">
 			<div class="modal-content">
-				<div class="modal-header">Adicionar disciplina</div>
+				<div class="modal-header">Adicionar componente curricular</div>
 				<div class="modal-body" style="text-align: center;">
 					<form:form servletRelativeAction="/integracao/adicionar" method="get" modelAttribute="integracao" role="form" class="form-horizontal">
 						<input type="hidden" name="id" id="id" value="" />
 
 						<div class="form-group">
-							<label class="control-label" style="font-size: 20px;">Adicionar Disciplina</label>
+							<label class="control-label" style="font-size: 20px;">Adicionar Componente Curricular</label>
 						</div>
 
 						<div class="form-group">
-							<label for="disciplinaInput3" class="col-sm-2 control-label">Código Disciplina</label>
+							<label for="componenteInput3" class="col-sm-2 control-label">Código Componente Curricular</label>
 							<div class="col-sm-10">
-								<form:input id="disciplinaInput3" class="form-control" style="width: 150px;" placeholder="Código disciplina" path="disciplina" required="true" />
-								<form:errors path="disciplina" cssClass="error" />
+								<form:input id="componenteInput3" class="form-control" style="width: 150px;" placeholder="Código componente curricular" path="componente" required="true" />
+								<form:errors path="componente" cssClass="error" />
 							</div>
 						</div>
 

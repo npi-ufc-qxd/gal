@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.ufc.npi.gal.model.Disciplina;
+import br.ufc.npi.gal.model.ComponenteCurricular;
 import br.ufc.npi.gal.model.EstruturaCurricular;
 import br.ufc.npi.gal.model.IntegracaoCurricular;
-import br.ufc.npi.gal.service.DisciplinaService;
+import br.ufc.npi.gal.service.ComponenteCurricularService;
 import br.ufc.npi.gal.service.EstruturaCurricularService;
 import br.ufc.npi.gal.service.IntegracaoCurricularService;
 
@@ -28,14 +28,14 @@ public class IntegracaoCurricularController {
 	private IntegracaoCurricularService integracaoService;
 	
 	@Inject
-	private DisciplinaService disciplinaService;
+	private ComponenteCurricularService componenteCurricularService;
 	
 	@Inject
 	private EstruturaCurricularService estruturaService;
 	
-	@RequestMapping(value = "/{idDisciplina}/{idCurriculo}/excluir", method = RequestMethod.GET)
-	public String excluir(RedirectAttributes redirectAttributes,@PathVariable("idDisciplina") Integer idDisciplina, @PathVariable("idCurriculo") Integer idCurriculo) {
-		IntegracaoCurricular integracao = integracaoService.getIntegracaoByIdDisciplinaIdCurriculo(idDisciplina, idCurriculo);
+	@RequestMapping(value = "/{idComponente}/{idCurriculo}/excluir", method = RequestMethod.GET)
+	public String excluir(RedirectAttributes redirectAttributes,@PathVariable("idComponente") Integer idComponente, @PathVariable("idCurriculo") Integer idCurriculo) {
+		IntegracaoCurricular integracao = integracaoService.getIntegracaoByIdComponenteCurricularIdCurriculo(idComponente, idCurriculo);
 		int codigoCurso = integracao.getEstruturaCurricular().getCurso().getCodigo();
 		if (integracao != null) {
 			this.integracaoService.delete(integracao);
@@ -46,7 +46,7 @@ public class IntegracaoCurricularController {
 	}
 	
 	@RequestMapping(value = "/adicionar", method = RequestMethod.POST)
-	public String adicionar(String disciplina, Integer quantidadeAlunos, Integer semestreOferta, Integer estruturaCurricular, final RedirectAttributes redirectAttributes) {
+	public String adicionar(String componente, Integer quantidadeAlunos, Integer semestreOferta, Integer estruturaCurricular, final RedirectAttributes redirectAttributes) {
 		
 		EstruturaCurricular estruturaBD = estruturaService.find(EstruturaCurricular.class, estruturaCurricular);
 		
@@ -57,23 +57,23 @@ public class IntegracaoCurricularController {
 		}
 		
 		IntegracaoCurricular integracao =  new IntegracaoCurricular();
-		Disciplina disciplinaBD = disciplinaService.getDisciplinaByCodigo(disciplina);
+		ComponenteCurricular componenteBD = componenteCurricularService.getComponenteCurricularByCodigo(componente);
 		
 		List<IntegracaoCurricular> integracaoList = estruturaBD.getCurriculos();		
 		
-		if(disciplinaBD == null){
-			redirectAttributes.addFlashAttribute("error", "Código da disciplina não existe");
+		if(componenteBD == null){
+			redirectAttributes.addFlashAttribute("error", "Código do componente curricular não existe");
 			return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
 		}
 		
 		for (IntegracaoCurricular integracaoCurricular : integracaoList) {
-			if(integracaoCurricular.getDisciplina().equals(disciplinaBD)){
-				redirectAttributes.addFlashAttribute("error", "Essa disciplina já está vinculada");
+			if(integracaoCurricular.getComponente().equals(componenteBD)){
+				redirectAttributes.addFlashAttribute("error", "Esse componente curricular já está vinculada");
 				return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
 			}
 		}		
 		
-		integracao.setDisciplina(disciplinaBD);
+		integracao.setComponente(componenteBD);
 		integracao.setEstruturaCurricular(estruturaBD);
 		
 		integracao.setQuantidadeAlunos(quantidadeAlunos);
@@ -89,16 +89,16 @@ public class IntegracaoCurricularController {
 	public String adicionar(ModelMap modelMap, @PathVariable("idCurriculo") Integer idCurriculo, final RedirectAttributes redirectAttributes) {
 		
 		modelMap.addAttribute("idCurriculo", idCurriculo);
-		modelMap.addAttribute("disciplinas", disciplinaService.find(Disciplina.class));
+		modelMap.addAttribute("componentes", componenteCurricularService.find(ComponenteCurricular.class));
 		modelMap.addAttribute("integracao", new IntegracaoCurricular());
 		
 		return "integracao/adicionar";
 	}
 	
-	@RequestMapping(value = "/{idDisciplina}/{idCurriculo}/editar", method = RequestMethod.GET)
-	public String editar(@PathVariable("idDisciplina") Integer idDisciplina,@PathVariable("idCurriculo") Integer idCurriculo, ModelMap modelMap) {
+	@RequestMapping(value = "/{idComponente}/{idCurriculo}/editar", method = RequestMethod.GET)
+	public String editar(@PathVariable("idComponente") Integer idComponente,@PathVariable("idCurriculo") Integer idCurriculo, ModelMap modelMap) {
 
-		IntegracaoCurricular integracao = this.integracaoService.getIntegracaoByIdDisciplinaIdCurriculo(idDisciplina, idCurriculo);
+		IntegracaoCurricular integracao = this.integracaoService.getIntegracaoByIdComponenteCurricularIdCurriculo(idComponente, idCurriculo);
 
 		if (integracao == null) {
 			return "redirect:/curso/listar";

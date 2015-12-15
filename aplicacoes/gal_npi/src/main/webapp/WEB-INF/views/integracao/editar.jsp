@@ -24,23 +24,32 @@
 					Vinculo</label>
 			</div>
 
+			
 			<div class="form-group">
-				<label for="disciplina.codigo" class="col-sm-2 control-label">Código
-					Disciplina</label>
+				<label for="componente" class="col-sm-2 control-label">Selecione Componente</label>
 				<div class="col-sm-10">
-					<form:input id="disciplina.codigo" class="form-control"
-						placeholder="Código disciplina" disabled="true"
-						path="disciplina.codigo" required="true" /> 
-					<form:errors path="disciplina" cssClass="error" /> 
+					<form:select id="selectDisciplina" class="form-control" placeholder="Código Componente" path="componente" required="true" >
+
+						<c:forEach items="${componentes}" var="componente">
+							<form:option value="${componente.codigo }">${componente.codigo} - ${componente.nome}</form:option>
+						</c:forEach>
+					</form:select>
+					
+<!-- 					<select class="disciplinas form-control"> -->
+<!-- 					</select> -->
+					
+					<form:errors path="componente" cssClass="error" />
 				</div>
 			</div>
+			
+			
 
 			<div class="form-group">
 				<label for="quantidadeAlunos" class="col-sm-2 control-label">Quantidade
 					alunos</label>
 				<div class="col-sm-10">
-					<form:input id="quantidadedeAlunos" class="form-control numeros"
-						maxlength="4" placeholder="Quantidade alunos"
+					<form:input id="quantidadeAlunos" class="form-control numeros"
+						placeholder="Quantidade alunos" maxlength="4"
 						path="quantidadeAlunos" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
 						required="true" />
 					<form:errors path="quantidadeAlunos" cssClass="error" />
@@ -52,8 +61,8 @@
 					oferta</label>
 				<div class="col-sm-10">
 					<form:input id="semestreOferta" class="form-control numeros"
-						placeholder="Semestre oferta"
-						path="semestreOferta" maxlength="2" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
+						placeholder="Semestre oferta" maxlength="2"
+						path="semestreOferta" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
 						required="true" />
 					<form:errors path="semestreOferta" cssClass="error" />
 				</div>

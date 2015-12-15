@@ -315,9 +315,9 @@ public class EstruturaCurricular{
 		int contChAtvAcademicaEspecifica = 0;
 		
 		for (IntegracaoCurricular curriculo : this.getCurriculos()) {
-			if (TIPO_ATV_ESPECIFICA.contains(curriculo.getDisciplina().getTipo())) {
-				contChAtvAcademicaEspecifica += curriculo.getDisciplina().getChPratica();
-				contChAtvAcademicaEspecifica += curriculo.getDisciplina().getChTeorica();
+			if (TIPO_ATV_ESPECIFICA.contains(curriculo.getComponente().getTipo())) {
+				contChAtvAcademicaEspecifica += curriculo.getComponente().getChPratica();
+				contChAtvAcademicaEspecifica += curriculo.getComponente().getChTeorica();
 			}
 		}
 		this.chAtvAcademicaEspecifica = contChAtvAcademicaEspecifica;
@@ -334,8 +334,8 @@ public class EstruturaCurricular{
 		
 		for (IntegracaoCurricular curriculo : this.getCurriculos()) {
 			if (NATUREZA.equals(curriculo.getNatureza())) {
-				contChObgPratica += curriculo.getDisciplina().getChPratica();
-				contChObgTeorica += curriculo.getDisciplina().getChTeorica();
+				contChObgPratica += curriculo.getComponente().getChPratica();
+				contChObgTeorica += curriculo.getComponente().getChTeorica();
 			}
 		}
 

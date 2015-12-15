@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Disciplina</title>
+	<title>Componente Curricular</title>
 	<jsp:include page="../fragments/htmlHead.jsp" />
 </head>
 <body>
@@ -35,23 +35,23 @@
 			Voltar
 		</button>
 		
-		<c:if test="${empty disciplina}">
-			<div class="alert alert-warning" role="alert">Disciplina inexistente</div>
+		<c:if test="${empty componente}">
+			<div class="alert alert-warning" role="alert">Componente curricular inexistente</div>
 		</c:if>
 		
-		<c:if test="${not empty disciplina}">
+		<c:if test="${not empty componente}">
 			<div style="text-align: center;">
-				<label class="control-label" style="font-size: 20px;">Disciplina</label>
+				<label class="control-label" style="font-size: 20px;">Componente Curricular</label>
 			</div>
 			
-			<p>Nome: <b>${disciplina.nome}</b></p>
-			<p>Código: <b>${disciplina.codigo}</b></p>
+			<p>Nome: <b>${componente.nome}</b></p>
+			<p>Código: <b>${componente.codigo}</b></p>
 			
 			<hr>
 			
 			<h4>Integrações Curriculares</h4>
 			<c:if test="${empty curriculos}">
-				<div class="alert alert-warning" role="alert">Esta disciplina não possui integrações curriculares cadastradas</div>
+				<div class="alert alert-warning" role="alert">Este componente curicular não possui integrações curriculares cadastradas</div>
 			</c:if>
 			
 			<c:if test="${not empty curriculos}">
@@ -90,7 +90,7 @@
 			
 			<h4>Bibliografia Básica</h4>
 			<c:if test="${empty bibliografia_basica}">
-				<div class="alert alert-warning" role="alert">Esta disciplina não possui bibliografia básica cadastrada.</div>
+				<div class="alert alert-warning" role="alert">Este componente curricular não possui bibliografia básica cadastrada.</div>
 			</c:if>
 			<c:if test="${not empty bibliografia_basica}">
 				<div class="panel-group" id="accordionBasica" role="tablist" aria-multiselectable="true">
@@ -153,7 +153,7 @@
 			
 			<h4>Bibliografia Complementar</h4>
 			<c:if test="${empty bibliografia_complementar}">
-				<div class="alert alert-warning" role="alert">Esta disciplina não possui bibliografia complementar cadastrada.</div>
+				<div class="alert alert-warning" role="alert">Este componente curricular não possui bibliografia complementar cadastrada.</div>
 			</c:if>
 			<c:if test="${not empty bibliografia_complementar}">
 				<div class="panel-group" id="accordionComplementar" role="tablist" aria-multiselectable="true">

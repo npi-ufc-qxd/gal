@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,22 +20,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.DetalheMetaCalculada;
-import br.ufc.npi.gal.model.Disciplina;
+import br.ufc.npi.gal.model.ComponenteCurricular;
 import br.ufc.npi.gal.model.IntegracaoCurricular;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.CalculoMetaService;
-import br.ufc.npi.gal.service.DisciplinaService;
+import br.ufc.npi.gal.service.ComponenteCurricularService;
 import br.ufc.npi.gal.service.MetaCalculada;
 import br.ufc.npi.gal.service.ResultadoCalculo;
 import br.ufc.npi.gal.service.TituloService;
 import br.ufc.quixada.npi.service.GenericService;
 
 @Controller
-@RequestMapping("/disciplina")
-public class DisciplinaController {
+@RequestMapping("componente")
+public class ComponenteCurricularController {
 
 	@Inject
-	private DisciplinaService disciplinaService;
+	private ComponenteCurricularService componenteCurricularService;
 	
 	@Inject
 	private TituloService tituloService;
@@ -50,120 +51,142 @@ public class DisciplinaController {
 	
 	@RequestMapping(value = "/listar")
 	public String listar(ModelMap modelMap, HttpSession session) {
-		modelMap.addAttribute("disciplinas", this.disciplinaService.find(Disciplina.class));
-		return "disciplina/listar";
+		modelMap.addAttribute("componentes", this.componenteCurricularService.find(ComponenteCurricular.class));
+		return "componente/listar";
 	}
 
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
 	public String editar(@PathVariable("id") Integer id, ModelMap modelMap) {
 
-		Disciplina disciplina = this.disciplinaService.find(Disciplina.class, id);
+		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class, id);
 
-		if (disciplina == null) {
-			return "redirect:/disciplina/listar";
+		if (componente == null) {
+			return "redirect:/componente/listar";
 
 		}
-		modelMap.addAttribute("disciplina", disciplina);
-		return "disciplina/editar";
+		modelMap.addAttribute("componente", componente);
+		return "componente/editar";
 	}
 
 	@RequestMapping(value = "/editar", method = RequestMethod.POST)
-	public String atualizar(@Valid Disciplina disciplina, BindingResult result,
+	public String atualizar(@Valid ComponenteCurricular componente, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
-			return "disciplina/editar";
+			return "componente/editar";
 		}
 
-		if (disciplinaService.getOutraDisciplinaByCodigo(disciplina.getId(),
-				disciplina.getCodigo()) != null) {
-			result.rejectValue("codigo", "Repeat.disciplina.codigo",
-					"Já existe uma disciplina com esse código");
-			return "disciplina/editar";
+		if (componenteCurricularService.getOutraComponenteCurricularByCodigo(componente.getId(),
+				componente.getCodigo()) != null) {
+			result.rejectValue("codigo", "Repeat.componente.codigo",
+					"Já existe um componente curricular com esse código");
+			return "componente/editar";
 		}
-		if (disciplinaService.getOutraDisciplinaByNome(disciplina.getId(),
-				disciplina.getNome().toUpperCase()) != null) {
-			result.rejectValue("nome", "Repeat.disciplina.nome",
-					"Já existe uma disciplina com esse nome");
-			return "disciplina/editar";
+		if (componenteCurricularService.getOutraComponenteCurricularByNome(componente.getId(),
+				componente.getNome().toUpperCase()) != null) {
+			result.rejectValue("nome", "Repeat.componente.nome",
+					"Já existe um componente curricular com esse nome");
+			return "componente/editar";
 		}
 
-		disciplina.setNome(disciplina.getNome().toUpperCase());
-		disciplinaService.update(disciplina);
+		componente.setNome(componente.getNome().toUpperCase());
+		componenteCurricularService.update(componente);
 		redirectAttributes.addFlashAttribute("info",
-				"Disciplina atualizada com sucesso.");
-		return "redirect:/disciplina/listar";
+				"Componente curricular atualizado com sucesso.");
+		return "redirect:/componente/listar";
 
 	}
 
 	@RequestMapping(value = "/{id}/excluir", method = RequestMethod.GET)
 	public String excluir(@PathVariable("id") Integer id,
 			RedirectAttributes redirectAttributes) {
-		Disciplina disciplina = disciplinaService.find(Disciplina.class, id);
-		if (disciplina != null) {
-			this.disciplinaService.delete(disciplina);
+		ComponenteCurricular componente = componenteCurricularService.find(ComponenteCurricular.class, id);
+		if (componente != null) {
+			this.componenteCurricularService.delete(componente);
 			redirectAttributes.addFlashAttribute("info",
-					"Disciplina removida com sucesso.");
+					"Componente curricular removido com sucesso.");
 		}
-		return "redirect:/disciplina/listar";
+		return "redirect:/componente/listar";
 	}
 
 	@RequestMapping(value = "/adicionar")
 	public String adicionar(ModelMap modelMap) {
-		modelMap.addAttribute("disciplina", new Disciplina());
-		return "disciplina/adicionar";
+		modelMap.addAttribute("componente", new ComponenteCurricular());
+		return "componente/adicionar";
 	}
 
 	@RequestMapping(value = "/adicionar", method = RequestMethod.POST)
-	public String adicionar(@Valid Disciplina disciplina, BindingResult result,
+	public String adicionar(@ModelAttribute("componente") ComponenteCurricular componente, BindingResult result,
 			RedirectAttributes redirectAttributes) {
-
+		boolean errors = false;
 		if (result.hasErrors()) {
-			return "disciplina/adicionar";
+			return "componente/adicionar";
 		}
-
-		if (disciplinaService.getDisciplinaByCodigo(disciplina.getCodigo()) != null) {
-			result.rejectValue("codigo", "Repeat.disciplina.codigo",
-					"Já existe uma disciplina com esse código");
-			return "disciplina/adicionar";
-		}
-		if (disciplina.getNome().trim().isEmpty()) {
-			result.rejectValue("nome", "Repeat.disciplina.nome",
+		
+		if (componente.getCodigo().trim().isEmpty()) {
+			result.rejectValue("codigo", "Repeat.componente.codigo",
 					"Campo obrigatório.");
-			return "disciplina/adicionar";
-		}
-		if (disciplinaService.getDisciplinaByNome(disciplina.getNome()
-				.toUpperCase()) != null) {
-			result.rejectValue("nome", "Repeat.disciplina.nome",
-					"Já existe uma disciplina com esse nome");
-			return "disciplina/adicionar";
+			errors = true;
 		}
 
-		disciplina.setNome(disciplina.getNome().toUpperCase());
-		disciplinaService.save(disciplina);
+		if (componenteCurricularService.getComponenteCurricularByCodigo(componente.getCodigo()) != null) {
+			result.rejectValue("codigo", "Repeat.componente.codigo",
+					"Já existe um componente curricular com esse código");
+			errors = true;
+		}
+		if (componente.getNome().trim().isEmpty()) {
+			result.rejectValue("nome", "Repeat.componente.nome",
+					"Campo obrigatório.");
+			errors = true;
+		}
+		if (componenteCurricularService.getComponenteCurricularByNome(componente.getNome()
+				.toUpperCase()) != null) {
+			result.rejectValue("nome", "Repeat.componente.nome",
+					"Já existe um componente curricular com esse nome");
+			errors = true;
+		}
+		
+		if (componente.getChPratica() == null) {
+			result.rejectValue("chPratica", "Repeat.componente.chPratica",
+					"Campo obrigatório.");
+			errors = true;
+		}
+		
+		if (componente.getChTeorica() == null) {
+			result.rejectValue("chTeorica", "Repeat.componente.chTeorica",
+					"Campo obrigatório.");
+			errors = true;
+		}
+		
+		if(errors == true){
+			return "componente/adicionar";
+		}
+
+		componente.setNome(componente.getNome().toUpperCase());
+		componenteCurricularService.save(componente);
 		redirectAttributes.addFlashAttribute("info",
-				"Disciplina adicionada com sucesso.");
-		return "redirect:/disciplina/listar";
+				"Componente curricular adicionado com sucesso.");
+		return "redirect:/componente/listar";
 	}
 
 	@RequestMapping(value = "/{id}/vincular", method = RequestMethod.GET)
 	public String vincular(@PathVariable("id") Integer id, ModelMap modelMap) {
 		List<Titulo> listaIdTitulo;
 		List<Titulo> complementar;
-		Disciplina disciplina = this.disciplinaService.find(Disciplina.class,
+		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class,
 				id);
 		List<Titulo> titulos = this.tituloService.find(Titulo.class);
-		if (disciplina == null) {
-			return "redirect:/disciplina/listar";
+		if (componente == null) {
+			return "redirect:/componente/listar";
 
 		}
-		List<Bibliografia> bibliografias = disciplina.getBibliografias();
+		List<Bibliografia> bibliografias = componente.getBibliografias();
 		listaIdTitulo = new ArrayList<Titulo>();
 		complementar = new ArrayList<Titulo>();
 		for (Bibliografia b : bibliografias) {
-			if (b.getTipoBibliografia().equals(DisciplinaController.BASICA)) {
+			if (b.getTipoBibliografia().equals(ComponenteCurricularController.BASICA)) {
 				listaIdTitulo.add(b.getTitulo());
 				titulos.remove(b.getTitulo());
-			} else if (b.getTipoBibliografia().equals(DisciplinaController.COMPLEMENTAR)) {
+			} else if (b.getTipoBibliografia().equals(ComponenteCurricularController.COMPLEMENTAR)) {
 				complementar.add(b.getTitulo());
 				titulos.remove(b.getTitulo());
 			}
@@ -171,31 +194,31 @@ public class DisciplinaController {
 		modelMap.addAttribute("titulo", titulos);
 		modelMap.addAttribute("basica", listaIdTitulo);
 		modelMap.addAttribute("complementar", complementar);
-		modelMap.addAttribute("disciplina", disciplina);
-		return "disciplina/vincularBibliografia";
+		modelMap.addAttribute("componente", componente);
+		return "componente/vincularBibliografia";
 	}
 	
 	@RequestMapping(value = "/{id}/visualizar", method = RequestMethod.GET)
 	public String visualizar(@PathVariable("id") Integer id, ModelMap modelMap) {
-		Disciplina disciplina = this.disciplinaService.find(Disciplina.class, id);
+		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class, id);
 		
-		if (disciplina == null)
-			return "redirect:/disciplina/listar";
+		if (componente == null)
+			return "redirect:/componente/listar";
 		
 		List<Titulo> basica = new ArrayList<Titulo>();
 		List<Titulo> complementar = new ArrayList<Titulo>();
 		
-		List<Bibliografia> bibliografias = disciplina.getBibliografias();
+		List<Bibliografia> bibliografias = componente.getBibliografias();
 		
 		for (Bibliografia b : bibliografias) {
-			if (b.getTipoBibliografia().equals(DisciplinaController.BASICA))
+			if (b.getTipoBibliografia().equals(ComponenteCurricularController.BASICA))
 				basica.add(b.getTitulo());
 			
-			else if (b.getTipoBibliografia().equals(DisciplinaController.COMPLEMENTAR))
+			else if (b.getTipoBibliografia().equals(ComponenteCurricularController.COMPLEMENTAR))
 				complementar.add(b.getTitulo());
 		}
 		
-		List<IntegracaoCurricular> curriculos = disciplina.getCurriculos();
+		List<IntegracaoCurricular> curriculos = componente.getCurriculos();
 		
 		HashMap<String, List<MetaCalculada>> metasCalculadasPorTitulo = new HashMap<String, List<MetaCalculada>>();
 		
@@ -207,13 +230,13 @@ public class DisciplinaController {
 				if(resultadoCalculo.getTitulo().getId().equals(b.getTitulo().getId())){
 					for(MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()){
 						for(DetalheMetaCalculada detalheMetaCalculada: metaCalculada.getDetalhePar()){
-							if(detalheMetaCalculada.getDisciplina().equals(disciplina.getNome())){
+							if(detalheMetaCalculada.getComponenteCurricular().equals(componente.getNome())){
 								metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
 								break;
 							}
 						}
 						for(DetalheMetaCalculada detalheMetaCalculada: metaCalculada.getDetalheImpar()){
-							if(detalheMetaCalculada.getDisciplina().equals(disciplina.getNome())){
+							if(detalheMetaCalculada.getComponenteCurricular().equals(componente.getNome())){
 								metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
 								break;
 							}
@@ -227,13 +250,13 @@ public class DisciplinaController {
 		modelMap.addAttribute("bibliografia_complementar", complementar);
 		modelMap.addAttribute("metasCalculadas", metasCalculadasPorTitulo);
 		modelMap.addAttribute("curriculos", curriculos);
-		modelMap.addAttribute("disciplina", disciplina);
+		modelMap.addAttribute("componente", componente);
 		
-		return "disciplina/visualizar";
+		return "componente/visualizar";
 	}
 
 
-	public List<Bibliografia> atualizaOuCriaBibligrafia (String[] listaIdTitulo, List<Bibliografia> bibliografiasAseremModificadas, Disciplina disciplina, String tipoBibliografia){
+	public List<Bibliografia> atualizaOuCriaBibligrafia (String[] listaIdTitulo, List<Bibliografia> bibliografiasAseremModificadas, ComponenteCurricular componente, String tipoBibliografia){
 		int id_titulo;
 		
 		if(!listaIdTitulo[0].isEmpty()){
@@ -257,7 +280,7 @@ public class DisciplinaController {
 			}
 			if (listaIdTitulo[i]!=null){
 				Bibliografia biblio = new Bibliografia();
-				biblio.setDisciplina(disciplina);
+				biblio.setComponenteCurricular(componente);
 				biblio.setTitulo(tituloService.find(Titulo.class, id_titulo));
 				biblio.setTipoBibliografia(tipoBibliografia);
 				bibliografiaService.save(biblio);
@@ -267,23 +290,22 @@ public class DisciplinaController {
 		return bibliografiasAseremModificadas;
 	}
 	
-	@RequestMapping(value = "/vincular")
-	public String vincular(@RequestParam("basica") String basica, @RequestParam("complementar") String complementar, @RequestParam("idDiciplina") Integer idDiciplina) {
-
+	@RequestMapping(value = "/vincular", method = RequestMethod.GET)
+	public String vincular(@RequestParam("basica") String basica, @RequestParam("complementar") String complementar, @RequestParam("idComponente") Integer idComponente) {
 		String[] basicaArray = basica.split(",");
 		
 		String[] complementarArray = complementar.split(",");
 
 
-		Disciplina disciplina = this.disciplinaService.find(Disciplina.class,idDiciplina);
-		List<Bibliografia> bibliografiaLista = disciplina.getBibliografias();
+		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class,idComponente);
+		List<Bibliografia> bibliografiaLista = componente.getBibliografias();
 		
-		bibliografiaLista = atualizaOuCriaBibligrafia(basicaArray, bibliografiaLista, disciplina, DisciplinaController.BASICA);
-		bibliografiaLista = atualizaOuCriaBibligrafia(complementarArray, bibliografiaLista, disciplina, DisciplinaController.COMPLEMENTAR);
+		bibliografiaLista = atualizaOuCriaBibligrafia(basicaArray, bibliografiaLista, componente, ComponenteCurricularController.BASICA);
+		bibliografiaLista = atualizaOuCriaBibligrafia(complementarArray, bibliografiaLista, componente, ComponenteCurricularController.COMPLEMENTAR);
 		for (int i = 0; i < bibliografiaLista.size(); i++) {
 			bibliografiaService.delete(bibliografiaLista.get(i));
 		}
-		return "/disciplina/listar";
+		return "/componente/listar";
 	}
 
 }

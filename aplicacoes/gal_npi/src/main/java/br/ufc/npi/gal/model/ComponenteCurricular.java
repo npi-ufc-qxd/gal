@@ -17,11 +17,11 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "disciplinas")
-public class Disciplina {
+@Table(name = "componentes")
+public class ComponenteCurricular {
 
 	@Id
-	@Column(name = "id_d")
+	@Column(name = "id_c")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
@@ -37,10 +37,10 @@ public class Disciplina {
 	@Size(min = 6, max = 12, message = "O código deve ter entre 6 e 12 caracteres")
 	private String codigo;
 
-	@OneToMany(mappedBy = "disciplina", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "componente", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
 	private List<IntegracaoCurricular> curriculos;
 
-	@OneToMany(mappedBy = "disciplina", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "componente", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
 	private List<Bibliografia> bibliografias;
 
 	@Column(name = "ch_pratica")
@@ -62,7 +62,7 @@ public class Disciplina {
 		this.tipo = tipo;
 	}
 
-	public Disciplina() {
+	public ComponenteCurricular() {
 		this.codigo = "";
 		this.nome = "";
 	}
@@ -109,7 +109,7 @@ public class Disciplina {
 
 	@Override
 	public String toString() {
-		return "Disciplina [id=" + id + ", nome=" + nome + ", codigo=" + codigo + "]";
+		return "Componente [id=" + id + ", nome=" + nome + ", codigo=" + codigo + "]";
 	}
 
 	public Integer getChPratica() {

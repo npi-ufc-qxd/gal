@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Disciplinas</title>
+<title>Componentes Curriculares</title>
 <jsp:include page="../fragments/htmlHead.jsp" />
 </head>
 <body>
@@ -38,7 +38,7 @@
 
 		<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 			<div id="button-add">
-				<a href="<c:url value="/disciplina/adicionar" ></c:url>">
+				<a href="<c:url value="/componente/adicionar" ></c:url>">
 					<button class="btn btn-primary">
 						<span class="glyphicon glyphicon-plus"></span> Adicionar
 					</button>
@@ -47,71 +47,71 @@
 		</sec:authorize>
 
 		<div style="text-align: center;">
-			<label class="control-label" style="font-size: 20px;">Disciplinas</label>
+			<label class="control-label" style="font-size: 20px;">Componentes Curriculares</label>
 		</div>
 
-		<c:if test="${empty disciplinas}">
+		<c:if test="${empty componentes}">
 			<div class="alert alert-warning" role="alert">Não há
-				disciplinas cadastradas.</div>
+				componentes curriculares cadastrados.</div>
 		</c:if>
 
-		<c:if test="${not empty disciplinas}">
+		<c:if test="${not empty componentes}">
 			<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
-				<datatables:table id="disciplinaTable" data="${disciplinas}" cdn="false"
-					row="disciplina" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 3 4" default-sort="0 asc">
+				<datatables:table id="disciplinaTable" data="${componentes}" cdn="false"
+					row="componente" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 3 4" default-sort="0 asc">
 					<datatables:column title="Nome">
-						<a class="adark" href="<c:url value="/disciplina/${disciplina.id }/visualizar" ></c:url>" ><c:out value="${disciplina.nome}"></c:out></a>
+						<a class="adark" href="<c:url value="/componente/${componente.id }/visualizar" ></c:url>" ><c:out value="${componente.nome}"></c:out></a>
 					</datatables:column>
 			
 					<datatables:column title="Codigo">
-						<c:out value="${disciplina.codigo}"></c:out>
+						<c:out value="${componente.codigo}"></c:out>
 					</datatables:column>
 					
 					<datatables:column title="CH Prática">
-						<c:out value="${disciplina.chPratica}"></c:out>
+						<c:out value="${componente.chPratica}"></c:out>
 					</datatables:column>
 					<datatables:column title="CH Teórica">
-						<c:out value="${disciplina.chTeorica}"></c:out>
+						<c:out value="${componente.chTeorica}"></c:out>
 					</datatables:column>
 					<datatables:column title="Tipo">
-						<c:out value="${disciplina.tipo}"></c:out>
+						<c:out value="${componente.tipo}"></c:out>
 					</datatables:column>
 						
 					<datatables:column title="Vincular">
-						<a class="btn btn-success" href="<c:url value="/disciplina/${disciplina.id }/vincular" ></c:url>"><span class="glyphicon glyphicon-link"></span></a>
+						<a class="btn btn-success" href="<c:url value="/componente/${componente.id }/vincular" ></c:url>"><span class="glyphicon glyphicon-link"></span></a>
 					</datatables:column>
 							
 					<datatables:column title="Editar">
-						<a class="btn btn-primary" href="<c:url value="/disciplina/${disciplina.id }/editar" ></c:url>"><span class="glyphicon glyphicon-edit"></span></a>
+						<a class="btn btn-primary" href="<c:url value="/componente/${componente.id }/editar" ></c:url>"><span class="glyphicon glyphicon-edit"></span></a>
 					</datatables:column>
 				
 					<datatables:column title="Excluir">
-						<a id="excluir" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/disciplina/${disciplina.id}/excluir" ></c:url>">
+						<a id="excluir" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/componente/${componente.id}/excluir" ></c:url>">
 							<span class="glyphicon glyphicon-trash"></span>
 						</a>	
 					</datatables:column>
 				</datatables:table>
 			</sec:authorize>
 			<sec:authorize access="!hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
-				<datatables:table id="disciplinaTable" data="${disciplinas}" cdn="false"
-					row="disciplina" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 3 4" default-sort="0 asc">
+				<datatables:table id="disciplinaTable" data="${componentes}" cdn="false"
+					row="componente" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 3 4" default-sort="0 asc">
 					
 					<datatables:column title="Nome">
-						<a class="adark" href="<c:url value="/disciplina/${disciplina.id }/visualizar" ></c:url>" ><c:out value="${disciplina.nome}"></c:out></a>
+						<a class="adark" href="<c:url value="/componente/${componente.id }/visualizar" ></c:url>" ><c:out value="${componente.nome}"></c:out></a>
 					</datatables:column>
 			
 					<datatables:column title="Codigo">
-						<c:out value="${disciplina.codigo}"></c:out>
+						<c:out value="${componente.codigo}"></c:out>
 					</datatables:column>
 					
 					<datatables:column title="CH Pratica">
-						<c:out value="${disciplina.chPratica}"></c:out>
+						<c:out value="${componente.chPratica}"></c:out>
 					</datatables:column>
 					<datatables:column title="CH Teorica">
-						<c:out value="${disciplina.chTeorica}"></c:out>
+						<c:out value="${componente.chTeorica}"></c:out>
 					</datatables:column>
 					<datatables:column title="Tipo">
-						<c:out value="${disciplina.tipo}"></c:out>
+						<c:out value="${componente.tipo}"></c:out>
 					</datatables:column>
 				</datatables:table>
 			</sec:authorize>
@@ -124,8 +124,8 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">Excluir</div>
-				<div class="modal-body">Tem certeza de que deseja excluir essa
-					disciplina?</div>
+				<div class="modal-body">Tem certeza de que deseja excluir esse
+					componente curricular?</div>
 				<div class="modal-footer">
 					<a href="#" class="btn btn-danger">Excluir</a>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
