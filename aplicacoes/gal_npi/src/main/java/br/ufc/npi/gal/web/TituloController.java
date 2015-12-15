@@ -128,7 +128,7 @@ public class TituloController {
 					}
 				nomeDisciplinas.append('.');
 				redirectAttributes.addFlashAttribute("error", titulo.getNome() +
-						" não pode ser excluído, pois está vinculado as seguintes bibliografias: " + nomeDisciplinas);
+						" não pode ser excluído, pois está vinculado a bibliografia das seguintes disciplinas: " + nomeDisciplinas);
 			}
 		}
 		return "redirect:/titulo/listar";
