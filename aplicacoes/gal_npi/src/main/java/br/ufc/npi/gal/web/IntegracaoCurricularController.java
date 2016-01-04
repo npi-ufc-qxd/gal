@@ -95,7 +95,7 @@ public class IntegracaoCurricularController {
 	public String adicionar(ModelMap modelMap, @PathVariable("idCurriculo") Integer idCurriculo, final RedirectAttributes redirectAttributes) {
 		
 		modelMap.addAttribute("idCurriculo", idCurriculo);
-		modelMap.addAttribute("disciplinas", disciplinaService.find(Disciplina.class));
+		modelMap.addAttribute("disciplinas", disciplinaService.getTodasDisciplinasOrderByCodigo());
 		modelMap.addAttribute("integracao", new IntegracaoCurricular());
 		
 		return "integracao/adicionar";

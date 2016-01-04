@@ -55,8 +55,6 @@
 								Curriculo
 							</button>
 						</a>
-
-
 						<form id="importarCurriculo" method="POST"
 							action="<c:url value="/estrutura/${curso.codigo}/importar"></c:url>"
 							enctype="multipart/form-data" style="float: right;">

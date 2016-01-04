@@ -17,4 +17,6 @@ public interface DisciplinaService extends GenericService<Disciplina> {
 	
 	public abstract List<Disciplina> getTodasDisciplinas();
 	
+	public abstract List<Disciplina> getTodasDisciplinasOrderByCodigo();
+	
 }
