@@ -1,6 +1,8 @@
 package br.ufc.npi.gal.model;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -60,7 +62,16 @@ public class Curso implements Serializable {
 	}
 
 	public List<EstruturaCurricular> getCurriculos() {
-		return curriculos;
+		List<EstruturaCurricular> curriculosOrdenados = this.curriculos;
+		
+		// Ordena a lista curriculosOrdenados pelo código das estruturas curriculares de forma crescente
+		Collections.sort(curriculosOrdenados, new Comparator<EstruturaCurricular>(){
+			public int compare(EstruturaCurricular ec1, EstruturaCurricular ec2){
+				return ec1.getCodigo().compareTo(ec2.getCodigo());
+			}
+		});
+		
+		return curriculosOrdenados;
 	}
 
 	public void setCurriculos(List<EstruturaCurricular> curriculos) {

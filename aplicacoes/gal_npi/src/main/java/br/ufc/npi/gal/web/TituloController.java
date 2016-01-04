@@ -1,5 +1,8 @@
 package br.ufc.npi.gal.web;
 
+import java.util.List;
+import java.util.ListIterator;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.TituloService;
 
@@ -109,9 +113,23 @@ public class TituloController {
 			RedirectAttributes redirectAttributes) {
 		Titulo titulo = tituloService.find(Titulo.class, id);
 		if (titulo != null) {
-			this.tituloService.delete(titulo);
-			redirectAttributes.addFlashAttribute("info",
-					"Título removido com sucesso.");
+			if (titulo.getBibliografias().size() == 0) {
+				this.tituloService.delete(titulo);
+				redirectAttributes.addFlashAttribute("info",
+						"Título removido com sucesso.");
+			} else {
+				StringBuilder nomeDisciplinas = new StringBuilder();
+				for (Bibliografia bibliografia : titulo.getBibliografias()) {
+					if(nomeDisciplinas.length() == 0) {
+						nomeDisciplinas.append(bibliografia.getDisciplina().getNome());
+					} else {
+						nomeDisciplinas.append(", " + bibliografia.getDisciplina().getNome());
+						}
+					}
+				nomeDisciplinas.append('.');
+				redirectAttributes.addFlashAttribute("error", titulo.getNome() +
+						" não pode ser excluído, pois está vinculado a bibliografia das seguintes disciplinas: " + nomeDisciplinas);
+			}
 		}
 		return "redirect:/titulo/listar";
 	}

@@ -23,30 +23,12 @@
 				<label class="control-label" style="font-size: 20px;">Editar
 					Vinculo</label>
 			</div>
-
+			
 			<div class="form-group">
-				<label for="disciplina.codigo" class="col-sm-2 control-label">Código
-					Disciplina</label>
-				<div class="col-sm-10">
-					<form:input id="disciplina.codigo" class="form-control"
-						placeholder="Código disciplina" disabled="true"
-						path="disciplina.codigo" required="true" /> 
-					<form:errors path="disciplina" cssClass="error" /> 
-				</div>
+				<label class="control-label" style="font-size: 16px;">${integracao.disciplina.codigo}
+				 - ${integracao.disciplina.nome}</label>
 			</div>
-
-			<div class="form-group">
-				<label for="quantidadeAlunos" class="col-sm-2 control-label">Quantidade
-					alunos</label>
-				<div class="col-sm-10">
-					<form:input id="quantidadedeAlunos" class="form-control numeros"
-						maxlength="4" placeholder="Quantidade alunos"
-						path="quantidadeAlunos" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
-						required="true" />
-					<form:errors path="quantidadeAlunos" cssClass="error" />
-				</div>
-			</div>
-
+			
 			<div class="form-group">
 				<label for="semestreOferta" class="col-sm-2 control-label">Semestre
 					oferta</label>
@@ -58,8 +40,29 @@
 					<form:errors path="semestreOferta" cssClass="error" />
 				</div>
 			</div>
-
-
+			
+			<div class="form-group">
+				<label for="natureza" class="col-sm-2 control-label">Natureza</label>
+				<div class="col-sm-10">
+					<form:select path="natureza" class="form-control">
+						<form:option value="OBRIGATORIA">Obrigatória</form:option>
+						<form:option value="OPTATIVA">Optativa</form:option>
+					</form:select>
+					<form:errors path="natureza" cssClass="error" />
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="quantidadeAlunos" class="col-sm-2 control-label">Quantidade
+					alunos</label>
+				<div class="col-sm-10">
+					<form:input id="quantidadedeAlunos" class="form-control numeros"
+						maxlength="4" placeholder="Quantidade alunos"
+						path="quantidadeAlunos" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
+						required="true" />
+					<form:errors path="quantidadeAlunos" cssClass="error" />
+				</div>
+			</div>
 
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit"

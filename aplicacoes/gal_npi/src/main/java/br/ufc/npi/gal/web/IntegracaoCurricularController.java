@@ -46,18 +46,22 @@ public class IntegracaoCurricularController {
 	}
 	
 	@RequestMapping(value = "/adicionar", method = RequestMethod.POST)
-	public String adicionar(String disciplina, Integer quantidadeAlunos, Integer semestreOferta, Integer estruturaCurricular, final RedirectAttributes redirectAttributes) {
+	public String adicionar(@Valid IntegracaoCurricular integracao, BindingResult result, RedirectAttributes redirectAttributes) {
 		
-		EstruturaCurricular estruturaBD = estruturaService.find(EstruturaCurricular.class, estruturaCurricular);
+		EstruturaCurricular estruturaBD = estruturaService.find(EstruturaCurricular.class, integracao.getEstruturaCurricular().getId());
 		
-		if(semestreOferta == null || semestreOferta <= 0 || semestreOferta > 10){
+		if (result.hasErrors()) {
+			redirectAttributes.addFlashAttribute("error", "Erro ao vincular Integracao curricular");
+			return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
+		}
+		
+		if(integracao.getSemestreOferta() == null || integracao.getSemestreOferta() <= 0 || integracao.getSemestreOferta() > 10){
 			redirectAttributes.addFlashAttribute("error",
 					"Semestre de oferta inválido");
 			return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
 		}
 		
-		IntegracaoCurricular integracao =  new IntegracaoCurricular();
-		Disciplina disciplinaBD = disciplinaService.getDisciplinaByCodigo(disciplina);
+		Disciplina disciplinaBD = disciplinaService.getDisciplinaByCodigo(integracao.getDisciplina().getCodigo());
 		
 		List<IntegracaoCurricular> integracaoList = estruturaBD.getCurriculos();		
 		
@@ -76,10 +80,12 @@ public class IntegracaoCurricularController {
 		integracao.setDisciplina(disciplinaBD);
 		integracao.setEstruturaCurricular(estruturaBD);
 		
-		integracao.setQuantidadeAlunos(quantidadeAlunos);
-		integracao.setSemestreOferta(semestreOferta);
-		
-		integracaoService.save(integracao);
+		try {
+			integracaoService.save(integracao);
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("erro", "Erro ao criar Integracao Curricular.");
+			return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
+		}
 		
 		redirectAttributes.addFlashAttribute("info", "Integracao Curricular adicionada com sucesso.");
 		return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";

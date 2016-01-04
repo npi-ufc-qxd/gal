@@ -58,7 +58,7 @@
 		<c:if test="${not empty disciplinas}">
 			<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 				<datatables:table id="disciplinaTable" data="${disciplinas}" cdn="false"
-					row="disciplina" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 3 4" default-sort="0 asc">
+					row="disciplina" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="5 6 7" default-sort="0 asc">
 					<datatables:column title="Nome">
 						<a class="adark" href="<c:url value="/disciplina/${disciplina.id }/visualizar" ></c:url>" ><c:out value="${disciplina.nome}"></c:out></a>
 					</datatables:column>
@@ -94,7 +94,7 @@
 			</sec:authorize>
 			<sec:authorize access="!hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 				<datatables:table id="disciplinaTable" data="${disciplinas}" cdn="false"
-					row="disciplina" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 3 4" default-sort="0 asc">
+					row="disciplina" theme="bootstrap2" cssClass="table table-striped table-orderable" default-sort="0 asc">
 					
 					<datatables:column title="Nome">
 						<a class="adark" href="<c:url value="/disciplina/${disciplina.id }/visualizar" ></c:url>" ><c:out value="${disciplina.nome}"></c:out></a>
