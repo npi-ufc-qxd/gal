@@ -51,7 +51,6 @@
 						<input type="submit" name="submit" class="btn btn-primary" value="Atualizar" /> <a href="<c:url value="/"></c:url>"
 							class="btn btn-default">Cancelar</a> <a></a>
 						
-						
 					</div>
 				</form:form>
 			</div>

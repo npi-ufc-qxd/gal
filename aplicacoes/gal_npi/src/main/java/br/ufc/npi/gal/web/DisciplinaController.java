@@ -1,5 +1,6 @@
 package br.ufc.npi.gal.web;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,7 @@ import br.ufc.npi.gal.service.DisciplinaService;
 import br.ufc.npi.gal.service.MetaCalculada;
 import br.ufc.npi.gal.service.ResultadoCalculo;
 import br.ufc.npi.gal.service.TituloService;
+import br.ufc.npi.gal.service.impl.ParserEstruturaCurricularServiceImpl;
 import br.ufc.quixada.npi.service.GenericService;
 
 @Controller
@@ -34,22 +36,23 @@ import br.ufc.quixada.npi.service.GenericService;
 public class DisciplinaController {
 
 	@Inject
-	private DisciplinaService disciplinaService;
-	
+	private DisciplinaService disciplinaService;	
 	@Inject
 	private TituloService tituloService;
-	
+
 	@Inject
 	private CalculoMetaService calculoService;
 
 	@Inject
 	private GenericService<Bibliografia> bibliografiaService;
+	@Inject
+	private ParserEstruturaCurricularServiceImpl parserEstruturaCurricular;
 
 	private static final String COMPLEMENTAR = "Complementar";
 	private static final String BASICA = "Básica";
 	
 	@RequestMapping(value = "/listar")
-	public String listar(ModelMap modelMap, HttpSession session) {
+	public String listar(ModelMap modelMap, HttpSession session) throws IOException {
 		modelMap.addAttribute("disciplinas", this.disciplinaService.find(Disciplina.class));
 		return "disciplina/listar";
 	}

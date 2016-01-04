@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,36 +33,28 @@ public class EstruturaCurricular{
 
 	@Column(name = "codigo")
 	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({
-			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
-			@Pattern(regexp = "([0-9]{4}+[.][1-2]{1})", message = "O campo deve conter formato xxxx.1 ou xxxx.2"), })
+	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+			@Pattern(regexp = "([0-9]{4}+[.][1-2]{1}+[A-Z]?)", message = "O campo deve conter formato xxxx.1 ou xxxx.2"), })
 	private String codigo;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_curso")
 	private Curso curso;
 
-	@OneToMany(mappedBy = "estruturaCurricular", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "estruturaCurricular", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<IntegracaoCurricular> curriculos;
 
 	@Column(name = "matriz_curricular")
-	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({ @Pattern(regexp = "([a-z A-Z à-ú À-Ú\\s -]+$)", message = "O campo deve conter apenas letras"), })
 	private String matrizCurricular;
 
 	@Column(name = "unidade_vinculacao")
-	@NotEmpty(message = "Campo obrigatório")
 	private String unidadeVinculacao;
 
 	@Column(name = "municipio")
-	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({ @Pattern(regexp = "([a-z A-Z à-ú À-Ú\\s -]+$)", message = "Formato inválido"), })
 	private String municipio;
 
 	@Column(name = "semestre_vigor")
-	@NotEmpty(message = "Campo obrigatório")
-	@Pattern.List({
-			@Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
+	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O campo não pode conter espaços"),
 			@Pattern(regexp = "([0-9]{4}+[.][1-2]{1})", message = "O campo deve conter formato xxxx.1 ou xxxx.2"), })
 	private String semestreEntradaVigor;
 
@@ -204,8 +197,7 @@ public class EstruturaCurricular{
 
 	@Override
 	public String toString() {
-		return "EstruturaCurricular [id=" + id + ", codigo=" + codigo
-				+ ", curso=" + curso + "]";
+		return "EstruturaCurricular [id=" + id + ", codigo=" + codigo + ", curso=" + curso + "]";
 	}
 
 	public Integer getChOptMinima() {

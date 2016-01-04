@@ -37,6 +37,10 @@ public class CursoServiceImpl extends GenericServiceImpl<Curso> implements Curso
 	}
 
 	@Override
+	public Curso getCursoById(Integer id) {
+		return cursoRepository.getCursoById(id);
+	}
+
 	public List<Curso> getTodosCursos(){
 		return cursoRepository.getTodosCursos();
 	}
