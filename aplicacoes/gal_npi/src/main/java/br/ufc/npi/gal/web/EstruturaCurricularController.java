@@ -3,6 +3,7 @@ package br.ufc.npi.gal.web;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,13 +25,13 @@ public class EstruturaCurricularController {
 	@Inject
 	private CursoService cursoService;
 
-	@RequestMapping(value = "estrutura/listar")
+	@RequestMapping(value = "curso/estrutura/listar")
 	public String listar(ModelMap modelMap) {
 		modelMap.addAttribute("estrutura", this.estruturaCurricularService.find(EstruturaCurricular.class));
 		return "estrutura/listar";
 	}
 
-	@RequestMapping(value = { "curso/{codigo}/estrutura/{id}/editar", "estrutura/{id}/editar" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "curso/{codigo}/estrutura/{id}/editar", "/{id}/editar" }, method = RequestMethod.GET)
 	public String editar(@PathVariable("id") Integer id, ModelMap modelMap) {
 		EstruturaCurricular estruturaCurricular = this.estruturaCurricularService.find(EstruturaCurricular.class, id);
 		if (estruturaCurricular == null) {
@@ -38,27 +39,28 @@ public class EstruturaCurricularController {
 		}
 		modelMap.addAttribute("curso", estruturaCurricular.getCurso());
 		modelMap.addAttribute("estruturaCurricular", estruturaCurricular);
-		return "estrutura/editar";
+		return "curso/estrutura/editar";
 	}
 
-	@RequestMapping(value = { "curso/{codigo}/estrutura/{id}/editar", "estrutura/{id}/editar" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "curso/{codigo}/estrutura/{id}/editar", "/{id}/editar" }, method = RequestMethod.POST)
 	public String atualizar(@Valid EstruturaCurricular estrutura, BindingResult result,
-			RedirectAttributes redirectAttributes, @PathVariable("id") Integer id, ModelMap modelMap) {
-		Curso curso = cursoService.find(Curso.class, id);
+			RedirectAttributes redirectAttributes, @PathVariable("id") Integer id,
+			@PathVariable("codigo") Integer codigo, ModelMap modelMap) {
+		Curso curso = cursoService.getCursoByCodigo(codigo);
 		modelMap.addAttribute("curso", curso);
 
 		if (result.hasErrors()) {
-			return "estrutura/editar";
+			return "curso/estrutura/editar";
 		}
 
 		estrutura.setCurso(curso);
 
 		estruturaCurricularService.update(estrutura);
 		redirectAttributes.addFlashAttribute("info", "Estrutura Curricular atualizada com sucesso");
-		return "redirect:/curso/" + curso.getCodigo() + "/visualizar";
+		return "redirect:/curso/" + codigo + "/visualizar";
 	}
 
-	@RequestMapping(value = "estrutura/{id}/excluir")
+	@RequestMapping(value = "curso/{codigo}/estrutura/{id}/excluir")
 	public String excluir(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
 		EstruturaCurricular estruturaCurricular = estruturaCurricularService.find(EstruturaCurricular.class, id);
 
@@ -70,7 +72,7 @@ public class EstruturaCurricularController {
 		return "redirect:/curso/" + estruturaCurricular.getCurso().getCodigo() + "/visualizar";
 	}
 
-	@RequestMapping(value = { "curso/{codigo}/estrutura/adicionar"}, method = RequestMethod.GET)
+	@RequestMapping(value = "curso/{codigo}/estrutura/adicionar", method = RequestMethod.GET)
 	public String adicionar(@PathVariable("codigo") Integer codigo, ModelMap modelMap) {
 
 		Curso curso = this.cursoService.getCursoByCodigo(codigo);
@@ -79,7 +81,7 @@ public class EstruturaCurricularController {
 		return "curso/estrutura/adicionar";
 	}
 
-	@RequestMapping(value = { "curso/{codigo}/estrutura/adicionar"}, method = RequestMethod.POST)
+	@RequestMapping(value = "curso/{codigo}/estrutura/adicionar", method = RequestMethod.POST)
 	public String adicionar(@Valid EstruturaCurricular estruturaCurricular, BindingResult result,
 			@PathVariable("codigo") Integer codigo, RedirectAttributes redirectAttributes, ModelMap modelMap) {
 		Curso curso = this.cursoService.getCursoByCodigo(codigo);
