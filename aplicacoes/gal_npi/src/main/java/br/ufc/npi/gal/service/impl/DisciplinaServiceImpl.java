@@ -42,4 +42,9 @@ public class DisciplinaServiceImpl extends GenericServiceImpl<Disciplina> implem
 		return disciplinaRepository.getTodasDisciplinas();
 	}
 
+	@Override
+	public List<Disciplina> getTodasDisciplinasOrderByCodigo() {
+		return disciplinaRepository.getTodasDisciplinasOrderByCodigo();
+	}
+
 }

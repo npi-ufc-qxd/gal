@@ -49,16 +49,16 @@
 					access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 					<div id="button-add">
 						<a
-							href="<c:url value="/estrutura/${curso.id}/adicionar" ></c:url>">
+							href="<c:url value="/curso/${curso.codigo}/estrutura/adicionar" ></c:url>">
+
 							<button class="btn btn-primary">
 								<span class="glyphicon glyphicon-plus"></span> Adicionar
 								Curriculo
 							</button>
 						</a>
 
-
 						<form id="importarCurriculo" method="POST"
-							action="<c:url value="/estrutura/${curso.codigo}/importar"></c:url>"
+							action="<c:url value="/curso/${curso.codigo}/estrutura/importar"></c:url>"
 							enctype="multipart/form-data" style="float: right;">
 							<input type="file" name="file" id="fileupload" accept="text/html"
 								class="file" />
@@ -95,11 +95,11 @@
 									Disciplina
 								</a> <a id="excluir" style="float: right;" class="btn btn-danger"
 									data-toggle="modal" data-target="#confirm-delete" href="#"
-									data-href="<c:url value="/estrutura/${curriculo.id }/excluir" ></c:url>">
+									data-href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/excluir" ></c:url>">
 									<span class="glyphicon glyphicon-trash"></span> Excluir
 									Curriculo
 								</a> <a
-									href="<c:url value="/estrutura/${curriculo.id }/editar" ></c:url>">
+									href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/editar" ></c:url>">
 									<button class="btn btn-primary">
 										<span class="glyphicon glyphicon-plus"></span> Editar
 										Curriculo

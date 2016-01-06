@@ -16,4 +16,6 @@ public interface DisciplinaRepository extends GenericRepository<Disciplina> {
 	public abstract Disciplina getOutraDisciplinaByCodigo(Integer id, String codigo);
 	
 	public abstract List<Disciplina> getTodasDisciplinas();
+	
+	public abstract List<Disciplina> getTodasDisciplinasOrderByCodigo();
 }

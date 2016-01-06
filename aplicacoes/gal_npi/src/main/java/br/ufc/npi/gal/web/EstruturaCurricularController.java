@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.security.access.method.P;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,6 @@ import br.ufc.npi.gal.service.EstruturaCurricularService;
 import br.ufc.npi.gal.service.impl.ParserEstruturaCurricularServiceImpl;
 
 @Controller
-@RequestMapping("estrutura")
 public class EstruturaCurricularController {
 
 	@Inject
@@ -37,13 +37,13 @@ public class EstruturaCurricularController {
 	@Inject
 	private ParserEstruturaCurricularServiceImpl parserEstruturaCurricular;
 
-	@RequestMapping(value = "/listar")
+	@RequestMapping(value = "curso/estrutura/listar")
 	public String listar(ModelMap modelMap) throws IOException {
 		modelMap.addAttribute("estrutura", this.estruturaCurricularService.find(EstruturaCurricular.class));
 		return "estrutura/listar";
 	}
 
-	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
+	@RequestMapping(value = { "curso/{codigo}/estrutura/{id}/editar", "/{id}/editar" }, method = RequestMethod.GET)
 	public String editar(@PathVariable("id") Integer id, ModelMap modelMap) {
 		EstruturaCurricular estruturaCurricular = this.estruturaCurricularService.find(EstruturaCurricular.class, id);
 		if (estruturaCurricular == null) {
@@ -51,31 +51,33 @@ public class EstruturaCurricularController {
 		}
 		modelMap.addAttribute("curso", estruturaCurricular.getCurso());
 		modelMap.addAttribute("estruturaCurricular", estruturaCurricular);
-		return "estrutura/editar";
+		return "curso/estrutura/editar";
 	}
 
-	@RequestMapping(value = "/{id}/editar", method = RequestMethod.POST)
+	@RequestMapping(value = { "curso/{codigo}/estrutura/{id}/editar", "/{id}/editar" }, method = RequestMethod.POST)
 	public String atualizar(@Valid EstruturaCurricular estrutura, BindingResult result,
-			RedirectAttributes redirectAttributes, @PathVariable("id") Integer id, ModelMap modelMap) {
-		Curso curso = cursoService.find(Curso.class, id);
+			RedirectAttributes redirectAttributes, @PathVariable("id") Integer id,
+			@PathVariable("codigo") Integer codigo, ModelMap modelMap) {
+		Curso curso = cursoService.getCursoByCodigo(codigo);
+
 		modelMap.addAttribute("curso", curso);
 
 		EstruturaCurricular oldEstrutura = estruturaCurricularService
 				.getOutraEstruturaCurricularByCodigo(estrutura.getId(), estrutura.getCodigo());
-		
+
 		if (result.hasErrors()) {
-			return "estrutura/editar";
+			return "curso/estrutura/editar";
 		}
 
 		estrutura.setCurso(oldEstrutura.getCurso());
 		estrutura.setCurriculos(oldEstrutura.getCurriculos());
-		
+		estrutura.setCurso(curso);
 		estruturaCurricularService.update(estrutura);
 		redirectAttributes.addFlashAttribute("info", "Estrutura Curricular atualizada com sucesso");
 		return "redirect:/curso/" + curso.getCodigo() + "/visualizar";
 	}
 
-	@RequestMapping(value = "/{id}/excluir")
+	@RequestMapping(value = "curso/{codigo}/estrutura/{id}/excluir")
 	public String excluir(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
 		EstruturaCurricular estruturaCurricular = estruturaCurricularService.find(EstruturaCurricular.class, id);
 
@@ -87,22 +89,52 @@ public class EstruturaCurricularController {
 		return "redirect:/curso/" + estruturaCurricular.getCurso().getCodigo() + "/visualizar";
 	}
 
-	@RequestMapping(value = "/{id}/adicionar", method = RequestMethod.GET)
-	public String adicionar(@PathVariable("id") Integer id, ModelMap modelMap) {
+	@RequestMapping(value = "curso/{codigo}/estrutura/adicionar", method = RequestMethod.GET)
+	public String adicionar(@PathVariable("codigo") Integer codigo, ModelMap modelMap) {
 
-		Curso curso = this.cursoService.find(Curso.class, id);
+		Curso curso = this.cursoService.getCursoByCodigo(codigo);
 		modelMap.addAttribute("curso", curso);
 		modelMap.addAttribute("estruturaCurricular", new EstruturaCurricular());
-		return "estrutura/adicionar";
+		return "curso/estrutura/adicionar";
 	}
 
+	@RequestMapping(value = "curso/{codigo}/estrutura/adicionar", method = RequestMethod.POST)
+	public String adicionar(@Valid EstruturaCurricular estruturaCurricular, BindingResult result,
+			@PathVariable("codigo") Integer codigo, RedirectAttributes redirectAttributes, ModelMap modelMap) {
+		Curso curso = this.cursoService.getCursoByCodigo(codigo);
+		modelMap.addAttribute("curso", curso);
+
+		if (result.hasErrors()) {
+			return "curso/estrutura/adicionar";
+		}
+		
+		if (estruturaCurricular.getCodigo().trim().isEmpty()) {
+			result.rejectValue("codigo", "Repeat.estrutura.codigo", "Campo obrigatório.");
+			return "curso/estrutura/adicionar";
+		}
+
+		if (estruturaCurricularService.getOutraEstruturaCurricularByCodigo(curso.getCodigo(),
+				estruturaCurricular.getCodigo()) != null) {
+			result.rejectValue("codigo", "Repeat.estruturas.codigo", "Ano e Semestre já existe para curso");
+			return "curso/estrutura/adicionar";
+		}
+
+		estruturaCurricular.setCurso(curso);
+		estruturaCurricular.setId(null);
+
+		estruturaCurricularService.save(estruturaCurricular);
+
+		redirectAttributes.addFlashAttribute("info", "Estrutura Curricular adicionada com sucesso.");
+		return "redirect:/curso/" + curso.getCodigo() + "/visualizar";
+	}
+	
 	@RequestMapping(value = "")
 	public String uploadArquivo(ModelMap modelMap, HttpSession session) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return "acervo/atualizar";
 	}
 
-	@RequestMapping(value = "/{idCurso}/importar", method = RequestMethod.POST)
+	@RequestMapping(value = "curso/{idCurso}/estrutura/importar", method = RequestMethod.POST)
 	public String uploadEstruturaCurricular(@PathVariable("idCurso") Integer idCurso,
 			@RequestParam("file") MultipartFile request, RedirectAttributes redirectAttributes) {
 
@@ -147,31 +179,4 @@ public class EstruturaCurricularController {
 		return "redirect:/curso/" + idCurso + "/visualizar";
 	}
 
-	@RequestMapping(value = "/{id}/adicionar", method = RequestMethod.POST)
-	public String adicionar(@Valid EstruturaCurricular estruturaCurricular, BindingResult result,
-			@PathVariable("id") Integer id, RedirectAttributes redirectAttributes, ModelMap modelMap) {
-		Curso curso = this.cursoService.find(Curso.class, id);
-		modelMap.addAttribute("curso", curso);
-		if (result.hasErrors()) {
-			return "estrutura/adicionar";
-		}
-		if (estruturaCurricular.getCodigo().trim().isEmpty()) {
-			result.rejectValue("codigo", "Repeat.estrutura.codigo", "Campo obrigatório.");
-			return "estrutura/adicionar";
-		}
-		
-		if (estruturaCurricularService.getOutraEstruturaCurricularByCodigo(id,
-				estruturaCurricular.getCodigo()) != null) {
-			result.rejectValue("codigo", "Repeat.estruturas.codigo", "Ano e Semestre já existe para curso");
-			return "estrutura/adicionar";
-		}
-
-		estruturaCurricular.setCurso(curso);
-		estruturaCurricular.setId(null);
-
-		estruturaCurricularService.save(estruturaCurricular);
-
-		redirectAttributes.addFlashAttribute("info", "Estrutura Curricular adicionada com sucesso.");
-		return "redirect:/curso/" + curso.getCodigo() + "/visualizar";
-	}
 }

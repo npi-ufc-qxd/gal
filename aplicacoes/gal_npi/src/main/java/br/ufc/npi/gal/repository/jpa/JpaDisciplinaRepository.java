@@ -67,4 +67,13 @@ public class JpaDisciplinaRepository extends JpaGenericRepositoryImpl<Disciplina
 		}
 		return null;
 	}
+
+	@Override
+	public List<Disciplina> getTodasDisciplinasOrderByCodigo() {
+		List<Disciplina> result = find(QueryType.JPQL, "from Disciplina order by codigo asc", null);
+		if(result != null && !result.isEmpty()) {
+			return result;
+		}
+		return null;
+	}
 }
