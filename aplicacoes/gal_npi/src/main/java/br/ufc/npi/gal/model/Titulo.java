@@ -50,7 +50,7 @@ public class Titulo {
 	@NotEmpty(message="Campo obrigatório")
 	private String tipo;
 	
-	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
 	private List<Bibliografia> bibliografias;
 	
 	@OneToMany(mappedBy = "titulo", targetEntity = Exemplar.class, fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)

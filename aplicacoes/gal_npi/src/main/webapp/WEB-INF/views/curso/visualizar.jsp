@@ -202,7 +202,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">Excluir</div>
-				<div class="modal-body">Tem certeza de que deseja excluir esse curso?</div>
+				<div class="modal-body">Tem certeza de que deseja excluir essa disciplina?</div>
 				<div class="modal-footer">
 					<a href="integracao/excluir" class="btn btn-danger">Excluir</a>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

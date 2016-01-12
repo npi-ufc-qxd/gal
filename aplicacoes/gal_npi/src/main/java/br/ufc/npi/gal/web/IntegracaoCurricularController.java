@@ -39,7 +39,7 @@ public class IntegracaoCurricularController {
 		int codigoCurso = integracao.getEstruturaCurricular().getCurso().getCodigo();
 		if (integracao != null) {
 			this.integracaoService.delete(integracao);
-			redirectAttributes.addFlashAttribute("info", "Integração Curricular removida com sucesso.");
+			redirectAttributes.addFlashAttribute("info", "Disciplina removida do currículo com sucesso.");
 		}
 		
 		return "redirect:/curso/" + codigoCurso + "/visualizar";
@@ -51,7 +51,7 @@ public class IntegracaoCurricularController {
 		EstruturaCurricular estruturaBD = estruturaService.find(EstruturaCurricular.class, integracao.getEstruturaCurricular().getId());
 		
 		if (result.hasErrors()) {
-			redirectAttributes.addFlashAttribute("error", "Erro ao vincular Integracao curricular");
+			redirectAttributes.addFlashAttribute("error", "Erro ao vincular disciplina ao curriculo");
 			return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
 		}
 		
@@ -83,11 +83,11 @@ public class IntegracaoCurricularController {
 		try {
 			integracaoService.save(integracao);
 		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("erro", "Erro ao criar Integracao Curricular.");
+			redirectAttributes.addFlashAttribute("erro", "Erro ao adicionar disciplina ao curriculo.");
 			return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
 		}
 		
-		redirectAttributes.addFlashAttribute("info", "Integracao Curricular adicionada com sucesso.");
+		redirectAttributes.addFlashAttribute("info", "Disciplina adicionada ao currículo com sucesso.");
 		return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
 	}
 
@@ -128,7 +128,7 @@ public class IntegracaoCurricularController {
 
 		integracaoService.update(integracao);
 		redirectAttributes.addFlashAttribute("info",
-				"Integração atualizada com sucesso.");
+				"Disciplina atualizada com sucesso.");
 		return "redirect:/curso/" + estrutura.getCurso().getCodigo() + "/visualizar";
 
 	}

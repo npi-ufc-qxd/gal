@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -70,23 +71,24 @@ public class DisciplinaController {
 	@RequestMapping(value = "/editar", method = RequestMethod.POST)
 	public String atualizar(@Valid Disciplina disciplina, BindingResult result,
 			RedirectAttributes redirectAttributes) {
+		
 		if (result.hasErrors()) {
 			return "disciplina/editar";
 		}
-
-		if (disciplinaService.getOutraDisciplinaByCodigo(disciplina.getId(),
+		else if (disciplinaService.getOutraDisciplinaByCodigo(disciplina.getId(),
 				disciplina.getCodigo()) != null) {
 			result.rejectValue("codigo", "Repeat.disciplina.codigo",
 					"Já existe uma disciplina com esse código");
 			return "disciplina/editar";
 		}
-		if (disciplinaService.getOutraDisciplinaByNome(disciplina.getId(),
+		else if (disciplinaService.getOutraDisciplinaByNome(disciplina.getId(),
 				disciplina.getNome().toUpperCase()) != null) {
 			result.rejectValue("nome", "Repeat.disciplina.nome",
 					"Já existe uma disciplina com esse nome");
 			return "disciplina/editar";
 		}
 
+		disciplina.setCodigo(disciplina.getCodigo().toUpperCase());
 		disciplina.setNome(disciplina.getNome().toUpperCase());
 		disciplinaService.update(disciplina);
 		redirectAttributes.addFlashAttribute("info",
@@ -138,6 +140,7 @@ public class DisciplinaController {
 			return "disciplina/adicionar";
 		}
 
+		disciplina.setCodigo(disciplina.getCodigo().toUpperCase());
 		disciplina.setNome(disciplina.getNome().toUpperCase());
 		disciplinaService.save(disciplina);
 		redirectAttributes.addFlashAttribute("info",
