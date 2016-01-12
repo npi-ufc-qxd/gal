@@ -64,6 +64,8 @@
 									<th>Semestre de Oferta</th>
 									<th>Quantidade de Alunos</th>
 									<th>Natureza</th>
+									<th>Horas Práticas</th>
+									<th>Horas Teóricas</th>
 								</tr>
 							</thead>
 							
@@ -74,6 +76,8 @@
 										<td>${curriculo.semestreOferta}</td>
 										<td>${curriculo.quantidadeAlunos}</td>
 										<td>${curriculo.natureza}</td>
+										<td>${curriculo.disciplina.chPratica}</td>
+										<td>${curriculo.disciplina.chTeorica}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
