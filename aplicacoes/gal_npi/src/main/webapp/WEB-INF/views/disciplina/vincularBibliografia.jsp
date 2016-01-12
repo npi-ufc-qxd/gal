@@ -21,7 +21,7 @@
 				<p id="nomeDisciplina">${disciplina.codigo}-${disciplina.nome}</p>
 				<p>
 					<a class="btn btn-success" id="btn-get"
-						href="<c:url value="/disciplina/listar" ></c:url>">Vincular</a>
+						href="<c:url value='/disciplina/listar'/>">Vincular</a>
 				</p>
 				<div class="column left first">
 					<label style="font-size: 16px;">Básica</label>

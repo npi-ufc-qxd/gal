@@ -274,13 +274,15 @@ public class DisciplinaController {
 		return bibliografiasAseremModificadas;
 	}
 	
-	@RequestMapping(value = "/vincular")
+	@RequestMapping(value = "/vincular", method = RequestMethod.POST)
 	public String vincular(@RequestParam("basica") String basica, @RequestParam("complementar") String complementar, @RequestParam("idDiciplina") Integer idDiciplina) {
 
 		String[] basicaArray = basica.split(",");
 		
 		String[] complementarArray = complementar.split(",");
 
+		System.out.println(basicaArray);
+		System.out.println(complementarArray);
 
 		Disciplina disciplina = this.disciplinaService.find(Disciplina.class,idDiciplina);
 		List<Bibliografia> bibliografiaLista = disciplina.getBibliografias();
