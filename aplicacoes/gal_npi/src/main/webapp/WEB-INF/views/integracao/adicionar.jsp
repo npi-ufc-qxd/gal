@@ -30,6 +30,7 @@
 				<div class="col-sm-10">
 					<form:select id="selectDisciplina" class="form-control" placeholder="Código disciplina" path="disciplina.codigo" required="true" >
 
+						<form:option value="nenhuma" >Selecione o componente</form:option>
 						<c:forEach items="${disciplinas}" var="disciplina">
 							<form:option value="${disciplina.codigo}">${disciplina.codigo} - ${disciplina.nome}</form:option>
 						</c:forEach>
