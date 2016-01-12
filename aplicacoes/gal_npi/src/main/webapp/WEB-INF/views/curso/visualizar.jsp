@@ -69,7 +69,7 @@
 							<span class="glyphicon glyphicon-link"></span> Vincular Componente Curricular
 						</a>
 						
-						<a id="excluir" style="float: right;" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/estrutura/${curriculo.id}/excluir" ></c:url>">
+						<a id="excluir" style="float: right;" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/estrutura/${curriculo.id }/excluir" ></c:url>">
 							<span class="glyphicon glyphicon-trash"></span> Excluir Curriculo
 						</a>
 						 
@@ -108,7 +108,6 @@
 						<hr width="102%">
 						<div class="littleBox">
 						<b>Carga Horária Obrigatória</b><br>
-						
 						<b>Total: </b>${curriculo.chObrigatoria}<b> hrs</b>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
 						<b>( </b>${curriculo.chObgPratica }<b> hrs</b> <b>Práticas ) / ( </b> ${curriculo.chObgTeorica }<b> hrs</b> <b> Teóricas )</b><br>
 						</div>

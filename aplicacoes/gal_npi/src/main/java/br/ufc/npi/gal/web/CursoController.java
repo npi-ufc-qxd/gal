@@ -1,7 +1,5 @@
 package br.ufc.npi.gal.web;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -30,26 +28,27 @@ public class CursoController {
 	private static final String PATH_CURSO_ADICIONAR = "curso/adicionar";
 	private static final String PATH_CURSO_LISTAR = "curso/listar";
 	private static final String PATH_CURSO_EDITAR = "curso/editar";
+	private static final String PATH_CURSO_VISUALIZAR = "curso/visualizar";
+	
 	@Inject
 	private EstruturaCurricularService estruturaService;
 
 	@RequestMapping(value = "/listar")
 	public String listar(ModelMap modelMap) {
 		modelMap.addAttribute("integracao", new IntegracaoCurricular());
-		modelMap.addAttribute("cursos", this.cursoService.find(Curso.class));
+		modelMap.addAttribute("cursos", this.cursoService.getTodosCursos());
 		modelMap.addAttribute("estruturas", this.estruturaService.find(EstruturaCurricular.class));
+		
 		return PATH_CURSO_LISTAR;
 	}
 	
 	@RequestMapping(value = "{codigo}/visualizar")
 	public String visualizar(@PathVariable("codigo") Integer codigo, ModelMap modelMap) {
-		
 		Curso curso = this.cursoService.getCursoByCodigo(codigo);
 		modelMap.addAttribute("curso", curso);
 		modelMap.addAttribute("integracao", new IntegracaoCurricular());
-		modelMap.addAttribute("estruturas", curso.getCurriculos());
 		
-		return "curso/visualizar";
+		return PATH_CURSO_VISUALIZAR;
 	}
 	
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
@@ -133,6 +132,7 @@ public class CursoController {
 		}
 
 		curso.setSigla(curso.getSigla().toUpperCase());
+		curso.setNome(curso.getNome().toUpperCase());
 		cursoService.save(curso);
 		redirectAttributes.addFlashAttribute("info",
 				"Curso adicionado com sucesso.");

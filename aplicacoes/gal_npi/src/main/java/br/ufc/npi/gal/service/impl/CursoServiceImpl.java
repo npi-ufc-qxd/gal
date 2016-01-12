@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.service.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -34,5 +36,12 @@ public class CursoServiceImpl extends GenericServiceImpl<Curso> implements Curso
 		return cursoRepository.getOutroCursoByCodigo(id, codigo);
 	}
 
-	
+	@Override
+	public Curso getCursoById(Integer id) {
+		return cursoRepository.getCursoById(id);
+	}
+
+	public List<Curso> getTodosCursos(){
+		return cursoRepository.getTodosCursos();
+	}
 }

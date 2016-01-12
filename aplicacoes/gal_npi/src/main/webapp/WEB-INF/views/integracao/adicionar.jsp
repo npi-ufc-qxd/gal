@@ -27,7 +27,7 @@
 			<div class="form-group">
 				<label for="componente" class="col-sm-2 control-label">Selecione Componente</label>
 				<div class="col-sm-10">
-					<form:select id="selectDisciplina" class="form-control" placeholder="Código Componente" path="componente" required="true" >
+					<form:select id="selectComponente" class="form-control" placeholder="Código componente" path="componente" required="true" >
 
 						<c:forEach items="${componentes}" var="componente">
 							<form:option value="${componente.codigo }">${componente.codigo} - ${componente.nome}</form:option>

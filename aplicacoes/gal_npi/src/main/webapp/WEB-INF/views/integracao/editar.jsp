@@ -17,39 +17,30 @@
 			modelAttribute="integracao" role="form" class="form-horizontal">
 			
 			<form:input path="estruturaCurricular.id" type="hidden" />
-			<form:input path="disciplina.id" type="hidden" />
+			<form:input path="componente.id" type="hidden" />
 						
 			<div class="form-group">
 				<label class="control-label" style="font-size: 20px;">Editar
 					Vinculo</label>
 			</div>
 
-			
 			<div class="form-group">
-				<label for="componente" class="col-sm-2 control-label">Selecione Componente</label>
+				<label for="componente.codigo" class="col-sm-2 control-label">Código
+					Componente Curricular</label>
 				<div class="col-sm-10">
-					<form:select id="selectDisciplina" class="form-control" placeholder="Código Componente" path="componente" required="true" >
-
-						<c:forEach items="${componentes}" var="componente">
-							<form:option value="${componente.codigo }">${componente.codigo} - ${componente.nome}</form:option>
-						</c:forEach>
-					</form:select>
-					
-<!-- 					<select class="disciplinas form-control"> -->
-<!-- 					</select> -->
-					
-					<form:errors path="componente" cssClass="error" />
+					<form:input id="componente.codigo" class="form-control"
+						placeholder="Código componente curricular" disabled="true"
+						path="componente.codigo" required="true" /> 
+					<form:errors path="componente" cssClass="error" /> 
 				</div>
 			</div>
-			
-			
 
 			<div class="form-group">
 				<label for="quantidadeAlunos" class="col-sm-2 control-label">Quantidade
 					alunos</label>
 				<div class="col-sm-10">
-					<form:input id="quantidadeAlunos" class="form-control numeros"
-						placeholder="Quantidade alunos" maxlength="4"
+					<form:input id="quantidadedeAlunos" class="form-control numeros"
+						maxlength="4" placeholder="Quantidade alunos"
 						path="quantidadeAlunos" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
 						required="true" />
 					<form:errors path="quantidadeAlunos" cssClass="error" />
@@ -61,8 +52,8 @@
 					oferta</label>
 				<div class="col-sm-10">
 					<form:input id="semestreOferta" class="form-control numeros"
-						placeholder="Semestre oferta" maxlength="2"
-						path="semestreOferta" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
+						placeholder="Semestre oferta"
+						path="semestreOferta" maxlength="2" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
 						required="true" />
 					<form:errors path="semestreOferta" cssClass="error" />
 				</div>

@@ -46,7 +46,9 @@ public class IntegracaoCurricularController {
 	}
 	
 	@RequestMapping(value = "/adicionar", method = RequestMethod.POST)
+
 	public String adicionar(String componente, Integer quantidadeAlunos, Integer semestreOferta, Integer estruturaCurricular, final RedirectAttributes redirectAttributes) {
+
 		
 		EstruturaCurricular estruturaBD = estruturaService.find(EstruturaCurricular.class, estruturaCurricular);
 		
@@ -58,6 +60,7 @@ public class IntegracaoCurricularController {
 		
 		IntegracaoCurricular integracao =  new IntegracaoCurricular();
 		ComponenteCurricular componenteBD = componenteCurricularService.getComponenteCurricularByCodigo(componente);
+
 		
 		List<IntegracaoCurricular> integracaoList = estruturaBD.getCurriculos();		
 		

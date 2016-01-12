@@ -51,7 +51,7 @@
 					<div class="panel-heading">
 						<div class="panel-title" style="float: left;">
 							<a  data-parent="#selection" href="<c:url value="/curso/${curso.codigo}/visualizar" ></c:url>">
-								<c:out value="${curso.codigo}"></c:out> - <c:out value="${curso.nome}"></c:out>
+								<c:out value="${curso.nome}"></c:out> (<c:out value="${curso.codigo}"></c:out>)
 							</a>
 						</div>
 
