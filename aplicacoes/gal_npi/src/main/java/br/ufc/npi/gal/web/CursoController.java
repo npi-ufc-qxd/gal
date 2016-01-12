@@ -132,6 +132,7 @@ public class CursoController {
 		}
 
 		curso.setSigla(curso.getSigla().toUpperCase());
+		curso.setNome(curso.getNome().toUpperCase());
 		cursoService.save(curso);
 		redirectAttributes.addFlashAttribute("info",
 				"Curso adicionado com sucesso.");
