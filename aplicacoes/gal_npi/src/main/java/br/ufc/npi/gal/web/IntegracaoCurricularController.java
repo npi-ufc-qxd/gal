@@ -55,12 +55,6 @@ public class IntegracaoCurricularController {
 			return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
 		}
 		
-		if(integracao.getSemestreOferta() == null || integracao.getSemestreOferta() <= 0 || integracao.getSemestreOferta() > 10){
-			redirectAttributes.addFlashAttribute("error",
-					"Semestre de oferta inválido");
-			return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
-		}
-		
 		Disciplina disciplinaBD = disciplinaService.getDisciplinaByCodigo(integracao.getDisciplina().getCodigo());
 		
 		List<IntegracaoCurricular> integracaoList = estruturaBD.getCurriculos();		
@@ -94,9 +88,12 @@ public class IntegracaoCurricularController {
 	@RequestMapping(value = "/{idCurriculo}/adicionar")
 	public String adicionar(ModelMap modelMap, @PathVariable("idCurriculo") Integer idCurriculo, final RedirectAttributes redirectAttributes) {
 		
+		EstruturaCurricular estrutura = this.estruturaService.find(EstruturaCurricular.class, idCurriculo);
+		
 		modelMap.addAttribute("idCurriculo", idCurriculo);
 		modelMap.addAttribute("disciplinas", disciplinaService.getTodasDisciplinasOrderByCodigo());
 		modelMap.addAttribute("integracao", new IntegracaoCurricular());
+		modelMap.addAttribute("semestreMax", estrutura.getPrazoConclusaoMedio());
 		
 		return "integracao/adicionar";
 	}
@@ -105,11 +102,13 @@ public class IntegracaoCurricularController {
 	public String editar(@PathVariable("idDisciplina") Integer idDisciplina,@PathVariable("idCurriculo") Integer idCurriculo, ModelMap modelMap) {
 
 		IntegracaoCurricular integracao = this.integracaoService.getIntegracaoByIdDisciplinaIdCurriculo(idDisciplina, idCurriculo);
-
+		EstruturaCurricular estrutura = this.estruturaService.find(EstruturaCurricular.class, idCurriculo);
+		
 		if (integracao == null) {
 			return "redirect:/curso/listar";
 
 		}
+		modelMap.addAttribute("semestreMax", estrutura.getPrazoConclusaoMedio());
 		modelMap.addAttribute("integracao", integracao);
 		return "integracao/editar";
 	}
@@ -119,12 +118,6 @@ public class IntegracaoCurricularController {
 			RedirectAttributes redirectAttributes) {
 		EstruturaCurricular estrutura = this.estruturaService.find(EstruturaCurricular.class,
 				integracao.getEstruturaCurricular().getId());
-		
-		if (integracao.getSemestreOferta() == null || integracao.getSemestreOferta() <= 0
-				|| integracao.getSemestreOferta() > 10) {
-			redirectAttributes.addFlashAttribute("error", "Semestre de oferta inválido");
-			return "redirect:/curso/" + estrutura.getCurso().getCodigo() + "/visualizar";
-		}
 
 		integracaoService.update(integracao);
 		redirectAttributes.addFlashAttribute("info",
