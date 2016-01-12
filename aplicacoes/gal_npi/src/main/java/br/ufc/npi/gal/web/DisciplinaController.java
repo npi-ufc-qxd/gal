@@ -281,9 +281,6 @@ public class DisciplinaController {
 		
 		String[] complementarArray = complementar.split(",");
 
-		System.out.println(basicaArray);
-		System.out.println(complementarArray);
-
 		Disciplina disciplina = this.disciplinaService.find(Disciplina.class,idDiciplina);
 		List<Bibliografia> bibliografiaLista = disciplina.getBibliografias();
 		
