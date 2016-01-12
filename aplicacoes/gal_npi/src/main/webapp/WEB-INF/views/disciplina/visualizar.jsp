@@ -46,6 +46,9 @@
 			
 			<p>Nome: <b>${disciplina.nome}</b></p>
 			<p>Código: <b>${disciplina.codigo}</b></p>
+			<p>CH Prática: <b>${disciplina.chPratica}</b></p>
+			<p>CH Teórica: <b>${disciplina.chTeorica}</b></p>
+			
 			
 			<hr>
 			
