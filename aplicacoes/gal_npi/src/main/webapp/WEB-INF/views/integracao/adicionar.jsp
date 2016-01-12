@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
@@ -13,48 +14,51 @@
 
 		<form:form servletRelativeAction="/integracao/adicionar" method="post"
 			modelAttribute="integracao" role="form" class="form-horizontal">
-		
-			<form:hidden path="estruturaCurricular.id" value="${idCurriculo}"/>
-			
+
+			<form:hidden path="estruturaCurricular.id" value="${idCurriculo}" />
+
 			<%-- <form:input id="estruturaCurricular" class="form-control"
 						style="width: 150px;" type="hidden" value="${idCurriculo}"
 						path="estruturaCurricular" required="true" /> --%>
-			
+
 			<div class="form-group">
 				<label class="control-label" style="font-size: 20px;">Vincular
 					Disciplina</label>
 			</div>
 
 			<div class="form-group">
-				<label for="disciplina" class="col-sm-2 control-label">Selecione Disciplina</label>
+				<label for="disciplina" class="col-sm-2 control-label">Selecione
+					Disciplina</label>
 				<div class="col-sm-10">
-					<form:select id="selectDisciplina" class="form-control" placeholder="Código disciplina" path="disciplina.codigo" required="true" >
+					<form:select id="selectDisciplina" class="form-control"
+						placeholder="Código disciplina" path="disciplina.codigo"
+						required="true">
 
-						<form:option value="nenhuma" >Selecione o componente</form:option>
+						<form:option value="nenhuma">Selecione o componente</form:option>
 						<c:forEach items="${disciplinas}" var="disciplina">
 							<form:option value="${disciplina.codigo}">${disciplina.codigo} - ${disciplina.nome}</form:option>
 						</c:forEach>
 					</form:select>
-					
-<!-- 					<select class="disciplinas form-control"> -->
-<!-- 					</select> -->
-					
+
+					<!-- 					<select class="disciplinas form-control"> -->
+					<!-- 					</select> -->
+
 					<form:errors path="disciplina" cssClass="error" />
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label for="semestreOferta" class="col-sm-2 control-label">Semestre
 					oferta</label>
 				<div class="col-sm-10">
 					<form:input id="semestreOferta" class="form-control numeros"
-						placeholder="Semestre oferta" maxlength="2"
-						path="semestreOferta" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
-						required="true" />
+						placeholder="Semestre oferta" maxlength="2" path="semestreOferta"
+						onkeypress="mascara(this,soNumeros)"
+						onchange="mascara(this,soNumeros)" required="true" />
 					<form:errors path="semestreOferta" cssClass="error" />
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label for="natureza" class="col-sm-2 control-label">Natureza</label>
 				<div class="col-sm-10">
@@ -72,12 +76,21 @@
 				<div class="col-sm-10">
 					<form:input id="quantidadeAlunos" class="form-control numeros"
 						placeholder="Quantidade alunos" maxlength="4"
-						path="quantidadeAlunos" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
-						required="true" />
+						path="quantidadeAlunos" onkeypress="mascara(this,soNumeros)"
+						onchange="mascara(this,soNumeros)" required="true" />
 					<form:errors path="quantidadeAlunos" cssClass="error" />
 				</div>
 			</div>
 
+			<div class="form-group">
+				<label for="observacoes" class="col-sm-2 control-label">Observações
+				</label>
+				<div class="col-sm-10">
+					<form:input id="observacoes" class="form-control"
+						placeholder="Observações" path="observacoes" required="false" />
+					<form:errors path="observacoes" cssClass="error" />
+				</div>
+			</div>
 
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit"

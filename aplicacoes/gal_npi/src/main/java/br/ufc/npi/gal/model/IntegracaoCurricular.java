@@ -38,6 +38,17 @@ public class IntegracaoCurricular {
 
 	@Column(name = "natureza")
 	private String natureza;
+	
+	@Column(name="observacoes")
+	private String observacoes;
+
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
+	}
 
 	public String getNatureza() {
 		return natureza;
@@ -82,7 +93,7 @@ public class IntegracaoCurricular {
 	@Override
 	public String toString() {
 		return "IntegracaoCurricular [estruturaCurricular=" + estruturaCurricular + ", disciplina=" + disciplina
-				+ ", quantidadeAlunos=" + quantidadeAlunos + ", semestreOferta=" + semestreOferta + "]";
+				+ ", quantidadeAlunos=" + quantidadeAlunos + ", semestreOferta=" + semestreOferta + ", observacoes=" +observacoes+ "]";
 	}
 
 }
