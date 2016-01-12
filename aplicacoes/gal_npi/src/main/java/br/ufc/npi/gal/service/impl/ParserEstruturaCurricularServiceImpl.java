@@ -64,14 +64,20 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		try {
 			multipartFile.transferTo(fileHtml);
 			docFromHtml = Jsoup.parse(fileHtml, null, "");
-			List<String> statusParser = parserCurriculo(id);
-			indice = statusParser.get(1).indexOf(" -");
-			nomeCurso = removeAcentos(statusParser.get(1).substring(0, indice).toUpperCase());
-
-			Curso curso = cursoService.getCursoByCodigo(id);
-			if (nomeCurso.equals(curso.getNome())) {
-				return true;
+			Element titulo = docFromHtml.select("title").get(0);
+			String tituloHTMl = titulo.toString().replaceAll("<title>", "").replaceAll("</title>", "");
+			
+			boolean algo = titulo.toString().replaceAll("<title>", "").replaceAll("</title>", "").equals("SIGAA - Sistema Integrado de Gestão de Atividades Acadêmicas");
+			if(algo == true){
+				List<String> statusParser = parserCurriculo(id);
+				indice = statusParser.get(1).indexOf(" -");
+				nomeCurso = removeAcentos(statusParser.get(1).substring(0, indice).toUpperCase());
+				Curso curso = cursoService.getCursoByCodigo(id);
+				if (nomeCurso.equals(curso.getNome())) {
+					return true;
+				}
 			}
+			
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 			return false;
@@ -90,6 +96,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		String codigoEstrutura = "";
 		String nomeCurso = "";
 		ArrayList<String> info = new ArrayList<String>();
+
 		Element tabela = docFromHtml.select("table").get(0);
 		Elements linhas = tabela.select("tr");
 
@@ -108,10 +115,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			}
 		}
 
-		/**
-		 * verificar no banco se a estruttura curricular já encontra-se
-		 * cadastrada usar as duas primeiras informações para verificar no banco
-		 */
 		int limiteNomeCurso = nomeCurso.indexOf("-");
 		nomeCurso = nomeCurso.substring(0, (limiteNomeCurso - 1));
 		return info;
@@ -143,21 +146,21 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		idMedio = estrutura.get(11).indexOf("Médio");
 		idMaximo = estrutura.get(11).indexOf("Máximo");
 		novaEstrutura.setPrazoConclusaoMinimo(
-				trasnformaStringInteger(estrutura.get(11).substring(idMinino + 6, idMedio-1)));
+				trasnformaStringInteger(estrutura.get(11).substring(idMinino + 6, idMedio - 1)));
 		novaEstrutura.setPrazoConclusaoMedio(
-				trasnformaStringInteger(estrutura.get(11).substring(idMedio + 5, idMaximo-1)));
-		novaEstrutura.setPrazoConclusaoMaximo(trasnformaStringInteger(
-				estrutura.get(11).substring(idMaximo + 6, estrutura.get(11).length())));
+				trasnformaStringInteger(estrutura.get(11).substring(idMedio + 5, idMaximo - 1)));
+		novaEstrutura.setPrazoConclusaoMaximo(
+				trasnformaStringInteger(estrutura.get(11).substring(idMaximo + 6, estrutura.get(11).length())));
 
 		idMinino = estrutura.get(12).indexOf("Mínima");
 		idMedio = estrutura.get(12).indexOf("Média");
 		idMaximo = estrutura.get(12).indexOf("Máxima");
-		novaEstrutura.setChPeriodoMinimo(trasnformaStringInteger(
-				estrutura.get(12).substring(idMinino + 6, idMedio - 2).replaceAll("hrs", "")));
-		novaEstrutura.setChPeriodoMedio(trasnformaStringInteger(
-				estrutura.get(12).substring(idMedio + 5, idMaximo - 2).replaceAll("hrs", "")));
-		novaEstrutura.setChPeriodoMaximo(trasnformaStringInteger(estrutura.get(12)
-				.substring(idMaximo + 6, estrutura.get(12).length() - 1).replaceAll("hrs", "")));
+		novaEstrutura.setChPeriodoMinimo(
+				trasnformaStringInteger(estrutura.get(12).substring(idMinino + 6, idMedio - 2).replaceAll("hrs", "")));
+		novaEstrutura.setChPeriodoMedio(
+				trasnformaStringInteger(estrutura.get(12).substring(idMedio + 5, idMaximo - 2).replaceAll("hrs", "")));
+		novaEstrutura.setChPeriodoMaximo(trasnformaStringInteger(
+				estrutura.get(12).substring(idMaximo + 6, estrutura.get(12).length() - 1).replaceAll("hrs", "")));
 		novaEstrutura.setCurso(curso);
 		estruturaCurricular = novaEstrutura;
 		estruturaCurricluarService.save(novaEstrutura);
@@ -237,9 +240,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			disciplina.setNome(removeAcentos(colunasComponente.get(1).text().substring(0, valorParada)));
 			disciplina.setTipo(tipoDisciplina(colunasComponente.get(3).text()));
 			valorParada = colunasComponente.get(2).text().indexOf("aula");
-			// aux = colunasComponente.get(2).text().substring(0, valorParada -
-			// 1).replaceAll("h", "");
-			// chTeorica = Integer.parseInt(aux);
 			disciplina.setChTeorica(trasnformaStringInteger(
 					colunasComponente.get(2).text().substring(0, valorParada - 1).replaceAll("h", "")));
 
@@ -247,14 +247,10 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 
 				valorParada = colunasComponente.get(2).text().indexOf("cr)");
 				valorParada2 = colunasComponente.get(2).text().indexOf("lab");
-				//aux = colunasComponente.get(2).text().substring(valorParada + 4, valorParada2 - 1).replaceAll("h", "");
-				//chPratica = Integer.parseInt(aux);
-				disciplina.setChPratica(trasnformaStringInteger(colunasComponente.get(2).text().substring(valorParada + 4, valorParada2 - 1).replaceAll("h", "")));
+				disciplina.setChPratica(trasnformaStringInteger(colunasComponente.get(2).text()
+						.substring(valorParada + 4, valorParada2 - 1).replaceAll("h", "")));
 			} else {
 				valorParada2 = colunasComponente.get(2).text().indexOf("lab");
-				// aux = colunasComponente.get(2).text().substring(valorParada +
-				// 5, valorParada2 - 1).replaceAll("h", "");
-				// chPratica = Integer.parseInt(aux);
 				disciplina.setChPratica(trasnformaStringInteger(colunasComponente.get(2).text()
 						.substring(valorParada + 5, valorParada2 - 1).replaceAll("h", "")));
 			}
@@ -267,7 +263,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	}
 
 	private void adicionarIntegracaoCurricular(Disciplina disciplina, int periodoOferta, String natureza,
-			String preRequisitos, String equivalencias, String coRequisitos) {
+		String preRequisitos, String equivalencias, String coRequisitos) {
 		IntegracaoCurricular integracaoCurricular = new IntegracaoCurricular();
 		integracaoCurricular.setDisciplina(disciplina);
 		integracaoCurricular.setEstruturaCurricular(estruturaCurricular);
