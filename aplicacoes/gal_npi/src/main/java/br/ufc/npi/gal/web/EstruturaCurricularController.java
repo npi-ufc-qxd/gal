@@ -178,5 +178,15 @@ public class EstruturaCurricularController {
 
 		return "redirect:/curso/" + idCurso + "/visualizar";
 	}
+	
+	@RequestMapping(value="curso/{idCurso}/estrutura/{id}/relatorioGeral", method = RequestMethod.GET)
+	public String relatorioGeralEstruturaCurricular (@PathVariable("id") Integer id, ModelMap modelMap){
+		EstruturaCurricular estruturaCurricular = estruturaCurricularService.find(EstruturaCurricular.class, id);
+		if(estruturaCurricular == null){
+			return "redirect:/disciplina/listar";
+		}
+		modelMap.addAttribute("estrutura", estruturaCurricular);
+		return "curso/estrutura/relatorioGeral";
+	}
 
 }
