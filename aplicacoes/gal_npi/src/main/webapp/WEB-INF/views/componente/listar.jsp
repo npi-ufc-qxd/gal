@@ -60,7 +60,7 @@
 				<datatables:table id="disciplinaTable" data="${componentes}" cdn="false"
 					row="componente" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 3 4" default-sort="0 asc">
 					<datatables:column title="Nome">
-						<a class="adark" href="<c:url value="/componentes/${componente.id }/visualizar" ></c:url>" ><c:out value="${componente.nome}"></c:out></a>
+						<a class="adark" href="<c:url value="/componente/${componente.id }/visualizar" ></c:url>" ><c:out value="${componente.nome}"></c:out></a>
 					</datatables:column>
 			
 					<datatables:column title="Codigo">
@@ -94,7 +94,7 @@
 			</sec:authorize>
 			<sec:authorize access="!hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 				<datatables:table id="disciplinaTable" data="${componentes}" cdn="false"
-					row="componente" theme="bootstrap2" cssClass="table table-striped table-orderable" default-sort="0 asc">
+					row="componente" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 3 4" default-sort="0 asc">
 					
 					<datatables:column title="Nome">
 						<a class="adark" href="<c:url value="/componente/${componente.id }/visualizar" ></c:url>" ><c:out value="${componente.nome}"></c:out></a>
@@ -124,7 +124,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">Excluir</div>
-				<div class="modal-body">Tem certeza de que deseja excluir este
+				<div class="modal-body">Tem certeza de que deseja excluir esse
 					componente curricular?</div>
 				<div class="modal-footer">
 					<a href="#" class="btn btn-danger">Excluir</a>
