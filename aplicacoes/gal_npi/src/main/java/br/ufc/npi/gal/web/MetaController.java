@@ -28,10 +28,10 @@ import br.ufc.npi.gal.model.DetalheMetaCalculada;
 import br.ufc.npi.gal.model.Meta;
 import br.ufc.npi.gal.model.MetaForm;
 import br.ufc.npi.gal.model.Titulo;
-import br.ufc.npi.gal.model.Disciplina;
+import br.ufc.npi.gal.model.ComponenteCurricular;
 import br.ufc.npi.gal.service.CalculoMetaService;
 import br.ufc.npi.gal.service.CursoService;
-import br.ufc.npi.gal.service.DisciplinaService;
+import br.ufc.npi.gal.service.ComponenteCurricularService;
 import br.ufc.npi.gal.service.MetaCalculada;
 import br.ufc.npi.gal.service.MetaService;
 import br.ufc.npi.gal.service.ResultadoCalculo;
@@ -54,16 +54,16 @@ public class MetaController {
 	private MetaService metaService;
 
 	@Inject
-	private DisciplinaService disciplinaService;
+	private ComponenteCurricularService componenteCurricularService;
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(ModelMap modelMap) {
 
 		modelMap.addAttribute("resultados", calculo.gerarCalculo());
 		modelMap.addAttribute("cursos", cursoService.find(Curso.class));
-		modelMap.addAttribute("disciplinas", disciplinaService.getTodasDisciplinas());
+		modelMap.addAttribute("componentes", componenteCurricularService.getTodosComponenteCurricular());
 		modelMap.addAttribute("idCurso", -1);
-		modelMap.addAttribute("idDisciplina", -1);
+		modelMap.addAttribute("idComponente", -1);
 
 		return "meta/listar";
 	}
@@ -73,7 +73,7 @@ public class MetaController {
 			RedirectAttributes redirectAttributes) {
 
 		List<Curso> cursos = cursoService.find(Curso.class);
-		List<Disciplina> disciplinas = disciplinaService.getTodasDisciplinas();
+		List<ComponenteCurricular> componenteCurriculares = componenteCurricularService.getTodosComponenteCurricular();
 		List<ResultadoCalculo> resultados = calculo.gerarCalculo();
 		Curso curso = cursoService.find(Curso.class, id);
 
@@ -117,22 +117,22 @@ public class MetaController {
 		}
 
 		modelMap.addAttribute("idCurso", curso.getId());
-		modelMap.addAttribute("idDisciplina", -1);
+		modelMap.addAttribute("idComponente", -1);
 		modelMap.addAttribute("cursos", cursos);
-		modelMap.addAttribute("disciplinas", disciplinas);
+		modelMap.addAttribute("componentes", componenteCurriculares);
 		modelMap.addAttribute("resultados", resultadosCurso);
 
 		return "meta/listar";
 
 	}
 
-	@RequestMapping(value = "/disciplina/{id}/listar", method = RequestMethod.GET)
-	public String listarByDisciplina(@PathVariable("id") Integer id, ModelMap modelMap) {
+	@RequestMapping(value = "/componente/{id}/listar", method = RequestMethod.GET)
+	public String listarByComponenteCurricular(@PathVariable("id") Integer id, ModelMap modelMap) {
 
 		List<Curso> cursos = cursoService.find(Curso.class);
-		List<Disciplina> disciplinas = disciplinaService.getTodasDisciplinas();
+		List<ComponenteCurricular> componentesCurriculares = componenteCurricularService.getTodosComponenteCurricular();
 		List<ResultadoCalculo> resultados = calculo.gerarCalculo();
-		Disciplina disciplina = disciplinaService.find(Disciplina.class, id);
+		ComponenteCurricular componenteCurricular = componenteCurricularService.find(ComponenteCurricular.class, id);
 
 		List<ResultadoCalculo> resultadosCurso = new ArrayList<ResultadoCalculo>();
 		List<MetaCalculada> metasCalculadas;
@@ -144,7 +144,7 @@ public class MetaController {
 				boolean flag = false;
 				for (DetalheMetaCalculada detalhePar : metaCalculada.getDetalhePar()) {
 
-					if (detalhePar.getDisciplina().equals(disciplina.getNome())) {
+					if (detalhePar.getComponenteCurricular().equals(componenteCurricular.getNome())) {
 						flag = true;
 						break;
 
@@ -153,7 +153,7 @@ public class MetaController {
 				}
 				for (DetalheMetaCalculada detalheImpar : metaCalculada.getDetalheImpar()) {
 
-					if (detalheImpar.getDisciplina().equals(disciplina.getNome())) {
+					if (detalheImpar.getComponenteCurricular().equals(componenteCurricular.getNome())) {
 						flag = true;
 						break;
 
@@ -174,9 +174,9 @@ public class MetaController {
 		}
 
 		modelMap.addAttribute("idCurso", -1);
-		modelMap.addAttribute("idDisciplina", disciplina.getId());
+		modelMap.addAttribute("idComponente", componenteCurricular.getId());
 		modelMap.addAttribute("cursos", cursos);
-		modelMap.addAttribute("disciplinas", disciplinas);
+		modelMap.addAttribute("componentes", componentesCurriculares);
 		modelMap.addAttribute("resultados", resultadosCurso);
 
 		return "meta/listar";
@@ -288,7 +288,7 @@ public class MetaController {
 		CriaArquivoCsvETxt cria = new CriaArquivoCsvETxt();
 		BufferedWriter str = cria.abreFile("metaDetalhada_" + meta + ".csv");
 		DecimalFormat df = new DecimalFormat("#,###.0");
-		String linha = "Nome do Titulo; Isbn;Semestre;Curso;Disciplina;Código Disciplina;Semestre de Oferta;"
+		String linha = "Nome do Titulo; Isbn;Semestre;Curso;Componente;Código Componente;Semestre de Oferta;"
 				+ "Quantidade de Alunos;Tipo de Bibliografia;" + meta + ";Acervo;Deficit";
 		cria.escreveFile(str, linha);
 		List<DetalheMetaCalculada> metacalculada;
@@ -306,8 +306,8 @@ public class MetaController {
 				for (DetalheMetaCalculada detalheMetaCalculada : metacalculada) {
 					linha = "\"" + element.getTitulo().getNome() + "\";\"" + element.getTitulo().getIsbn()
 							+ "\";\"Impar\";\"" + detalheMetaCalculada.getCurso() + "\";\""
-							+ detalheMetaCalculada.getDisciplina() + "\";\""
-							+ detalheMetaCalculada.getCodigoDisciplina() + "\";\"" + detalheMetaCalculada.getSemestre()
+							+ detalheMetaCalculada.getComponenteCurricular() + "\";\""
+							+ detalheMetaCalculada.getCodigoComponenteCurricular() + "\";\"" + detalheMetaCalculada.getSemestre()
 							+ "\";\"" + detalheMetaCalculada.getQuantidadeAlunos() + "\";\""
 							+ detalheMetaCalculada.getTipoBibliografia() + "\";\""
 							+ df.format(detalheMetaCalculada.getCalculo()) + "\";\"" + element.getTitulo().getAcervo()
@@ -322,8 +322,8 @@ public class MetaController {
 				for (DetalheMetaCalculada detalheMetaCalculada : metacalculada) {
 					linha = "\"" + element.getTitulo().getNome() + "\";\"" + element.getTitulo().getIsbn()
 							+ "\";\"Par\";\"" + detalheMetaCalculada.getCurso() + "\";\""
-							+ detalheMetaCalculada.getDisciplina() + "\";\""
-							+ detalheMetaCalculada.getCodigoDisciplina() + "\";\"" + detalheMetaCalculada.getSemestre()
+							+ detalheMetaCalculada.getComponenteCurricular() + "\";\""
+							+ detalheMetaCalculada.getCodigoComponenteCurricular() + "\";\"" + detalheMetaCalculada.getSemestre()
 							+ "\";\"" + detalheMetaCalculada.getQuantidadeAlunos() + "\";\""
 							+ detalheMetaCalculada.getTipoBibliografia() + "\";\""
 							+ df.format(detalheMetaCalculada.getCalculo()) + "\";\"" + element.getTitulo().getAcervo()

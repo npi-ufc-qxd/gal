@@ -188,10 +188,9 @@ $( document ).ready(function() {
 		var data = {
 			basica : getItems('#drag-and-drop')[0],
 			complementar : getItems('#drag-and-drop')[1],
-			idDiciplina : $('#disciplinaId').val()
+			idComponente : $('#componenteId').val()
 		};
-
-		$.get('/' + getAppName() + '/disciplina/vincular', data);
+		$.get('/' + getAppName() + '/componente/vincular', data);
 	});
 
 	$('#drag-and-drop .sortable-list').sortable({
@@ -211,13 +210,13 @@ $( document ).ready(function() {
 		$(location).attr("href", newUrl);
 	});
 	
-	$("select#selecionaDisciplina").change(function() { 
+	$("select#selecionaComponente").change(function() { 
 		var option = $(this).val();
 
 		if(option == -1){
 			newUrl = "/" + getAppName() + "/meta/listar";
 		}else{
-			newUrl = "/" + getAppName() + "/meta/disciplina/"+(option)+"/listar";
+			newUrl = "/" + getAppName() + "/meta/componente/"+(option)+"/listar";
 		}
 
 
@@ -226,7 +225,7 @@ $( document ).ready(function() {
 	
 
 	$("#seleciona").val($("#idCurso").val());
-	$("#selecionaDisciplina").val($("#idDisciplina").val());
+	$("#selecionaComponente").val($("#idComponente").val());
 
 	
 	$(document).on("click", ".open-AddBookDialog", function() {
@@ -234,7 +233,7 @@ $( document ).ready(function() {
 		$(".modal-body #id").val(id);
 	});
 
-	$("#selectDisciplina").select2();
+	$("#selectComponente").select2();
 
 });
 
@@ -261,3 +260,22 @@ function getAppName() {
 	url = url.split("/");
 	return url[1];
 }
+
+/*mostra a quantidade de exemplares que um titulo possui*/
+$(".open-AddQtdExemplares").on("click", function() {
+	var acervo = $(this).data('id');
+	var mensagem;
+	if (acervo > 0) {
+		mensagem = "Esse título possui " + acervo + " exemplares, tem certeza de que deseja exclui-lo?";
+	} else {
+		mensagem = "Tem certeza de que deseja excluir esse título?";
+	}
+	$("#mensagem").text(mensagem);
+});
+
+/*mostra o codigo do exemplar ao tentar exclui-lo*/
+$(".open-CodigoExemplar").on("click", function() {
+	var codigo = $(this).data('id');
+	var mensagem = "Tem certeza de que deseja excluir o exemplar" + codigo + " ?";
+	$("#mensagem").text(mensagem);
+});

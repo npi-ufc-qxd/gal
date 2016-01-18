@@ -8,9 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -20,28 +17,30 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "disciplinas")
-public class Disciplina {
+@Table(name = "componentes")
+public class ComponenteCurricular {
 
 	@Id
-	@Column(name = "id_d")
+	@Column(name = "id_c")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
 	@NotEmpty(message = "Campo obrigatório")
 	@Column(name = "nome")
-	@Size(min = 5, message = "O nome deve ter no mínimo 5 caracteres")
+	@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù]{0,}", message = "O campo Nome não pode possuir caracteres especiais ou números.")
+	@Size(min = 6, message = "O nome deve ter no mínimo 6 caracteres")
 	private String nome;
 
 	@NotEmpty(message = "Campo obrigatório")
 	@Column(name = "cod_d")
 	@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù0-9]{0,}", message = "O campo código não pode possuir caracteres especiais.")
-	@Size(min = 5, max = 12, message = "O código deve ter entre 5 e 12 caracteres")
+	@Size(min = 6, max = 12, message = "O código deve ter entre 6 e 12 caracteres")
 	private String codigo;
 
-	@OneToMany(mappedBy = "disciplina", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "componente", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
 	private List<IntegracaoCurricular> curriculos;
 
-	@OneToMany(mappedBy = "disciplina", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "componente", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
 	private List<Bibliografia> bibliografias;
 
 	@Column(name = "ch_pratica")
@@ -63,7 +62,7 @@ public class Disciplina {
 		this.tipo = tipo;
 	}
 
-	public Disciplina() {
+	public ComponenteCurricular() {
 		this.codigo = "";
 		this.nome = "";
 	}
@@ -110,7 +109,7 @@ public class Disciplina {
 
 	@Override
 	public String toString() {
-		return "Disciplina [id=" + id + ", nome=" + nome + ", codigo=" + codigo + "]";
+		return "Componente [id=" + id + ", nome=" + nome + ", codigo=" + codigo + "]";
 	}
 
 	public Integer getChPratica() {
