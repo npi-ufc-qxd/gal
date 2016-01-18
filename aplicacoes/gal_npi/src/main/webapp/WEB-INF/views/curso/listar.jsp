@@ -116,7 +116,7 @@
 		role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog ">
 			<div class="modal-content">
-				<div class="modal-header">Adicionar disciplina</div>
+				<div class="modal-header">Adicionar componente curricular</div>
 				<div class="modal-body" style="text-align: center;">
 					<form:form servletRelativeAction="/integracao/adicionar"
 						method="get" modelAttribute="integracao" role="form"
@@ -124,17 +124,17 @@
 						<input type="hidden" name="id" id="id" value="" />
 						<div class="form-group">
 							<label class="control-label" style="font-size: 20px;">Adicionar
-								Disciplina</label>
+								Componente Curricular</label>
 						</div>
 
 						<div class="form-group">
-							<label for="disciplina" class="col-sm-2 control-label">Código
-								Disciplina</label>
+							<label for="componente" class="col-sm-2 control-label">Código
+								Componente Curricular</label>
 							<div class="col-sm-10">
-								<form:input id="disciplinaInput" class="form-control"
-									style="width: 150px;" placeholder="Código disciplina"
-									path="disciplina" required="true" />
-								<form:errors path="disciplina" cssClass="error" />
+								<form:input  class="form-control"
+									style="width: 150px;" placeholder="Código Componente Curricular"
+									path="componente" required="true" />
+								<form:errors path="componente" cssClass="error" />
 							</div>
 						</div>
 

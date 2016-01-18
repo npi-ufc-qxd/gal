@@ -15,13 +15,13 @@
 <body>
 	<div id="container" style="width: 1000px; margin: 0 auto;">
 		<jsp:include page="../fragments/header.jsp" />
-		<input id="disciplinaId" type="hidden" value="${disciplina.id}" />
+		<input id="componenteId" type="hidden" value="${componente.id}" />
 		<div id="center-wrapper">
 			<div id="drag-and-drop">
-				<p id="nomeDisciplina">${disciplina.codigo}-${disciplina.nome}</p>
+				<p id="nomeComponente">${componente.codigo}-${componente.nome}</p>
 				<p>
 					<a class="btn btn-success" id="btn-get"
-						href="<c:url value="/disciplina/listar" ></c:url>">Vincular</a>
+						href="<c:url value="/componente/listar" ></c:url>">Vincular</a>
 				</p>
 				<div class="column left first">
 					<label style="font-size: 16px;">Básica</label>

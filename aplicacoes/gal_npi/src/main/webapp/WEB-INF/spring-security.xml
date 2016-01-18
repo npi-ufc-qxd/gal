@@ -36,8 +36,8 @@
 		<intercept-url pattern="/curso/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
 		<intercept-url pattern="/curso/estrutura/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
 		
-		<intercept-url pattern="/disciplina/listar/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/disciplina/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
+		<intercept-url pattern="/componente/listar**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/componente/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
 		
 		<intercept-url pattern="/titulo/listar/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/titulo/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
