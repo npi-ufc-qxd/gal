@@ -22,13 +22,13 @@
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">Disciplinas<b class="caret"></b></a>
+					data-toggle="dropdown">Componentes Curriculares<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
-							<li><a href="<c:url value='/disciplina/adicionar'/>">Adicionar</a></li>
+							<li><a href="<c:url value='/componente/adicionar'/>">Adicionar</a></li>
 							<li class="divider"></li>
 						</sec:authorize>
-						<li><a href="<c:url value='/disciplina/listar'/>">Listar</a></li>
+						<li><a href="<c:url value='/componente/listar'/>">Listar</a></li>
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Cursos<b class="caret"></b></a>

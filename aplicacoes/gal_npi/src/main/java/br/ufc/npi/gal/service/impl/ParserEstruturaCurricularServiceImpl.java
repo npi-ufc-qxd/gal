@@ -16,11 +16,11 @@ import org.jsoup.select.Elements;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.ufc.npi.gal.model.Curso;
-import br.ufc.npi.gal.model.Disciplina;
+import br.ufc.npi.gal.model.ComponenteCurricular;
 import br.ufc.npi.gal.model.EstruturaCurricular;
 import br.ufc.npi.gal.model.IntegracaoCurricular;
 import br.ufc.npi.gal.service.CursoService;
-import br.ufc.npi.gal.service.DisciplinaService;
+import br.ufc.npi.gal.service.ComponenteCurricularService;
 import br.ufc.npi.gal.service.EstruturaCurricularService;
 import br.ufc.npi.gal.service.IntegracaoCurricularService;
 import br.ufc.npi.gal.service.ParserEstruturaCurricularService;
@@ -29,7 +29,7 @@ import br.ufc.npi.gal.service.ParserEstruturaCurricularService;
 public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurricularService {
 	private Document docFromHtml;
 	@Inject
-	private DisciplinaService disciplinaService;
+	private ComponenteCurricularService componenteService;
 	@Inject
 	private EstruturaCurricularService estruturaCurricluarService;
 	@Inject
@@ -42,7 +42,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		estruturaCurricular = new EstruturaCurricular();
 	}
 
-	@Override
 	public List<String> processarArquivo(Integer id) {
 		try {
 			List<String> statusParser = parserCurriculo(id);
@@ -55,7 +54,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		return null;
 	}
 
-	@Override
 	public boolean verificaConformidadeDocumeto(MultipartFile multipartFile, Integer id) throws IOException {
 		File fileHtml = new File("estrutura.html");
 		String nomeCurso = "";
@@ -225,47 +223,47 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 	 */
 	private void parserComponente(Elements colunasComponente, int periodoOferta) {
 
-		Disciplina disciplina = new Disciplina();
-		disciplina = disciplinaService.getDisciplinaByCodigo(colunasComponente.get(0).text());
+		ComponenteCurricular componente = new ComponenteCurricular();
+		componente = componenteService.getComponenteCurricularByCodigo(colunasComponente.get(0).text());
 		int chPratica, chTeorica;
 		String aux;
 
-		if (disciplina == null) {
+		if (componente == null) {
 			int valorParada, valorParada2 = 0;
 
-			disciplina = new Disciplina();
-			disciplina.setCodigo(colunasComponente.get(0).text());
+			componente = new ComponenteCurricular();
+			componente.setCodigo(colunasComponente.get(0).text());
 			valorParada = colunasComponente.get(1).text().indexOf(" - ");
 			System.out.println(colunasComponente.get(1).text().substring(0, valorParada));
-			disciplina.setNome(removeAcentos(colunasComponente.get(1).text().substring(0, valorParada)));
-			disciplina.setTipo(tipoDisciplina(colunasComponente.get(3).text()));
+			componente.setNome(removeAcentos(colunasComponente.get(1).text().substring(0, valorParada)));
+			componente.setTipo(tipoComponente(colunasComponente.get(3).text()));
 			valorParada = colunasComponente.get(2).text().indexOf("aula");
-			disciplina.setChTeorica(trasnformaStringInteger(
+			componente.setChTeorica(trasnformaStringInteger(
 					colunasComponente.get(2).text().substring(0, valorParada - 1).replaceAll("h", "")));
 
 			if ((colunasComponente.get(3).text().equals("DISCIPLINA"))) {
 
 				valorParada = colunasComponente.get(2).text().indexOf("cr)");
 				valorParada2 = colunasComponente.get(2).text().indexOf("lab");
-				disciplina.setChPratica(trasnformaStringInteger(colunasComponente.get(2).text()
-						.substring(valorParada + 4, valorParada2 - 1).replaceAll("h", "")));
+				componente.setChPratica(trasnformaStringInteger(colunasComponente.get(2).text().substring(valorParada + 4, valorParada2 - 1).replaceAll("h", "")));
 			} else {
 				valorParada2 = colunasComponente.get(2).text().indexOf("lab");
-				disciplina.setChPratica(trasnformaStringInteger(colunasComponente.get(2).text()
+				componente.setChPratica(trasnformaStringInteger(colunasComponente.get(2).text()
 						.substring(valorParada + 5, valorParada2 - 1).replaceAll("h", "")));
 			}
-			disciplinaService.save(disciplina);
+			componenteService.save(componente);
 
 		}
-		adicionarIntegracaoCurricular(disciplina, periodoOferta, colunasComponente.get(4).text(),
+		adicionarIntegracaoCurricular(componente, periodoOferta, colunasComponente.get(4).text(),
 				colunasComponente.get(5).text(), colunasComponente.get(6).text(), colunasComponente.get(7).text());
 
 	}
 
-	private void adicionarIntegracaoCurricular(Disciplina disciplina, int periodoOferta, String natureza,
-		String preRequisitos, String equivalencias, String coRequisitos) {
+
+	private void adicionarIntegracaoCurricular(ComponenteCurricular componente, int periodoOferta, String natureza,
+			String preRequisitos, String equivalencias, String coRequisitos) {
 		IntegracaoCurricular integracaoCurricular = new IntegracaoCurricular();
-		integracaoCurricular.setDisciplina(disciplina);
+		integracaoCurricular.setComponente(componente);
 		integracaoCurricular.setEstruturaCurricular(estruturaCurricular);
 		integracaoCurricular.setNatureza(naturezaIntegracao(natureza));
 		integracaoCurricular.setSemestreOferta(periodoOferta);
@@ -281,14 +279,14 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 		}
 	}
 
-	private String tipoDisciplina(String tipoDisciplina) {
-		if (tipoDisciplina.equals("DISCIPLINA")) {
+	private String tipoComponente(String tipoComponente) {
+		if (tipoComponente.equals("DISCIPLINA")) {
 			return "DISCIPLINA";
-		} else if (tipoDisciplina.equals("ATIVIDADES COMPLEMENTARES")) {
+		} else if (tipoComponente.equals("ATIVIDADES COMPLEMENTARES")) {
 			return "ATIVIDADES COMPLEMENTARES";
-		} else if (tipoDisciplina.equals("ESTÁGIO")) {
+		} else if (tipoComponente.equals("ESTÁGIO")) {
 			return "ESTAGIO";
-		} else if (tipoDisciplina.equals("TRABALHO DE CONCLUSÃO DE CURSO")) {
+		} else if (tipoComponente.equals("TRABALHO DE CONCLUSÃO DE CURSO")) {
 			return "TCC";
 		}
 		return "";

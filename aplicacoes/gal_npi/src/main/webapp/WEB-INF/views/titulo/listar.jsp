@@ -74,8 +74,9 @@
 					</datatables:column>
 			
 					<datatables:column title="Excluir">
-						<a id="excluir" class="btn btn-danger" data-toggle="modal"
-							data-target="#confirm-delete" href="#"
+						<a id="excluir" class="open-AddQtdExemplares btn btn-danger"
+							data-toggle="modal" data-target="#confirm-delete" href="#"
+							data-id="${titulo.acervo}"
 							data-href="<c:url value="/titulo/${titulo.id}/excluir" ></c:url>">
 							<span class="glyphicon glyphicon-trash"></span>
 						</a>
@@ -123,8 +124,9 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">Excluir</div>
-				<div class="modal-body">Tem certeza de que deseja excluir esse
-					título?</div>
+				<div class="modal-body">
+					<p id="mensagem"></p>
+				</div>
 				<div class="modal-footer">
 					<a href="#" class="btn btn-danger">Excluir</a>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
