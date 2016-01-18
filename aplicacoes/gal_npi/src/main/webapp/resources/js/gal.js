@@ -260,7 +260,6 @@ function getAppName() {
 	url = url.split("/");
 	return url[1];
 }
-<<<<<<< HEAD
 
 /*mostra a quantidade de exemplares que um titulo possui*/
 $(".open-AddQtdExemplares").on("click", function() {
@@ -277,8 +276,6 @@ $(".open-AddQtdExemplares").on("click", function() {
 /*mostra o codigo do exemplar ao tentar exclui-lo*/
 $(".open-CodigoExemplar").on("click", function() {
 	var codigo = $(this).data('id');
-	var mensagem = "Tem certeza de que deseja excluir o exemplar" + codigo + " ?";
+	var mensagem = "Tem certeza de que deseja excluir o exemplar " + codigo + " ?";
 	$("#mensagem").text(mensagem);
 });
-=======
->>>>>>> refs/remotes/origin/master
