@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -27,8 +28,8 @@ public class IntegracaoCurricular {
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "id_disciplina")
-	private Disciplina disciplina;
+	@JoinColumn(name = "id_componente")
+	private ComponenteCurricular componente;
 
 	@Column(name = "qtd_alunos")
 	private Integer quantidadeAlunos;
@@ -65,13 +66,13 @@ public class IntegracaoCurricular {
 	public void setEstruturaCurricular(EstruturaCurricular estruturaCurricular) {
 		this.estruturaCurricular = estruturaCurricular;
 	}
-
-	public Disciplina getDisciplina() {
-		return disciplina;
+	
+	public ComponenteCurricular getComponente() {
+		return componente;
 	}
 
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
+	public void setComponente(ComponenteCurricular componente) {
+		this.componente = componente;
 	}
 
 	public Integer getQuantidadeAlunos() {
@@ -92,8 +93,9 @@ public class IntegracaoCurricular {
 
 	@Override
 	public String toString() {
-		return "IntegracaoCurricular [estruturaCurricular=" + estruturaCurricular + ", disciplina=" + disciplina
+		return "IntegracaoCurricular [estruturaCurricular=" + estruturaCurricular + ", disciplina=" + componente
 				+ ", quantidadeAlunos=" + quantidadeAlunos + ", semestreOferta=" + semestreOferta + ", observacoes=" +observacoes+ "]";
+
 	}
 
 }
