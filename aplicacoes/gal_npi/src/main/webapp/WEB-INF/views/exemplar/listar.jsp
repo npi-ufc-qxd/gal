@@ -63,11 +63,11 @@
 		
 					<datatables:column title="Excluir">
 						<a id="excluir" class="open-CodigoExemplar btn btn-danger" 
-+							data-toggle="modal" data-target="#confirm-delete" href="#"
-+							data-id="${exemplar.codigoExemplar}"
-+							data-href="<c:url value="/exemplar/${exemplar.id}/excluir" ></c:url>">
- 							<span class="glyphicon glyphicon-trash"></span>
- 						</a>
+							data-toggle="modal" data-target="#confirm-delete" href="#"
+							data-id="${exemplar.codigoExemplar}"
+							data-href="<c:url value="/exemplar/${exemplar.id}/excluir" ></c:url>">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
 					</datatables:column>
 				</sec:authorize>
 			</datatables:table>
@@ -75,7 +75,7 @@
 
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
-	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" 
 		aria-labelledby="myModalLabel" aria-hidden="true">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
