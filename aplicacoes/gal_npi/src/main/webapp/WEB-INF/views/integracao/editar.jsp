@@ -17,41 +17,24 @@
 			modelAttribute="integracao" role="form" class="form-horizontal">
 			
 			<form:input path="estruturaCurricular.id" type="hidden" />
-			<form:input path="disciplina.id" type="hidden" />
+			<form:input path="componente.id" type="hidden" />
 						
 			<div class="form-group">
 				<label class="control-label" style="font-size: 20px;">Editar
 					Vinculo</label>
 			</div>
-			
+
 			<div class="form-group">
-				<label class="control-label" style="font-size: 16px;">${integracao.disciplina.codigo}
-				 - ${integracao.disciplina.nome}</label>
-			</div>
-			
-			<div class="form-group">
-				<label for="semestreOferta" class="col-sm-2 control-label">Semestre
-					oferta</label>
+				<label for="componente.codigo" class="col-sm-2 control-label">Código
+					Componente Curricular</label>
 				<div class="col-sm-10">
-					<form:input id="semestreOferta" class="form-control numeros"
-						placeholder="Semestre oferta"
-						path="semestreOferta" maxlength="2" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
-						required="true" />
-					<form:errors path="semestreOferta" cssClass="error" />
+					<form:input id="componente.codigo" class="form-control"
+						placeholder="Código componente curricular" disabled="true"
+						path="componente.codigo" required="true" /> 
+					<form:errors path="componente" cssClass="error" /> 
 				</div>
 			</div>
-			
-			<div class="form-group">
-				<label for="natureza" class="col-sm-2 control-label">Natureza</label>
-				<div class="col-sm-10">
-					<form:select path="natureza" class="form-control">
-						<form:option value="OBRIGATORIA">Obrigatória</form:option>
-						<form:option value="OPTATIVA">Optativa</form:option>
-					</form:select>
-					<form:errors path="natureza" cssClass="error" />
-				</div>
-			</div>
-			
+
 			<div class="form-group">
 				<label for="quantidadeAlunos" class="col-sm-2 control-label">Quantidade
 					alunos</label>
@@ -63,6 +46,20 @@
 					<form:errors path="quantidadeAlunos" cssClass="error" />
 				</div>
 			</div>
+
+			<div class="form-group">
+				<label for="semestreOferta" class="col-sm-2 control-label">Semestre
+					oferta</label>
+				<div class="col-sm-10">
+					<form:input id="semestreOferta" class="form-control numeros"
+						placeholder="Semestre oferta"
+						path="semestreOferta" maxlength="2" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
+						required="true" />
+					<form:errors path="semestreOferta" cssClass="error" />
+				</div>
+			</div>
+
+
 
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit"
