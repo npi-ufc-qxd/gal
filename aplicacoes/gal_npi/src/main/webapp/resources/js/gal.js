@@ -6,67 +6,6 @@ $( document ).ready(function() {
 		format: "dd/mm/yyyy",
 	});
 	
-	$('#tituloTable').dataTable({
-		iDisplayLength: 25,
-		sPaginationType : "full_numbers",
-		oLanguage : {
-			"sEmptyTable" : "Nenhum registro encontrado",
-			"sInfo" : "Mostrando _START_ até _END_ de _TOTAL_ registros",
-			"sInfoEmpty" : "Mostrar 0 até 0 de 0 Registros",
-			"sInfoFiltered" : "(Filtrar de _MAX_ total registros)",
-			"sInfoPostFix" : "",
-			"sInfoThousands" : ".",
-			"sLengthMenu" : "Mostrar _MENU_ registros por página",
-			"sLoadingRecords" : "Carregando...",
-			"sProcessing" : "Processando...",
-			"sZeroRecords" : "Nenhum registro encontrado",
-			"sSearch" : "Pesquisar: ",
-			"oPaginate" : {
-				"sNext" : "Próximo",
-				"sPrevious" : "Anterior",
-				"sFirst" : "Primeiro",
-				"sLast" : "Último"
-			},
-			"oAria" : {
-				"sSortAscending" : ": Ordenar colunas de forma ascendente",
-				"sSortDescending" : ": Ordenar colunas de forma descendente"
-			}
-		},
-		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 3,4,5 ] }],
-		"bDestroy": true
-	})
-	
-	$('#resultadoTable').dataTable({
-		iDisplayLength: 25,
-		sPaginationType : "full_numbers",
-		oLanguage : {
-			"sEmptyTable" : "Nenhum registro encontrado",
-			"sInfo" : "Mostrando _START_ até _END_ de _TOTAL_ registros",
-			"sInfoEmpty" : "Mostrar 0 até 0 de 0 Registros",
-			"sInfoFiltered" : "(Filtrar de _MAX_ total registros)",
-			"sInfoPostFix" : "",
-			"sInfoThousands" : ".",
-			"sLengthMenu" : "Mostrar _MENU_ registros por página",
-			"sLoadingRecords" : "Carregando...",
-			"sProcessing" : "Processando...",
-			"sZeroRecords" : "Nenhum registro encontrado",
-			"sSearch" : "Pesquisar: ",
-			"oPaginate" : {
-				"sNext" : "Próximo",
-				"sPrevious" : "Anterior",
-				"sFirst" : "Primeiro",
-				"sLast" : "Último"
-			},
-			"oAria" : {
-				"sSortAscending" : ": Ordenar colunas de forma ascendente",
-				"sSortDescending" : ": Ordenar colunas de forma descendente"
-			}
-		},
-//		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 0,1 ] }],
-		"bDestroy": true
-	})
-
-
 	$('#resultadoParTable').dataTable( {
 		iDisplayLength: 25,
 		sPaginationType : "full_numbers",
@@ -206,7 +145,6 @@ $( document ).ready(function() {
 			newUrl = "/" + getAppName() + "/meta/"+(option)+"/listar";
 		}
 
-
 		$(location).attr("href", newUrl);
 	});
 	
@@ -218,7 +156,6 @@ $( document ).ready(function() {
 		}else{
 			newUrl = "/" + getAppName() + "/meta/componente/"+(option)+"/listar";
 		}
-
 
 		$(location).attr("href", newUrl);
 	});
