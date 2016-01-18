@@ -8,19 +8,19 @@ public class BibliografiaId implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
-	private Disciplina disciplina;
+	private ComponenteCurricular componente;
 
 	
 	private Titulo titulo;
 	
 	
 
-	public Disciplina getDisciplina() {
-		return disciplina;
+	public ComponenteCurricular getComponenteCurricular() {
+		return componente;
 	}
 
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
+	public void setComponenteCurricular(ComponenteCurricular componenteCurricular) {
+		this.componente = componenteCurricular;
 	}
 
 	public Titulo getTitulo() {
@@ -33,14 +33,14 @@ public class BibliografiaId implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return titulo.hashCode()+disciplina.hashCode();
+		return titulo.hashCode()+componente.hashCode();
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof BibliografiaId){
 			BibliografiaId bibliografiaId = (BibliografiaId) obj;
-			return bibliografiaId.disciplina.equals(disciplina) && bibliografiaId.titulo.equals(titulo);
+			return bibliografiaId.componente.equals(componente) && bibliografiaId.titulo.equals(titulo);
 		}
 		
 		return false;	
