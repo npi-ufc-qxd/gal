@@ -28,7 +28,6 @@ import br.ufc.npi.gal.model.DetalheMetaCalculada;
 import br.ufc.npi.gal.model.Meta;
 import br.ufc.npi.gal.model.MetaForm;
 import br.ufc.npi.gal.model.Titulo;
-import br.ufc.npi.gal.model.TipoTitulo;
 import br.ufc.npi.gal.model.ComponenteCurricular;
 import br.ufc.npi.gal.service.CalculoMetaService;
 import br.ufc.npi.gal.service.CursoService;
@@ -63,7 +62,6 @@ public class MetaController {
 		modelMap.addAttribute("resultados", calculo.gerarCalculo());
 		modelMap.addAttribute("cursos", cursoService.find(Curso.class));
 		modelMap.addAttribute("componentes", componenteCurricularService.getTodosComponenteCurricular());
-		//modelMap.addAttribute("tipoTituloVirtual", TipoTitulo.);
 		modelMap.addAttribute("idCurso", -1);
 		modelMap.addAttribute("idComponente", -1);
 

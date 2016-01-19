@@ -18,7 +18,7 @@
 		<jsp:include page="../fragments/header.jsp" />
 
 		<input id="idCurso" type="hidden" value="${idCurso}" />
-		<input id="idDisciplina" type="hidden" value="${idComponente}" /> 
+		<input id="idComponente" type="hidden" value="${idComponente}" /> 
 
 		<select id="seleciona">
 			<option value="-1">Todos os Cursos</option>
@@ -54,7 +54,6 @@
 		<div style="text-align: center;">
 			<label class="control-label" style="font-size: 20px; margin-top: 25px">Metas</label>
 			<br>
-			${tipoTituloVirtual}
 		</div>
 
 		<c:if test="${empty resultados}">
@@ -85,7 +84,7 @@
 
 					<datatables:column title="Déficit" cssCellStyle="background-color:${indice.count%2==0 ? '#EAEBFF' : '#D3D6FF'};">
 						<c:choose>
-							<c:when test="${resultado.titulo.tipo == tipoTituloVirtual}">
+							<c:when test="${resultado.titulo.tipo == 'Virtual'}">
 								<c:out value="0"></c:out>
 							</c:when>
 							<c:otherwise>
