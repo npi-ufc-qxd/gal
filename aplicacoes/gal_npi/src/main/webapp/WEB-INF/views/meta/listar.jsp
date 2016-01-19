@@ -28,7 +28,7 @@
 		</select>
 		
 		<select id="selecionaDisciplina">
-			<option value="-1">Todas os Componentes</option>
+			<option value="-1">Todos os Componentes</option>
 			<c:forEach items="${componentes}" var="componente">
 				<option value="${componente.id}">${componente.nome}</option>
 			</c:forEach>
