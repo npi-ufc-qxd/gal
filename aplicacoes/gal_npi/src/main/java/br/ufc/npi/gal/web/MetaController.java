@@ -28,12 +28,8 @@ import br.ufc.npi.gal.model.DetalheMetaCalculada;
 import br.ufc.npi.gal.model.Meta;
 import br.ufc.npi.gal.model.MetaForm;
 import br.ufc.npi.gal.model.Titulo;
-<<<<<<< HEAD
 import br.ufc.npi.gal.model.TipoTitulo;
-import br.ufc.npi.gal.model.Disciplina;
-=======
 import br.ufc.npi.gal.model.ComponenteCurricular;
->>>>>>> refs/heads/master
 import br.ufc.npi.gal.service.CalculoMetaService;
 import br.ufc.npi.gal.service.CursoService;
 import br.ufc.npi.gal.service.ComponenteCurricularService;
