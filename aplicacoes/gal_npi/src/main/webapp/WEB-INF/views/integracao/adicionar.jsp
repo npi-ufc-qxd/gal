@@ -46,6 +46,19 @@
 					<form:errors path="componente" cssClass="error" />
 				</div>
 			</div>
+			
+			<div class="form-group">
+				<label for="semestreOferta" class="col-sm-2 control-label">Semestre oferta</label>
+				<div class="col-sm-10">
+					<form:select path="semestreOferta" class="form-control">
+						<c:forEach var="i" begin="1" end="${semestreMax}">
+							<form:option value="${i}">${i}º Semestre</form:option>
+						</c:forEach>
+					</form:select>
+					<form:errors path="semestreOferta" cssClass="error" />
+				</div>
+			</div>
+			
 			<div class="form-group">
 				<label for="natureza" class="col-sm-2 control-label">Natureza</label>
 				<div class="col-sm-10">

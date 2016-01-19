@@ -48,19 +48,19 @@
 		</c:if>
 		
 		<c:if test="${not empty exemplares}">
-			<datatables:table id="exemplarTable" data="${exemplares}" cdn="true"
-				row="exemplar" theme="bootstrap2" cssClass="table table-striped">
-				<datatables:column title="Codido do Exemplar">
-					<c:out value="${exemplar.codigoExemplar}"></c:out>
-				</datatables:column>
-				
-				<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+			<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+				<datatables:table id="exemplarTable" data="${exemplares}" cdn="true"
+					row="exemplar" theme="bootstrap2" cssClass="table table-striped">
+					<datatables:column title="Codido do Exemplar">
+						<c:out value="${exemplar.codigoExemplar}"></c:out>
+					</datatables:column>
+					
 					<datatables:column title="Editar">
 						<a class="btn btn-primary" href="<c:url value = "/exemplar/${exemplar.id}/editar"></c:url>">
 							<span class="glyphicon glyphicon-edit"></span>
 						</a>
 					</datatables:column>
-		
+			
 					<datatables:column title="Excluir">
 						<a id="excluir" class="open-CodigoExemplar btn btn-danger" 
 							data-toggle="modal" data-target="#confirm-delete" href="#"
@@ -69,8 +69,18 @@
 							<span class="glyphicon glyphicon-trash"></span>
 						</a>
 					</datatables:column>
-				</sec:authorize>
-			</datatables:table>
+				</datatables:table>
+			</sec:authorize>
+			<sec:authorize access="!hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+				<datatables:table id="exemplarTable" data="${exemplares}" cdn="true"
+					row="exemplar" theme="bootstrap2" cssClass="table table-striped">
+					
+					<datatables:column title="Codido do Exemplar">
+						<c:out value="${exemplar.codigoExemplar}"></c:out>
+					</datatables:column>
+					
+				</datatables:table>
+			</sec:authorize>
 		</c:if>
 
 		<jsp:include page="../fragments/footer.jsp" />

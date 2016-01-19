@@ -12,6 +12,7 @@
 <script src="<c:url value="/resources/js/jquery.fastLiveFilter.js" />"></script>
 <script src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
 <script src="<c:url value="/resources/js/sortable.js" />"></script>
+<script src="<c:url value="/resources/js/Sortable.js" />"></script> <!-- Nova biblioteca para manipulação de drag and drop -->
 <script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap-datepicker.pt-BR.js" />"></script>
 

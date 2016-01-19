@@ -216,7 +216,7 @@
 				<div class="modal-content">
 					<div class="modal-header">Excluir</div>
 					<div class="modal-body">Tem certeza de que deseja excluir
-						esse curso?</div>
+						essa estrutura curricular?</div>
 					<div class="modal-footer">
 						<a href="integracao/excluir" class="btn btn-danger">Excluir</a>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
