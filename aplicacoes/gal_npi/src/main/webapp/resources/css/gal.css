@@ -23,7 +23,6 @@ div#button-add {
 }
 
 /* Só sobrescreva classes default do bootstrap caso necessario */
-
 div.panel-heading {
 	padding-bottom: 44px;/* !important;*/
 }

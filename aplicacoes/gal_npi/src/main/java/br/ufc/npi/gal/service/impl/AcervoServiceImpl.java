@@ -83,7 +83,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 			Sheet sheet = workbook.getSheet(0);
 			int linhas = sheet.getRows();
 			ExemplarConflitante exemplarConflitante = new ExemplarConflitante();
-
+			
 			for (int i = 1; i < linhas; i++) {
 				
 				if(sheet.getCell(TIPO,i).getContents().equals("0")) {
