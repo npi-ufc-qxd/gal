@@ -73,7 +73,7 @@ ALTER SEQUENCE acervodocumento_id_ad_seq OWNED BY acervodocumento.id_ad;
 CREATE TABLE bibliografias (
     tipo_bibliografia character varying(255),
     id_titulo integer NOT NULL,
-    id_disciplina integer NOT NULL
+    id_componente integer NOT NULL
 );
 
 
@@ -161,11 +161,11 @@ ALTER SEQUENCE curso_id_crs_seq OWNED BY curso.id_crs;
 
 
 --
--- Name: disciplinas; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: componentes; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE disciplinas (
-    id_d integer NOT NULL,
+CREATE TABLE componentes (
+    id_c integer NOT NULL,
     ch_pratica integer NOT NULL,
     ch_teorica integer NOT NULL,
     cod_d character varying(12) NOT NULL,
@@ -174,13 +174,13 @@ CREATE TABLE disciplinas (
 );
 
 
-ALTER TABLE public.disciplinas OWNER TO postgres;
+ALTER TABLE public.componentes OWNER TO postgres;
 
 --
--- Name: disciplinas_id_d_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: componentes_id_c_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE disciplinas_id_d_seq
+CREATE SEQUENCE componentes_id_c_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -188,13 +188,13 @@ CREATE SEQUENCE disciplinas_id_d_seq
     CACHE 1;
 
 
-ALTER TABLE public.disciplinas_id_d_seq OWNER TO postgres;
+ALTER TABLE public.componentes_id_c_seq OWNER TO postgres;
 
 --
--- Name: disciplinas_id_d_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: componentes_id_c_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE disciplinas_id_d_seq OWNED BY disciplinas.id_d;
+ALTER SEQUENCE componentes_id_c_seq OWNED BY componentes.id_c;
 
 
 --
@@ -286,7 +286,7 @@ CREATE TABLE integracao_curricular (
     qtd_alunos integer,
     semestre_oferta integer,
     id_curriculo integer NOT NULL,
-    id_disciplina integer NOT NULL
+    id_componente integer NOT NULL
 );
 
 
@@ -417,10 +417,10 @@ ALTER TABLE ONLY curso ALTER COLUMN id_crs SET DEFAULT nextval('curso_id_crs_seq
 
 
 --
--- Name: id_d; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_c; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY disciplinas ALTER COLUMN id_d SET DEFAULT nextval('disciplinas_id_d_seq'::regclass);
+ALTER TABLE ONLY componentes ALTER COLUMN id_c SET DEFAULT nextval('componentes_id_c_seq'::regclass);
 
 
 --
@@ -477,7 +477,7 @@ SELECT pg_catalog.setval('acervodocumento_id_ad_seq', 1, false);
 -- Data for Name: bibliografias; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY bibliografias ( id_disciplina , id_titulo,tipo_bibliografia) FROM stdin;
+COPY bibliografias ( id_componente , id_titulo,tipo_bibliografia) FROM stdin;
 6	44	Complementar
 6	36	Complementar
 6	42	Complementar
@@ -2484,10 +2484,10 @@ SELECT pg_catalog.setval('curso_id_crs_seq', 1, false);
 
 
 --
--- Data for Name: disciplinas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: componentes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY disciplinas (id_d, cod_d, nome ,ch_pratica , ch_teorica, tipo) FROM stdin;
+COPY componentes (id_c, cod_d, nome ,ch_pratica , ch_teorica, tipo) FROM stdin;
 1	QXD0108	INTRODUÇÃO À CIÊNCIA DA COMPUTAÇÃO	0	0	0
 2	QXD0001	FUNDAMENTOS DE PROGRAMAÇÃO	0	0	0
 3	QXD0002	INTRODUÇÃO A CIÊNCIA DA COMPUTAÇÃO E SISTEMAS DE INFORMAÇÃO	0	0	0
@@ -2698,10 +2698,10 @@ COPY disciplinas (id_d, cod_d, nome ,ch_pratica , ch_teorica, tipo) FROM stdin;
 
 
 --
--- Name: disciplinas_id_d_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: componentes_id_c_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('disciplinas_id_d_seq', 1, false);
+SELECT pg_catalog.setval('componentes_id_c_seq', 1, false);
 
 
 --
@@ -9153,7 +9153,7 @@ SELECT pg_catalog.setval('exemplares_id_e_seq', 1, false);
 -- Data for Name: integracao_curricular; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY integracao_curricular (id_disciplina, id_curriculo, qtd_alunos,  semestre_oferta , natureza) FROM stdin;
+COPY integracao_curricular (id_componente, id_curriculo, qtd_alunos,  semestre_oferta , natureza) FROM stdin;
 7	1	50	2	0
 9	1	50	2	0
 6	1	50	2	0
@@ -10954,7 +10954,7 @@ ALTER TABLE ONLY acervodocumento
 --
 
 ALTER TABLE ONLY bibliografias
-    ADD CONSTRAINT bibliografias_pkey PRIMARY KEY (id_disciplina, id_titulo);
+    ADD CONSTRAINT bibliografias_pkey PRIMARY KEY (id_componente, id_titulo);
 
 
 --
@@ -10974,11 +10974,11 @@ ALTER TABLE ONLY curso
 
 
 --
--- Name: disciplinas_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: componentes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY disciplinas
-    ADD CONSTRAINT disciplinas_pkey PRIMARY KEY (id_d);
+ALTER TABLE ONLY componentes
+    ADD CONSTRAINT componentes_pkey PRIMARY KEY (id_c);
 
 
 --
@@ -11002,7 +11002,7 @@ ALTER TABLE ONLY exemplares
 --
 
 ALTER TABLE ONLY integracao_curricular
-    ADD CONSTRAINT integracao_curricular_pkey PRIMARY KEY (id_disciplina, id_curriculo);
+    ADD CONSTRAINT integracao_curricular_pkey PRIMARY KEY (id_componente, id_curriculo);
 
 
 --
@@ -11058,7 +11058,7 @@ ALTER TABLE ONLY usuario
 --
 
 ALTER TABLE ONLY integracao_curricular
-    ADD CONSTRAINT fk_1tmxfs9ljri58klhitjb5feg4 FOREIGN KEY (id_disciplina) REFERENCES disciplinas(id_d);
+    ADD CONSTRAINT fk_1tmxfs9ljri58klhitjb5feg4 FOREIGN KEY (id_componente) REFERENCES componentes(id_c);
 
 
 --
@@ -11113,10 +11113,12 @@ ALTER TABLE ONLY bibliografias
 --
 
 ALTER TABLE ONLY bibliografias
-    ADD CONSTRAINT fk_t7xao48bkov9y3lfmc42v697y FOREIGN KEY (id_disciplina) REFERENCES disciplinas(id_d);
+    ADD CONSTRAINT fk_t7xao48bkov9y3lfmc42v697y FOREIGN KEY (id_componente) REFERENCES componentes(id_c);
 
 
-UPDATE disciplinas set tipo='DISCIPLINA';
+UPDATE componentes set tipo='DISCIPLINA';
+
+UPDATE integracao_curricular set natureza='Obrigatória';
 
 
 --
