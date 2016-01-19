@@ -10,7 +10,7 @@ public class IntegracaoCurricularId implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private EstruturaCurricular estruturaCurricular;
-	private Disciplina disciplina;
+	private ComponenteCurricular componente;
 	
 	
 	
@@ -21,24 +21,24 @@ public class IntegracaoCurricularId implements Serializable{
 	public void setEstruturaCurricular(EstruturaCurricular estruturaCurricular) {
 		this.estruturaCurricular = estruturaCurricular;
 	}
-	public Disciplina getDisciplina() {
-		return disciplina;
+	public ComponenteCurricular getComponenteCurricular() {
+		return componente;
 	}
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
+	public void setComponenteCurricular(ComponenteCurricular componenteCurricular) {
+		this.componente = componenteCurricular;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	@Override
 	public int hashCode() {
-		return estruturaCurricular.hashCode()+disciplina.hashCode();
+		return estruturaCurricular.hashCode()+componente.hashCode();
 	}
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof IntegracaoCurricularId){
 			IntegracaoCurricularId integracaoId = (IntegracaoCurricularId) obj;
-			return integracaoId.disciplina.equals(disciplina) && integracaoId.estruturaCurricular.equals(estruturaCurricular);
+			return integracaoId.componente.equals(componente) && integracaoId.estruturaCurricular.equals(estruturaCurricular);
 		}	
 		return false;	
 	}

@@ -10,7 +10,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import br.ufc.npi.gal.model.Disciplina;
+import br.ufc.npi.gal.model.ComponenteCurricular;
 
 public class DisciplinaTeste {
 
@@ -22,16 +22,16 @@ public class DisciplinaTeste {
 
 	@Test
 	public void testeNomeVazio() {
-		Disciplina disciplina = new Disciplina();
-		disciplina.setNome("");
-		disciplina.setCodigo("QXD002");
+		ComponenteCurricular componenteCurricular = new ComponenteCurricular();
+		componenteCurricular.setNome("");
+		componenteCurricular.setCodigo("QXD002");
 		
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Disciplina>> constraintViolations = validator
-				.validate(disciplina);
+		Set<ConstraintViolation<ComponenteCurricular>> constraintViolations = validator
+				.validate(componenteCurricular);
 		
 		Assert.assertEquals(1, constraintViolations.size());
-		ConstraintViolation<Disciplina> violacao = constraintViolations.iterator()
+		ConstraintViolation<ComponenteCurricular> violacao = constraintViolations.iterator()
 				.next();
 		Assert.assertEquals(violacao.getMessage(), "Campo obrigatório");
 		Assert.assertEquals(violacao.getPropertyPath().toString(), "nome");
@@ -40,16 +40,16 @@ public class DisciplinaTeste {
 	
 	@Test
 	public void testeNomeNulo() {
-		Disciplina disciplina = new Disciplina();
-		disciplina.setNome(null);
-		disciplina.setCodigo("QXD002");
+		ComponenteCurricular componenteCurricular = new ComponenteCurricular();
+		componenteCurricular.setNome(null);
+		componenteCurricular.setCodigo("QXD002");
 		
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Disciplina>> constraintViolations = validator
-				.validate(disciplina);
+		Set<ConstraintViolation<ComponenteCurricular>> constraintViolations = validator
+				.validate(componenteCurricular);
 		
 		Assert.assertEquals(1, constraintViolations.size());
-		ConstraintViolation<Disciplina> violacao = constraintViolations.iterator()
+		ConstraintViolation<ComponenteCurricular> violacao = constraintViolations.iterator()
 				.next();
 		
 		Assert.assertEquals(violacao.getPropertyPath().toString(), "nome");
@@ -58,13 +58,13 @@ public class DisciplinaTeste {
 		
 	@Test
 	public void testeNomeComSeisEspacosNaoDeveriaPassar() {
-		Disciplina disciplina = new Disciplina();
-		disciplina.setNome("      ");
-		disciplina.setCodigo("QXD002");
+		ComponenteCurricular componenteCurricular = new ComponenteCurricular();
+		componenteCurricular.setNome("      ");
+		componenteCurricular.setCodigo("QXD002");
 		
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Disciplina>> constraintViolations = validator
-				.validate(disciplina);
+		Set<ConstraintViolation<ComponenteCurricular>> constraintViolations = validator
+				.validate(componenteCurricular);
 		
 		Assert.assertEquals(1, constraintViolations.size());
 		
@@ -73,16 +73,16 @@ public class DisciplinaTeste {
 	
 	@Test
 	public void testeNomeComCincoCaracteres() {
-		Disciplina disciplina = new Disciplina();
-		disciplina.setNome("Geren");
-		disciplina.setCodigo("QXD002");
+		ComponenteCurricular componenteCurricular = new ComponenteCurricular();
+		componenteCurricular.setNome("Geren");
+		componenteCurricular.setCodigo("QXD002");
 		
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Disciplina>> constraintViolations = validator
-				.validate(disciplina);
+		Set<ConstraintViolation<ComponenteCurricular>> constraintViolations = validator
+				.validate(componenteCurricular);
 		
 		Assert.assertEquals(1, constraintViolations.size());
-		ConstraintViolation<Disciplina> violacao = constraintViolations.iterator()
+		ConstraintViolation<ComponenteCurricular> violacao = constraintViolations.iterator()
 				.next();
 		Assert.assertEquals(violacao.getMessage(), "O nome deve ter no mínimo 6 caracteres");
 		Assert.assertEquals(violacao.getPropertyPath().toString(), "nome");
@@ -91,16 +91,16 @@ public class DisciplinaTeste {
 	
 	@Test
 	public void testeNomeComCaractereEspecial() {
-		Disciplina disciplina = new Disciplina();
-		disciplina.setNome("Gerenci@ de Projetos");
-		disciplina.setCodigo("QXD002");
+		ComponenteCurricular componenteCurricular = new ComponenteCurricular();
+		componenteCurricular.setNome("Gerenci@ de Projetos");
+		componenteCurricular.setCodigo("QXD002");
 		
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Disciplina>> constraintViolations = validator
-				.validate(disciplina);
+		Set<ConstraintViolation<ComponenteCurricular>> constraintViolations = validator
+				.validate(componenteCurricular);
 		
 		Assert.assertEquals(1, constraintViolations.size());
-		ConstraintViolation<Disciplina> violation = constraintViolations.iterator()
+		ConstraintViolation<ComponenteCurricular> violation = constraintViolations.iterator()
 				.next();
 		Assert.assertEquals(violation.getMessage(), "O campo Nome não pode possuir caracteres especiais ou números.");
 
@@ -108,16 +108,16 @@ public class DisciplinaTeste {
 	
 	@Test
 	public void testeNomeComNumero() {
-		Disciplina disciplina = new Disciplina();
-		disciplina.setNome("Gerenc7a de Projetos");
-		disciplina.setCodigo("QXD002");
+		ComponenteCurricular componenteCurricular = new ComponenteCurricular();
+		componenteCurricular.setNome("Gerenc7a de Projetos");
+		componenteCurricular.setCodigo("QXD002");
 		
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Disciplina>> constraintViolations = validator
-				.validate(disciplina);
+		Set<ConstraintViolation<ComponenteCurricular>> constraintViolations = validator
+				.validate(componenteCurricular);
 		
 		Assert.assertEquals(1, constraintViolations.size());
-		ConstraintViolation<Disciplina> violation = constraintViolations.iterator()
+		ConstraintViolation<ComponenteCurricular> violation = constraintViolations.iterator()
 				.next();
 		Assert.assertEquals(violation.getMessage(), "O campo Nome não pode possuir caracteres especiais ou números.");
 
@@ -126,16 +126,16 @@ public class DisciplinaTeste {
 
 	@Test
 	public void testeCodigoVazio(){
-		Disciplina disciplina = new Disciplina();
-		disciplina.setNome("Gerencia de Projetos");
-		disciplina.setCodigo("");
+		ComponenteCurricular componenteCurricular = new ComponenteCurricular();
+		componenteCurricular.setNome("Gerencia de Projetos");
+		componenteCurricular.setCodigo("");
 		
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Disciplina>> constraintViolations = validator
-				.validate(disciplina);
+		Set<ConstraintViolation<ComponenteCurricular>> constraintViolations = validator
+				.validate(componenteCurricular);
 		
 		Assert.assertEquals(1, constraintViolations.size());
-		ConstraintViolation<Disciplina> violation = constraintViolations.iterator()
+		ConstraintViolation<ComponenteCurricular> violation = constraintViolations.iterator()
 				.next();
 		Assert.assertEquals(violation.getMessage(), "Campo obrigatório");
 
@@ -144,13 +144,13 @@ public class DisciplinaTeste {
 
 	@Test
 	public void testeCodigoComSeisEspacos() {
-		Disciplina disciplina = new Disciplina();
-		disciplina.setNome("Gerencia");
-		disciplina.setCodigo("      ");
+		ComponenteCurricular componenteCurricular = new ComponenteCurricular();
+		componenteCurricular.setNome("Gerencia");
+		componenteCurricular.setCodigo("      ");
 		
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Disciplina>> constraintViolations = validator
-				.validate(disciplina);
+		Set<ConstraintViolation<ComponenteCurricular>> constraintViolations = validator
+				.validate(componenteCurricular);
 		
 		Assert.assertEquals(1, constraintViolations.size());
 		
@@ -158,13 +158,13 @@ public class DisciplinaTeste {
 	
 	@Test
 	public void testeCodigoNulo() {
-		Disciplina disciplina = new Disciplina();
-		disciplina.setNome("Gerencia");
-		disciplina.setCodigo(null);
+		ComponenteCurricular componenteCurricular = new ComponenteCurricular();
+		componenteCurricular.setNome("Gerencia");
+		componenteCurricular.setCodigo(null);
 		
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Disciplina>> constraintViolations = validator
-				.validate(disciplina);
+		Set<ConstraintViolation<ComponenteCurricular>> constraintViolations = validator
+				.validate(componenteCurricular);
 		
 		Assert.assertEquals(1, constraintViolations.size());
 		
@@ -172,16 +172,16 @@ public class DisciplinaTeste {
 	
 	@Test
 	public void testeCodigoComCaratereEspecial(){
-		Disciplina disciplina = new Disciplina();
-		disciplina.setNome("Gerencia de Projetos");
-		disciplina.setCodigo("QXD%02");
+		ComponenteCurricular componenteCurricular = new ComponenteCurricular();
+		componenteCurricular.setNome("Gerencia de Projetos");
+		componenteCurricular.setCodigo("QXD%02");
 		
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Disciplina>> constraintViolations = validator
-				.validate(disciplina);
+		Set<ConstraintViolation<ComponenteCurricular>> constraintViolations = validator
+				.validate(componenteCurricular);
 		
 		Assert.assertEquals(1, constraintViolations.size());
-		ConstraintViolation<Disciplina> violation = constraintViolations.iterator()
+		ConstraintViolation<ComponenteCurricular> violation = constraintViolations.iterator()
 				.next();
 		Assert.assertEquals(violation.getMessage(), "O campo código não pode possuir caracteres especiais.");
 
@@ -189,16 +189,16 @@ public class DisciplinaTeste {
 	
 	@Test
 	public void testeCodigoCom_5_Caracteres(){
-		Disciplina disciplina = new Disciplina();
-		disciplina.setNome("Gerencia de Projetos");
-		disciplina.setCodigo("QXD02");
+		ComponenteCurricular componenteCurricular = new ComponenteCurricular();
+		componenteCurricular.setNome("Gerencia de Projetos");
+		componenteCurricular.setCodigo("QXD02");
 		
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Disciplina>> constraintViolations = validator
-				.validate(disciplina);
+		Set<ConstraintViolation<ComponenteCurricular>> constraintViolations = validator
+				.validate(componenteCurricular);
 		
 		Assert.assertEquals(1, constraintViolations.size());
-		ConstraintViolation<Disciplina> violation = constraintViolations.iterator()
+		ConstraintViolation<ComponenteCurricular> violation = constraintViolations.iterator()
 				.next();
 		Assert.assertEquals(violation.getMessage(), "O código deve ter entre 6 e 12 caracteres");
 
@@ -206,16 +206,16 @@ public class DisciplinaTeste {
 	
 	@Test
 	public void testeCodigoCom_13_Caracteres(){
-		Disciplina disciplina = new Disciplina();
-		disciplina.setNome("Gerencia de Projetos");
-		disciplina.setCodigo("QXD1234567890");
+		ComponenteCurricular componenteCurricular = new ComponenteCurricular();
+		componenteCurricular.setNome("Gerencia de Projetos");
+		componenteCurricular.setCodigo("QXD1234567890");
 		
 		Validator validator = createValidator();
-		Set<ConstraintViolation<Disciplina>> constraintViolations = validator
-				.validate(disciplina);
+		Set<ConstraintViolation<ComponenteCurricular>> constraintViolations = validator
+				.validate(componenteCurricular);
 		
 		Assert.assertEquals(1, constraintViolations.size());
-		ConstraintViolation<Disciplina> violation = constraintViolations.iterator()
+		ConstraintViolation<ComponenteCurricular> violation = constraintViolations.iterator()
 				.next();
 		Assert.assertEquals(violation.getMessage(), "O código deve ter entre 6 e 12 caracteres");
 
