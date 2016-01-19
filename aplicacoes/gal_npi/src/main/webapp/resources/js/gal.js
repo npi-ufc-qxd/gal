@@ -1,8 +1,4 @@
 $( document ).ready(function() {
-	
-	document.onkeydown = function (e) { 
-		  console.erro("aqui");
-		};
 
 	$('.data').datepicker({
 		language: 'pt-BR',
@@ -97,6 +93,14 @@ $( document ).ready(function() {
 			"destroy": true
 		});
 	});
+	
+	$('#autor').on("keyup",function(){
+		 
+		document.getElementById("nome").value = document.getElementById("autor").value;
+		nome = nome + " " + autor;
+		console.error("aqui");
+	});
+
 	
 	$('#expandirTodosAccordions').click(function(){
 		$('.panel-collapse').collapse('show');

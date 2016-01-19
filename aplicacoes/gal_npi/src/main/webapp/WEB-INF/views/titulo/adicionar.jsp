@@ -28,7 +28,7 @@
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Autor</label>
 			    <div class="col-sm-10">
-			    	<form:input id="autor" class="form-control" placeholder="Autor" path="autor" />
+			    	<form:input id="autor" class="form-control" placeholder="Autor" path="autor"/>
 			    	<form:errors path="autor" cssClass="error" />
 			    </div>
 			</div>
@@ -36,7 +36,7 @@
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Título</label>
 			    <div class="col-sm-10">
-			    	<form:input id="titulo" class="form-control" placeholder="Titulo" path="titulo" />
+			    	<form:input id="titulo" class="form-control" placeholder="Titulo" path="titulo"/>
 			    	<form:errors path="titulo" cssClass="error" />
 			    </div>
 			</div>
@@ -52,7 +52,7 @@
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Sub titulo</label>
 			    <div class="col-sm-10">
-			    	<form:input id="sub_titulo" class="form-control" placeholder="Sub titulo" path="subTitulo"/>
+			    	<form:input id="sub_titulo" class="form-control" placeholder="Sub titulo" path="subTitulo" />
 			    	<form:errors path="subTitulo" cssClass="error" />
 			    </div>
 			</div>
@@ -60,7 +60,7 @@
 			<div class="form-group">
 			    <label for="isbn" class="col-sm-1 control-label">Isbn</label>
 			    <div class="col-sm-10">
-			    	<form:input id="isbn" class="form-control" placeholder="Isbn" path="isbn"/>
+			    	<form:input id="isbn" class="form-control" placeholder="Isbn" path="isbn" />
 			    	<form:errors path="isbn" cssClass="error" />
 			    </div>
 			</div>
@@ -68,7 +68,7 @@
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">titulo Revista</label>
 			    <div class="col-sm-10">
-			    	<form:input id="titulo_revista" class="form-control" placeholder="titulo Revista" path="tituloRevista"/>
+			    	<form:input id="titulo_revista" class="form-control" placeholder="titulo Revista" path="tituloRevista" />
 			    	<form:errors path="tituloRevista" cssClass="error" />
 			    </div>
 			</div>
@@ -76,7 +76,7 @@
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Paginas</label>
 			    <div class="col-sm-10">
-			    	<form:input id="pagina" class="form-control" placeholder="pagina" path="pagina"/>
+			    	<form:input id="pagina" class="form-control" placeholder="pagina" path="pagina" />
 			    	<form:errors path="pagina" cssClass="error" />
 			    </div>
 			</div>
@@ -84,7 +84,7 @@
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Ref Artigo</label>
 			    <div class="col-sm-10">
-			    	<form:input id="ref_artigo" class="form-control" placeholder="Ref Artigo" path="refArtigo"/>
+			    	<form:input id="ref_artigo" class="form-control" placeholder="Ref Artigo" path="refArtigo" />
 			    	<form:errors path="refArtigo" cssClass="error" />
 			    </div>
 			</div>
@@ -92,7 +92,7 @@
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Edicao</label>
 			    <div class="col-sm-10">
-			    	<form:input id="edicao" class="form-control" placeholder="Edicao" path="edicao"/>
+			    	<form:input id="edicao" class="form-control" placeholder="Edicao" path="edicao" />
 			    	<form:errors path="edicao" cssClass="error" />
 			    </div>
 			</div>
@@ -100,7 +100,7 @@
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Publicador</label>
 			    <div class="col-sm-10">
-			    	<form:input id="publicador" class="form-control" placeholder="Publicador" path="publicador"/>
+			    	<form:input id="publicador" class="form-control" placeholder="Publicador" path="publicador" />
 			    	<form:errors path="publicador" cssClass="error" />
 			    </div>
 			</div>

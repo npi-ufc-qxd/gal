@@ -194,13 +194,17 @@
 											<span class="glyphicon glyphicon-edit"></span>
 										</a>
 
+										
+									</datatables:column>
+									
+									<datatables:column title="excluir">
 										<a id="excluir" class="btn btn-danger" data-toggle="modal"
 											data-target="#confirm-delete" href="#"
 											data-href="<c:url value="/integracao/${integracao.componente.id}/${curriculo.id}/excluir" ></c:url>">
 											<span class="glyphicon glyphicon-trash"></span>
+								
 										</a>
 									</datatables:column>
-
 								</datatables:table>
 							</div>
 						</sec:authorize>
