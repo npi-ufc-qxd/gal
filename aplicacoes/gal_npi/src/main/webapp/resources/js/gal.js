@@ -6,67 +6,6 @@ $( document ).ready(function() {
 		format: "dd/mm/yyyy",
 	});
 	
-	$('#tituloTable').dataTable({
-		iDisplayLength: 25,
-		sPaginationType : "full_numbers",
-		oLanguage : {
-			"sEmptyTable" : "Nenhum registro encontrado",
-			"sInfo" : "Mostrando _START_ até _END_ de _TOTAL_ registros",
-			"sInfoEmpty" : "Mostrar 0 até 0 de 0 Registros",
-			"sInfoFiltered" : "(Filtrar de _MAX_ total registros)",
-			"sInfoPostFix" : "",
-			"sInfoThousands" : ".",
-			"sLengthMenu" : "Mostrar _MENU_ registros por página",
-			"sLoadingRecords" : "Carregando...",
-			"sProcessing" : "Processando...",
-			"sZeroRecords" : "Nenhum registro encontrado",
-			"sSearch" : "Pesquisar: ",
-			"oPaginate" : {
-				"sNext" : "Próximo",
-				"sPrevious" : "Anterior",
-				"sFirst" : "Primeiro",
-				"sLast" : "Último"
-			},
-			"oAria" : {
-				"sSortAscending" : ": Ordenar colunas de forma ascendente",
-				"sSortDescending" : ": Ordenar colunas de forma descendente"
-			}
-		},
-		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 3,4,5 ] }],
-		"bDestroy": true
-	})
-	
-	$('#resultadoTable').dataTable({
-		iDisplayLength: 25,
-		sPaginationType : "full_numbers",
-		oLanguage : {
-			"sEmptyTable" : "Nenhum registro encontrado",
-			"sInfo" : "Mostrando _START_ até _END_ de _TOTAL_ registros",
-			"sInfoEmpty" : "Mostrar 0 até 0 de 0 Registros",
-			"sInfoFiltered" : "(Filtrar de _MAX_ total registros)",
-			"sInfoPostFix" : "",
-			"sInfoThousands" : ".",
-			"sLengthMenu" : "Mostrar _MENU_ registros por página",
-			"sLoadingRecords" : "Carregando...",
-			"sProcessing" : "Processando...",
-			"sZeroRecords" : "Nenhum registro encontrado",
-			"sSearch" : "Pesquisar: ",
-			"oPaginate" : {
-				"sNext" : "Próximo",
-				"sPrevious" : "Anterior",
-				"sFirst" : "Primeiro",
-				"sLast" : "Último"
-			},
-			"oAria" : {
-				"sSortAscending" : ": Ordenar colunas de forma ascendente",
-				"sSortDescending" : ": Ordenar colunas de forma descendente"
-			}
-		},
-//		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 0,1 ] }],
-		"bDestroy": true
-	})
-
-
 	$('#resultadoParTable').dataTable( {
 		iDisplayLength: 25,
 		sPaginationType : "full_numbers",
@@ -206,7 +145,6 @@ $( document ).ready(function() {
 			newUrl = "/" + getAppName() + "/meta/"+(option)+"/listar";
 		}
 
-
 		$(location).attr("href", newUrl);
 	});
 	
@@ -218,7 +156,6 @@ $( document ).ready(function() {
 		}else{
 			newUrl = "/" + getAppName() + "/meta/componente/"+(option)+"/listar";
 		}
-
 
 		$(location).attr("href", newUrl);
 	});
@@ -260,3 +197,22 @@ function getAppName() {
 	url = url.split("/");
 	return url[1];
 }
+
+/*mostra a quantidade de exemplares que um titulo possui*/
+$(".open-AddQtdExemplares").on("click", function() {
+	var acervo = $(this).data('id');
+	var mensagem;
+	if (acervo > 0) {
+		mensagem = "Esse título possui " + acervo + " exemplares, tem certeza de que deseja exclui-lo?";
+	} else {
+		mensagem = "Tem certeza de que deseja excluir esse título?";
+	}
+	$("#mensagem").text(mensagem);
+});
+
+/*mostra o codigo do exemplar ao tentar exclui-lo*/
+$(".open-CodigoExemplar").on("click", function() {
+	var codigo = $(this).data('id');
+	var mensagem = "Tem certeza de que deseja excluir o exemplar " + codigo + " ?";
+	$("#mensagem").text(mensagem);
+});

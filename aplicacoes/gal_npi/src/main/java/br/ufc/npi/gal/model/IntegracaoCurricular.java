@@ -40,37 +40,15 @@ public class IntegracaoCurricular {
 	@Column(name = "natureza")
 	private String natureza;
 	
-	@ManyToOne
-	private IntegracaoCurricular integracao;
-	
-	@OneToMany(mappedBy = "integracao", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
-	private List<IntegracaoCurricular> preRequisitos;
-	
-	@OneToMany(mappedBy = "integracao", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
-	private List<IntegracaoCurricular> coRequisitos;
-	
-	public List<IntegracaoCurricular> getCoRequisitos() {
-		return coRequisitos;
+	@Column(name="observacoes")
+	private String observacoes;
+
+	public String getObservacoes() {
+		return observacoes;
 	}
 
-	public void setCoRequisitos(List<IntegracaoCurricular> coRequisitos) {
-		this.coRequisitos = coRequisitos;
-	}
-
-	public IntegracaoCurricular getIntegracao() {
-		return integracao;
-	}
-
-	public void setIntegracao(IntegracaoCurricular integracao) {
-		this.integracao = integracao;
-	}
-
-	public List<IntegracaoCurricular> getPreRequisitos() {
-		return preRequisitos;
-	}
-
-	public void setPreRequisitos(List<IntegracaoCurricular> preRequisitos) {
-		this.preRequisitos = preRequisitos;
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
 	}
 
 	public String getNatureza() {
@@ -115,8 +93,9 @@ public class IntegracaoCurricular {
 
 	@Override
 	public String toString() {
-		return "IntegracaoCurricular [estruturaCurricular=" + estruturaCurricular + ", componente=" + componente
-				+ ", quantidadeAlunos=" + quantidadeAlunos + ", semestreOferta=" + semestreOferta + "]";
+		return "IntegracaoCurricular [estruturaCurricular=" + estruturaCurricular + ", disciplina=" + componente
+				+ ", quantidadeAlunos=" + quantidadeAlunos + ", semestreOferta=" + semestreOferta + ", observacoes=" +observacoes+ "]";
+
 	}
 
 }

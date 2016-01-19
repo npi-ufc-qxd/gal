@@ -63,6 +63,8 @@
 									<th>Curso</th>
 									<th>Semestre de Oferta</th>
 									<th>Quantidade de Alunos</th>
+									<th>Horas Práticas</th>
+									<th>Horas Teóricas</th>
 								</tr>
 							</thead>
 							
@@ -72,6 +74,8 @@
 										<td>${curriculo.estruturaCurricular.curso.nome}</td>
 										<td>${curriculo.semestreOferta}</td>
 										<td>${curriculo.quantidadeAlunos}</td>
+										<td>${curriculo.componente.chPratica}</td>
+										<td>${curriculo.componente.chTeorica}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
