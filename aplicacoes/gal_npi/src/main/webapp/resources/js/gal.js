@@ -99,9 +99,9 @@ $( document ).ready(function() {
 		var data = {
 			basica : allItems[0],
 			complementar : allItems[1],
-			idDiciplina : $('#disciplinaId').val()
+			idComponente : $('#componenteId').val()
 		};
-		$.post('/' + getAppName() + '/disciplina/vincular', data);
+		$.post('/' + getAppName() + '/componente/vincular', data);
 	});
 	
 	var lista_drag_and_drop_basica = $('#drag-and-drop .sortable-list#basica');
@@ -122,26 +122,24 @@ $( document ).ready(function() {
 			newUrl = "/" + getAppName() + "/meta/"+(option)+"/listar";
 		}
 
-
 		$(location).attr("href", newUrl);
 	});
 	
-	$("select#selecionaDisciplina").change(function() { 
+	$("select#selecionaComponente").change(function() { 
 		var option = $(this).val();
 
 		if(option == -1){
 			newUrl = "/" + getAppName() + "/meta/listar";
 		}else{
-			newUrl = "/" + getAppName() + "/meta/disciplina/"+(option)+"/listar";
+			newUrl = "/" + getAppName() + "/meta/componente/"+(option)+"/listar";
 		}
-
 
 		$(location).attr("href", newUrl);
 	});
 	
 
 	$("#seleciona").val($("#idCurso").val());
-	$("#selecionaDisciplina").val($("#idDisciplina").val());
+	$("#selecionaComponente").val($("#idComponente").val());
 
 	
 	$(document).on("click", ".open-AddBookDialog", function() {
@@ -149,7 +147,7 @@ $( document ).ready(function() {
 		$(".modal-body #id").val(id);
 	});
 
-	$("#selectDisciplina").select2();
+	$("#selectComponente").select2();
 
 });
 

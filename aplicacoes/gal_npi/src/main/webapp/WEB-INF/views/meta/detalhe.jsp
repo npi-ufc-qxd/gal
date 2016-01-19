@@ -70,7 +70,7 @@
 				<c:forEach items="${metaCalculada.detalhePar}" var="par">
 					<tr>
 						<td><c:out value="${par.curso}" /></td>
-						<td><c:out value="${par.disciplina}" /></td>
+						<td><c:out value="${par.componente}" /></td>
 						<td><c:out value="${par.tipoBibliografia}" /></td>
 						<td><c:out value="${par.curriculo}" /></td>
 						<td><fmt:formatNumber type="number" maxFractionDigits="1"
@@ -105,7 +105,7 @@
 				<c:forEach items="${metaCalculada.detalheImpar}" var="impar">
 					<tr>
 						<td><c:out value="${impar.curso}" /></td>
-						<td><c:out value="${impar.disciplina}" /></td>
+						<td><c:out value="${impar.componente}" /></td>
 						<td><c:out value="${impar.tipoBibliografia}" /></td>
 						<td><c:out value="${impar.curriculo}" /></td>
 						<td><fmt:formatNumber type="number" maxFractionDigits="1"
