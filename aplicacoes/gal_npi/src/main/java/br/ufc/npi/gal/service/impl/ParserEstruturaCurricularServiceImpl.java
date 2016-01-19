@@ -71,7 +71,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 				indice = statusParser.get(1).indexOf(" -");
 				nomeCurso = removeAcentos(statusParser.get(1).substring(0, indice).toUpperCase());
 				Curso curso = cursoService.getCursoByCodigo(id);
-				if (nomeCurso.equals(curso.getNome())) {
+				if (nomeCurso.toUpperCase().equals(curso.getNome().toUpperCase())) {
 					return true;
 				}
 			}
