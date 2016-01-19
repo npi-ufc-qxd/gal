@@ -1,4 +1,8 @@
 $( document ).ready(function() {
+	
+	document.onkeydown = function (e) { 
+		  console.erro("aqui");
+		};
 
 	$('.data').datepicker({
 		language: 'pt-BR',
@@ -197,6 +201,8 @@ function getAppName() {
 	url = url.split("/");
 	return url[1];
 }
+
+$().
 
 /*mostra a quantidade de exemplares que um titulo possui*/
 $(".open-AddQtdExemplares").on("click", function() {

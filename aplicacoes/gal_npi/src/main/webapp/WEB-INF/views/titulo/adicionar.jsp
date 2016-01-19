@@ -27,32 +27,32 @@
 			
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Autor</label>
-			    <div class="col-sm-8">
-			    	<form:input id="autor" class="form-control" placeholder="autor" path="autor" />
+			    <div class="col-sm-10">
+			    	<form:input id="autor" class="form-control" placeholder="Autor" path="autor" />
 			    	<form:errors path="autor" cssClass="error" />
 			    </div>
 			</div>
 			
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Título</label>
-			    <div class="col-sm-8">
+			    <div class="col-sm-10">
 			    	<form:input id="titulo" class="form-control" placeholder="Titulo" path="titulo" />
 			    	<form:errors path="titulo" cssClass="error" />
 			    </div>
 			</div>
 			
 			<div class="form-group">
-			    <label for="codigo" class="col-sm-1 control-label">Titulo_n</label>
-			    <div class="col-sm-8">
-			    	<form:input id="titulo_n" class="form-control" placeholder="titulo_n" path="titulo_n"/>
+			    <label for="codigo" class="col-sm-1 control-label">titulo N</label>
+			    <div class="col-sm-10">
+			    	<form:input id="titulo_n" class="form-control" placeholder="titulo N" path="titulo_n"/>
 			    	<form:errors path="titulo_n" cssClass="error" />
 			    </div>
 			</div>
 			
 			<div class="form-group">
-			    <label for="codigo" class="col-sm-1 control-label">Sub_titulo</label>
-			    <div class="col-sm-8">
-			    	<form:input id="sub_titulo" class="form-control" placeholder="sub_titulo" path="subTitulo"/>
+			    <label for="codigo" class="col-sm-1 control-label">Sub titulo</label>
+			    <div class="col-sm-10">
+			    	<form:input id="sub_titulo" class="form-control" placeholder="Sub titulo" path="subTitulo"/>
 			    	<form:errors path="subTitulo" cssClass="error" />
 			    </div>
 			</div>
@@ -66,41 +66,41 @@
 			</div>
 						
 			<div class="form-group">
-			    <label for="codigo" class="col-sm-1 control-label">Titulo_revista</label>
-			    <div class="col-sm-8">
-			    	<form:input id="titulo_revista" class="form-control" placeholder="titulo_revista" path="tituloRevista"/>
+			    <label for="codigo" class="col-sm-1 control-label">titulo Revista</label>
+			    <div class="col-sm-10">
+			    	<form:input id="titulo_revista" class="form-control" placeholder="titulo Revista" path="tituloRevista"/>
 			    	<form:errors path="tituloRevista" cssClass="error" />
 			    </div>
 			</div>
 			
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Paginas</label>
-			    <div class="col-sm-8">
+			    <div class="col-sm-10">
 			    	<form:input id="pagina" class="form-control" placeholder="pagina" path="pagina"/>
 			    	<form:errors path="pagina" cssClass="error" />
 			    </div>
 			</div>
 			
 			<div class="form-group">
-			    <label for="codigo" class="col-sm-1 control-label">Ref_artigo</label>
-			    <div class="col-sm-8">
-			    	<form:input id="ref_artigo" class="form-control" placeholder="ref_artigo" path="refArtigo"/>
+			    <label for="codigo" class="col-sm-1 control-label">Ref Artigo</label>
+			    <div class="col-sm-10">
+			    	<form:input id="ref_artigo" class="form-control" placeholder="Ref Artigo" path="refArtigo"/>
 			    	<form:errors path="refArtigo" cssClass="error" />
 			    </div>
 			</div>
 			
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Edicao</label>
-			    <div class="col-sm-8">
-			    	<form:input id="edicao" class="form-control" placeholder="edicao" path="edicao"/>
+			    <div class="col-sm-10">
+			    	<form:input id="edicao" class="form-control" placeholder="Edicao" path="edicao"/>
 			    	<form:errors path="edicao" cssClass="error" />
 			    </div>
 			</div>
 			
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Publicador</label>
-			    <div class="col-sm-8">
-			    	<form:input id="publicador" class="form-control" placeholder="publicador" path="publicador"/>
+			    <div class="col-sm-10">
+			    	<form:input id="publicador" class="form-control" placeholder="Publicador" path="publicador"/>
 			    	<form:errors path="publicador" cssClass="error" />
 			    </div>
 			</div>
