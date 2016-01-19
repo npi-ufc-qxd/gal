@@ -139,9 +139,14 @@ public class EstruturaCurricularController {
 			@RequestParam("file") MultipartFile request, RedirectAttributes redirectAttributes) {
 
 		List<String> infoCurriculo = new ArrayList<String>();
-
+	
 		if (request == null || request.getSize() <= 0) {
 			redirectAttributes.addFlashAttribute("error", "Arquivo obrigatório");
+			return "redirect:/curso/" + idCurso + "/visualizar";
+		}
+		
+		if(!request.getOriginalFilename().substring(request.getOriginalFilename().indexOf('.')).equals(".html")){
+			redirectAttributes.addFlashAttribute("error", "Formato inválido de arquivo. Por favor selecione um arquivo HTML");
 			return "redirect:/curso/" + idCurso + "/visualizar";
 		}
 

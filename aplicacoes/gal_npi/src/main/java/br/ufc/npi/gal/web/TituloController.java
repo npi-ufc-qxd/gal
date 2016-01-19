@@ -121,9 +121,9 @@ public class TituloController {
 				StringBuilder nomeDisciplinas = new StringBuilder();
 				for (Bibliografia bibliografia : titulo.getBibliografias()) {
 					if(nomeDisciplinas.length() == 0) {
-						nomeDisciplinas.append(bibliografia.getDisciplina().getNome());
+						nomeDisciplinas.append(bibliografia.getComponenteCurricular().getNome());
 					} else {
-						nomeDisciplinas.append(", " + bibliografia.getDisciplina().getNome());
+						nomeDisciplinas.append(", " + bibliografia.getComponenteCurricular().getNome());
 						}
 					}
 				nomeDisciplinas.append('.');
