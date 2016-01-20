@@ -11,7 +11,6 @@
 <head>
 	<title>Metas</title>
 	<jsp:include page="../fragments/htmlHead.jsp" />
-	<link href="<c:url value="../resources/css/gal.css" />" rel="stylesheet">
 </head>
 <body>
 	<div id="container">
@@ -19,7 +18,7 @@
 		<jsp:include page="../fragments/header.jsp" />
 
 		<input id="idCurso" type="hidden" value="${idCurso}" />
-		<input id="idDisciplina" type="hidden" value="${idComponente}" /> 
+		<input id="idComponente" type="hidden" value="${idComponente}" /> 
 
 		<select id="seleciona">
 			<option value="-1">Todos os Cursos</option>
@@ -29,7 +28,7 @@
 		</select>
 		
 		<select id="selecionaDisciplina">
-			<option value="-1">Todas os Componentes</option>
+			<option value="-1">Todos os Componentes</option>
 			<c:forEach items="${componentes}" var="componente">
 				<option value="${componente.id}">${componente.nome}</option>
 			</c:forEach>
@@ -54,6 +53,7 @@
 
 		<div style="text-align: center;">
 			<label class="control-label" style="font-size: 20px; margin-top: 25px">Metas</label>
+			<br>
 		</div>
 
 		<c:if test="${empty resultados}">
@@ -63,10 +63,14 @@
 		<c:if test="${not empty resultados}">
 
 			<datatables:table id="resultadoTable" data="${resultados}" cdn="false"
-				row="resultado" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="4 7 10" default-sort="0 asc">
+				row="resultado" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="5 8 11" default-sort="0 asc">
 
 				<datatables:column title="Titulo">
 					<c:out value="${resultado.titulo.nome}"></c:out>
+				</datatables:column>
+				
+				<datatables:column title="Tipo">
+					<c:out value="${resultado.titulo.tipo}"></c:out>
 				</datatables:column>
 
 				<datatables:column title="Acervo">
@@ -79,15 +83,24 @@
 					</datatables:column>
 
 					<datatables:column title="Déficit" cssCellStyle="background-color:${indice.count%2==0 ? '#EAEBFF' : '#D3D6FF'};">
-						<c:if test="${(meta.calculo-resultado.titulo.acervo) >= 0}">
-							<fmt:formatNumber type="number" maxFractionDigits="1" value="${meta.calculo-resultado.titulo.acervo}"></fmt:formatNumber>
-						</c:if>
-						<c:if test="${(meta.calculo-resultado.titulo.acervo) < 0}">
-							<c:out value="0"></c:out>
-						</c:if>
+						<c:choose>
+							<c:when test="${resultado.titulo.tipo == 'Virtual'}">
+								<c:out value="0"></c:out>
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test="${(meta.calculo-resultado.titulo.acervo) >= 0}">
+										<fmt:formatNumber type="number" maxFractionDigits="1" value="${meta.calculo-resultado.titulo.acervo}"></fmt:formatNumber>
+									</c:when>
+									<c:otherwise>
+										<c:out value="0"></c:out>
+									</c:otherwise>
+								</c:choose>
+							</c:otherwise>
+						</c:choose>
 					</datatables:column>
 
-					<datatables:column title="Meta Detalhada" cssCellStyle="background-color:${indice.count%2==0 ? '#EAEBFF' : '#D3D6FF'};">
+					<datatables:column title="Detalhes" cssCellStyle="background-color:${indice.count%2==0 ? '#EAEBFF' : '#D3D6FF'};">
 
 						<c:if test="${(meta.calculo) > 0.1}">
 							<div title="Detalhe da ${meta.nome}">

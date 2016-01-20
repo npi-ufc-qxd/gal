@@ -104,11 +104,11 @@
 									Componente Curricular
 								</a> <a id="excluir" style="float: right;" class="btn btn-danger"
 									data-toggle="modal" data-target="#confirm-delete" href="#"
-									data-href="<c:url value="/estrutura/${curriculo.id }/excluir" ></c:url>">
+									data-href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/excluir" ></c:url>">
 									<span class="glyphicon glyphicon-trash"></span> Excluir
 									Curriculo
 								</a> <a
-									href="<c:url value="/estrutura/${curriculo.id }/editar" ></c:url>">
+									href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/editar" ></c:url>">
 									<button class="btn btn-primary">
 										<span class="glyphicon glyphicon-plus"></span> Editar
 										Curriculo
@@ -248,7 +248,7 @@
 				<div class="modal-content">
 					<div class="modal-header">Excluir</div>
 					<div class="modal-body">Tem certeza de que deseja excluir
-						esse curso?</div>
+						essa estrutura curricular?</div>
 					<div class="modal-footer">
 						<a href="integracao/excluir" class="btn btn-danger">Excluir</a>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
