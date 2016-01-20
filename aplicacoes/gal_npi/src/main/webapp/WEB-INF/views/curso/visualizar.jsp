@@ -169,7 +169,6 @@
 											href="<c:url value="/integracao/${integracao.componente.id}/${curriculo.id}/editar" ></c:url>">
 											<span class="glyphicon glyphicon-edit"></span>
 										</a>
-
 									</datatables:column>
 									<datatables:column title="Excluir">
 										<a id="excluir" class="btn btn-danger" data-toggle="modal"
