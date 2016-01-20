@@ -27,13 +27,13 @@ public class ComponenteCurricular {
 
 	@NotEmpty(message = "Campo obrigatório")
 	@Column(name = "nome")
-	@Size(min = 5, message = "O nome deve ter no mínimo 5 caracteres")
+	@Size(min = 5, message = "O nome do componente curricular deve ter no mínimo 5 caracteres")
 	private String nome;
 
 	@NotEmpty(message = "Campo obrigatório")
 	@Column(name = "cod_d")
-	@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù0-9]{0,}", message = "O campo código não pode possuir caracteres especiais.")
-	@Size(min = 5, max = 12, message = "O código deve ter entre 5 e 12 caracteres")
+	@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù0-9]{0,}", message = "O campo código do componente curricular não pode possuir caracteres especiais.")
+	@Size(min = 5, max = 12, message = "O código do componente curricular deve ter entre 5 e 12 caracteres")
 	private String codigo;
 
 	@OneToMany(mappedBy = "componente", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
