@@ -104,12 +104,18 @@
 					<tbody>
 						<c:forEach var="curriculo" items="${estrutura.curriculos}">
 							<tr>
-								<td><a
-									href="<c:url value="/componente/${curriculo.componente.id }/visualizar" ></c:url>">${curriculo.componente.nome}</a></td>
+								<c:if test="${not empty curriculo.observacoes}">
+									<td><a title="${curriculo.observacoes}"
+										href="<c:url value="/componente/${curriculo.componente.id }/visualizar "  ></c:url>">${curriculo.componente.nome}</a></td>
+								</c:if>
+								<c:if test="${empty curriculo.observacoes}">
+									<td><a
+										href="<c:url value="/componente/${curriculo.componente.id }/visualizar" ></c:url>">${curriculo.componente.nome}</a></td>
+								</c:if>
 								<td>${curriculo.componente.codigo}</td>
 								<td>${curriculo.quantidadeAlunos}</td>
 								<td>${curriculo.semestreOferta}</td>
-								</tr>
+							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
