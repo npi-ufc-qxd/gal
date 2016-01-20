@@ -16,8 +16,8 @@ public class Bibliografia {
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name="id_disciplina")
-	private Disciplina disciplina;
+	@JoinColumn(name="id_componente")
+	private ComponenteCurricular componente;
 
 	@Id
 	@ManyToOne
@@ -27,12 +27,12 @@ public class Bibliografia {
 	@Column(name = "tipo_bibliografia")
 	private String tipoBibliografia;
 
-	public Disciplina getDisciplina() {
-		return disciplina;
+	public ComponenteCurricular getComponenteCurricular() {
+		return componente;
 	}
 
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
+	public void setComponenteCurricular(ComponenteCurricular componenteCurricular) {
+		this.componente = componenteCurricular;
 	}
 
 	public Titulo getTitulo() {
@@ -56,9 +56,9 @@ public class Bibliografia {
 	@Override
 	public String toString() {
 		
-		 return "Bibliografia [id_disciplina=" + disciplina +
+		 return "Bibliografia [id_componente=" + componente +
 		 ", id_titulo="
-		 + titulo + ", disciplina=" + getDisciplina() + ", titulo="
+		 + titulo + ", componente=" + getComponenteCurricular() + ", titulo="
 		 + getTitulo() + ", tipoBibliografia=" + tipoBibliografia + "]";
 	}
 }

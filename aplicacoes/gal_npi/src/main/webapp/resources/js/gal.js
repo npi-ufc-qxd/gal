@@ -5,99 +5,6 @@ $( document ).ready(function() {
 		autoclose: true,
 		format: "dd/mm/yyyy",
 	});
-	
-	$('#tituloTable').dataTable({
-		iDisplayLength: 25,
-		sPaginationType : "full_numbers",
-		oLanguage : {
-			"sEmptyTable" : "Nenhum registro encontrado",
-			"sInfo" : "Mostrando _START_ até _END_ de _TOTAL_ registros",
-			"sInfoEmpty" : "Mostrar 0 até 0 de 0 Registros",
-			"sInfoFiltered" : "(Filtrar de _MAX_ total registros)",
-			"sInfoPostFix" : "",
-			"sInfoThousands" : ".",
-			"sLengthMenu" : "Mostrar _MENU_ registros por página",
-			"sLoadingRecords" : "Carregando...",
-			"sProcessing" : "Processando...",
-			"sZeroRecords" : "Nenhum registro encontrado",
-			"sSearch" : "Pesquisar: ",
-			"oPaginate" : {
-				"sNext" : "Próximo",
-				"sPrevious" : "Anterior",
-				"sFirst" : "Primeiro",
-				"sLast" : "Último"
-			},
-			"oAria" : {
-				"sSortAscending" : ": Ordenar colunas de forma ascendente",
-				"sSortDescending" : ": Ordenar colunas de forma descendente"
-			}
-		},
-		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 3,4,5 ] }],
-		"bDestroy": true
-	})
-	
-	$('#resultadoTable').dataTable({
-		iDisplayLength: 25,
-		sPaginationType : "full_numbers",
-		oLanguage : {
-			"sEmptyTable" : "Nenhum registro encontrado",
-			"sInfo" : "Mostrando _START_ até _END_ de _TOTAL_ registros",
-			"sInfoEmpty" : "Mostrar 0 até 0 de 0 Registros",
-			"sInfoFiltered" : "(Filtrar de _MAX_ total registros)",
-			"sInfoPostFix" : "",
-			"sInfoThousands" : ".",
-			"sLengthMenu" : "Mostrar _MENU_ registros por página",
-			"sLoadingRecords" : "Carregando...",
-			"sProcessing" : "Processando...",
-			"sZeroRecords" : "Nenhum registro encontrado",
-			"sSearch" : "Pesquisar: ",
-			"oPaginate" : {
-				"sNext" : "Próximo",
-				"sPrevious" : "Anterior",
-				"sFirst" : "Primeiro",
-				"sLast" : "Último"
-			},
-			"oAria" : {
-				"sSortAscending" : ": Ordenar colunas de forma ascendente",
-				"sSortDescending" : ": Ordenar colunas de forma descendente"
-			}
-		},
-//		"aoColumnDefs": [ { "bSortable": false, "aTargets": [ 0,1 ] }],
-		"bDestroy": true
-	})
-
-
-	$('#resultadoParTable').dataTable( {
-		iDisplayLength: 25,
-		sPaginationType : "full_numbers",
-		oLanguage : {
-			"sEmptyTable" : "Nenhum registro encontrado",
-			"sInfo" : "Mostrando _START_ até _END_ de _TOTAL_ registros",
-			"sInfoEmpty" : "Mostrar 0 até 0 de 0 Registros",
-			"sInfoFiltered" : "(Filtrar de _MAX_ total registros)",
-			"sInfoPostFix" : "",
-			"sInfoThousands" : ".",
-			"sLengthMenu" : "Mostrar _MENU_ registros por página",
-			"sLoadingRecords" : "Carregando...",
-			"sProcessing" : "Processando...",
-			"sZeroRecords" : "Nenhum registro encontrado",
-			"sSearch" : "Pesquisar: ",
-			"oPaginate" : {
-				"sNext" : "Próximo",
-				"sPrevious" : "Anterior",
-				"sFirst" : "Primeiro",
-				"sLast" : "Último"
-			},
-			"oAria" : {
-				"sSortAscending" : ": Ordenar colunas de forma ascendente",
-				"sSortDescending" : ": Ordenar colunas de forma descendente"
-			}
-		},
-        "paging":   false,
-        "ordering": false,
-        "info":     false,
-		"bDestroy": true
-    } );
     
 	$('table.table-orderable').each(function(){
 		var default_sort = $(this).attr('default-sort');
@@ -190,29 +97,37 @@ $( document ).ready(function() {
 	
 	function getItems(exampleNr) {
 		var columns = [];
-		$(exampleNr + ' ul.sortable-list').each(
-				function() {
-					if ($(this).attr('id') != 'acervo') {
-						columns.push($(this).sortable(
-								'toArray').join(','));
-					}
+		$(exampleNr + ' ul.sortable-list').each(function() {
+			var idLista = $(this).attr('id')
+			if (idLista != 'acervo') {
+				var lista_aux_titulos = []
+				$('#'+idLista+' .sortable-item').each(function(){
+					lista_aux_titulos.push($(this).attr('id'));
 				});
+				columns.push(lista_aux_titulos.join(','));
+			}
+		});
 		return columns;
 	}
 
 	$('#btn-get').click(function() {
+		var allItems = getItems('#drag-and-drop');
 		var data = {
-			basica : getItems('#drag-and-drop')[0],
-			complementar : getItems('#drag-and-drop')[1],
-			idDiciplina : $('#disciplinaId').val()
+			basica : allItems[0],
+			complementar : allItems[1],
+			idComponente : $('#componenteId').val()
 		};
-
-		$.get('/' + getAppName() + '/disciplina/vincular', data);
+		$.post('/' + getAppName() + '/componente/vincular', data);
 	});
-
-	$('#drag-and-drop .sortable-list').sortable({
-		connectWith : '#drag-and-drop .sortable-list'
-	});
+	
+	var lista_drag_and_drop_basica = $('#drag-and-drop .sortable-list#basica');
+	Sortable.create(lista_drag_and_drop_basica[0], { group: "drag_and_drop" });
+	
+	var lista_drag_and_drop_complementar = $('#drag-and-drop .sortable-list#complementar');
+	Sortable.create(lista_drag_and_drop_complementar[0], { group: "drag_and_drop" });
+	
+	var lista_drag_and_drop_acervo = $('#drag-and-drop .sortable-list#acervo');
+	Sortable.create(lista_drag_and_drop_acervo[0], { group: "drag_and_drop" });
 
 	$("select#seleciona").change(function() { 
 		var option = $("#seleciona").val();
@@ -223,26 +138,24 @@ $( document ).ready(function() {
 			newUrl = "/" + getAppName() + "/meta/"+(option)+"/listar";
 		}
 
-
 		$(location).attr("href", newUrl);
 	});
 	
-	$("select#selecionaDisciplina").change(function() { 
+	$("select#selecionaComponente").change(function() { 
 		var option = $(this).val();
 
 		if(option == -1){
 			newUrl = "/" + getAppName() + "/meta/listar";
 		}else{
-			newUrl = "/" + getAppName() + "/meta/disciplina/"+(option)+"/listar";
+			newUrl = "/" + getAppName() + "/meta/componente/"+(option)+"/listar";
 		}
-
 
 		$(location).attr("href", newUrl);
 	});
 	
 
 	$("#seleciona").val($("#idCurso").val());
-	$("#selecionaDisciplina").val($("#idDisciplina").val());
+	$("#selecionaComponente").val($("#idComponente").val());
 
 	
 	$(document).on("click", ".open-AddBookDialog", function() {
@@ -250,7 +163,7 @@ $( document ).ready(function() {
 		$(".modal-body #id").val(id);
 	});
 
-	$("#selectDisciplina").select2();
+	$("#selectComponente").select2();
 
 });
 

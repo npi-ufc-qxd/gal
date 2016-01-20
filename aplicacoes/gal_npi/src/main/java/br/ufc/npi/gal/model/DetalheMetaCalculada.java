@@ -11,7 +11,7 @@ public class DetalheMetaCalculada {
 	private int quantidadeAlunos;
 	private String codigoDisciplina;
 
-	public String getDisciplina() {
+	public String getComponenteCurricular() {
 		return disciplina;
 	}
 
@@ -73,7 +73,7 @@ public class DetalheMetaCalculada {
 		this.quantidadeAlunos = quantidadeAlunos;
 	}
 
-	public String getCodigoDisciplina() {
+	public String getCodigoComponenteCurricular() {
 		return codigoDisciplina;
 	}
 

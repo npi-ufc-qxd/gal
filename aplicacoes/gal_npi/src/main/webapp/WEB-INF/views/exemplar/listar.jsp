@@ -48,38 +48,50 @@
 		</c:if>
 		
 		<c:if test="${not empty exemplares}">
-			<datatables:table id="exemplarTable" data="${exemplares}" cdn="true"
-				row="exemplar" theme="bootstrap2" cssClass="table table-striped">
-				<datatables:column title="Codido do Exemplar">
-					<c:out value="${exemplar.codigoExemplar}"></c:out>
-				</datatables:column>
-				
-				<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+			<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+				<datatables:table id="exemplarTable" data="${exemplares}" cdn="true"
+					row="exemplar" theme="bootstrap2" cssClass="table table-striped">
+					<datatables:column title="Codido do Exemplar">
+						<c:out value="${exemplar.codigoExemplar}"></c:out>
+					</datatables:column>
+					
 					<datatables:column title="Editar">
 						<a class="btn btn-primary" href="<c:url value = "/exemplar/${exemplar.id}/editar"></c:url>">
 							<span class="glyphicon glyphicon-edit"></span>
 						</a>
 					</datatables:column>
-		
+			
 					<datatables:column title="Excluir">
-						<a id="excluir" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/exemplar/${exemplar.id}/excluir" ></c:url>">
+						<a id="excluir" class="open-CodigoExemplar btn btn-danger" 
+							data-toggle="modal" data-target="#confirm-delete" href="#"
+							data-id="${exemplar.codigoExemplar}"
+							data-href="<c:url value="/exemplar/${exemplar.id}/excluir" ></c:url>">
 							<span class="glyphicon glyphicon-trash"></span>
 						</a>
 					</datatables:column>
-				</sec:authorize>
-			</datatables:table>
+				</datatables:table>
+			</sec:authorize>
+			<sec:authorize access="!hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+				<datatables:table id="exemplarTable" data="${exemplares}" cdn="true"
+					row="exemplar" theme="bootstrap2" cssClass="table table-striped">
+					
+					<datatables:column title="Codido do Exemplar">
+						<c:out value="${exemplar.codigoExemplar}"></c:out>
+					</datatables:column>
+					
+				</datatables:table>
+			</sec:authorize>
 		</c:if>
 
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
-	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" 
+		aria-labelledby="myModalLabel" aria-hidden="true">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
-	            <div class="modal-header">
-	                Excluir
-	            </div>
+	            <div class="modal-header"> Excluir </div>
 	            <div class="modal-body">
-	                Tem certeza de que deseja excluir esse Exemplar?
+	                <p id="mensagem"></p>
 	            </div>
 	            <div class="modal-footer">
 	                <a href="#" class="btn btn-danger">Excluir</a>

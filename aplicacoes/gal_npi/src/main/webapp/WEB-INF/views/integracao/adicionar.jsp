@@ -1,11 +1,13 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>Vincular Disciplina</title>
+<title>Vincular Componente Curricular</title>
 <jsp:include page="../fragments/htmlHead.jsp" />
 </head>
 <body>
@@ -15,50 +17,48 @@
 		<form:form servletRelativeAction="/integracao/adicionar" method="post"
 			modelAttribute="integracao" role="form" class="form-horizontal">
 
-			<form:hidden path="estruturaCurricular.id" value="${idCurriculo}" />
-
-			<%-- <form:input id="estruturaCurricular" class="form-control"
-						style="width: 150px;" type="hidden" value="${idCurriculo}"
-						path="estruturaCurricular" required="true" /> --%>
+			<form:input id="estruturaCurricular" class="form-control"
+				style="width: 150px;" type="hidden" value="${idCurriculo}"
+				path="estruturaCurricular" required="true" />
 
 			<div class="form-group">
 				<label class="control-label" style="font-size: 20px;">Vincular
-					Disciplina</label>
+					Componente Curricular</label>
 			</div>
 
 			<div class="form-group">
-				<label for="disciplina" class="col-sm-2 control-label">Selecione
-					Disciplina</label>
-				<div class="col-sm-10">
-					<form:select id="selectDisciplina" class="form-control"
-						placeholder="Código disciplina" path="disciplina.codigo"
-						required="true">
 
+				<label for="componente" class="col-sm-2 control-label">Selecione
+					Componente</label>
+				<div class="col-sm-10">
+					<form:select id="selectComponente" class="form-control"
+						placeholder="Código componente" path="componente" required="true">
 						<form:option value="nenhuma">Selecione o componente</form:option>
-						<c:forEach items="${disciplinas}" var="disciplina">
-							<form:option value="${disciplina.codigo}">${disciplina.codigo} - ${disciplina.nome}</form:option>
-						</c:forEach>
+						<c:forEach items="${componentes}" var="componente">
+							<form:option value="${componente.codigo}">${componente.codigo} - ${componente.nome}</form:option>
+						</c:forEach>		
+						
 					</form:select>
 
 					<!-- 					<select class="disciplinas form-control"> -->
 					<!-- 					</select> -->
 
-					<form:errors path="disciplina" cssClass="error" />
+					<form:errors path="componente" cssClass="error" />
 				</div>
 			</div>
-
+			
 			<div class="form-group">
-				<label for="semestreOferta" class="col-sm-2 control-label">Semestre
-					oferta</label>
+				<label for="semestreOferta" class="col-sm-2 control-label">Semestre oferta</label>
 				<div class="col-sm-10">
-					<form:input id="semestreOferta" class="form-control numeros"
-						placeholder="Semestre oferta" maxlength="2" path="semestreOferta"
-						onkeypress="mascara(this,soNumeros)"
-						onchange="mascara(this,soNumeros)" required="true" />
+					<form:select path="semestreOferta" class="form-control">
+						<c:forEach var="i" begin="1" end="${semestreMax}">
+							<form:option value="${i}">${i}º Semestre</form:option>
+						</c:forEach>
+					</form:select>
 					<form:errors path="semestreOferta" cssClass="error" />
 				</div>
 			</div>
-
+			
 			<div class="form-group">
 				<label for="natureza" class="col-sm-2 control-label">Natureza</label>
 				<div class="col-sm-10">
@@ -81,6 +81,19 @@
 					<form:errors path="quantidadeAlunos" cssClass="error" />
 				</div>
 			</div>
+
+			<div class="form-group">
+				<label for="semestreOferta" class="col-sm-2 control-label">Semestre
+					oferta</label>
+				<div class="col-sm-10">
+					<form:input id="semestreOferta" class="form-control numeros"
+						placeholder="Semestre oferta" maxlength="2" path="semestreOferta"
+						onkeypress="mascara(this,soNumeros)"
+						onchange="mascara(this,soNumeros)" required="true" />
+					<form:errors path="semestreOferta" cssClass="error" />
+				</div>
+			</div>
+
 
 			<div class="form-group">
 				<label for="observacoes" class="col-sm-2 control-label">Observações
