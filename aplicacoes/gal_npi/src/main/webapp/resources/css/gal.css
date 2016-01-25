@@ -64,7 +64,7 @@ div#container {
 .halfContainer{
 	border-width: thin;
 	margin: 0px auto;
-	width: 50%;
+	width: 49%;
 	position: relative;
 	float:left;
 	padding:6px 12px;
@@ -83,7 +83,7 @@ div#container {
 
 .sidebyside {
 	
-	width:25%;
+	width:75px; 
 	height:34px;
 	padding:6px 12px;
 	font-size:14px;
