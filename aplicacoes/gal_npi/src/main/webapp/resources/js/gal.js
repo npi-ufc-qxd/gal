@@ -7,7 +7,7 @@ $( document ).ready(function() {
 	});
 	
 	// remove acentos para auxiliar na busca dentro do datatable
-	// funcionando apenas na tabela de metas e na tabela de títulos
+	// não está funcionando na tabela de componentes curriculares
 	$.fn.DataTable.ext.type.search.string = function (data) {
 	    return ! data ?
 	        '' :
