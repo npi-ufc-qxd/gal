@@ -20,7 +20,7 @@
 			<div class="form-group">
 			    <label for="nome" class="col-sm-1 control-label">Nome</label>
 			    <div class="col-sm-10">
-			    	<form:input id="nome" class="form-control" placeholder="Nome" path="nome" disabled="true"/>
+			    	<form:input id="nome" class="form-control" placeholder="Nome" path="nome" readonly="true"/>
 			    	<form:errors path="nome" cssClass="error" />
 			    </div>
 			</div>
@@ -28,7 +28,7 @@
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Autor</label>
 			    <div class="col-sm-10">
-			    	<form:input id="autor" class="form-control" placeholder="Autor" path="autor"/>
+			    	<form:input id="autor" class="form-control" placeholder="Autor" path="autor" />
 			    	<form:errors path="autor" cssClass="error" />
 			    </div>
 			</div>
@@ -36,7 +36,7 @@
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Título</label>
 			    <div class="col-sm-10">
-			    	<form:input id="titulo" class="form-control" placeholder="Titulo" path="titulo"/>
+			    	<form:input id="nome_titulo" class="form-control" placeholder="Titulo" path="titulo"/>
 			    	<form:errors path="titulo" cssClass="error" />
 			    </div>
 			</div>
@@ -115,10 +115,6 @@
 			    	<form:errors path="tipo" cssClass="error" />
 			    </div>
 			</div>
-			
-			
-			
-			
 			
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit" value="Adicionar"/>

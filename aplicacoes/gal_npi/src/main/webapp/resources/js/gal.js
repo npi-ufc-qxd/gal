@@ -62,11 +62,12 @@ $( document ).ready(function() {
 		});
 	});
 	
-	$('#autor').on("keyup",function(){
+	$('.form-control').on("keyup",function(){
 		 
-		document.getElementById("nome").value = document.getElementById("autor").value;
-		nome = nome + " " + autor;
-		console.error("aqui");
+		document.getElementById("nome").value = document.getElementById("autor").value + " " + document.getElementById("nome_titulo").value + " " +document.getElementById("titulo_n").value + 
+												" " + document.getElementById("sub_titulo").value +	" " + document.getElementById("titulo_revista").value + " " + document.getElementById("pagina").value + " " + document.getElementById("ref_artigo").value +
+												" " + document.getElementById("edicao").value + " " + document.getElementById("publicador").value;
+		console.error(document.getElementById("nome").value);
 	});
 
 	
