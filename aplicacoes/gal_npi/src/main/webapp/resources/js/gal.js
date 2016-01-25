@@ -5,6 +5,24 @@ $( document ).ready(function() {
 		autoclose: true,
 		format: "dd/mm/yyyy",
 	});
+	
+	// remove acentos para auxiliar na busca dentro do datatable
+	// funcionando apenas na tabela de metas e na tabela de títulos
+	$.fn.DataTable.ext.type.search.string = function (data) {
+	    return ! data ?
+	        '' :
+	        typeof data === 'string' ?
+	            data
+	            	.toLowerCase()
+                	.replace( /[áàäâãÁÀÄÂÃ]/g, 'a' )
+                	.replace( /[óòöôõÓÒÖÔÕ]/g, 'o' )
+                	.replace( /[éèëêÉÈËÊ]/g, 'e' )
+                	.replace( /[íìïîÍÌÏÎ]/g, 'i' )
+                	.replace( /[úùüûÚÙÜÛ]/g, 'u' )
+	                .replace( /ç/g, 'c' )
+	                .replace( /\n/g, ' ' ) :
+	            data;
+	};
     
 	$('table.table-orderable').each(function(){
 		var default_sort = $(this).attr('default-sort');
@@ -58,7 +76,7 @@ $( document ).ready(function() {
 			},
 			"order": default_sort,
 			"columnDefs": [ { "orderable": false, "targets": no_sort_fields } ],
-			"destroy": true
+			"destroy": true,
 		});
 	});
 	
