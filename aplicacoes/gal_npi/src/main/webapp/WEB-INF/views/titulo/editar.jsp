@@ -13,7 +13,7 @@
 <body>
 	<div id="container">
 		<jsp:include page="../fragments/header.jsp" />
-		<form:form servletRelativeAction="/titulo/editar" method="post" modelAttribute="titulo" role="form" class="form-horizontal">
+		<form:form id="formfieldtitulo" servletRelativeAction="/titulo/editar" method="post" modelAttribute="titulo" role="form" class="form-horizontal">
 			<form:input path="id" type="hidden" />
 			
 			<div class="form-group" style="text-align: center;">
@@ -127,11 +127,26 @@
 			</div>
 			
 			<div class="controls">
-				<input id="criar" class="btn btn-primary" type="submit" value="Salvar"/>
+				<input id="criar" class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirm-submit" value="Salvar"/>
 				<a href="<c:url value="/titulo/listar"></c:url>" class="btn btn-default">Cancelar</a>
 			</div>
 		</form:form>
 		<jsp:include page="../fragments/footer.jsp" />
+		
+		<div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">Salvar</div>
+				<div class="modal-body">Tem certeza de que deseja Salvar esse
+					Titulo?</div>
+				<div class="modal-footer">
+					<a href="#" id="submitEditarTitulo" class="btn btn-primary" >Salvar</a>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	</div>
 
 </body>
