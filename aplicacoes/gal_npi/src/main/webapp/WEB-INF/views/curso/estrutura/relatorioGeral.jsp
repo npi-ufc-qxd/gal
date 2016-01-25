@@ -111,7 +111,7 @@
 								<td>${curriculo.quantidadeAlunos}</td>
 								<td>${curriculo.semestreOferta}</td>
 								<c:if test="${not empty curriculo.observacoes}">
-									<td width="200px" align="center">${curriculo.observacoes}</td>
+									<td width="200px">${curriculo.observacoes}</td>
 								</c:if>
 								<c:if test="${empty curriculo.observacoes}">
 									<td width="200px" align="center">-</td>
