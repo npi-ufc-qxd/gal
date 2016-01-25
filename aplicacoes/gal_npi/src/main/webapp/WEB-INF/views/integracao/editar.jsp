@@ -68,25 +68,11 @@
 				<label for="observacoes" class="col-sm-2 control-label">Observações
 				</label>
 				<div class="col-sm-10">
-					<form:input id="observacoes" class="form-control"
+					<form:textarea id="observacoes" class="form-control" rows="2"
 						placeholder="Observações" path="observacoes" required="false" />
 					<form:errors path="observacoes" cssClass="error" />
 				</div>
 			</div>
-
-			<div class="form-group">
-				<label for="semestreOferta" class="col-sm-2 control-label">Semestre
-					oferta</label>
-				<div class="col-sm-10">
-					<form:input id="semestreOferta" class="form-control numeros"
-						placeholder="Semestre oferta"
-						path="semestreOferta" maxlength="2" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
-						required="true" />
-					<form:errors path="semestreOferta" cssClass="error" />
-				</div>
-			</div>
-
-
 
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit"
