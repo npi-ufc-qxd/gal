@@ -39,7 +39,7 @@ public class IntegracaoCurricularController {
 		int codigoCurso = integracao.getEstruturaCurricular().getCurso().getCodigo();
 		if (integracao != null) {
 			this.integracaoService.delete(integracao);
-			redirectAttributes.addFlashAttribute("info", "Disciplina removida do currículo com sucesso.");
+			redirectAttributes.addFlashAttribute("info", "Componente curricular removido do currículo com sucesso.");
 		}
 		
 		return "redirect:/curso/" + codigoCurso + "/visualizar";
@@ -51,7 +51,6 @@ public class IntegracaoCurricularController {
 
 		
 		EstruturaCurricular estruturaBD = estruturaService.find(EstruturaCurricular.class, estruturaCurricular);
-		
 
 		if(semestreOferta == null || semestreOferta <= 0 || semestreOferta > 10){
 
@@ -62,7 +61,6 @@ public class IntegracaoCurricularController {
 		
 		IntegracaoCurricular integracao =  new IntegracaoCurricular();
 		ComponenteCurricular componenteBD = componenteCurricularService.getComponenteCurricularByCodigo(componente);
-
 		
 		List<IntegracaoCurricular> integracaoList = estruturaBD.getCurriculos();		
 		
@@ -73,7 +71,7 @@ public class IntegracaoCurricularController {
 		
 		for (IntegracaoCurricular integracaoCurricular : integracaoList) {
 			if(integracaoCurricular.getComponente().equals(componenteBD)){
-				redirectAttributes.addFlashAttribute("error", "Esse componente curricular já está vinculada");
+				redirectAttributes.addFlashAttribute("error", "Esse componente curricular já está vinculado");
 				return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
 			}
 		}		
@@ -87,16 +85,19 @@ public class IntegracaoCurricularController {
 		
 		integracaoService.save(integracao);
 		
-		redirectAttributes.addFlashAttribute("info", "Disciplina adicionada ao currículo com sucesso.");
+		redirectAttributes.addFlashAttribute("info", "Componente curricular adicionado ao currículo com sucesso.");
 		return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
 	}
 
 	@RequestMapping(value = "/{idCurriculo}/adicionar")
 	public String adicionar(ModelMap modelMap, @PathVariable("idCurriculo") Integer idCurriculo, final RedirectAttributes redirectAttributes) {
 		
+		EstruturaCurricular estrutura = this.estruturaService.find(EstruturaCurricular.class, idCurriculo);
+		
 		modelMap.addAttribute("idCurriculo", idCurriculo);
 		modelMap.addAttribute("componentes", componenteCurricularService.find(ComponenteCurricular.class));
 		modelMap.addAttribute("integracao", new IntegracaoCurricular());
+		modelMap.addAttribute("semestreMax", estrutura.getPrazoConclusaoMedio());
 		
 		return "integracao/adicionar";
 	}
@@ -104,12 +105,14 @@ public class IntegracaoCurricularController {
 	@RequestMapping(value = "/{idComponente}/{idCurriculo}/editar", method = RequestMethod.GET)
 	public String editar(@PathVariable("idComponente") Integer idComponente,@PathVariable("idCurriculo") Integer idCurriculo, ModelMap modelMap) {
 
+		EstruturaCurricular estrutura = this.estruturaService.find(EstruturaCurricular.class, idCurriculo);
 		IntegracaoCurricular integracao = this.integracaoService.getIntegracaoByIdComponenteCurricularIdCurriculo(idComponente, idCurriculo);
 
 		if (integracao == null) {
 			return "redirect:/curso/listar";
 
 		}
+		modelMap.addAttribute("semestreMax", estrutura.getPrazoConclusaoMedio());
 		modelMap.addAttribute("integracao", integracao);
 		return "integracao/editar";
 	}
@@ -119,16 +122,10 @@ public class IntegracaoCurricularController {
 			RedirectAttributes redirectAttributes) {
 		EstruturaCurricular estrutura = this.estruturaService.find(EstruturaCurricular.class,
 				integracao.getEstruturaCurricular().getId());
-		
-		if (integracao.getSemestreOferta() == null || integracao.getSemestreOferta() <= 0
-				|| integracao.getSemestreOferta() > 10) {
-			redirectAttributes.addFlashAttribute("error", "Semestre de oferta inválido");
-			return "redirect:/curso/" + estrutura.getCurso().getCodigo() + "/visualizar";
-		}
 
 		integracaoService.update(integracao);
 		redirectAttributes.addFlashAttribute("info",
-				"Disciplina atualizada com sucesso.");
+				"Integração atualizada com sucesso.");
 		return "redirect:/curso/" + estrutura.getCurso().getCodigo() + "/visualizar";
 
 	}

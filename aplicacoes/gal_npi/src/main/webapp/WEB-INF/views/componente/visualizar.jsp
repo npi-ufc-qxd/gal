@@ -46,6 +46,7 @@
 			
 			<p>Nome: <b>${componente.nome}</b></p>
 			<p>Código: <b>${componente.codigo}</b></p>
+			<p>Tipo: <b>${componente.tipo}</b></p>
 			
 			<hr>
 			
@@ -56,7 +57,7 @@
 			
 			<c:if test="${not empty curriculos}">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-7">
 						<table class="table table-condensed table-striped table-bordered">
 							<thead>
 								<tr>
@@ -110,6 +111,7 @@
 							<div id="${basica.id}" class="panel-collapse collapse" role="tabpanel">
 								<div class="disciplina-panel-body panel-body">
 						      		<p><b>Acervo</b>: ${basica.acervo}</p>
+						      		<p><b>Tipo</b>: ${basica.tipo}</p>
 						      		<div class="row">
 						      			<div class="col-md-5">
 											<table class="table table-condensed table-striped table-bordered">
@@ -173,6 +175,7 @@
 							<div id="${complementar.id}" class="panel-collapse collapse" role="tabpanel">
 								<div class="disciplina-panel-body panel-body">
 						      		<p><b>Acervo</b>: ${complementar.acervo}</p>
+						      		<p><b>Tipo</b>: ${complementar.tipo}</p>
 						      		<div class="row">
 						      			<div class="col-md-5">
 											<table class="table table-condensed table-striped table-bordered">

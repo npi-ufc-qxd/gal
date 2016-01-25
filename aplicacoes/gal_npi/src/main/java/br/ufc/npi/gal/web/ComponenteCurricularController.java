@@ -290,7 +290,7 @@ public class ComponenteCurricularController {
 		return bibliografiasAseremModificadas;
 	}
 	
-	@RequestMapping(value = "/vincular", method = RequestMethod.GET)
+	@RequestMapping(value = "/vincular", method = RequestMethod.POST)
 	public String vincular(@RequestParam("basica") String basica, @RequestParam("complementar") String complementar, @RequestParam("idComponente") Integer idComponente) {
 		String[] basicaArray = basica.split(",");
 		

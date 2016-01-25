@@ -5,38 +5,6 @@ $( document ).ready(function() {
 		autoclose: true,
 		format: "dd/mm/yyyy",
 	});
-	
-	$('#resultadoParTable').dataTable( {
-		iDisplayLength: 25,
-		sPaginationType : "full_numbers",
-		oLanguage : {
-			"sEmptyTable" : "Nenhum registro encontrado",
-			"sInfo" : "Mostrando _START_ até _END_ de _TOTAL_ registros",
-			"sInfoEmpty" : "Mostrar 0 até 0 de 0 Registros",
-			"sInfoFiltered" : "(Filtrar de _MAX_ total registros)",
-			"sInfoPostFix" : "",
-			"sInfoThousands" : ".",
-			"sLengthMenu" : "Mostrar _MENU_ registros por página",
-			"sLoadingRecords" : "Carregando...",
-			"sProcessing" : "Processando...",
-			"sZeroRecords" : "Nenhum registro encontrado",
-			"sSearch" : "Pesquisar: ",
-			"oPaginate" : {
-				"sNext" : "Próximo",
-				"sPrevious" : "Anterior",
-				"sFirst" : "Primeiro",
-				"sLast" : "Último"
-			},
-			"oAria" : {
-				"sSortAscending" : ": Ordenar colunas de forma ascendente",
-				"sSortDescending" : ": Ordenar colunas de forma descendente"
-			}
-		},
-        "paging":   false,
-        "ordering": false,
-        "info":     false,
-		"bDestroy": true
-    } );
     
 	$('table.table-orderable').each(function(){
 		var default_sort = $(this).attr('default-sort');
@@ -121,28 +89,37 @@ $( document ).ready(function() {
 	
 	function getItems(exampleNr) {
 		var columns = [];
-		$(exampleNr + ' ul.sortable-list').each(
-				function() {
-					if ($(this).attr('id') != 'acervo') {
-						columns.push($(this).sortable(
-								'toArray').join(','));
-					}
+		$(exampleNr + ' ul.sortable-list').each(function() {
+			var idLista = $(this).attr('id')
+			if (idLista != 'acervo') {
+				var lista_aux_titulos = []
+				$('#'+idLista+' .sortable-item').each(function(){
+					lista_aux_titulos.push($(this).attr('id'));
 				});
+				columns.push(lista_aux_titulos.join(','));
+			}
+		});
 		return columns;
 	}
 
 	$('#btn-get').click(function() {
+		var allItems = getItems('#drag-and-drop');
 		var data = {
-			basica : getItems('#drag-and-drop')[0],
-			complementar : getItems('#drag-and-drop')[1],
+			basica : allItems[0],
+			complementar : allItems[1],
 			idComponente : $('#componenteId').val()
 		};
-		$.get('/' + getAppName() + '/componente/vincular', data);
+		$.post('/' + getAppName() + '/componente/vincular', data);
 	});
-
-	$('#drag-and-drop .sortable-list').sortable({
-		connectWith : '#drag-and-drop .sortable-list'
-	});
+	
+	var lista_drag_and_drop_basica = $('#drag-and-drop .sortable-list#basica');
+	Sortable.create(lista_drag_and_drop_basica[0], { group: "drag_and_drop" });
+	
+	var lista_drag_and_drop_complementar = $('#drag-and-drop .sortable-list#complementar');
+	Sortable.create(lista_drag_and_drop_complementar[0], { group: "drag_and_drop" });
+	
+	var lista_drag_and_drop_acervo = $('#drag-and-drop .sortable-list#acervo');
+	Sortable.create(lista_drag_and_drop_acervo[0], { group: "drag_and_drop" });
 
 	$("select#seleciona").change(function() { 
 		var option = $("#seleciona").val();
@@ -204,6 +181,7 @@ function getAppName() {
 	var url = location.pathname;
 	url = url.split("/");
 	return url[1];
+
 }
 
 $().
@@ -226,3 +204,4 @@ $(".open-CodigoExemplar").on("click", function() {
 	var mensagem = "Tem certeza de que deseja excluir o exemplar " + codigo + " ?";
 	$("#mensagem").text(mensagem);
 });
+
