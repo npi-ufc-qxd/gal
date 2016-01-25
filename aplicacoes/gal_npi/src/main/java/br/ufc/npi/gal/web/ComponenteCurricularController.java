@@ -127,6 +127,18 @@ public class ComponenteCurricularController {
 					"Campo obrigatório.");
 			errors = true;
 		}
+		
+		if (componente.getCodigo().length() < 6 || componente.getCodigo().length() > 12) {
+			result.rejectValue("codigo", "Repeat.componente.codigo",
+					"O código do Componente Curricular deve ter entre 5 e 12 caracteres");
+			errors = true;
+		}
+		
+		if (componente.getCodigo().matches("^[A-Za-z0-9]")) {
+			result.rejectValue("codigo", "Repeat.componente.codigo",
+					"O campo código do Componente Curricular não pode possuir caracteres especiais.");
+			errors = true;
+		}
 
 		if (componenteCurricularService.getComponenteCurricularByCodigo(componente.getCodigo()) != null) {
 			result.rejectValue("codigo", "Repeat.componente.codigo",

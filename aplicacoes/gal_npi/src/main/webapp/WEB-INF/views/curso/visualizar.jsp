@@ -94,10 +94,17 @@
 									data-href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/excluir" ></c:url>">
 									<span class="glyphicon glyphicon-trash"></span> Excluir
 									Curriculo
-								</a> <a
+								</a> 
+								<a
+									href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/relatorioGeral" ></c:url>">
+									<button class="btn btn-primary">
+										<span class="glyphicon glyphicon-file"></span> Relatório Geral
+									</button>
+								</a>
+								<a
 									href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/editar" ></c:url>">
 									<button class="btn btn-primary">
-										<span class="glyphicon glyphicon-plus"></span> Editar
+										<span class="glyphicon glyphicon-edit"></span> Editar
 										Curriculo
 									</button>
 								</a>
