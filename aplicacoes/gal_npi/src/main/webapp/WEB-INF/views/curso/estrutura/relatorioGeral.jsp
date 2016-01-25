@@ -106,7 +106,7 @@
 						<c:forEach var="curriculo" items="${estrutura.curriculos}">
 							<tr>
 									<td><a
-										href="<c:url value="/componente/${curriculo.componente.id }/visualizar" ></c:url>">${curriculo.componente.nome}</a></td>
+										href="<c:url value="/integracao/${curriculo.componente.id }/${estrutura.id}/editar" ></c:url>">${curriculo.componente.nome}</a></td>
 								<td>${curriculo.componente.codigo}</td>
 								<td>${curriculo.quantidadeAlunos}</td>
 								<td>${curriculo.semestreOferta}</td>
