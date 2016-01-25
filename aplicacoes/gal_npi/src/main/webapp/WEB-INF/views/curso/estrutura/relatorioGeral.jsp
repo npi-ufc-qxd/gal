@@ -107,9 +107,9 @@
 							<tr>
 									<td><a
 										href="<c:url value="/integracao/${curriculo.componente.id }/${estrutura.id}/editar" ></c:url>">${curriculo.componente.nome}</a></td>
-								<td>${curriculo.componente.codigo}</td>
-								<td>${curriculo.quantidadeAlunos}</td>
-								<td>${curriculo.semestreOferta}</td>
+								<td align="center">${curriculo.componente.codigo}</td>
+								<td align="right">${curriculo.quantidadeAlunos}</td>
+								<td align="right">${curriculo.semestreOferta}</td>
 								<c:if test="${not empty curriculo.observacoes}">
 									<td width="200px">${curriculo.observacoes}</td>
 								</c:if>
