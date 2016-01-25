@@ -7,22 +7,24 @@ $( document ).ready(function() {
 	});
 	
 	// remove acentos para auxiliar na busca dentro do datatable
+	function removeAcentos(data){
+		return ! data ?
+		        '' :
+		        typeof data === 'string' ?
+		            data
+		            	.toLowerCase()
+	                	.replace( /[áàäâãÁÀÄÂÃ]/g, 'a' )
+	                	.replace( /[óòöôõÓÒÖÔÕ]/g, 'o' )
+	                	.replace( /[éèëêÉÈËÊ]/g, 'e' )
+	                	.replace( /[íìïîÍÌÏÎ]/g, 'i' )
+	                	.replace( /[úùüûÚÙÜÛ]/g, 'u' )
+		                .replace( /ç/g, 'c' )
+		                .replace( /\n/g, ' ' ) :
+		            data;
+	}
+	
 	// não está funcionando na tabela de componentes curriculares
-	$.fn.DataTable.ext.type.search.string = function (data) {
-	    return ! data ?
-	        '' :
-	        typeof data === 'string' ?
-	            data
-	            	.toLowerCase()
-                	.replace( /[áàäâãÁÀÄÂÃ]/g, 'a' )
-                	.replace( /[óòöôõÓÒÖÔÕ]/g, 'o' )
-                	.replace( /[éèëêÉÈËÊ]/g, 'e' )
-                	.replace( /[íìïîÍÌÏÎ]/g, 'i' )
-                	.replace( /[úùüûÚÙÜÛ]/g, 'u' )
-	                .replace( /ç/g, 'c' )
-	                .replace( /\n/g, ' ' ) :
-	            data;
-	};
+	$.fn.DataTable.ext.type.search.string = removeAcentos;
     
 	$('table.table-orderable').each(function(){
 		var default_sort = $(this).attr('default-sort');

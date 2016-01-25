@@ -165,7 +165,7 @@
 						<sec:authorize
 							access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 							<div class="panel panel-default">
-								<datatables:table id="estrutura${curso.id}"
+								<datatables:table id="${curso.id}"
 									data="${curriculo.curriculos}" cdn="false" row="integracao"
 									theme="bootstrap2"
 									cssClass="table table-striped table-orderable"
