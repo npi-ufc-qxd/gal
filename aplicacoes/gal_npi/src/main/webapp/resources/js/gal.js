@@ -11,7 +11,6 @@ $( document ).ready(function() {
 		// testa se existe o atributo default_sort no elemento
 		if(typeof default_sort !== typeof undefined && default_sort !== false)
 			default_sort = [default_sort.split(' ')];
-
 		else
 			default_sort = [];
 		
@@ -25,8 +24,23 @@ $( document ).ready(function() {
 				no_sort_fields[i] = Number(no_sort_fields[i]);
 			}
 		}
+		
 		else
 			no_sort_fields = [];
+		
+		var attr_paging = $(this).attr('paging');
+		if(typeof attr_paging !== typeof undefined){
+			if(attr_paging === "false")
+				attr_paging = false;
+		}
+		else attr_paging = true;
+		
+		var attr_searching = $(this).attr('searching');
+		if(typeof attr_searching !== typeof undefined){
+			if (attr_searching === "false")
+				attr_searching = false;
+		}
+		else attr_searching = true;
 		
 		
 		$(this).dataTable({
@@ -58,7 +72,9 @@ $( document ).ready(function() {
 			},
 			"order": default_sort,
 			"columnDefs": [ { "orderable": false, "targets": no_sort_fields } ],
-			"destroy": true
+			"destroy": true,
+			"paging": attr_paging,
+			"searching": attr_searching
 		});
 	});
 	
