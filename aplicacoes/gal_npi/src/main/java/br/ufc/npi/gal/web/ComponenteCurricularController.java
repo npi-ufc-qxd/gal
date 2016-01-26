@@ -3,6 +3,8 @@ package br.ufc.npi.gal.web;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -36,10 +38,10 @@ public class ComponenteCurricularController {
 
 	@Inject
 	private ComponenteCurricularService componenteCurricularService;
-	
+
 	@Inject
 	private TituloService tituloService;
-	
+
 	@Inject
 	private CalculoMetaService calculoService;
 
@@ -48,7 +50,7 @@ public class ComponenteCurricularController {
 
 	private static final String COMPLEMENTAR = "Complementar";
 	private static final String BASICA = "Básica";
-	
+
 	@RequestMapping(value = "/listar")
 	public String listar(ModelMap modelMap, HttpSession session) {
 		modelMap.addAttribute("componentes", this.componenteCurricularService.find(ComponenteCurricular.class));
@@ -69,41 +71,44 @@ public class ComponenteCurricularController {
 	}
 
 	@RequestMapping(value = "/editar", method = RequestMethod.POST)
-	public String atualizar(@Valid ComponenteCurricular componente, BindingResult result,
+	public String atualizar(@ModelAttribute("componente") ComponenteCurricular componente, BindingResult result,
 			RedirectAttributes redirectAttributes) {
+		boolean errors = false;
+
 		if (result.hasErrors()) {
 			return "componente/editar";
 		}
-
+		
 		if (componenteCurricularService.getOutraComponenteCurricularByCodigo(componente.getId(),
 				componente.getCodigo()) != null) {
 			result.rejectValue("codigo", "Repeat.componente.codigo",
 					"Já existe um componente curricular com esse código");
-			return "componente/editar";
+			errors = true;
 		}
+		
 		if (componenteCurricularService.getOutraComponenteCurricularByNome(componente.getId(),
 				componente.getNome().toUpperCase()) != null) {
-			result.rejectValue("nome", "Repeat.componente.nome",
-					"Já existe um componente curricular com esse nome");
+			result.rejectValue("nome", "Repeat.componente.nome", "Já existe um componente curricular com esse nome");
+			errors = true;
+		}
+
+		if (analiseComponente(componente, result, redirectAttributes, errors)) {
 			return "componente/editar";
 		}
 
 		componente.setNome(componente.getNome().toUpperCase());
 		componenteCurricularService.update(componente);
-		redirectAttributes.addFlashAttribute("info",
-				"Componente curricular atualizado com sucesso.");
+		redirectAttributes.addFlashAttribute("info", "Componente curricular atualizado com sucesso.");
 		return "redirect:/componente/listar";
 
 	}
 
 	@RequestMapping(value = "/{id}/excluir", method = RequestMethod.GET)
-	public String excluir(@PathVariable("id") Integer id,
-			RedirectAttributes redirectAttributes) {
+	public String excluir(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
 		ComponenteCurricular componente = componenteCurricularService.find(ComponenteCurricular.class, id);
 		if (componente != null) {
 			this.componenteCurricularService.delete(componente);
-			redirectAttributes.addFlashAttribute("info",
-					"Componente curricular removido com sucesso.");
+			redirectAttributes.addFlashAttribute("info", "Componente curricular removido com sucesso.");
 		}
 		return "redirect:/componente/listar";
 	}
@@ -121,22 +126,9 @@ public class ComponenteCurricularController {
 		if (result.hasErrors()) {
 			return "componente/adicionar";
 		}
-		
-		if (componente.getCodigo().trim().isEmpty()) {
-			result.rejectValue("codigo", "Repeat.componente.codigo",
-					"Campo obrigatório.");
-			errors = true;
-		}
-		
-		if (componente.getCodigo().length() < 6 || componente.getCodigo().length() > 12) {
-			result.rejectValue("codigo", "Repeat.componente.codigo",
-					"O código do Componente Curricular deve ter entre 5 e 12 caracteres");
-			errors = true;
-		}
-		
-		if (componente.getCodigo().matches("^[A-Za-z0-9]")) {
-			result.rejectValue("codigo", "Repeat.componente.codigo",
-					"O campo código do Componente Curricular não pode possuir caracteres especiais.");
+
+		if (componenteCurricularService.getComponenteCurricularByNome(componente.getNome()) != null) {
+			result.rejectValue("nome", "Repeat.componente.nome", "Já existe um componente curricular com esse nome");
 			errors = true;
 		}
 
@@ -145,38 +137,14 @@ public class ComponenteCurricularController {
 					"Já existe um componente curricular com esse código");
 			errors = true;
 		}
-		if (componente.getNome().trim().isEmpty()) {
-			result.rejectValue("nome", "Repeat.componente.nome",
-					"Campo obrigatório.");
-			errors = true;
-		}
-		if (componenteCurricularService.getComponenteCurricularByNome(componente.getNome()
-				.toUpperCase()) != null) {
-			result.rejectValue("nome", "Repeat.componente.nome",
-					"Já existe um componente curricular com esse nome");
-			errors = true;
-		}
-		
-		if (componente.getChPratica() == null) {
-			result.rejectValue("chPratica", "Repeat.componente.chPratica",
-					"Campo obrigatório.");
-			errors = true;
-		}
-		
-		if (componente.getChTeorica() == null) {
-			result.rejectValue("chTeorica", "Repeat.componente.chTeorica",
-					"Campo obrigatório.");
-			errors = true;
-		}
-		
-		if(errors == true){
+
+		if (analiseComponente(componente, result, redirectAttributes, errors)) {
 			return "componente/adicionar";
 		}
 
 		componente.setNome(componente.getNome().toUpperCase());
 		componenteCurricularService.save(componente);
-		redirectAttributes.addFlashAttribute("info",
-				"Componente curricular adicionado com sucesso.");
+		redirectAttributes.addFlashAttribute("info", "Componente curricular adicionado com sucesso.");
 		return "redirect:/componente/listar";
 	}
 
@@ -184,8 +152,7 @@ public class ComponenteCurricularController {
 	public String vincular(@PathVariable("id") Integer id, ModelMap modelMap) {
 		List<Titulo> listaIdTitulo;
 		List<Titulo> complementar;
-		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class,
-				id);
+		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class, id);
 		List<Titulo> titulos = this.tituloService.find(Titulo.class);
 		if (componente == null) {
 			return "redirect:/componente/listar";
@@ -209,46 +176,46 @@ public class ComponenteCurricularController {
 		modelMap.addAttribute("componente", componente);
 		return "componente/vincularBibliografia";
 	}
-	
+
 	@RequestMapping(value = "/{id}/visualizar", method = RequestMethod.GET)
 	public String visualizar(@PathVariable("id") Integer id, ModelMap modelMap) {
 		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class, id);
-		
+
 		if (componente == null)
 			return "redirect:/componente/listar";
-		
+
 		List<Titulo> basica = new ArrayList<Titulo>();
 		List<Titulo> complementar = new ArrayList<Titulo>();
-		
+
 		List<Bibliografia> bibliografias = componente.getBibliografias();
-		
+
 		for (Bibliografia b : bibliografias) {
 			if (b.getTipoBibliografia().equals(ComponenteCurricularController.BASICA))
 				basica.add(b.getTitulo());
-			
+
 			else if (b.getTipoBibliografia().equals(ComponenteCurricularController.COMPLEMENTAR))
 				complementar.add(b.getTitulo());
 		}
-		
+
 		List<IntegracaoCurricular> curriculos = componente.getCurriculos();
-		
+
 		HashMap<String, List<MetaCalculada>> metasCalculadasPorTitulo = new HashMap<String, List<MetaCalculada>>();
-		
+
 		List<ResultadoCalculo> resultados = calculoService.gerarCalculo();
-		
+
 		for (Bibliografia b : bibliografias) {
 			metasCalculadasPorTitulo.put(b.getTitulo().getNome(), new ArrayList<MetaCalculada>());
-			for(ResultadoCalculo resultadoCalculo : resultados){
-				if(resultadoCalculo.getTitulo().getId().equals(b.getTitulo().getId())){
-					for(MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()){
-						for(DetalheMetaCalculada detalheMetaCalculada: metaCalculada.getDetalhePar()){
-							if(detalheMetaCalculada.getComponenteCurricular().equals(componente.getNome())){
+			for (ResultadoCalculo resultadoCalculo : resultados) {
+				if (resultadoCalculo.getTitulo().getId().equals(b.getTitulo().getId())) {
+					for (MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()) {
+						for (DetalheMetaCalculada detalheMetaCalculada : metaCalculada.getDetalhePar()) {
+							if (detalheMetaCalculada.getComponenteCurricular().equals(componente.getNome())) {
 								metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
 								break;
 							}
 						}
-						for(DetalheMetaCalculada detalheMetaCalculada: metaCalculada.getDetalheImpar()){
-							if(detalheMetaCalculada.getComponenteCurricular().equals(componente.getNome())){
+						for (DetalheMetaCalculada detalheMetaCalculada : metaCalculada.getDetalheImpar()) {
+							if (detalheMetaCalculada.getComponenteCurricular().equals(componente.getNome())) {
 								metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
 								break;
 							}
@@ -257,67 +224,111 @@ public class ComponenteCurricularController {
 				}
 			}
 		}
-		
+
 		modelMap.addAttribute("bibliografia_basica", basica);
 		modelMap.addAttribute("bibliografia_complementar", complementar);
 		modelMap.addAttribute("metasCalculadas", metasCalculadasPorTitulo);
 		modelMap.addAttribute("curriculos", curriculos);
 		modelMap.addAttribute("componente", componente);
-		
+
 		return "componente/visualizar";
 	}
 
-
-	public List<Bibliografia> atualizaOuCriaBibligrafia (String[] listaIdTitulo, List<Bibliografia> bibliografiasAseremModificadas, ComponenteCurricular componente, String tipoBibliografia){
+	public List<Bibliografia> atualizaOuCriaBibligrafia(String[] listaIdTitulo,
+			List<Bibliografia> bibliografiasAseremModificadas, ComponenteCurricular componente,
+			String tipoBibliografia) {
 		int id_titulo;
-		
-		if(!listaIdTitulo[0].isEmpty()){
-		for (int i = 0; i < listaIdTitulo.length; i++) {
-			id_titulo = Integer.parseInt(listaIdTitulo[i]);
-			for (int j = 0; j < bibliografiasAseremModificadas.size(); j++) {
-				if (bibliografiasAseremModificadas.get(j).getTitulo().getId() == id_titulo) {
-					if (!bibliografiasAseremModificadas.get(j).getTipoBibliografia().equals(tipoBibliografia)) {
-						bibliografiasAseremModificadas.get(j).setTipoBibliografia(tipoBibliografia);
-						bibliografiaService.update(bibliografiasAseremModificadas.get(j));
-						bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
-						listaIdTitulo[i]=null;
-						j=bibliografiasAseremModificadas.size()+1;
-						
-					}else{
-						bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
-						listaIdTitulo[i]=null;
+
+		if (!listaIdTitulo[0].isEmpty()) {
+			for (int i = 0; i < listaIdTitulo.length; i++) {
+				id_titulo = Integer.parseInt(listaIdTitulo[i]);
+				for (int j = 0; j < bibliografiasAseremModificadas.size(); j++) {
+					if (bibliografiasAseremModificadas.get(j).getTitulo().getId() == id_titulo) {
+						if (!bibliografiasAseremModificadas.get(j).getTipoBibliografia().equals(tipoBibliografia)) {
+							bibliografiasAseremModificadas.get(j).setTipoBibliografia(tipoBibliografia);
+							bibliografiaService.update(bibliografiasAseremModificadas.get(j));
+							bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
+							listaIdTitulo[i] = null;
+							j = bibliografiasAseremModificadas.size() + 1;
+
+						} else {
+							bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
+							listaIdTitulo[i] = null;
+						}
+
 					}
-					
-				} 
+				}
+				if (listaIdTitulo[i] != null) {
+					Bibliografia biblio = new Bibliografia();
+					biblio.setComponenteCurricular(componente);
+					biblio.setTitulo(tituloService.find(Titulo.class, id_titulo));
+					biblio.setTipoBibliografia(tipoBibliografia);
+					bibliografiaService.save(biblio);
+				}
 			}
-			if (listaIdTitulo[i]!=null){
-				Bibliografia biblio = new Bibliografia();
-				biblio.setComponenteCurricular(componente);
-				biblio.setTitulo(tituloService.find(Titulo.class, id_titulo));
-				biblio.setTipoBibliografia(tipoBibliografia);
-				bibliografiaService.save(biblio);
-			} 
-		}
 		}
 		return bibliografiasAseremModificadas;
 	}
-	
+
 	@RequestMapping(value = "/vincular", method = RequestMethod.POST)
-	public String vincular(@RequestParam("basica") String basica, @RequestParam("complementar") String complementar, @RequestParam("idComponente") Integer idComponente) {
+	public String vincular(@RequestParam("basica") String basica, @RequestParam("complementar") String complementar,
+			@RequestParam("idComponente") Integer idComponente) {
 		String[] basicaArray = basica.split(",");
-		
+
 		String[] complementarArray = complementar.split(",");
 
-
-		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class,idComponente);
+		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class,
+				idComponente);
 		List<Bibliografia> bibliografiaLista = componente.getBibliografias();
-		
-		bibliografiaLista = atualizaOuCriaBibligrafia(basicaArray, bibliografiaLista, componente, ComponenteCurricularController.BASICA);
-		bibliografiaLista = atualizaOuCriaBibligrafia(complementarArray, bibliografiaLista, componente, ComponenteCurricularController.COMPLEMENTAR);
+
+		bibliografiaLista = atualizaOuCriaBibligrafia(basicaArray, bibliografiaLista, componente,
+				ComponenteCurricularController.BASICA);
+		bibliografiaLista = atualizaOuCriaBibligrafia(complementarArray, bibliografiaLista, componente,
+				ComponenteCurricularController.COMPLEMENTAR);
 		for (int i = 0; i < bibliografiaLista.size(); i++) {
 			bibliografiaService.delete(bibliografiaLista.get(i));
 		}
 		return "/componente/listar";
+	}
+
+	private boolean analiseComponente(ComponenteCurricular componente, BindingResult result,
+			RedirectAttributes redirectAttributes, boolean errors) {
+
+		if (componente.getCodigo().trim().isEmpty()) {
+			result.rejectValue("codigo", "Repeat.componente.codigo", "Campo obrigatório.");
+			errors = true;
+		}
+
+		if (componente.getCodigo().length() < 5 || componente.getCodigo().length() > 12) {
+			result.rejectValue("codigo", "Repeat.componente.codigo",
+					"O código do Componente Curricular deve ter entre 5 e 12 caracteres");
+			errors = true;
+		}
+
+		if (componente.getChPratica() == null) {
+			result.rejectValue("chPratica", "Repeat.componente.chPratica", "Campo obrigatório.");
+			errors = true;
+		}
+
+		if (componente.getChTeorica() == null) {
+			result.rejectValue("chTeorica", "Repeat.componente.chTeorica", "Campo obrigatório.");
+			errors = true;
+		}
+
+		Pattern estruturaCodigo = Pattern.compile("[^A-Za-z0-9 ]");
+		Matcher matcher = estruturaCodigo.matcher(componente.getCodigo());
+		if (matcher.find()) {
+			result.rejectValue("codigo", "Repeat.componente.codigo",
+					"O campo código do Componente Curricular não pode possuir caracteres especiais.");
+			errors = true;
+		}
+
+		if (componente.getNome().trim().isEmpty()) {
+			result.rejectValue("nome", "Repeat.componente.nome", "Campo obrigatório.");
+			errors = true;
+		}
+
+		return errors;
 	}
 
 }
