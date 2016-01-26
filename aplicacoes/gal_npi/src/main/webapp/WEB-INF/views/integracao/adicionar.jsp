@@ -31,13 +31,7 @@
 				<label for="componente" class="col-sm-2 control-label">Selecione
 					Componente</label>
 				<div class="col-sm-10">
-					<select id="selectComponente" class="form-control"
-						placeholder="Código componente" path="componente" required="true">
-						<c:forEach items="${componentes}" var="componente">
-							<option value="${componente.codigo}">${componente.codigo} - ${componente.nome}</option>
-						</c:forEach>
-					</select>
-					<!--
+		
 					<form:select id="selectComponente" class="form-control"
 						placeholder="Código componente" path="componente" required="true">
 						<form:option value="nenhuma">Selecione o componente</form:option>
@@ -49,7 +43,6 @@
 
 					<!-- 					<select class="disciplinas form-control"> -->
 					<!-- 					</select> -->
-					-->
 					<form:errors path="componente" cssClass="error" />
 				</div>
 			</div>

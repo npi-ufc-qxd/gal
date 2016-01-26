@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "bibliografias")
 @IdClass(BibliografiaId.class)
-public class Bibliografia {
+public class Bibliografia implements Comparable<Object>{
 
 	@Id
 	@ManyToOne
@@ -26,6 +26,9 @@ public class Bibliografia {
 
 	@Column(name = "tipo_bibliografia")
 	private String tipoBibliografia;
+	
+	@Column(name = "posicao")
+	private Integer posicao;
 
 	public ComponenteCurricular getComponenteCurricular() {
 		return componente;
@@ -51,7 +54,13 @@ public class Bibliografia {
 		this.tipoBibliografia = tipoBibliografia;
 	}
 	
-	
+	public Integer getPosicao() {
+		return posicao;
+	}
+
+	public void setPosicao(int posicao) {
+		this.posicao = posicao;
+	}
 
 	@Override
 	public String toString() {
@@ -60,5 +69,16 @@ public class Bibliografia {
 		 ", id_titulo="
 		 + titulo + ", componente=" + getComponenteCurricular() + ", titulo="
 		 + getTitulo() + ", tipoBibliografia=" + tipoBibliografia + "]";
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		Bibliografia aux = (Bibliografia )o;
+		if(this.posicao  > aux.posicao) {
+			return 1;
+		} else if(this.posicao  < aux.posicao) {
+			return -1;
+		}
+		return 0;
 	}
 }
