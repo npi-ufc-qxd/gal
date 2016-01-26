@@ -6,9 +6,10 @@ $( document ).ready(function() {
 		format: "dd/mm/yyyy",
 	});
 	
-	// remove acentos para auxiliar na busca dentro do datatable
+	// remove acentos de strings
 	function removeAcentos(data){
-		return ! data ?
+		console.log(data);
+		var r = !data ?
 		        '' :
 		        typeof data === 'string' ?
 		            data
@@ -21,9 +22,9 @@ $( document ).ready(function() {
 		                .replace( /ç/g, 'c' )
 		                .replace( /\n/g, ' ' ) :
 		            data;
+		return r;
 	}
 	
-	// não está funcionando na tabela de componentes curriculares
 	$.fn.DataTable.ext.type.search.string = removeAcentos;
     
 	$('table.table-orderable').each(function(){
@@ -80,6 +81,13 @@ $( document ).ready(function() {
 			"columnDefs": [ { "orderable": false, "targets": no_sort_fields } ],
 			"destroy": true,
 		});
+	});
+	
+	// Clicando no nome da disciplina exibe sua visualização
+	$('td.nomeDisciplina').click(function(){
+		var idComponente = $(this).attr('idComponente');
+		var urlDisciplina = '/' + getAppName() + '/componente/' + idComponente + '/visualizar';
+		$(location).attr("href", urlDisciplina);
 	});
 	
 	$('#expandirTodosAccordions').click(function(){
