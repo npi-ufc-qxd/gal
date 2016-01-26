@@ -31,7 +31,6 @@ $( document ).ready(function() {
 		// testa se existe o atributo default_sort no elemento
 		if(typeof default_sort !== typeof undefined && default_sort !== false)
 			default_sort = [default_sort.split(' ')];
-
 		else
 			default_sort = [];
 		
@@ -45,8 +44,23 @@ $( document ).ready(function() {
 				no_sort_fields[i] = Number(no_sort_fields[i]);
 			}
 		}
+		
 		else
 			no_sort_fields = [];
+		
+		var attr_paging = $(this).attr('paging');
+		if(typeof attr_paging !== typeof undefined){
+			if(attr_paging === "false")
+				attr_paging = false;
+		}
+		else attr_paging = true;
+		
+		var attr_searching = $(this).attr('searching');
+		if(typeof attr_searching !== typeof undefined){
+			if (attr_searching === "false")
+				attr_searching = false;
+		}
+		else attr_searching = true;
 		
 		
 		$(this).dataTable({
@@ -79,8 +93,23 @@ $( document ).ready(function() {
 			"order": default_sort,
 			"columnDefs": [ { "orderable": false, "targets": no_sort_fields } ],
 			"destroy": true,
+			"paging": attr_paging,
+			"searching": attr_searching
 		});
 	});
+	
+	$('#submitEditarTitulo').click(function(){
+		$('#formfieldtitulo').submit();
+	});
+	
+	$('.form-control').on("keyup",function(){
+		 
+		document.getElementById("nome").value = document.getElementById("autor").value + " " + document.getElementById("nome_titulo").value + " " +document.getElementById("titulo_n").value + 
+												" " + document.getElementById("sub_titulo").value +	" " + document.getElementById("titulo_revista").value + " " + document.getElementById("pagina").value + " " + document.getElementById("ref_artigo").value +
+												" " + document.getElementById("edicao").value + " " + document.getElementById("publicador").value;
+		console.error(document.getElementById("nome").value);
+	});
+
 	
 	// Clicando no nome da disciplina exibe sua visualização
 	$('td.nomeDisciplina').click(function(){
@@ -200,4 +229,27 @@ function getAppName() {
 	var url = location.pathname;
 	url = url.split("/");
 	return url[1];
+
 }
+
+$().
+
+/*mostra a quantidade de exemplares que um titulo possui*/
+$(".open-AddQtdExemplares").on("click", function() {
+	var acervo = $(this).data('id');
+	var mensagem;
+	if (acervo > 0) {
+		mensagem = "Esse título possui " + acervo + " exemplares, tem certeza de que deseja exclui-lo?";
+	} else {
+		mensagem = "Tem certeza de que deseja excluir esse título?";
+	}
+	$("#mensagem").text(mensagem);
+});
+
+/*mostra o codigo do exemplar ao tentar exclui-lo*/
+$(".open-CodigoExemplar").on("click", function() {
+	var codigo = $(this).data('id');
+	var mensagem = "Tem certeza de que deseja excluir o exemplar " + codigo + " ?";
+	$("#mensagem").text(mensagem);
+});
+
