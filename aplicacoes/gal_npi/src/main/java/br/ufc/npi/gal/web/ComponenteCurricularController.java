@@ -27,6 +27,8 @@ import br.ufc.npi.gal.model.IntegracaoCurricular;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.CalculoMetaService;
 import br.ufc.npi.gal.service.ComponenteCurricularService;
+import br.ufc.npi.gal.service.EstruturaCurricularService;
+import br.ufc.npi.gal.service.IntegracaoCurricularService;
 import br.ufc.npi.gal.service.MetaCalculada;
 import br.ufc.npi.gal.service.ResultadoCalculo;
 import br.ufc.npi.gal.service.TituloService;
@@ -47,6 +49,9 @@ public class ComponenteCurricularController {
 
 	@Inject
 	private GenericService<Bibliografia> bibliografiaService;
+
+	@Inject
+	private IntegracaoCurricularService integracaoCurricularService;
 
 	private static final String COMPLEMENTAR = "Complementar";
 	private static final String BASICA = "Básica";
@@ -78,14 +83,14 @@ public class ComponenteCurricularController {
 		if (result.hasErrors()) {
 			return "componente/editar";
 		}
-		
+
 		if (componenteCurricularService.getOutraComponenteCurricularByCodigo(componente.getId(),
 				componente.getCodigo()) != null) {
 			result.rejectValue("codigo", "Repeat.componente.codigo",
 					"Já existe um componente curricular com esse código");
 			errors = true;
 		}
-		
+
 		if (componenteCurricularService.getOutraComponenteCurricularByNome(componente.getId(),
 				componente.getNome().toUpperCase()) != null) {
 			result.rejectValue("nome", "Repeat.componente.nome", "Já existe um componente curricular com esse nome");
@@ -106,10 +111,17 @@ public class ComponenteCurricularController {
 	@RequestMapping(value = "/{id}/excluir", method = RequestMethod.GET)
 	public String excluir(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
 		ComponenteCurricular componente = componenteCurricularService.find(ComponenteCurricular.class, id);
-		if (componente != null) {
-			this.componenteCurricularService.delete(componente);
-			redirectAttributes.addFlashAttribute("info", "Componente curricular removido com sucesso.");
+
+		if (integracaoCurricularService.getIntegracaoByIdComponente(id) == null) {
+			if (componente != null) {
+				this.componenteCurricularService.delete(componente);
+				redirectAttributes.addFlashAttribute("info", "Componente curricular removido com sucesso.");
+			}
+		} else {
+			redirectAttributes.addFlashAttribute("error", "O Componente Curricular (" + componente.getNome()
+					+ ") faz parte de Estruturas Curriculares de alguns cursos. Por favor, resolva estas dependências para tentar excluir este componente curricular.");
 		}
+
 		return "redirect:/componente/listar";
 	}
 
@@ -127,7 +139,7 @@ public class ComponenteCurricularController {
 			return "componente/adicionar";
 		}
 
-		if (componenteCurricularService.getComponenteCurricularByNome(componente.getNome()) != null) {
+		if (componenteCurricularService.getComponenteCurricularByNome(componente.getNome().toUpperCase()) != null) {
 			result.rejectValue("nome", "Repeat.componente.nome", "Já existe um componente curricular com esse nome");
 			errors = true;
 		}

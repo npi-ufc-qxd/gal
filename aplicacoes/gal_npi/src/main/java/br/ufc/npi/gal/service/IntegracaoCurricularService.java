@@ -6,4 +6,6 @@ import br.ufc.quixada.npi.service.GenericService;
 public interface IntegracaoCurricularService extends GenericService<IntegracaoCurricular> {
 
 	IntegracaoCurricular getIntegracaoByIdComponenteCurricularIdCurriculo(Integer idDisciplina, Integer idCurriculo);
+	
+	IntegracaoCurricular getIntegracaoByIdComponente(Integer idComponente);
 }
