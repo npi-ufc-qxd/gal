@@ -8,7 +8,6 @@ $( document ).ready(function() {
 	
 	// remove acentos de strings
 	function removeAcentos(data){
-		console.log(data);
 		var r = !data ?
 		        '' :
 		        typeof data === 'string' ?
