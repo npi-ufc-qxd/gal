@@ -31,24 +31,32 @@
 				<label for="componente" class="col-sm-2 control-label">Selecione
 					Componente</label>
 				<div class="col-sm-10">
+					<select id="selectComponente" class="form-control"
+						placeholder="Código componente" path="componente" required="true">
+						<c:forEach items="${componentes}" var="componente">
+							<option value="${componente.codigo}">${componente.codigo} - ${componente.nome}</option>
+						</c:forEach>
+					</select>
+					<!--
 					<form:select id="selectComponente" class="form-control"
 						placeholder="Código componente" path="componente" required="true">
 						<form:option value="nenhuma">Selecione o componente</form:option>
 						<c:forEach items="${componentes}" var="componente">
 							<form:option value="${componente.codigo}">${componente.codigo} - ${componente.nome}</form:option>
-						</c:forEach>		
-						
+						</c:forEach>
+
 					</form:select>
 
 					<!-- 					<select class="disciplinas form-control"> -->
 					<!-- 					</select> -->
-
+					-->
 					<form:errors path="componente" cssClass="error" />
 				</div>
 			</div>
-			
+
 			<div class="form-group">
-				<label for="semestreOferta" class="col-sm-2 control-label">Semestre oferta</label>
+				<label for="semestreOferta" class="col-sm-2 control-label">Semestre
+					oferta</label>
 				<div class="col-sm-10">
 					<form:select path="semestreOferta" class="form-control">
 						<c:forEach var="i" begin="1" end="${semestreMax}">
@@ -58,7 +66,7 @@
 					<form:errors path="semestreOferta" cssClass="error" />
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label for="natureza" class="col-sm-2 control-label">Natureza</label>
 				<div class="col-sm-10">
