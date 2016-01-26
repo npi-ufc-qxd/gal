@@ -159,50 +159,6 @@
 
 
 			<br><br><br><br>
-=======
-			<div class="form-group">
-				<label class="col-sm-1 control-label"style="width:210px;">Prazos Conclusão Períodos Letivos</label>
-				<div class="col-sm-9">
-				<label for="prazoConclusaoMinimo">Mínimo:</label>
-					<form:input id="prazoConclusaoMinimo" class="sidebyside" 
-						placeholder="Mínimo"
-						path="prazoConclusaoMinimo" />
-					<form:errors path="prazoConclusaoMinimo" cssClass="error" />
-				<label for="prazoConclusaoMedio">Médio:</label>
-					<form:input id="prazoConclusaoMedio" class="sidebyside" 
-						placeholder="Médio"
-						path="prazoConclusaoMedio" />
-					<form:errors path="prazoConclusaoMedio" cssClass="error" />
-				<label for="prazoConclusaoMaximo">Máximo:</label>
-					<form:input id="prazoConclusaoMaximo" class="sidebyside" 
-						placeholder="Máximo"
-						path="prazoConclusaoMaximo" />
-					<form:errors path="prazoConclusaoMaximo" cssClass="error" />
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-1 control-label"style="width:210px;">C.H. por Período Letivo (hrs)</label>
-				<div class="col-sm-9">
-				<label for="chPeriodoMinimo">Mínima:</label>
-					<form:input id="chPeriodoMinimo" class="sidebyside"
-						placeholder="Mínima"
-						path="chPeriodoMinimo" />
-					<form:errors path="chPeriodoMinimo" cssClass="error" />
-				<label for="chPeriodoMedio">Média:</label>
-					<form:input id="chPeriodoMedio" class="sidebyside"
-						placeholder="Média"
-						path="chPeriodoMedio" />
-					<form:errors path="chPeriodoMedio" cssClass="error" />
-				<label for="chPeriodoMaximo">Máxima:</label>
-					<form:input id="chPeriodoMaximo" class="sidebyside"
-						placeholder="Máxima"
-						path="chPeriodoMaximo" />
-					<form:errors path="chPeriodoMaximo" cssClass="error" />
-				</div>
-			</div>
-
-
->>>>>>> refs/remotes/origin/master
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit"
 					value="Adicionar" /> 
