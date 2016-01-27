@@ -33,6 +33,7 @@ public class LdapAuthentication implements AuthenticationProvider{
 		String username = authentication.getName();
         String password = (String) authentication.getCredentials();
         
+        
         br.ufc.quixada.npi.ldap.model.Usuario user = usuarioService.getByCpf(username);
         
 
