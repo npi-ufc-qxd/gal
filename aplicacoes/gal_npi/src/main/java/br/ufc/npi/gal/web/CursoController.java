@@ -95,7 +95,7 @@ public class CursoController {
 			}
 		} else {
 			redirectAttributes.addFlashAttribute("error", "O Curso " + curso.getNome()
-					+ " possui Estruturas Curriculares cadastradas, e portanto não pode ser removido. Por favor, resolva estas dependências e tente novamente.");
+					+ " possui Estruturas Curriculares cadastradas, e portanto, não pode ser removido. Por favor, resolva estas dependências e tente novamente.");
 		}
 
 		return PATH_REDIRECT_CURSO_LISTAR;
