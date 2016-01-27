@@ -207,14 +207,11 @@ function getAppName() {
 
 /*mostra a quantidade de exemplares que um titulo possui*/
 $(".open-AddQtdExemplares").on("click", function() {
-	console.log("Aqui");
 	var acervo = $(this).data('id');
 	var mensagem;
 	if (acervo > 0) {
-		console.log("Aqui > 0");
 		mensagem = "Esse título possui " + acervo + " exemplares, tem certeza de que deseja exclui-lo?";
 	} else {
-		console.log("Aqui else");
 		mensagem = "Tem certeza de que deseja excluir esse título?";
 	}
 	$("#mensagem").text(mensagem);
