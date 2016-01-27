@@ -237,8 +237,6 @@
 				</c:forEach>
 			</div>
 		</div>
-		>>>>>>> refs/heads/master
-
 
 		<jsp:include page="../fragments/footer.jsp" />
 

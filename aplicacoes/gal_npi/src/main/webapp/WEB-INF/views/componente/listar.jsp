@@ -64,7 +64,7 @@
 					</datatables:column>
 			
 					<datatables:column title="Codigo">
-						<c:out value="${componente.codigo}"></c:out>
+						<c:out value="${componente.codigo}"	></c:out>
 					</datatables:column>
 					
 					<datatables:column title="CH Prática">

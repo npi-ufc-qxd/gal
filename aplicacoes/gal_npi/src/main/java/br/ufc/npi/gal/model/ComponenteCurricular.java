@@ -1,5 +1,6 @@
 package br.ufc.npi.gal.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -53,6 +55,12 @@ public class ComponenteCurricular {
 
 	@Column(name = "tipo")
 	private String tipo;
+	
+	@Transient
+	public static final String COMPLEMENTAR = "Complementar";
+	
+	@Transient
+	public static final String BASICA = "Básica";
 
 	public String getTipo() {
 		return tipo;
@@ -126,5 +134,25 @@ public class ComponenteCurricular {
 
 	public void setChTeorica(Integer chTeorica) {
 		this.chTeorica = chTeorica;
+	}
+	
+	public List<Titulo> getTitulosBibliografiasBasicas() {
+		List<Titulo> titulos = new ArrayList<Titulo>();
+		for (Bibliografia bibliografia : this.bibliografias) {
+			if (BASICA.equals(bibliografia.getTipoBibliografia())) {
+				titulos.add(bibliografia.getTitulo());
+			}
+		}
+		return titulos;
+	}
+	
+	public List<Titulo> getTitulosBibliografiasComplementares() {
+		List<Titulo> titulos = new ArrayList<Titulo>();
+		for (Bibliografia bibliografia : this.bibliografias) {
+			if (COMPLEMENTAR.equals(bibliografia.getTipoBibliografia())) {
+				titulos.add(bibliografia.getTitulo());
+			}
+		}
+		return titulos;
 	}
 }

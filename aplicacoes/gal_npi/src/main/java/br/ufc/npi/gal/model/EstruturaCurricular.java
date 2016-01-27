@@ -15,12 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.print.DocFlavor.CHAR_ARRAY;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.annotation.Transient;
 
 @Entity
 @Table(name = "curriculo")
@@ -86,29 +85,29 @@ public class EstruturaCurricular{
 	@NotNull(message = "Campo obrigatório")
 	private Integer chPeriodoMaximo;
 
-	@javax.persistence.Transient
+	@Transient
 	private Integer chTotalMinima;
 
-	@javax.persistence.Transient
+	@Transient
 	private Integer chObrigatoria;
 
-	@javax.persistence.Transient
+	@Transient
 	private Integer chObgTeorica;
 
-	@javax.persistence.Transient
+	@Transient
 	private Integer chObgPratica;
 
-	@javax.persistence.Transient
+	@Transient
 	private Integer chAtvAcademicaEspecifica;
 
 	@Column(name = "ch_comp_opt_livres")
 	@NotNull(message = "Campo obrigatório")
 	private Integer chCompOptLivres;
 	
-	@javax.persistence.Transient
+	@Transient
 	public static final String NATUREZA = "OBRIGATORIA";
 	
-	@javax.persistence.Transient
+	@Transient
 	public static final List<String> TIPO_ATV_ESPECIFICA = new ArrayList<String>(
 			Arrays.asList("ESTAGIO", "TCC", "ATIVIDADES COMPLEMENTARES"));
 	
