@@ -273,6 +273,15 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	private Exemplar formatarExemplar(Sheet sheet, int i) {
 		Titulo titulo = new Titulo();
 		titulo.setIsbn(extrairIsbnDaCelula(sheet.getCell(COLUNA_ISBN, i).getContents()));
+		titulo.setAutor(sheet.getCell(COLUNA_AUTOR, i).getContents());
+		titulo.setTitulo(sheet.getCell(COLUNA_TITULO, i).getContents());
+		titulo.setTitulo_n(sheet.getCell(COLUNA_TITULO_N, i).getContents());
+		titulo.setTituloRevista(sheet.getCell(COLUNA_TITULO_REVISTA, i).getContents());
+		titulo.setSubTitulo(sheet.getCell(COLUNA_SUB_TITULO,i).getContents());
+		titulo.setPagina(sheet.getCell(COLUNA_PAGINA,i).getContents());
+		titulo.setEdicao(sheet.getCell(COLUNA_EDICAO,i).getContents());
+		titulo.setRefArtigo(sheet.getCell(COLUNA_REF_ARTIGO,i).getContents());
+		titulo.setPublicador(sheet.getCell(COLUNA_PUBLICADOR,i).getContents());
 		titulo.setNome(formatarNomeTitulo(sheet,i));
 		titulo.setTipo("Físico");
 		Exemplar exemplar = new Exemplar();
@@ -286,6 +295,15 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		Titulo titulo = new Titulo();
 		titulo.setIsbn(exemplarConflitante.getIsbn());
 		titulo.setNome(formatarNomeTitulo(exemplarConflitante));
+		titulo.setAutor(exemplarConflitante.getAutor());
+		titulo.setTitulo(exemplarConflitante.getTitulo());
+		titulo.setTitulo_n(exemplarConflitante.getTitulo_n());
+		titulo.setTituloRevista(exemplarConflitante.getTituloRevista());
+		titulo.setSubTitulo(exemplarConflitante.getSubTitulo());
+		titulo.setPagina(exemplarConflitante.getPagina());
+		titulo.setEdicao(exemplarConflitante.getEdicao());
+		titulo.setRefArtigo(exemplarConflitante.getRefArtigo());
+		titulo.setPublicador(exemplarConflitante.getPublicador());
 		titulo.setTipo("Físico");
 		exemplar.setTitulo(titulo);
 		exemplar.setCodigoExemplar(exemplarConflitante.getCodigoExemplar());
