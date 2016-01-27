@@ -306,21 +306,26 @@ public class ComponenteCurricularController {
 		if (componenteOrigem == null) {
 			return "redirect:/disciplina/listar";
 		}
+		List<Titulo> basica = componenteOrigem.getTitulosBibliografiasBasicas();
+		List<Titulo> complementar = componenteOrigem.getTitulosBibliografiasComplementares();
 
 		componenteDestino.setTipo(componenteOrigem.getTipo());
 		componenteDestino.setChPratica(componenteOrigem.getChPratica());
 		componenteDestino.setChTeorica(componenteOrigem.getChTeorica());
 		
 		modelMap.addAttribute("componente", componenteDestino);
-		modelMap.addAttribute("bibliografia_basica", componenteOrigem.getTitulosBibliografiasBasicas());
-		modelMap.addAttribute("bibliografia_complementar", componenteOrigem.getTitulosBibliografiasComplementares());
+		modelMap.addAttribute("bibliografia_basica", basica);
+		modelMap.addAttribute("bibliografia_complementar", complementar);
 		
 		return "componente/copiar";
 	}
 		
 	@RequestMapping(value = "/copiar", method = RequestMethod.POST)
 	public String copiar(@ModelAttribute("componente") ComponenteCurricular componente,
+			@RequestParam("bibliografia_basica") String[] basica, 
+			@RequestParam("bibliografia_complementar") String[] complementar,
 			BindingResult result, RedirectAttributes redirectAttributes) {
+		
 		
 		boolean errors = false;
 		
@@ -369,7 +374,28 @@ public class ComponenteCurricularController {
 		componente.setNome(componente.getNome().toUpperCase());
 		componenteCurricularService.save(componente);
 		
+		
+		criarBibliografias(basica, componente, ComponenteCurricular.BASICA);
+		criarBibliografias(complementar, componente, ComponenteCurricular.COMPLEMENTAR);
+		
 		return "redirect:/componente/"+componente.getId()+"/visualizar";
+	}
+	
+	private void criarBibliografias(String[] titulos, ComponenteCurricular componente, String tipo) {
+		
+		/*Essa comparação titulos.length > 1 é necessária, pois quando o array não possui nenhum
+		titulo, a primeira posição vem preenchida com um array vazio.*/
+		if(titulos.length > 1) {
+			int id_titulo;
+			for(int i = 0; i < titulos.length; i+=3) {
+				id_titulo = Integer.parseInt(titulos[i].substring(titulos[i].indexOf('=')+1));
+				Bibliografia biblio = new Bibliografia();
+				biblio.setComponenteCurricular(componente);
+				biblio.setTitulo(tituloService.find(Titulo.class, id_titulo));
+				biblio.setTipoBibliografia(tipo);
+				bibliografiaService.save(biblio);
+				}
+			}
 	}
 
 }

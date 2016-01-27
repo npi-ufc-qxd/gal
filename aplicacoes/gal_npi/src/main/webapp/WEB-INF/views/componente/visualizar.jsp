@@ -51,7 +51,7 @@
 				<div id="button-add">
 					<a href="<c:url value="/componente/${componente.id}/copiar" ></c:url>">
 						<button class="btn btn-primary">
-							<!-- <span class="glyphicon glyphicon-plus"></span> -->Copiar Componente Curricular
+							<span class="glyphicon glyphicon-copy"></span> Copiar Componente Curricular
 						</button>
 					</a>
 				</div>
