@@ -232,8 +232,6 @@ function getAppName() {
 
 }
 
-$().
-
 /*mostra a quantidade de exemplares que um titulo possui*/
 $(".open-AddQtdExemplares").on("click", function() {
 	var acervo = $(this).data('id');
