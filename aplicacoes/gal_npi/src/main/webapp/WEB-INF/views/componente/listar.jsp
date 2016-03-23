@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="datatables"
-	uri="http://github.com/dandelion/datatables"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -57,65 +55,74 @@
 
 		<c:if test="${not empty componentes}">
 			<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
-				<datatables:table id="disciplinaTable" data="${componentes}" cdn="false"
-					row="componente" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="5 6 7" default-sort="0 asc">
-					<datatables:column title="Nome">
-						<a class="adark" href="<c:url value="/componente/${componente.id }/visualizar" ></c:url>" ><c:out value="${componente.nome}"></c:out></a>
-					</datatables:column>
-			
-					<datatables:column title="Codigo">
-						<c:out value="${componente.codigo}"></c:out>
-					</datatables:column>
-					
-					<datatables:column title="CH Prática">
-						<c:out value="${componente.chPratica}"></c:out>
-					</datatables:column>
-					<datatables:column title="CH Teórica">
-						<c:out value="${componente.chTeorica}"></c:out>
-					</datatables:column>
-					<datatables:column title="Tipo">
-						<c:out value="${componente.tipo}"></c:out>
-					</datatables:column>
-						
-					<datatables:column title="Vincular">
-						<a class="btn btn-success" href="<c:url value="/componente/${componente.id }/vincular" ></c:url>"><span class="glyphicon glyphicon-link"></span></a>
-					</datatables:column>
-							
-					<datatables:column title="Editar">
-						<a class="btn btn-primary" href="<c:url value="/componente/${componente.id }/editar" ></c:url>"><span class="glyphicon glyphicon-edit"></span></a>
-					</datatables:column>
-				
-					<datatables:column title="Excluir">
-						<a id="excluir" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/componente/${componente.id}/excluir" ></c:url>">
-							<span class="glyphicon glyphicon-trash"></span>
-						</a>	
-					</datatables:column>
-				</datatables:table>
+				<table id="disciplinaTable" class="table table-striped table-orderable" no-sort-fields="5 6 7" default-sort="0 asc">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Código</th>
+							<th>CH Prática</th>
+							<th>CH Teórica</th>
+							<th>Tipo</th>
+							<th>Vincular</th>
+							<th>Editar</th>
+							<th>Excluir</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="componente" items="${componentes}">
+							<tr>
+								<td class="nomeDisciplina" idComponente="${componente.id}">
+									<c:out value="${componente.nome}"></c:out>
+								</td>
+								<td><c:out value="${componente.codigo}"></c:out></td>
+								<td><c:out value="${componente.chPratica}"></c:out></td>
+								<td><c:out value="${componente.chTeorica}"></c:out></td>
+								<td><c:out value="${componente.tipo}"></c:out></td>
+								<td>
+									<a class="btn btn-success" href="<c:url value="/componente/${componente.id}/vincular"></c:url>">
+										<span class="glyphicon glyphicon-link"></span>
+									</a>
+								</td>
+								<td>
+									<a class="btn btn-primary" href="<c:url value="/componente/${componente.id}/editar" ></c:url>">
+										<span class="glyphicon glyphicon-edit"></span>
+									</a>
+								</td>
+								<td>
+									<a id="excluir" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/componente/${componente.id}/excluir" ></c:url>">
+										<span class="glyphicon glyphicon-trash"></span>
+									</a>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 			</sec:authorize>
 			<sec:authorize access="!hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
-				<datatables:table id="disciplinaTable" data="${componentes}" cdn="false"
-					row="componente" theme="bootstrap2" cssClass="table table-striped table-orderable" default-sort="0 asc">
-					
-					<datatables:column title="Nome">
-						<a class="adark" href="<c:url value="/componente/${componente.id }/visualizar" ></c:url>" >
-							<c:out value="${componente.nome}"></c:out>
-						</a>
-					</datatables:column>
-			
-					<datatables:column title="Codigo">
-						<c:out value="${componente.codigo}"></c:out>
-					</datatables:column>
-					
-					<datatables:column title="CH Pratica">
-						<c:out value="${componente.chPratica}"></c:out>
-					</datatables:column>
-					<datatables:column title="CH Teorica">
-						<c:out value="${componente.chTeorica}"></c:out>
-					</datatables:column>
-					<datatables:column title="Tipo">
-						<c:out value="${componente.tipo}"></c:out>
-					</datatables:column>
-				</datatables:table>
+				<table id="disciplinaTable" class="table table-striped table-orderable" default-sort="0 asc">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Código</th>
+							<th>CH Prática</th>
+							<th>CH Teórica</th>
+							<th>Tipo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="componente" items="${componentes}">
+							<tr>
+								<td class="nomeDisciplina" idComponente="${componente.id}">
+									<c:out value="${componente.nome}"></c:out>
+								</td>
+								<td><c:out value="${componente.codigo}"></c:out></td>
+								<td><c:out value="${componente.chPratica}"></c:out></td>
+								<td><c:out value="${componente.chTeorica}"></c:out></td>
+								<td><c:out value="${componente.tipo}"></c:out></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 			</sec:authorize>
 		</c:if>
 

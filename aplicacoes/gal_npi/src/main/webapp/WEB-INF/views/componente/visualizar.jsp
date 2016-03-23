@@ -57,7 +57,7 @@
 			
 			<c:if test="${not empty curriculos}">
 				<div class="row">
-					<div class="col-md-7">
+					<div class="col-md-8">
 						<table class="table table-condensed table-striped table-bordered">
 							<thead>
 								<tr>

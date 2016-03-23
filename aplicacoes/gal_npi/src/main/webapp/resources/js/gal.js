@@ -5,6 +5,26 @@ $( document ).ready(function() {
 		autoclose: true,
 		format: "dd/mm/yyyy",
 	});
+	
+	// remove acentos de strings
+	function removeAcentos(data){
+		var r = !data ?
+		        '' :
+		        typeof data === 'string' ?
+		            data
+		            	.toLowerCase()
+	                	.replace( /[áàäâãÁÀÄÂÃ]/g, 'a' )
+	                	.replace( /[óòöôõÓÒÖÔÕ]/g, 'o' )
+	                	.replace( /[éèëêÉÈËÊ]/g, 'e' )
+	                	.replace( /[íìïîÍÌÏÎ]/g, 'i' )
+	                	.replace( /[úùüûÚÙÜÛ]/g, 'u' )
+		                .replace( /ç/g, 'c' )
+		                .replace( /\n/g, ' ' ) :
+		            data;
+		return r;
+	}
+	
+	$.fn.DataTable.ext.type.search.string = removeAcentos;
     
 	$('table.table-orderable').each(function(){
 		var default_sort = $(this).attr('default-sort');
@@ -76,6 +96,26 @@ $( document ).ready(function() {
 			"paging": attr_paging,
 			"searching": attr_searching
 		});
+	});
+	
+	$('#submitEditarTitulo').click(function(){
+		$('#formfieldtitulo').submit();
+	});
+	
+	$('.form-control').on("keyup",function(){
+		 
+		document.getElementById("nome").value = document.getElementById("autor").value + " " + document.getElementById("nome_titulo").value + " " +document.getElementById("titulo_n").value + 
+												" " + document.getElementById("sub_titulo").value +	" " + document.getElementById("titulo_revista").value + " " + document.getElementById("pagina").value + " " + document.getElementById("ref_artigo").value +
+												" " + document.getElementById("edicao").value + " " + document.getElementById("publicador").value;
+		console.error(document.getElementById("nome").value);
+	});
+
+	
+	// Clicando no nome da disciplina exibe sua visualização
+	$('td.nomeDisciplina').click(function(){
+		var idComponente = $(this).attr('idComponente');
+		var urlDisciplina = '/' + getAppName() + '/componente/' + idComponente + '/visualizar';
+		$(location).attr("href", urlDisciplina);
 	});
 	
 	$('#expandirTodosAccordions').click(function(){
@@ -189,4 +229,27 @@ function getAppName() {
 	var url = location.pathname;
 	url = url.split("/");
 	return url[1];
+
 }
+
+$().
+
+/*mostra a quantidade de exemplares que um titulo possui*/
+$(".open-AddQtdExemplares").on("click", function() {
+	var acervo = $(this).data('id');
+	var mensagem;
+	if (acervo > 0) {
+		mensagem = "Esse título possui " + acervo + " exemplares, tem certeza de que deseja exclui-lo?";
+	} else {
+		mensagem = "Tem certeza de que deseja excluir esse título?";
+	}
+	$("#mensagem").text(mensagem);
+});
+
+/*mostra o codigo do exemplar ao tentar exclui-lo*/
+$(".open-CodigoExemplar").on("click", function() {
+	var codigo = $(this).data('id');
+	var mensagem = "Tem certeza de que deseja excluir o exemplar " + codigo + " ?";
+	$("#mensagem").text(mensagem);
+});
+

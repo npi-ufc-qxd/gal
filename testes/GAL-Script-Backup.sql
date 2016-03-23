@@ -11120,6 +11120,21 @@ UPDATE componentes set tipo='DISCIPLINA';
 
 UPDATE integracao_curricular set natureza='Obrigatória';
 
+SELECT pg_catalog.setval(pg_get_serial_sequence('componentes', 'id_c'), (SELECT MAX(id_c) FROM componentes)+1);
+
+SELECT pg_catalog.setval(pg_get_serial_sequence('curriculo', 'id_c'), (SELECT MAX(id_c) FROM curriculo)+1);
+
+SELECT pg_catalog.setval(pg_get_serial_sequence('curso', 'id_crs'), (SELECT MAX(id_crs) FROM curso)+1);
+
+SELECT pg_catalog.setval(pg_get_serial_sequence('exemplarconflitante', 'id_ef'), (SELECT MAX(id_ef) FROM exemplarconflitante)+1);
+
+SELECT pg_catalog.setval(pg_get_serial_sequence('exemplares', 'id_e'), (SELECT MAX(id_e) FROM exemplares)+1);
+
+SELECT pg_catalog.setval(pg_get_serial_sequence('meta', 'id_mt'), (SELECT MAX(id_mt) FROM meta)+1);
+
+SELECT pg_catalog.setval(pg_get_serial_sequence('titulos', 'id_t'), (SELECT MAX(id_t) FROM titulos)+1);
+
+SELECT pg_catalog.setval(pg_get_serial_sequence('usuario', 'id'), (SELECT MAX(id) FROM usuario)+1);
 
 --
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
