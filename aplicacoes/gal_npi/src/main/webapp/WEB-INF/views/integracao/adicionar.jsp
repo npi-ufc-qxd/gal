@@ -89,7 +89,7 @@
 				</label>
 				<div class="col-sm-10">
 					<form:textarea id="observacoes" class="form-control" rows="2"
-						placeholder="Observações" path="observacoes" required="false" />
+						placeholder="Observações" path="observacoes" />
 					<form:errors path="observacoes" cssClass="error" />
 				</div>
 			</div>
