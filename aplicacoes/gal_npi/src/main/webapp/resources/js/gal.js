@@ -5,6 +5,26 @@ $( document ).ready(function() {
 		autoclose: true,
 		format: "dd/mm/yyyy",
 	});
+	
+	// remove acentos de strings
+	function removeAcentos(data){
+		var r = !data ?
+		        '' :
+		        typeof data === 'string' ?
+		            data
+		            	.toLowerCase()
+	                	.replace( /[áàäâãÁÀÄÂÃ]/g, 'a' )
+	                	.replace( /[óòöôõÓÒÖÔÕ]/g, 'o' )
+	                	.replace( /[éèëêÉÈËÊ]/g, 'e' )
+	                	.replace( /[íìïîÍÌÏÎ]/g, 'i' )
+	                	.replace( /[úùüûÚÙÜÛ]/g, 'u' )
+		                .replace( /ç/g, 'c' )
+		                .replace( /\n/g, ' ' ) :
+		            data;
+		return r;
+	}
+	
+	$.fn.DataTable.ext.type.search.string = removeAcentos;
     
 	$('table.table-orderable').each(function(){
 		var default_sort = $(this).attr('default-sort');
@@ -89,7 +109,6 @@ $( document ).ready(function() {
 												" " + document.getElementById("edicao").value + " " + document.getElementById("publicador").value;
 		console.error(document.getElementById("nome").value);
 	});
-
 	
 	$('#expandirTodosAccordions').click(function(){
 		$('.panel-collapse').collapse('show');
@@ -204,8 +223,6 @@ function getAppName() {
 	return url[1];
 
 }
-
-$().
 
 /*mostra a quantidade de exemplares que um titulo possui*/
 $(".open-AddQtdExemplares").on("click", function() {

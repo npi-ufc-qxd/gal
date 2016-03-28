@@ -18,5 +18,10 @@ public class IntegracaoCurricularServiceImpl extends GenericServiceImpl<Integrac
 	public IntegracaoCurricular getIntegracaoByIdComponenteCurricularIdCurriculo(Integer idDisciplina, Integer idCurriculo) {
 		return integracaoCurricularRepository.getIntegracao(idDisciplina, idCurriculo);
 	}
+
+	@Override
+	public IntegracaoCurricular getIntegracaoByIdComponente(Integer idComponente) {
+		return integracaoCurricularRepository.getIntegracaoIdComponente(idComponente);
+	}
 	
 }
