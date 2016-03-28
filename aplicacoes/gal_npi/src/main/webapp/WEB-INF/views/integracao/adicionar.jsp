@@ -22,31 +22,26 @@
 				path="estruturaCurricular" required="true" />
 
 			<div class="form-group">
-				<label class="control-label" style="font-size: 20px;">Vincular
-					Componente Curricular</label>
+				<label class="control-label" style="font-size: 20px;">Vincular Componente Curricular</label>
 			</div>
 
 			<div class="form-group">
 
-				<label for="componente" class="col-sm-2 control-label">Selecione
-					Componente</label>
+				<label for="componente" class="col-sm-2 control-label">Selecione Componente</label>
 				<div class="col-sm-10">
+					
 					<form:select id="selectComponente" class="form-control"
 						placeholder="Código componente" path="componente" required="true">
 						<form:option value="nenhuma">Selecione o componente</form:option>
 						<c:forEach items="${componentes}" var="componente">
 							<form:option value="${componente.codigo}">${componente.codigo} - ${componente.nome}</form:option>
-						</c:forEach>		
-						
+						</c:forEach>
 					</form:select>
-
-					<!-- 					<select class="disciplinas form-control"> -->
-					<!-- 					</select> -->
 
 					<form:errors path="componente" cssClass="error" />
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label for="semestreOferta" class="col-sm-2 control-label">Semestre oferta</label>
 				<div class="col-sm-10">
@@ -58,7 +53,7 @@
 					<form:errors path="semestreOferta" cssClass="error" />
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label for="natureza" class="col-sm-2 control-label">Natureza</label>
 				<div class="col-sm-10">
@@ -71,8 +66,7 @@
 			</div>
 
 			<div class="form-group">
-				<label for="quantidadeAlunos" class="col-sm-2 control-label">Quantidade
-					alunos</label>
+				<label for="quantidadeAlunos" class="col-sm-2 control-label">Quantidade de alunos</label>
 				<div class="col-sm-10">
 					<form:input id="quantidadeAlunos" class="form-control numeros"
 						placeholder="Quantidade alunos" maxlength="4"
@@ -85,8 +79,7 @@
 
 
 			<div class="form-group">
-				<label for="observacoes" class="col-sm-2 control-label">Observações
-				</label>
+				<label for="observacoes" class="col-sm-2 control-label">Observações</label>
 				<div class="col-sm-10">
 					<form:textarea id="observacoes" class="form-control" rows="2"
 						placeholder="Observações" path="observacoes" />
@@ -95,10 +88,10 @@
 			</div>
 
 			<div class="controls">
-				<input id="criar" class="btn btn-primary" type="submit"
-					value="Adicionar" /> <a
-					href="<c:url value="javascript:window.history.go(-1)"></c:url>"
-					class="btn btn-default">Cancelar</a>
+				<input id="criar" class="btn btn-primary" type="submit" value="Adicionar" />
+				<a href="<c:url value="javascript:window.history.go(-1)"></c:url>" class="btn btn-default">
+					Cancelar
+				</a>
 			</div>
 
 
