@@ -155,11 +155,6 @@ div#container {
 	color: #333;
 }
 
-.nomeDisciplina:hover{
-	cursor: pointer;
-	text-decoration: underline;
-}
-
 /* fix accordion visualizar disciplina */
 .disciplina-panel-heading{
 	padding-bottom: 9px !important;
