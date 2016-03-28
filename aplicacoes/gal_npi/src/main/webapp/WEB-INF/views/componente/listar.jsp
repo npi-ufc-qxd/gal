@@ -63,6 +63,7 @@
 							<th>CH Prática</th>
 							<th>CH Teórica</th>
 							<th>Tipo</th>
+							<th>Visualizar</th>
 							<th>Vincular</th>
 							<th>Editar</th>
 							<th>Excluir</th>
@@ -78,6 +79,11 @@
 								<td><c:out value="${componente.chPratica}"></c:out></td>
 								<td><c:out value="${componente.chTeorica}"></c:out></td>
 								<td><c:out value="${componente.tipo}"></c:out></td>
+								<td>
+									<a class="btn btn-info" href="<c:url value="/componente/${componente.id}/visualizar"></c:url>">
+										<span class="glyphicon glyphicon-eye-open"></span>
+									</a>
+								</td>
 								<td>
 									<a class="btn btn-success" href="<c:url value="/componente/${componente.id}/vincular"></c:url>">
 										<span class="glyphicon glyphicon-link"></span>
@@ -107,6 +113,7 @@
 							<th>CH Prática</th>
 							<th>CH Teórica</th>
 							<th>Tipo</th>
+							<th>Visualizar</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -119,6 +126,11 @@
 								<td><c:out value="${componente.chPratica}"></c:out></td>
 								<td><c:out value="${componente.chTeorica}"></c:out></td>
 								<td><c:out value="${componente.tipo}"></c:out></td>
+								<td>
+									<a class="btn btn-info" href="<c:url value="/componente/${componente.id}/visualizar"></c:url>">
+										<span class="glyphicon glyphicon-eye-open"></span>
+									</a>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
