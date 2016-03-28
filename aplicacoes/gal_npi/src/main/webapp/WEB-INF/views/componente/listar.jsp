@@ -55,42 +55,7 @@
 
 		<c:if test="${not empty componentes}">
 			<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
-				<datatables:table id="disciplinaTable" data="${componentes}" cdn="false"
-					row="componente" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="2 3 4" default-sort="0 asc">
-					<datatables:column title="Nome">
-						<a class="adark" href="<c:url value="/componente/${componente.id }/visualizar" ></c:url>" ><c:out value="${componente.nome}"></c:out></a>
-					</datatables:column>
-			
-					<datatables:column title="Codigo">
-						<c:out value="${componente.codigo}"	></c:out>
-					</datatables:column>
-					
-					<datatables:column title="CH Prática">
-						<c:out value="${componente.chPratica}"></c:out>
-					</datatables:column>
-					<datatables:column title="CH Teórica">
-						<c:out value="${componente.chTeorica}"></c:out>
-					</datatables:column>
-					<datatables:column title="Tipo">
-						<c:out value="${componente.tipo}"></c:out>
-					</datatables:column>
-						
-					<datatables:column title="Vincular">
-						<a class="btn btn-success" href="<c:url value="/componente/${componente.id }/vincular" ></c:url>"><span class="glyphicon glyphicon-link"></span></a>
-					</datatables:column>
-							
-					<datatables:column title="Editar">
-						<a class="btn btn-primary" href="<c:url value="/componente/${componente.id }/editar" ></c:url>"><span class="glyphicon glyphicon-edit"></span></a>
-					</datatables:column>
-				
-					<datatables:column title="Excluir">
-						<a id="excluir" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/componente/${componente.id}/excluir" ></c:url>">
-							<span class="glyphicon glyphicon-trash"></span>
-						</a>	
-					</datatables:column>
-				</datatables:table>
-				
-				<table id="disciplinaTable" class="table table-striped table-orderable" no-sort-fields="5 6 7" default-sort="0 asc">
+				<table id="disciplinaTable" class="table table-striped table-orderable" no-sort-fields="5 6 7 8" default-sort="0 asc">
 					<thead>
 						<tr>
 							<th>Nome</th>
