@@ -55,7 +55,7 @@
 
 		<c:if test="${not empty componentes}">
 			<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
-				<table id="disciplinaTable" class="table table-striped table-orderable" no-sort-fields="5 6 7" default-sort="0 asc">
+				<table id="disciplinaTable" class="table table-striped table-orderable" no-sort-fields="5 6 7 8" default-sort="0 asc">
 					<thead>
 						<tr>
 							<th>Nome</th>

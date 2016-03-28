@@ -48,6 +48,16 @@
 			<p>Código: <b>${componente.codigo}</b></p>
 			<p>Tipo: <b>${componente.tipo}</b></p>
 			
+			<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+				<div id="button-add">
+					<a href="<c:url value="/componente/${componente.id}/copiar" ></c:url>">
+						<button class="btn btn-primary">
+							<span class="glyphicon glyphicon-copy"></span> Copiar Componente Curricular
+						</button>
+					</a>
+				</div>
+			</sec:authorize>
+			
 			<hr>
 			
 			<h4>Integrações Curriculares</h4>

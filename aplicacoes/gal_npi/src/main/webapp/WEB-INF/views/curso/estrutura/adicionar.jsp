@@ -91,8 +91,6 @@
 				</div>
 			</div>
 			
-		
-			
 				<label>Prazos Conclusão Períodos Letivos</label><br><br>
 				
 				<div class="form-group">
