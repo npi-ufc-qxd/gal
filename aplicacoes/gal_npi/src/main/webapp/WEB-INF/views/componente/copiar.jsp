@@ -15,8 +15,7 @@
 		<form:form servletRelativeAction="/componente/copiar" method="post"
 			modelAttribute="componente" role="form" class="form-horizontal">
 
-			<input id="basica" value="${bibliografia_basica}" type="hidden" name="bibliografia_basica"/>
-			<input id="complementar" value="${bibliografia_complementar}" type="hidden" name="bibliografia_complementar"/>
+			<input id="origem" value="${id_componente_origem}" type="hidden" name="id_componente_origem"/>
 
 			<div class="form-group" style="text-align: center;">
 				<label class="control-label" style="font-size: 20px;">

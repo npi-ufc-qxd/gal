@@ -109,14 +109,6 @@ $( document ).ready(function() {
 												" " + document.getElementById("edicao").value + " " + document.getElementById("publicador").value;
 		console.error(document.getElementById("nome").value);
 	});
-
-	
-	// Clicando no nome da disciplina exibe sua visualização
-	$('td.nomeDisciplina').click(function(){
-		var idComponente = $(this).attr('idComponente');
-		var urlDisciplina = '/' + getAppName() + '/componente/' + idComponente + '/visualizar';
-		$(location).attr("href", urlDisciplina);
-	});
 	
 	$('#expandirTodosAccordions').click(function(){
 		$('.panel-collapse').collapse('show');

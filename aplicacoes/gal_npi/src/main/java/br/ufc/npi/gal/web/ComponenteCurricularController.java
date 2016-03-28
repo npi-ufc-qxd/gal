@@ -299,7 +299,6 @@ public class ComponenteCurricularController {
 	public String copiar(@PathVariable("idComponente") int idComponente, ModelMap modelMap) {
 		
 		ComponenteCurricular componenteOrigem = componenteCurricularService.find(ComponenteCurricular.class, idComponente);
-		ComponenteCurricular componenteDestino = new ComponenteCurricular();
 		
 		if (componenteOrigem == null) {
 			return "redirect:/disciplina/listar";
@@ -307,24 +306,19 @@ public class ComponenteCurricularController {
 		}
 		List<Titulo> basica = componenteOrigem.getTitulosBibliografiasBasicas();
 		List<Titulo> complementar = componenteOrigem.getTitulosBibliografiasComplementares();
-
-		componenteDestino.setTipo(componenteOrigem.getTipo());
-		componenteDestino.setChPratica(componenteOrigem.getChPratica());
-		componenteDestino.setChTeorica(componenteOrigem.getChTeorica());
 		
-		modelMap.addAttribute("componente", componenteDestino);
+		modelMap.addAttribute("componente", new ComponenteCurricular());
 		modelMap.addAttribute("bibliografia_basica", basica);
 		modelMap.addAttribute("bibliografia_complementar", complementar);
+		modelMap.addAttribute("id_componente_origem", componenteOrigem.getId());
 		
 		return "componente/copiar";
 	}
 		
 	@RequestMapping(value = "/copiar", method = RequestMethod.POST)
 	public String copiar(@ModelAttribute("componente") ComponenteCurricular componente,
-			@RequestParam("bibliografia_basica") String[] basica, 
-			@RequestParam("bibliografia_complementar") String[] complementar,
+			@RequestParam("id_componente_origem") int idComponenteOrigem, 
 			BindingResult result, RedirectAttributes redirectAttributes) {
-		
 		
 		boolean errors = false;
 		
@@ -370,29 +364,31 @@ public class ComponenteCurricularController {
 			return "/componente/copiar";
 		}
 		
+		ComponenteCurricular componenteOrigem = componenteCurricularService.find(ComponenteCurricular.class, idComponenteOrigem);
+		
 		componente.setNome(componente.getNome().toUpperCase());
 		componenteCurricularService.save(componente);
 		
+		List<Titulo> basica = componenteOrigem.getTitulosBibliografiasBasicas();
+		List<Titulo> complementar = componenteOrigem.getTitulosBibliografiasComplementares();
 		
 		criarBibliografias(basica, componente, ComponenteCurricular.BASICA);
 		criarBibliografias(complementar, componente, ComponenteCurricular.COMPLEMENTAR);
 		
+		
 		return "redirect:/componente/"+componente.getId()+"/visualizar";
 	}
 	
-	private void criarBibliografias(String[] titulos, ComponenteCurricular componente, String tipo) {
+	private void criarBibliografias(List<Titulo> titulos, ComponenteCurricular componente, String tipo) {
 		
-		/*Essa comparação titulos.length > 1 é necessária, pois quando o array não possui nenhum
-		titulo, a primeira posição vem preenchida com um array vazio.*/
-		if(titulos.length > 1) {
-			int id_titulo;
-			for(int i = 0; i < titulos.length; i+=3) {
-				id_titulo = Integer.parseInt(titulos[i].substring(titulos[i].indexOf('=')+1));
-				Bibliografia biblio = new Bibliografia();
-				biblio.setComponenteCurricular(componente);
-				biblio.setTitulo(tituloService.find(Titulo.class, id_titulo));
-				biblio.setTipoBibliografia(tipo);
-				bibliografiaService.save(biblio);
+
+		if(titulos.size() > 0) {
+			for(Titulo titulo : titulos) {
+				Bibliografia bibliografia = new Bibliografia();
+				bibliografia.setComponenteCurricular(componente);
+				bibliografia.setTitulo(tituloService.find(Titulo.class, titulo.getId()));
+				bibliografia.setTipoBibliografia(tipo);
+				bibliografiaService.save(bibliografia);
 				}
 			}
 	}
