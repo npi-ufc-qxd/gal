@@ -71,7 +71,7 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 				indice = statusParser.get(1).indexOf(" -");
 				nomeCurso = removeAcentos(statusParser.get(1).substring(0, indice).toUpperCase());
 				Curso curso = cursoService.getCursoByCodigo(id);
-				if (nomeCurso.equals(curso.getNome())) {
+				if (nomeCurso.toUpperCase().equals(curso.getNome().toUpperCase())) {
 					return true;
 				}
 			}
@@ -177,8 +177,8 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 
 		/**
 		 * A quinta tabela do HTML é responsável por apresentar as informações
-		 * referentes aos componenetes de cada semestre. Mudanças no HTML poderá
-		 * ser necessário atualizar
+		 * referentes aos componenetes de cada semestre. Mudanças no HTML implicará
+		 * em atualizá-lo.
 		 */
 
 		Element tabelaComponentes = docFromHtml.select("table").get(4);
@@ -225,8 +225,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 
 		ComponenteCurricular componente = new ComponenteCurricular();
 		componente = componenteService.getComponenteCurricularByCodigo(colunasComponente.get(0).text());
-		int chPratica, chTeorica;
-		String aux;
 
 		if (componente == null) {
 			int valorParada, valorParada2 = 0;
@@ -234,7 +232,6 @@ public class ParserEstruturaCurricularServiceImpl implements ParserEstruturaCurr
 			componente = new ComponenteCurricular();
 			componente.setCodigo(colunasComponente.get(0).text());
 			valorParada = colunasComponente.get(1).text().indexOf(" - ");
-			System.out.println(colunasComponente.get(1).text().substring(0, valorParada));
 			componente.setNome(removeAcentos(colunasComponente.get(1).text().substring(0, valorParada)));
 			componente.setTipo(tipoComponente(colunasComponente.get(3).text()));
 			valorParada = colunasComponente.get(2).text().indexOf("aula");

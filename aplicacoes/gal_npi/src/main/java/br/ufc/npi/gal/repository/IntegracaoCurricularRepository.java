@@ -6,4 +6,6 @@ import br.ufc.quixada.npi.repository.GenericRepository;
 public interface IntegracaoCurricularRepository extends GenericRepository<IntegracaoCurricular> {
 
 	IntegracaoCurricular getIntegracao(Integer idDisciplina, Integer idCurriculo);
+	
+	IntegracaoCurricular getIntegracaoIdComponente(Integer idComponente);
 }

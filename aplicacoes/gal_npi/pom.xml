@@ -32,7 +32,7 @@
 		<hibernate.validation.version>4.3.1.Final</hibernate.validation.version>
 
 		<!-- Database access -->
-		<postgresql.version>9.1-901.jdbc4</postgresql.version>
+		<postgresql.version>9.4-1204-jdbc41</postgresql.version>
 		<tomcat-jdbc.version>7.0.42</tomcat-jdbc.version>
 
 		<!-- Spring Security -->
@@ -177,7 +177,7 @@
 
 		<!-- Databases - Uses POSTGRESQL by default -->
 		<dependency>
-			<groupId>postgresql</groupId>
+			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
 		</dependency>

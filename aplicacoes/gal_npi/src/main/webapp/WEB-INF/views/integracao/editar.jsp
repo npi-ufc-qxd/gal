@@ -23,6 +23,11 @@
 				<label class="control-label" style="font-size: 20px;">Editar
 					Vinculo</label>
 			</div>
+			
+			<div class="form-group">
+				<label class="control-label" style="font-size: 16px;">${integracao.componente.codigo}
+				 - ${integracao.componente.nome}</label>
+			</div>
 
 			<div class="form-group">
 				<label for="componente.codigo" class="col-sm-2 control-label">Código
@@ -32,6 +37,18 @@
 						placeholder="Código componente curricular" disabled="true"
 						path="componente.codigo" required="true" /> 
 					<form:errors path="componente" cssClass="error" /> 
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="semestreOferta" class="col-sm-2 control-label">Semestre oferta</label>
+				<div class="col-sm-10">
+					<form:select path="semestreOferta" class="form-control">
+						<c:forEach var="i" begin="1" end="${semestreMax}">
+							<form:option value="${i}">${i}º Semestre</form:option>
+						</c:forEach>
+					</form:select>
+					<form:errors path="semestreOferta" cssClass="error" />
 				</div>
 			</div>
 
@@ -51,25 +68,11 @@
 				<label for="observacoes" class="col-sm-2 control-label">Observações
 				</label>
 				<div class="col-sm-10">
-					<form:input id="observacoes" class="form-control"
-						placeholder="Observações" path="observacoes" required="false" />
+					<form:textarea id="observacoes" class="form-control" rows="2"
+						placeholder="Observações" path="observacoes" />
 					<form:errors path="observacoes" cssClass="error" />
 				</div>
 			</div>
-
-			<div class="form-group">
-				<label for="semestreOferta" class="col-sm-2 control-label">Semestre
-					oferta</label>
-				<div class="col-sm-10">
-					<form:input id="semestreOferta" class="form-control numeros"
-						placeholder="Semestre oferta"
-						path="semestreOferta" maxlength="2" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
-						required="true" />
-					<form:errors path="semestreOferta" cssClass="error" />
-				</div>
-			</div>
-
-
 
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit"

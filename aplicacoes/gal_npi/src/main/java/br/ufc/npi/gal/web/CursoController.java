@@ -29,7 +29,7 @@ public class CursoController {
 	private static final String PATH_CURSO_LISTAR = "curso/listar";
 	private static final String PATH_CURSO_EDITAR = "curso/editar";
 	private static final String PATH_CURSO_VISUALIZAR = "curso/visualizar";
-	
+
 	@Inject
 	private EstruturaCurricularService estruturaService;
 
@@ -38,19 +38,19 @@ public class CursoController {
 		modelMap.addAttribute("integracao", new IntegracaoCurricular());
 		modelMap.addAttribute("cursos", this.cursoService.getTodosCursos());
 		modelMap.addAttribute("estruturas", this.estruturaService.find(EstruturaCurricular.class));
-		
+
 		return PATH_CURSO_LISTAR;
 	}
-	
+
 	@RequestMapping(value = "{codigo}/visualizar")
 	public String visualizar(@PathVariable("codigo") Integer codigo, ModelMap modelMap) {
 		Curso curso = this.cursoService.getCursoByCodigo(codigo);
 		modelMap.addAttribute("curso", curso);
 		modelMap.addAttribute("integracao", new IntegracaoCurricular());
-		
+
 		return PATH_CURSO_VISUALIZAR;
 	}
-	
+
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
 	public String editar(@PathVariable("id") Integer id, Model model) {
 		Curso curso = this.cursoService.find(Curso.class, id);
@@ -63,42 +63,41 @@ public class CursoController {
 	}
 
 	@RequestMapping(value = "/editar", method = RequestMethod.POST)
-	public String atualizar(@Valid Curso curso, BindingResult result,
-			RedirectAttributes redirectAttributes) {
+	public String atualizar(@Valid Curso curso, BindingResult result, RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			return PATH_CURSO_EDITAR;
 		}
-		
-		if (cursoService
-				.getOutroCursoByCodigo(curso.getId(), curso.getCodigo()) != null) {
-			result.rejectValue("codigo", "Repeat.curso.codigo",
-					"Já existe um curso com esse código");
+
+		if (cursoService.getOutroCursoByCodigo(curso.getId(), curso.getCodigo()) != null) {
+			result.rejectValue("codigo", "Repeat.curso.codigo", "Já existe um curso com esse código");
 			return PATH_CURSO_EDITAR;
 		}
-		if (cursoService.getOutroCursoBySigla(curso.getId(), curso.getSigla()
-				.toUpperCase()) != null) {
-			result.rejectValue("sigla", "Repeat.curso.sigla",
-					"Já existe um curso com essa sigla");
+		if (cursoService.getOutroCursoBySigla(curso.getId(), curso.getSigla().toUpperCase()) != null) {
+			result.rejectValue("sigla", "Repeat.curso.sigla", "Já existe um curso com essa sigla");
 			return PATH_CURSO_EDITAR;
 		}
 
 		curso.setSigla(curso.getSigla().toUpperCase());
 		cursoService.update(curso);
-		redirectAttributes.addFlashAttribute("info",
-				"Curso atualizado com sucesso.");
+		redirectAttributes.addFlashAttribute("info", "Curso atualizado com sucesso.");
 		return PATH_REDIRECT_CURSO_LISTAR;
 
 	}
 
 	@RequestMapping(value = "/{id}/excluir", method = RequestMethod.GET)
-	public String excluir(@PathVariable("id") Integer id,
-			RedirectAttributes redirectAttributes) {
+	public String excluir(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
 		Curso curso = cursoService.find(Curso.class, id);
-		if (curso != null) {
-			this.cursoService.delete(curso);
-			redirectAttributes.addFlashAttribute("info",
-					"Curso removido com sucesso.");
+
+		if (estruturaService.getOutraEstruturaCurricularByCurso(id) == null) {
+			if (curso != null) {
+				this.cursoService.delete(curso);
+				redirectAttributes.addFlashAttribute("info", "Curso removido com sucesso.");
+			}
+		} else {
+			redirectAttributes.addFlashAttribute("error", "O Curso " + curso.getNome()
+					+ " possui Estruturas Curriculares cadastradas, e portanto, não pode ser removido. Por favor, resolva estas dependências e tente novamente.");
 		}
+
 		return PATH_REDIRECT_CURSO_LISTAR;
 	}
 
@@ -109,33 +108,28 @@ public class CursoController {
 	}
 
 	@RequestMapping(value = "/adicionar", method = RequestMethod.POST)
-	public String adicionar(@Valid Curso curso, BindingResult result,
-			final RedirectAttributes redirectAttributes) {
+	public String adicionar(@Valid Curso curso, BindingResult result, final RedirectAttributes redirectAttributes) {
 		if (result.hasErrors()) {
 			return PATH_CURSO_ADICIONAR;
 		}
 
 		if (cursoService.getCursoByCodigo(curso.getCodigo()) != null) {
-			result.rejectValue("codigo", "Repeat.curso.codigo",
-					"Já existe um curso com esse código");
+			result.rejectValue("codigo", "Repeat.curso.codigo", "Já existe um curso com esse código");
 			return PATH_CURSO_ADICIONAR;
 		}
 		if (curso.getNome().trim().isEmpty()) {
-			result.rejectValue("codigo", "Repeat.curso.nome",
-					"Campo obrigatório.");
+			result.rejectValue("codigo", "Repeat.curso.nome", "Campo obrigatório.");
 			return PATH_CURSO_ADICIONAR;
 		}
 		if (cursoService.getCursoBySigla(curso.getSigla().toUpperCase()) != null) {
-			result.rejectValue("sigla", "Repeat.sigla.sigla",
-					"Já existe um curso com essa sigla");
+			result.rejectValue("sigla", "Repeat.sigla.sigla", "Já existe um curso com essa sigla");
 			return PATH_CURSO_ADICIONAR;
 		}
 
 		curso.setSigla(curso.getSigla().toUpperCase());
 		curso.setNome(curso.getNome().toUpperCase());
 		cursoService.save(curso);
-		redirectAttributes.addFlashAttribute("info",
-				"Curso adicionado com sucesso.");
+		redirectAttributes.addFlashAttribute("info", "Curso adicionado com sucesso.");
 		return PATH_REDIRECT_CURSO_LISTAR;
 	}
 

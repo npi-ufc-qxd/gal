@@ -20,6 +20,9 @@
 			<div id="drag-and-drop">
 				<p id="nomeComponente">${componente.codigo}-${componente.nome}</p>
 				<p>
+					<button class="btn btn-default" onclick="goBack()">
+						Voltar
+					</button>
 					<a class="btn btn-success" id="btn-get"
 						href="<c:url value="/componente/listar" ></c:url>">Vincular</a>
 				</p>
