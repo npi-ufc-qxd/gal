@@ -20,14 +20,14 @@
 		<input id="idCurso" type="hidden" value="${idCurso}" />
 		<input id="idComponente" type="hidden" value="${idComponente}" /> 
 
-		<select id="seleciona">
+		<select id="selecionaCurso" class="select-filter">
 			<option value="-1">Todos os Cursos</option>
 			<c:forEach items="${cursos}" var="curso">
 				<option value="${curso.id}">${curso.nome}</option>
 			</c:forEach>
 		</select>
 		
-		<select id="selecionaDisciplina">
+		<select id="selecionaComponente" class="select-filter">
 			<option value="-1">Todos os Componentes</option>
 			<c:forEach items="${componentes}" var="componente">
 				<option value="${componente.id}">${componente.nome}</option>

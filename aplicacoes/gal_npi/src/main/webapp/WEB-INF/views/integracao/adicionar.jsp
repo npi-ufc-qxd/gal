@@ -30,7 +30,7 @@
 				<label for="componente" class="col-sm-2 control-label">Selecione Componente</label>
 				<div class="col-sm-10">
 					
-					<form:select id="selectComponente" class="form-control"
+					<form:select id="selectComponente" class="form-control select-filter"
 						placeholder="Código componente" path="componente" required="true">
 						<form:option value="nenhuma">Selecione o componente</form:option>
 						<c:forEach items="${componentes}" var="componente">

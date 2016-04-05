@@ -6,6 +6,9 @@ $( document ).ready(function() {
 		format: "dd/mm/yyyy",
 	});
 	
+	// adiciona busca nos select box
+	$(".select-filter").select2();
+	
 	// remove acentos de strings
 	function removeAcentos(data){
 		var r = !data ?
@@ -152,17 +155,8 @@ $( document ).ready(function() {
 		$.post('/' + getAppName() + '/componente/vincular', data);
 	});
 	
-	var lista_drag_and_drop_basica = $('#drag-and-drop .sortable-list#basica');
-	Sortable.create(lista_drag_and_drop_basica[0], { group: "drag_and_drop" });
-	
-	var lista_drag_and_drop_complementar = $('#drag-and-drop .sortable-list#complementar');
-	Sortable.create(lista_drag_and_drop_complementar[0], { group: "drag_and_drop" });
-	
-	var lista_drag_and_drop_acervo = $('#drag-and-drop .sortable-list#acervo');
-	Sortable.create(lista_drag_and_drop_acervo[0], { group: "drag_and_drop" });
-
-	$("select#seleciona").change(function() { 
-		var option = $("#seleciona").val();
+	$("select#selecionaCurso").change(function() { 
+		var option = $(this).val();
 
 		if(option == -1){
 			newUrl = "/" + getAppName() + "/meta/listar";
@@ -185,18 +179,24 @@ $( document ).ready(function() {
 		$(location).attr("href", newUrl);
 	});
 	
-
-	$("#seleciona").val($("#idCurso").val());
+	$("#selecionaCurso").val($("#idCurso").val());
 	$("#selecionaComponente").val($("#idComponente").val());
 
-	
+	if($('#drag-and-drop .sortable-list').length > 0){
+		var lista_drag_and_drop_basica = $('#drag-and-drop .sortable-list#basica');
+		Sortable.create(lista_drag_and_drop_basica[0], { group: "drag_and_drop" });
+
+		var lista_drag_and_drop_complementar = $('#drag-and-drop .sortable-list#complementar');
+		Sortable.create(lista_drag_and_drop_complementar[0], { group: "drag_and_drop" });
+
+		var lista_drag_and_drop_acervo = $('#drag-and-drop .sortable-list#acervo');
+		Sortable.create(lista_drag_and_drop_acervo[0], { group: "drag_and_drop" });
+	}
+
 	$(document).on("click", ".open-AddBookDialog", function() {
 		var id = $(this).data('id');
 		$(".modal-body #id").val(id);
 	});
-
-	$("#selectComponente").select2();
-
 });
 
 function goBack() {
