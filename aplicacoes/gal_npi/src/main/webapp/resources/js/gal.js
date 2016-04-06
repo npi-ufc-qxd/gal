@@ -6,6 +6,10 @@ $( document ).ready(function() {
 		format: "dd/mm/yyyy",
 	});
 	
+	// Marca no select box o filtro que foi executado
+	$("#selecionaCurso").val($("#idCurso").val());
+	$("#selecionaComponente").val($("#idComponente").val());
+	
 	// adiciona busca nos select box
 	$(".select-filter").select2();
 	
@@ -178,9 +182,6 @@ $( document ).ready(function() {
 
 		$(location).attr("href", newUrl);
 	});
-	
-	$("#selecionaCurso").val($("#idCurso").val());
-	$("#selecionaComponente").val($("#idComponente").val());
 
 	if($('#drag-and-drop .sortable-list').length > 0){
 		var lista_drag_and_drop_basica = $('#drag-and-drop .sortable-list#basica');
