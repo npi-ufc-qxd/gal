@@ -2,21 +2,21 @@ package br.ufc.npi.gal.model;
 
 public class DetalheMetaCalculada {
 
-	private String disciplina;
+	private String componente;
 	private String curso;
 	private String tipoBibliografia;
 	private String curriculo;
 	private double calculo;
 	private Integer semestre;
 	private int quantidadeAlunos;
-	private String codigoDisciplina;
-
-	public String getComponenteCurricular() {
-		return disciplina;
+	private String codigoComponente;
+	
+	public void setComponente(String componente) {
+		this.componente = componente;
 	}
 
-	public void setDisciplina(String disciplina) {
-		this.disciplina = disciplina;
+	public String getComponente(){
+		return componente;
 	}
 
 	public String getCurso() {
@@ -53,7 +53,7 @@ public class DetalheMetaCalculada {
 
 	@Override
 	public String toString() {
-		return "DetalheMetaCalculada [disciplina=" + disciplina + ", curso=" + curso + ", tipoBibliografia="
+		return "DetalheMetaCalculada [componente=" + componente + ", curso=" + curso + ", tipoBibliografia="
 				+ tipoBibliografia + ", curriculo=" + curriculo + ", calculo=" + calculo + "]";
 	}
 
@@ -73,11 +73,13 @@ public class DetalheMetaCalculada {
 		this.quantidadeAlunos = quantidadeAlunos;
 	}
 
-	public String getCodigoComponenteCurricular() {
-		return codigoDisciplina;
+	public String getCodigoComponente() {
+		return codigoComponente;
 	}
 
-	public void setCodigoDisciplina(String codigoDisciplina) {
-		this.codigoDisciplina = codigoDisciplina;
+	public void setCodigoComponente(String codigoComponente) {
+		this.codigoComponente = codigoComponente;
 	}
+
+	
 }
