@@ -132,7 +132,7 @@ public class ComponenteCurricularController {
 	}
 
 	@RequestMapping(value = "/adicionar", method = RequestMethod.POST)
-	public String adicionar(@ModelAttribute("componente") ComponenteCurricular componente, BindingResult result,
+	public String adicionar(@Valid @ModelAttribute("componente") ComponenteCurricular componente, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		boolean errors = false;
 		if (result.hasErrors()) {
