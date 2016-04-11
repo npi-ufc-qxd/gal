@@ -144,7 +144,7 @@ public class MetaController {
 				boolean flag = false;
 				for (DetalheMetaCalculada detalhePar : metaCalculada.getDetalhePar()) {
 
-					if (detalhePar.getComponenteCurricular().equals(componenteCurricular.getNome())) {
+					if (detalhePar.getComponente().equals(componenteCurricular.getNome())) {
 						flag = true;
 						break;
 
@@ -153,7 +153,7 @@ public class MetaController {
 				}
 				for (DetalheMetaCalculada detalheImpar : metaCalculada.getDetalheImpar()) {
 
-					if (detalheImpar.getComponenteCurricular().equals(componenteCurricular.getNome())) {
+					if (detalheImpar.getComponente().equals(componenteCurricular.getNome())) {
 						flag = true;
 						break;
 
@@ -306,7 +306,7 @@ public class MetaController {
 				for (DetalheMetaCalculada detalheMetaCalculada : metacalculada) {
 					linha = "\"" + element.getTitulo().getNome() + "\";\"" + element.getTitulo().getIsbn()
 							+ "\";\"Impar\";\"" + detalheMetaCalculada.getCurso() + "\";\""
-							+ detalheMetaCalculada.getComponenteCurricular() + "\";\""
+							+ detalheMetaCalculada.getComponente() + "\";\""
 							+ detalheMetaCalculada.getCodigoComponenteCurricular() + "\";\"" + detalheMetaCalculada.getSemestre()
 							+ "\";\"" + detalheMetaCalculada.getQuantidadeAlunos() + "\";\""
 							+ detalheMetaCalculada.getTipoBibliografia() + "\";\""
@@ -322,7 +322,7 @@ public class MetaController {
 				for (DetalheMetaCalculada detalheMetaCalculada : metacalculada) {
 					linha = "\"" + element.getTitulo().getNome() + "\";\"" + element.getTitulo().getIsbn()
 							+ "\";\"Par\";\"" + detalheMetaCalculada.getCurso() + "\";\""
-							+ detalheMetaCalculada.getComponenteCurricular() + "\";\""
+							+ detalheMetaCalculada.getComponente() + "\";\""
 							+ detalheMetaCalculada.getCodigoComponenteCurricular() + "\";\"" + detalheMetaCalculada.getSemestre()
 							+ "\";\"" + detalheMetaCalculada.getQuantidadeAlunos() + "\";\""
 							+ detalheMetaCalculada.getTipoBibliografia() + "\";\""
