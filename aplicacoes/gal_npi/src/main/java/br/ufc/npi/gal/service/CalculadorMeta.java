@@ -51,17 +51,17 @@ public class CalculadorMeta {
 						if (integracaoCurricular.getSemestreOferta() % 2 == 0) {
 
 							detalheMeta.setTipoBibliografia(bibliografia.getTipoBibliografia());
-							detalheMeta.setDisciplina(bibliografia.getComponenteCurricular().getNome());
+							detalheMeta.setComponente(bibliografia.getComponenteCurricular().getNome());
 							detalheMeta.setSemestre(integracaoCurricular.getSemestreOferta());
-							detalheMeta.setCodigoDisciplina(bibliografia.getComponenteCurricular().getCodigo());
+							detalheMeta.setCodigoComponente(bibliografia.getComponenteCurricular().getCodigo());
 							detalheMeta.setQuantidadeAlunos(integracaoCurricular.getQuantidadeAlunos());
 							detalhePares.add(detalheMeta);
 						} else {
 
 							detalheMeta.setTipoBibliografia(bibliografia.getTipoBibliografia());
-							detalheMeta.setDisciplina(bibliografia.getComponenteCurricular().getNome());
+							detalheMeta.setComponente(bibliografia.getComponenteCurricular().getNome());
 							detalheMeta.setSemestre(integracaoCurricular.getSemestreOferta());
-							detalheMeta.setCodigoDisciplina(bibliografia.getComponenteCurricular().getCodigo());
+							detalheMeta.setCodigoComponente(bibliografia.getComponenteCurricular().getCodigo());
 							detalheMeta.setQuantidadeAlunos(integracaoCurricular.getQuantidadeAlunos());
 							detalheImpares.add(detalheMeta);
 						}
