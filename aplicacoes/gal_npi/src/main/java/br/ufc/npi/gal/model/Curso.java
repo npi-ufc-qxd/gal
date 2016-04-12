@@ -42,7 +42,7 @@ public class Curso implements Serializable {
 	@NotEmpty(message = "Campo obrigatório")
 	@Column(name = "nome_c")
 	@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù]{0,}", message = "O campo Nome não pode possuir caracteres especiais ou números.")
-	@Size(min=1,max=255,message = "O campo nome foi preenchido de forma inválida")
+	@Size(min=1,max=255,message = "O tamanho do nome informa não é válido")
 	private String nome;
 
 	@NotEmpty(message = "Campo obrigatório")
