@@ -29,7 +29,7 @@
 			<div class="form-group">
 				<label for="nome" class="col-sm-1 control-label">Nome</label>
 				<div class="col-sm-10">
-					<form:input id="nome" class="form-control" placeholder="Nome"
+					<form:input id="nome" maxlength="255" class="form-control" placeholder="Nome"
 						path="nome" />
 					<form:errors path="nome" cssClass="error" />
 				</div>
