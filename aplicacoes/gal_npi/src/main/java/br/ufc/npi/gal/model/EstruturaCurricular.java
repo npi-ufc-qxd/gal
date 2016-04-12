@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -59,6 +60,7 @@ public class EstruturaCurricular{
 
 	@Column(name = "ch_opt_minima")
 	@NotNull(message = "Campo obrigatório")
+	@Min(message = "O campo deve conter valor inteiro maior que zero", value = 1)
 	private Integer chOptMinima;
 
 	@Column(name = "prazo_conclusao_minimo")
