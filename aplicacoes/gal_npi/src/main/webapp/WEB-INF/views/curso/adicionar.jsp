@@ -24,10 +24,10 @@
 			    </div>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group" >
 			    <label for="nome" class="col-sm-1 control-label">Nome</label>
 			    <div class="col-sm-10">
-			    	<form:input id="nome" class="form-control" placeholder="Nome" path="nome"/>
+			    	<form:input maxlength="255" id="nome" class="form-control" placeholder="Nome" path="nome"/>
 			    	<form:errors path="nome" cssClass="error" />
 			    </div>
 			</div>
