@@ -233,13 +233,13 @@ public class ComponenteCurricularController {
 				if (resultadoCalculo.getTitulo().getId().equals(b.getTitulo().getId())) {
 					for (MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()) {
 						for (DetalheMetaCalculada detalheMetaCalculada : metaCalculada.getDetalhePar()) {
-							if (detalheMetaCalculada.getComponenteCurricular().equals(componente.getNome())) {
+							if (detalheMetaCalculada.getComponente().equals(componente.getNome())) {
 								metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
 								break;
 							}
 						}
 						for (DetalheMetaCalculada detalheMetaCalculada : metaCalculada.getDetalheImpar()) {
-							if (detalheMetaCalculada.getComponenteCurricular().equals(componente.getNome())) {
+							if (detalheMetaCalculada.getComponente().equals(componente.getNome())) {
 								metasCalculadasPorTitulo.get(resultadoCalculo.getTitulo().getNome()).add(metaCalculada);
 								break;
 							}
