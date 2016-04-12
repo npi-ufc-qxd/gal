@@ -109,8 +109,6 @@ $( document ).ready(function() {
 		$('#formfieldtitulo').submit();
 	});
 	
-	
-	
 	$('.form-control').on("keyup",function(){
 		 
 		document.getElementById("nome").value = document.getElementById("autor").value + " " + document.getElementById("nome_titulo").value + " " +document.getElementById("titulo_n").value + 

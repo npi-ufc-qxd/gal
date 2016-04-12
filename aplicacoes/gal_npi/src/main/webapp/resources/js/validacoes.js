@@ -70,7 +70,6 @@ function validarNomeDisciplina(nome, x) {
 
 
 
-
 function validarCodigoDisciplina(codigo, elemento) {
 
 	elemento.style.color = "white";
