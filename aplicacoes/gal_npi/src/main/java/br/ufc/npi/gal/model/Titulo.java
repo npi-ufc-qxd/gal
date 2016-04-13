@@ -19,17 +19,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name="titulos")
 public class Titulo {
 	
-	public Titulo() {
-		
-	}
-	
-	public Titulo(String nome, String isbn, String tipo) {
-		super();
-		this.nome = nome;
-		this.isbn = isbn;
-		this.tipo = tipo;
-	}
-	
 	@Id
 	@Column(name="id_t")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -86,6 +75,17 @@ public class Titulo {
 	
 	@OneToMany(mappedBy = "titulo", targetEntity = Exemplar.class, fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)
 	private List<Exemplar> exemplares;
+	
+	public Titulo() {
+		super();
+	}
+	
+	public Titulo(String nome, String isbn, String tipo) {
+		super();
+		this.nome = nome;
+		this.isbn = isbn;
+		this.tipo = tipo;
+	}
 	
 	public List<Bibliografia> getBibliografias() {
 		return bibliografias;
