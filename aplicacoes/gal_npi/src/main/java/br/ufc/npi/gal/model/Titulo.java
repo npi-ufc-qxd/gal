@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -35,8 +36,8 @@ public class Titulo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+
 	@Column(name="nome_titulo")
-	@NotEmpty(message="Campo obrigatório")
 	private String nome;
 	
 	@Pattern.List({
@@ -53,6 +54,7 @@ public class Titulo {
 	@Column(name = "autor")
 	private String autor;
 	
+	@NotEmpty(message = "Campo obrigatório")
 	@Column(name = "titulo")
 	private String titulo;
 	
