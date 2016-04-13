@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="br.ufc.npi.gal.model.TipoTitulo" %>
 
 <!DOCTYPE html>
 <html>
@@ -42,17 +43,17 @@
 			</div>
 			
 			<div class="form-group">
-			    <label for="codigo" class="col-sm-1 control-label">titulo N</label>
+			    <label for="codigo" class="col-sm-1 control-label">Título N</label>
 			    <div class="col-sm-10">
-			    	<form:input id="titulo_n" class="form-control" placeholder="titulo N" path="titulo_n"/>
+			    	<form:input id="titulo_n" class="form-control" placeholder="Título N" path="titulo_n"/>
 			    	<form:errors path="titulo_n" cssClass="error" />
 			    </div>
 			</div>
 			
 			<div class="form-group">
-			    <label for="codigo" class="col-sm-1 control-label">Sub titulo</label>
+			    <label for="codigo" class="col-sm-1 control-label">Sub título</label>
 			    <div class="col-sm-10">
-			    	<form:input id="sub_titulo" class="form-control" placeholder="Sub titulo" path="subTitulo" />
+			    	<form:input id="sub_titulo" class="form-control" placeholder="Sub título" path="subTitulo" />
 			    	<form:errors path="subTitulo" cssClass="error" />
 			    </div>
 			</div>
@@ -66,17 +67,17 @@
 			</div>
 						
 			<div class="form-group">
-			    <label for="codigo" class="col-sm-1 control-label">titulo Revista</label>
+			    <label for="codigo" class="col-sm-1 control-label">Titulo Revista</label>
 			    <div class="col-sm-10">
-			    	<form:input id="titulo_revista" class="form-control" placeholder="titulo Revista" path="tituloRevista" />
+			    	<form:input id="titulo_revista" class="form-control" placeholder="Titulo Revista" path="tituloRevista" />
 			    	<form:errors path="tituloRevista" cssClass="error" />
 			    </div>
 			</div>
 			
 			<div class="form-group">
-			    <label for="codigo" class="col-sm-1 control-label">Paginas</label>
+			    <label for="codigo" class="col-sm-1 control-label">Páginas</label>
 			    <div class="col-sm-10">
-			    	<form:input id="pagina" class="form-control" placeholder="pagina" path="pagina" />
+			    	<form:input id="pagina" class="form-control" placeholder="Páginas" path="pagina" />
 			    	<form:errors path="pagina" cssClass="error" />
 			    </div>
 			</div>
@@ -90,9 +91,9 @@
 			</div>
 			
 			<div class="form-group">
-			    <label for="codigo" class="col-sm-1 control-label">Edicao</label>
+			    <label for="codigo" class="col-sm-1 control-label">Edição</label>
 			    <div class="col-sm-10">
-			    	<form:input id="edicao" class="form-control" placeholder="Edicao" path="edicao" />
+			    	<form:input id="edicao" class="form-control" placeholder="Edição" path="edicao" />
 			    	<form:errors path="edicao" cssClass="error" />
 			    </div>
 			</div>
@@ -108,11 +109,18 @@
 			<div class="form-group">
 			    <label for="tipo" class="col-sm-1 control-label">Tipo</label>
 			    <div class="col-sm-10">
-			    	<form:select path="tipo" class="form-control">
-			    		<form:option value="Físico">Físico</form:option>
-			    		<form:option value="Virtual">Virtual</form:option>
+			    	<form:select path="tipo" class="form-control" onchange="showHideElement(this.value)">
+			    		<form:option value="${TipoTitulo.FISICO.descricao}">${TipoTitulo.FISICO.descricao}</form:option>
+			    		<form:option value="${TipoTitulo.VIRTUAL.descricao}">${TipoTitulo.VIRTUAL.descricao}</form:option>
 			    	</form:select>
 			    	<form:errors path="tipo" cssClass="error" />
+			    </div>
+			</div>
+			
+			<div id="inputVinculacao" class="form-group" style="display: none;">
+			    <div class="col-sm-4">
+			    	<form:checkbox path="vinculado" label="Vinculado à Biblioteca?" style="margin-right:8px;"/>
+			    	<form:errors path="vinculado" cssClass="error" />
 			    </div>
 			</div>
 			

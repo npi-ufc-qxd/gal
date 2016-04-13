@@ -225,6 +225,18 @@ function getAppName() {
 
 }
 
+//Função para mostrar o checkbox "vinculado a biblioteca" nas páginas de adição/edição de Título
+function showHideElement(tipo_titulo){
+	if (tipo_titulo === "Físico") { // Mesmo valor do enum br.ufc.npi.gal.model.TipoTitulo
+        $("#inputVinculacao").hide();
+    } 
+	else if (tipo_titulo === "Virtual") { // // Mesmo valor do enum br.ufc.npi.gal.model.TipoTitulo
+		$("#inputVinculacao").show();
+    }
+}
+// Para a página de edição, será necessário identificar previamente o valor do campo "tipo" para a tomada de decisão de mostrar/esconder o campo "vinculado a biblioteca" 
+showHideElement($("#tipo").val());
+
 /*mostra a quantidade de exemplares que um titulo possui*/
 $(".open-AddQtdExemplares").on("click", function() {
 	var acervo = $(this).data('id');

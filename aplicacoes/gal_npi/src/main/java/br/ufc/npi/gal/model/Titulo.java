@@ -76,6 +76,9 @@ public class Titulo {
 	
 	@Column(name = "publicador")
 	private String publicador;
+	
+	@Column(name = "vinculado")
+	private Boolean vinculado;
 
 	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
 
@@ -206,6 +209,14 @@ public class Titulo {
 
 	public int getAcervo() {
 		return this.exemplares.size();
+	}
+	
+	public Boolean getVinculado() {
+		return vinculado;
+	}
+
+	public void setVinculado(Boolean vinculado) {
+		this.vinculado = vinculado;
 	}
 
 	@Override

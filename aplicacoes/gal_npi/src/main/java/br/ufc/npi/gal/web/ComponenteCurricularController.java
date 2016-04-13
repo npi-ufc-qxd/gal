@@ -27,7 +27,6 @@ import br.ufc.npi.gal.model.IntegracaoCurricular;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.CalculoMetaService;
 import br.ufc.npi.gal.service.ComponenteCurricularService;
-import br.ufc.npi.gal.service.EstruturaCurricularService;
 import br.ufc.npi.gal.service.IntegracaoCurricularService;
 import br.ufc.npi.gal.service.MetaCalculada;
 import br.ufc.npi.gal.service.ResultadoCalculo;
@@ -76,7 +75,7 @@ public class ComponenteCurricularController {
 	}
 
 	@RequestMapping(value = "/editar", method = RequestMethod.POST)
-	public String atualizar(@ModelAttribute("componente") ComponenteCurricular componente, BindingResult result,
+	public String atualizar(@Valid @ModelAttribute("componente") ComponenteCurricular componente, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		boolean errors = false;
 
@@ -132,7 +131,7 @@ public class ComponenteCurricularController {
 	}
 
 	@RequestMapping(value = "/adicionar", method = RequestMethod.POST)
-	public String adicionar(@ModelAttribute("componente") ComponenteCurricular componente, BindingResult result,
+	public String adicionar(@Valid @ModelAttribute("componente") ComponenteCurricular componente, BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		boolean errors = false;
 		if (result.hasErrors()) {
