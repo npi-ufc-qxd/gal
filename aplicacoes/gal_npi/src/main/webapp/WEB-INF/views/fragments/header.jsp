@@ -6,7 +6,9 @@
 		GAL <small>Gestão de Aquisição de Livros</small>
 	</h1>
 </div>
-<div align="right">Olá, ${pageContext.request.userPrincipal.name}!</div>
+<sec:authorize access="isAuthenticated()">
+	<div align="right">Olá, ${pageContext.request.userPrincipal.name}!</div>
+</sec:authorize>
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -39,6 +41,7 @@
 						</sec:authorize>
 						<li><a href="<c:url value='/curso/listar'/>">Listar</a></li>
 					</ul></li>
+					
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Títulos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -73,11 +76,19 @@
 									Conflitos</a></li>
 						</ul></li>
 				</sec:authorize>
+				
 				<li><a href="<c:url value='/contatos'/>">Contato/Suporte</a>
 			</ul>
+			
 			<ul class="nav navbar-nav navbar-right">
+			<sec:authorize access="isAuthenticated()">
 				<li><a href="<c:url value="/logout" />">Sair<span
-						class="glyphicon glyphicon-off"></span></a></li>
+						class="glyphicon glyphicon-off"></span></a></li>						
+			</sec:authorize>
+			<sec:authorize access="isAnonymous()">
+				<li><a href="<c:url value="/login" />">Login&nbsp;<span
+						class="glyphicon glyphicon-user"></span></a></li>
+			</sec:authorize>			
 			</ul>
 		</div>
 	</div>
