@@ -66,18 +66,29 @@ public class AcervoController {
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Boolean erros = false;
-		if (atualizacaoAcervo.getInicioPeridoDelta() == null) {
-			result.rejectValue("inicioPeridoDelta",
-					"Repeat.AcervoDocumento.inicioPeridoDelta",
-					"Inicio do delta não foi determinado");
+		if (atualizacaoAcervo.getInicioPeridoDelta() != null && atualizacaoAcervo.getFinalPeridoDelta() != null) {
+			if(atualizacaoAcervo.getFinalPeridoDelta().compareTo(atualizacaoAcervo.getInicioPeridoDelta()) <= 0){
+				result.rejectValue("finalPeridoDelta","Repeat.AcervoDocumento.finalPeridoDelta","A data de termino do periodo é menor ou igual a data de inicio do periodo");
+				erros = true;
+			}
+		}else {
+			if (atualizacaoAcervo.getInicioPeridoDelta() == null) {
+				
+				result.rejectValue("inicioPeridoDelta",
+						"Repeat.AcervoDocumento.inicioPeridoDelta",
+						"Inicio do delta não foi determinado");				
+				
+			}
+			if (atualizacaoAcervo.getFinalPeridoDelta() == null) {
+				result.rejectValue("finalPeridoDelta",
+						"Repeat.AcervoDocumento.finalPeridoDelta",
+						"Final do delta não foi determinado");
+				
+			}
 			erros = true;
 		}
-		if (atualizacaoAcervo.getFinalPeridoDelta() == null) {
-			result.rejectValue("finalPeridoDelta",
-					"Repeat.AcervoDocumento.finalPeridoDelta",
-					"Final do delta não foi determinado");
-			erros = true;
-		}
+		
+		
 		if (request.isEmpty()) {
 			result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo",
 					"Arquivo enviado inexistente");
