@@ -138,13 +138,14 @@ $( document ).ready(function() {
 		$('#formfieldtitulo').submit();
 	});
 	
-	$('.form-control').on("keyup",function(){
+	$('.form-control').on("keyup change focusout",function(){
 		 
 		document.getElementById("nome").value = document.getElementById("autor").value + " " + document.getElementById("nome_titulo").value + " " +document.getElementById("titulo_n").value + 
 												" " + document.getElementById("sub_titulo").value +	" " + document.getElementById("titulo_revista").value + " " + document.getElementById("pagina").value + " " + document.getElementById("ref_artigo").value +
 												" " + document.getElementById("edicao").value + " " + document.getElementById("publicador").value;
-		console.error(document.getElementById("nome").value);
 	});
+	
+	$('#titulo')
 	
 	$('#expandirTodosAccordions').click(function(){
 		$('.panel-collapse').collapse('show');
