@@ -151,15 +151,19 @@ div#container {
 	font-weight: bold;
 }
 
-.nomeDisciplina{
+.nomeComponente{
 	color: #333;
 }
 
-/* fix accordion visualizar disciplina */
-.disciplina-panel-heading{
+/* fix accordion de bibliografias visualizar componente */
+.componente-bibliografia-panel-heading{
 	padding-bottom: 9px !important;
 	background-color: #d3d6ff !important;
 }
-.disciplina-panel-body{
+.componente-bibliografia-panel-body{
 	background-color: #eaebff !important;
+}
+
+.bibliografia-virtual-nao-cadastrada{
+	background-color: #ffcc00 !important;
 }

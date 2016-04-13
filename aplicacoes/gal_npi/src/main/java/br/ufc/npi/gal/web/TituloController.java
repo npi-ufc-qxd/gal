@@ -59,7 +59,7 @@ public class TituloController {
 			return "titulo/adicionar";
 		}
 		if (titulo.getTipo().equals(TipoTitulo.FISICO.getDescricao())){
-			titulo.setVinculado(true);
+			titulo.setCadastradoBiblioteca(true);
 		}
 
 		tituloService.save(titulo);
@@ -102,7 +102,7 @@ public class TituloController {
 			return "titulo/editar";
 		}
 		if (titulo.getTipo().equals(TipoTitulo.FISICO.getDescricao())){
-			titulo.setVinculado(true);
+			titulo.setCadastradoBiblioteca(true);
 		}
 
 		tituloService.update(titulo);

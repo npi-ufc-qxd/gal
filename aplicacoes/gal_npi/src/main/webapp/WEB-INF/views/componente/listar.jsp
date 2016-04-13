@@ -72,7 +72,7 @@
 					<tbody>
 						<c:forEach var="componente" items="${componentes}">
 							<tr>
-								<td class="nomeDisciplina" idComponente="${componente.id}">
+								<td class="nomeComponente" idComponente="${componente.id}">
 									<c:out value="${componente.nome}"></c:out>
 								</td>
 								<td><c:out value="${componente.codigo}"></c:out></td>
@@ -119,7 +119,7 @@
 					<tbody>
 						<c:forEach var="componente" items="${componentes}">
 							<tr>
-								<td class="nomeDisciplina" idComponente="${componente.id}">
+								<td class="nomeComponente" idComponente="${componente.id}">
 									<c:out value="${componente.nome}"></c:out>
 								</td>
 								<td><c:out value="${componente.codigo}"></c:out></td>

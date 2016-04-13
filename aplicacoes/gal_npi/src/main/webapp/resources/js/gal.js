@@ -25,7 +25,7 @@ $( document ).ready(function() {
 	                	.replace( /[éèëêÉÈËÊ]/g, 'e' )
 	                	.replace( /[íìïîÍÌÏÎ]/g, 'i' )
 	                	.replace( /[úùüûÚÙÜÛ]/g, 'u' )
-		                .replace( /ç/g, 'c' )
+		                .replace( /çÇ/g, 'c' )
 		                .replace( /\n/g, ' ' ) :
 		            data;
 		return r;
@@ -257,10 +257,10 @@ function getAppName() {
 //Função para mostrar o checkbox "vinculado a biblioteca" nas páginas de adição/edição de Título
 function showHideElement(tipo_titulo){
 	if (tipo_titulo === "Físico") { // Mesmo valor do enum br.ufc.npi.gal.model.TipoTitulo
-        $("#inputVinculacao").hide();
+        $("#inputCadastradoBiblioteca").hide();
     } 
 	else if (tipo_titulo === "Virtual") { // // Mesmo valor do enum br.ufc.npi.gal.model.TipoTitulo
-		$("#inputVinculacao").show();
+		$("#inputCadastradoBiblioteca").show();
     }
 }
 // Para a página de edição, será necessário identificar previamente o valor do campo "tipo" para a tomada de decisão de mostrar/esconder o campo "vinculado a biblioteca" 

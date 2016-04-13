@@ -127,10 +127,10 @@
 			    </div>
 			</div>
 			
-			<div id="inputVinculacao" class="form-group" style="display: none;">
+			<div id="inputCadastradoBiblioteca" class="form-group" style="display: none;">
 			    <div class="col-sm-4">
-			    	<form:checkbox path="vinculado" label="Vinculado à Biblioteca?" style="margin-right:8px;"/>
-			    	<form:errors path="vinculado" cssClass="error" />
+			    	<form:checkbox path="cadastradoBiblioteca" label="Cadastrado na Biblioteca?" style="margin-right:8px;"/>
+			    	<form:errors path="cadastradoBiblioteca" cssClass="error" />
 			    </div>
 			</div>
 			

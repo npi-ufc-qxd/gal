@@ -77,8 +77,8 @@ public class Titulo {
 	@Column(name = "publicador")
 	private String publicador;
 	
-	@Column(name = "vinculado")
-	private Boolean vinculado;
+	@Column(name = "cadastrado_biblioteca")
+	private Boolean cadastradoBiblioteca;
 
 	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
 
@@ -211,12 +211,12 @@ public class Titulo {
 		return this.exemplares.size();
 	}
 	
-	public Boolean getVinculado() {
-		return vinculado;
+	public Boolean getCadastradoBiblioteca() {
+		return cadastradoBiblioteca;
 	}
 
-	public void setVinculado(Boolean vinculado) {
-		this.vinculado = vinculado;
+	public void setCadastradoBiblioteca(Boolean cadastradoBiblioteca) {
+		this.cadastradoBiblioteca = cadastradoBiblioteca;
 	}
 
 	@Override
