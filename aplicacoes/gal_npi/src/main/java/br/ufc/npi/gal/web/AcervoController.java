@@ -66,8 +66,10 @@ public class AcervoController {
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		Boolean erros = false;
+		
 		List<AcervoDocumento> listAtualizacaoAnterior = acervoDocumentoService.find(AcervoDocumento.class);
 		int lastIndex = listAtualizacaoAnterior.size() - 1;
+		
 		if (atualizacaoAcervo.getInicioPeridoDelta() != null && atualizacaoAcervo.getFinalPeridoDelta() != null) {
 			if(atualizacaoAcervo.getFinalPeridoDelta().compareTo(atualizacaoAcervo.getInicioPeridoDelta()) <= 0){
 				result.rejectValue("finalPeridoDelta","Repeat.AcervoDocumento.finalPeridoDelta","A data de termino do periodo é menor ou igual a data de inicio do periodo");
