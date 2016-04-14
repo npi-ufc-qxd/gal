@@ -266,6 +266,11 @@ function showHideElement(tipo_titulo){
 // Para a página de edição, será necessário identificar previamente o valor do campo "tipo" para a tomada de decisão de mostrar/esconder o campo "vinculado a biblioteca" 
 showHideElement($("#tipo").val());
 
+// Evento para mostrar/esconder o campo "cadastrado na biblioteca" nas páginas de adição/edição de Título de acordo com o tipo do título 
+$("select#tipo").on("change", function(){
+	showHideElement(this.value);
+});
+
 /*mostra a quantidade de exemplares que um titulo possui*/
 $(".open-AddQtdExemplares").on("click", function() {
 	var acervo = $(this).data('id');

@@ -119,7 +119,7 @@
 			<div class="form-group">
 			    <label for="tipo" class="col-sm-1 control-label">Tipo</label>
 			    <div class="col-sm-10">
-			    	<form:select path="tipo" class="form-control" onchange="showHideElement(this.value)">
+			    	<form:select path="tipo" class="form-control">
 			    		<form:option value="${TipoTitulo.FISICO.descricao}">${TipoTitulo.FISICO.descricao}</form:option>
 			    		<form:option value="${TipoTitulo.VIRTUAL.descricao}">${TipoTitulo.VIRTUAL.descricao}</form:option>
 			    	</form:select>
@@ -129,7 +129,7 @@
 			
 			<div id="inputCadastradoBiblioteca" class="form-group" style="display: none;">
 			    <div class="col-sm-4">
-			    	<form:checkbox path="cadastradoBiblioteca" label="Cadastrado na Biblioteca?" style="margin-right:8px;"/>
+			    	<form:checkbox path="cadastradoBiblioteca" label="Cadastrado na Biblioteca?" style="margin:0 8px;"/>
 			    	<form:errors path="cadastradoBiblioteca" cssClass="error" />
 			    </div>
 			</div>
