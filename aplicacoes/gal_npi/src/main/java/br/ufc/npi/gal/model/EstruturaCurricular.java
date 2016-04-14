@@ -45,6 +45,8 @@ public class EstruturaCurricular{
 	private List<IntegracaoCurricular> curriculos;
 
 	@Column(name = "matriz_curricular")
+	@NotEmpty(message="Campo Obrigatório")
+	@Pattern.List({@Pattern(regexp="(?!^\\d+$)^.+$", message="O campo não pode conter apenas números")})
 	private String matrizCurricular;
 
 	@Column(name = "unidade_vinculacao")
