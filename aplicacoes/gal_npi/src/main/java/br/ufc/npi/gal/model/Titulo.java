@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -33,6 +34,7 @@ public class Titulo {
 		@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù0-9]{0,}", message = "O campo não pode contar caracteres especiais")
 	})
 	@NotEmpty(message="Campo obrigatório")
+	@Size(max=13, message="Este campo não pode conter mais de 13 caracteres")
 	private String isbn;
 	
 	@Column(name="tipo_titulo")
