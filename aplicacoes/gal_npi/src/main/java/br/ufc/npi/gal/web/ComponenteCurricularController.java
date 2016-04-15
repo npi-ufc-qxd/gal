@@ -269,6 +269,7 @@ public class ComponenteCurricularController {
 				id_titulo = Integer.parseInt(listaIdTitulo[i]);
 				for (int j = 0; j < bibliografiasAseremModificadas.size(); j++) {
 					if (bibliografiasAseremModificadas.get(j).getTitulo().getId() == id_titulo) {
+						bibliografiasAseremModificadas.get(j).setPrioridade(i);
 						if (!bibliografiasAseremModificadas.get(j).getTipoBibliografia().equals(tipoBibliografia)) {
 							bibliografiasAseremModificadas.get(j).setTipoBibliografia(tipoBibliografia);
 							bibliografiaService.update(bibliografiasAseremModificadas.get(j));

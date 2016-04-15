@@ -26,7 +26,10 @@ public class Bibliografia {
 
 	@Column(name = "tipo_bibliografia")
 	private String tipoBibliografia;
-
+	
+	@Column(name="prioridade")
+	private Integer prioridade;
+	
 	public ComponenteCurricular getComponenteCurricular() {
 		return componente;
 	}
@@ -51,7 +54,14 @@ public class Bibliografia {
 		this.tipoBibliografia = tipoBibliografia;
 	}
 	
-	
+
+	public Integer getPrioridade() {
+		return prioridade;
+	}
+
+	public void setPrioridade(Integer prioridade) {
+		this.prioridade = prioridade;
+	}
 
 	@Override
 	public String toString() {
