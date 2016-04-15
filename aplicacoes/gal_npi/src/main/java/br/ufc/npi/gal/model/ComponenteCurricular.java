@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.OrderBy;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -37,10 +38,11 @@ public class ComponenteCurricular {
 	@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù0-9]{0,}", message = "O campo código do Componente Curricular não pode possuir caracteres especiais.")//12
 	@Size(min = 5, max = 12, message = "O código do Componente Curricular deve ter entre 5 e 12 caracteres")
 	private String codigo;
-
+	
 	@OneToMany(mappedBy = "componente", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
 	private List<IntegracaoCurricular> curriculos;
-
+	
+	@OrderBy(clause = "prioridade ASC")
 	@OneToMany(mappedBy = "componente", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
 	private List<Bibliografia> bibliografias;
 

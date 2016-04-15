@@ -189,7 +189,8 @@ public class ComponenteCurricularController {
 	}
 	
 	@RequestMapping(value = "/vincular", method = RequestMethod.POST)
-	public String vincular(@RequestParam("basica") String basica, @RequestParam("complementar") String complementar, @RequestParam("idComponente") Integer idComponente) {
+	public String vincular(@RequestParam("basica") String basica, @RequestParam("complementar") String complementar, @RequestParam("idComponente") Integer idComponente,
+			RedirectAttributes redirectAttributes) {
 		String[] basicaArray = basica.split(",");
 		
 		String[] complementarArray = complementar.split(",");
@@ -203,6 +204,7 @@ public class ComponenteCurricularController {
 		for (int i = 0; i < bibliografiaLista.size(); i++) {
 			bibliografiaService.delete(bibliografiaLista.get(i));
 		}
+		redirectAttributes.addFlashAttribute("info", "Vinculações realizadas com sucesso.");
 		return "/componente/listar";
 	}
 
@@ -268,15 +270,21 @@ public class ComponenteCurricularController {
 				id_titulo = Integer.parseInt(listaIdTitulo[i]);
 				for (int j = 0; j < bibliografiasAseremModificadas.size(); j++) {
 					if (bibliografiasAseremModificadas.get(j).getTitulo().getId() == id_titulo) {
-						bibliografiasAseremModificadas.get(j).setPrioridade(i);
+						
 						if (!bibliografiasAseremModificadas.get(j).getTipoBibliografia().equals(tipoBibliografia)) {
-							bibliografiasAseremModificadas.get(j).setTipoBibliografia(tipoBibliografia);
+							
+							bibliografiasAseremModificadas.get(j).setPrioridade(i);
 							bibliografiaService.update(bibliografiasAseremModificadas.get(j));
+							
+							bibliografiasAseremModificadas.get(j).setTipoBibliografia(tipoBibliografia);
 							bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
 							listaIdTitulo[i] = null;
 							j = bibliografiasAseremModificadas.size() + 1;
 
 						} else {
+							bibliografiasAseremModificadas.get(j).setPrioridade(i);
+							bibliografiaService.update(bibliografiasAseremModificadas.get(j));
+							
 							bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
 							listaIdTitulo[i] = null;
 						}

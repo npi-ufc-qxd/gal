@@ -54,7 +54,6 @@ public class Bibliografia {
 		this.tipoBibliografia = tipoBibliografia;
 	}
 	
-
 	public Integer getPrioridade() {
 		return prioridade;
 	}
@@ -62,6 +61,7 @@ public class Bibliografia {
 	public void setPrioridade(Integer prioridade) {
 		this.prioridade = prioridade;
 	}
+	
 
 	@Override
 	public String toString() {
