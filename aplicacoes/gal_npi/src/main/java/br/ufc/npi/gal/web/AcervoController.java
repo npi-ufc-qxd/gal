@@ -163,7 +163,7 @@ public class AcervoController {
 		}
 		return false;
 	}
-	
+
 	@RequestMapping(value = "/download/{idArquivo}", method = RequestMethod.GET)
 	public void getArquivo(@PathVariable("idArquivo") int idArquivo,
 			HttpServletResponse response, HttpSession session) {
