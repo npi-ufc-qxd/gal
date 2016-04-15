@@ -114,7 +114,7 @@ $( document ).ready(function() {
 			"order": default_sort,
 			"columnDefs": [ 
 			    { "orderable": false, "targets": no_sort_fields },
-			    { type: 'portugues', targets: "_all" } 
+			    //{ type: 'portugues', targets: "_all" } 
 			],
 			"destroy": true,
 			"paging": attr_paging,
