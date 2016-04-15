@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.OrderBy;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -39,10 +40,11 @@ public class ComponenteCurricular {
 	@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù0-9]{0,}", message = "O campo código do Componente Curricular não pode possuir caracteres especiais.")//12
 	@Size(min = 5, max = 12, message = "O código do Componente Curricular deve ter entre 5 e 12 caracteres")
 	private String codigo;
-
+	
 	@OneToMany(mappedBy = "componente", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
 	private List<IntegracaoCurricular> curriculos;
-
+	
+	@OrderBy(clause = "prioridade ASC")
 	@OneToMany(mappedBy = "componente", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
 	private List<Bibliografia> bibliografias;
 
@@ -139,17 +141,6 @@ public class ComponenteCurricular {
 	
 	public List<Titulo> getTitulosBibliografiasBasicas() {
 		List<Titulo> titulos = new ArrayList<Titulo>();
-		List<Bibliografia> listaBibliografias = this.bibliografias;
-		if(listaBibliografias.get(0).getPrioridade() != null){
-			Collections.sort(listaBibliografias,new Comparator<Bibliografia>(){
-			    @Override
-			    public int compare(Bibliografia bibliografiaA,Bibliografia bibliografiaB){  
-			    	if(bibliografiaA.getPrioridade() != null && bibliografiaB.getPrioridade() != null)
-			    		return Integer.signum(bibliografiaA.getPrioridade()-bibliografiaB.getPrioridade()); 
-			    	return 0;
-			    }
-			});
-		}
 		for (Bibliografia bibliografia : this.bibliografias) {
 			if (BASICA.equals(bibliografia.getTipoBibliografia())) {
 				titulos.add(bibliografia.getTitulo());
@@ -161,17 +152,6 @@ public class ComponenteCurricular {
 	public List<Titulo> getTitulosBibliografiasComplementares() {
 		List<Titulo> titulos = new ArrayList<Titulo>();
 		List<Bibliografia> listaBibliografias = this.bibliografias;
-		
-		if(listaBibliografias.get(0).getPrioridade() != null){
-			Collections.sort(listaBibliografias,new Comparator<Bibliografia>(){
-			    @Override
-			    public int compare(Bibliografia bibliografiaA,Bibliografia bibliografiaB){  
-			    	if(bibliografiaA.getPrioridade() != null && bibliografiaB.getPrioridade() != null)
-			    		return Integer.signum(bibliografiaA.getPrioridade()-bibliografiaB.getPrioridade()); 
-			    	return 0;
-			    }
-			});
-		}
 		for (Bibliografia bibliografia : this.bibliografias) {
 			if (COMPLEMENTAR.equals(bibliografia.getTipoBibliografia())) {
 				titulos.add(bibliografia.getTitulo());
