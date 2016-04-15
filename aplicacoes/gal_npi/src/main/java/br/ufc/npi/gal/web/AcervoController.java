@@ -63,39 +63,25 @@ public class AcervoController {
 	public String uploadDoArquivoXls(ModelMap modelMap,
 			@ModelAttribute("atualizacaoAcervo") AcervoDocumento atualizacaoAcervo,
 			@RequestParam("file") MultipartFile request,BindingResult result , RedirectAttributes redirectAttributes) {
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService.find(AcervoDocumento.class);
+		modelMap.addAttribute("atualizacoesRealizadas", atualizacoesRealizadas);
+		
 		Boolean erros = false;
 		
-		List<AcervoDocumento> listAtualizacaoAnterior = acervoDocumentoService.find(AcervoDocumento.class);
-		int lastIndex = listAtualizacaoAnterior.size() - 1;
-		
-		if (atualizacaoAcervo.getInicioPeridoDelta() != null && atualizacaoAcervo.getFinalPeridoDelta() != null) {
-			if(atualizacaoAcervo.getFinalPeridoDelta().compareTo(atualizacaoAcervo.getInicioPeridoDelta()) <= 0){
-				result.rejectValue("finalPeridoDelta","Repeat.AcervoDocumento.finalPeridoDelta","A data de termino do periodo é menor ou igual a data de inicio do periodo");
-				erros = true;
-			}else if(atualizacaoAcervo.getInicioPeridoDelta().compareTo(listAtualizacaoAnterior.get(lastIndex).getFinalPeridoDelta()) <= 0){
-				result.rejectValue("finalPeridoDelta","Repeat.AcervoDocumento.finalPeridoDelta","A data de inicio do periodo não pode ser menor ou igual a data da ultima atualização do acervo");
-				erros = true;
-			}
-		}else {
-			if (atualizacaoAcervo.getInicioPeridoDelta() == null) {
-				
-				result.rejectValue("inicioPeridoDelta",
-						"Repeat.AcervoDocumento.inicioPeridoDelta",
-						"Inicio do delta não foi determinado");				
-				
-			}
-			if (atualizacaoAcervo.getFinalPeridoDelta() == null) {
-				result.rejectValue("finalPeridoDelta",
-						"Repeat.AcervoDocumento.finalPeridoDelta",
-						"Final do delta não foi determinado");
-				
-			}
+		if (atualizacaoAcervo.getInicioPeridoDelta() == null) {
+			result.rejectValue("inicioPeridoDelta",
+					"Repeat.AcervoDocumento.inicioPeridoDelta",
+					"Inicio do delta não foi determinado");
 			erros = true;
 		}
-		
-		
+		if (atualizacaoAcervo.getFinalPeridoDelta() == null) {
+			result.rejectValue("finalPeridoDelta",
+					"Repeat.AcervoDocumento.finalPeridoDelta",
+					"Final do delta não foi determinado");
+			erros = true;
+		}
 		if (request.isEmpty()) {
 			result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo",
 					"Arquivo enviado inexistente");

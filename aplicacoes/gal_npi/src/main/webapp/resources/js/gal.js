@@ -70,33 +70,18 @@ $( document ).ready(function() {
 		else attr_searching = true;
 		
 		
-		jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-		    "portugues-pre": function ( data ) {
-		        var a = 'a';
-		        var e = 'e';
-		        var i = 'i';
-		        var o = 'o';
-		        var u = 'u';
-		        var c = 'c';
-		        var special_letters = {
-		            "Á": a, "á": a, "Ã": a, "ã": a, "À": a, "à": a,
-		            "É": e, "é": e, "Ê": e, "ê": e,
-		            "Í": i, "í": i, "Î": i, "î": i,
-		            "Ó": o, "ó": o, "Õ": o, "õ": o, "Ô": o, "ô": o,
-		            "Ú": u, "ú": u, "Ü": u, "ü": u,
-		            "ç": c, "Ç": c
-		        };
-		        for (var val in special_letters)
-		           data = data.split(val).join(special_letters[val]).toLowerCase();
-		        return data;
-		    },
+		$.extend( $.fn.DataTable.ext.type.order, {
 		    "portugues-asc": function ( a, b ) {
+		    	a = removeAcentos(a);
+		    	b = removeAcentos(b);
 		        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
 		    },
 		    "portugues-desc": function ( a, b ) {
+		    	a = removeAcentos(a);
+		    	b = removeAcentos(b);
 		        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
 		    }
-		} );
+		});
 		
 		
 		$(this).dataTable({
@@ -127,7 +112,10 @@ $( document ).ready(function() {
 				}
 			},
 			"order": default_sort,
-			"columnDefs": [ { type: 'portugues', targets: "_all" } ],
+			"columnDefs": [ 
+			    { "orderable": false, "targets": no_sort_fields },
+			    { type: 'portugues', targets: "_all" } 
+			],
 			"destroy": true,
 			"paging": attr_paging,
 			"searching": attr_searching
@@ -138,13 +126,14 @@ $( document ).ready(function() {
 		$('#formfieldtitulo').submit();
 	});
 	
-	$('.form-control').on("keyup",function(){
+	$('.form-control').on("keyup change focusout",function(){
 		 
 		document.getElementById("nome").value = document.getElementById("autor").value + " " + document.getElementById("nome_titulo").value + " " +document.getElementById("titulo_n").value + 
 												" " + document.getElementById("sub_titulo").value +	" " + document.getElementById("titulo_revista").value + " " + document.getElementById("pagina").value + " " + document.getElementById("ref_artigo").value +
 												" " + document.getElementById("edicao").value + " " + document.getElementById("publicador").value;
-		console.error(document.getElementById("nome").value);
 	});
+	
+	$('#titulo')
 	
 	$('#expandirTodosAccordions').click(function(){
 		$('.panel-collapse').collapse('show');
