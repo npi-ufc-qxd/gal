@@ -61,7 +61,7 @@
 			<div class="form-group">
 			    <label for="isbn" class="col-sm-1 control-label">Isbn</label>
 			    <div class="col-sm-10">
-			    	<form:input id="isbn" class="form-control" placeholder="Isbn" path="isbn" maxlength="13"/>
+			    	<form:input id="isbn" class="form-control" placeholder="Isbn" path="isbn" />
 			    	<form:errors path="isbn" cssClass="error" />
 			    </div>
 			</div>
