@@ -17,43 +17,33 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "titulos")
+@Table(name="titulos")
 public class Titulo {
 
-	public Titulo() {
-
-	}
-
-	public Titulo(String nome, String isbn, String tipo) {
-		super();
-		this.nome = nome;
-		this.isbn = isbn;
-		this.tipo = tipo;
-	}
-
 	@Id
-	@Column(name = "id_t")
+	@Column(name="id_t")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "nome_titulo")
+	@Column(name="nome_titulo")
+	@NotEmpty(message="Campo obrigatório")
 	private String nome;
 
-	@Pattern.List({ @Pattern(regexp = "([^\\s]{0,})", message = "O isbn não pode conter espaços"),
-	@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù0-9]{0,}", message = "O campo não pode contar caracteres especiais") })
-	@NotEmpty(message = "Campo obrigatório")
-	@Size(max = 13, message = "Este campo não pode conter mais de 13 caracteres")
+	@Pattern.List({
+		@Pattern(regexp = "([^\\s]{0,})", message = "O isbn não pode conter espaços"),
+		@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù0-9]{0,}", message = "O campo não pode contar caracteres especiais")
+	})
+	@NotEmpty(message="Campo obrigatório")
+	@Size(max=13, message="Este campo não pode conter mais de 13 caracteres")
 	private String isbn;
 
-	@Column(name = "tipo_titulo")
-	@NotEmpty(message = "Campo obrigatório")
+	@Column(name="tipo_titulo")
+	@NotEmpty(message="Campo obrigatório")
 	private String tipo;
 
 	@Column(name = "autor")
 	private String autor;
 
-	@NotEmpty(message = "Campo obrigatório")
-	@Size(max=255,message="Este campo não pode conter mais de 255 caracteres")
 	@Column(name = "titulo")
 	private String titulo;
 
@@ -78,12 +68,26 @@ public class Titulo {
 	@Column(name = "publicador")
 	private String publicador;
 
+	@Column(name = "cadastrado_biblioteca")
+	private Boolean cadastradoBiblioteca;
+
 	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
 
 	private List<Bibliografia> bibliografias;
 
-	@OneToMany(mappedBy = "titulo", targetEntity = Exemplar.class, fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "titulo", targetEntity = Exemplar.class, fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)
 	private List<Exemplar> exemplares;
+
+	public Titulo() {
+		super();
+	}
+
+	public Titulo(String nome, String isbn, String tipo) {
+		super();
+		this.nome = nome;
+		this.isbn = isbn;
+		this.tipo = tipo;
+	}
 
 	public List<Bibliografia> getBibliografias() {
 		return bibliografias;
@@ -207,6 +211,14 @@ public class Titulo {
 
 	public int getAcervo() {
 		return this.exemplares.size();
+	}
+	
+	public Boolean getCadastradoBiblioteca() {
+		return cadastradoBiblioteca;
+	}
+
+	public void setCadastradoBiblioteca(Boolean cadastradoBiblioteca) {
+		this.cadastradoBiblioteca = cadastradoBiblioteca;
 	}
 
 	@Override

@@ -111,7 +111,7 @@
 				<div class="panel-group" id="accordionBasica" role="tablist" aria-multiselectable="true">
 					<c:forEach var="basica" items="${bibliografia_basica}">
 						<div class="panel panel-default">
-							<div class="disciplina-panel-heading panel-heading" role="tab">
+							<div class="componente-bibliografia-panel-heading panel-heading <c:if test="${basica.cadastradoBiblioteca == false}">bibliografia-virtual-nao-cadastrada</c:if>" role="tab">
 								<h4 class="panel-title">
 									<a role="button" data-toggle="collapse" href="#${basica.id}" aria-expanded="false" aria-controls="${basica.id}">
 							        	${basica.nome}
@@ -119,9 +119,9 @@
 								</h4>
 							</div>
 							<div id="${basica.id}" class="panel-collapse collapse" role="tabpanel">
-								<div class="disciplina-panel-body panel-body">
+								<div class="componente-bibliografia-panel-body panel-body">
 						      		<p><b>Acervo</b>: ${basica.acervo}</p>
-						      		<p><b>Tipo</b>: ${basica.tipo}</p>
+						      		<p><b>Tipo</b>: ${basica.tipo} <c:if test="${basica.cadastradoBiblioteca == false}">- Não cadastrado na biblioteca</c:if></p>
 						      		<div class="row">
 						      			<div class="col-md-5">
 											<table class="table table-condensed table-striped table-bordered">
@@ -158,7 +158,7 @@
 											</table>
 										</div> <!-- .col-md-5 -->
 									</div> <!-- .row -->
-								</div> <!-- .disciplina-panel-body -->
+								</div> <!-- .componente-bibliografia-panel-body -->
 							</div> <!-- .panel-collapse -->
 						</div> <!-- .panel -->
 					</c:forEach>
@@ -175,7 +175,7 @@
 				<div class="panel-group" id="accordionComplementar" role="tablist" aria-multiselectable="true">
 					<c:forEach var="complementar" items="${bibliografia_complementar}">
 						<div class="panel panel-default">
-							<div class="disciplina-panel-heading panel-heading" role="tab">
+							<div class="componente-bibliografia-panel-heading panel-heading <c:if test="${complementar.cadastradoBiblioteca == false}">bibliografia-virtual-nao-cadastrada</c:if>" role="tab">
 								<div class="panel-title">
 									<a role="button" data-toggle="collapse" href="#${complementar.id}" aria-expanded="false" aria-controls="${complementar.id}">
 							        	${complementar.nome}
@@ -183,9 +183,9 @@
 								</div>
 							</div>
 							<div id="${complementar.id}" class="panel-collapse collapse" role="tabpanel">
-								<div class="disciplina-panel-body panel-body">
+								<div class="componente-bibliografia-panel-body panel-body">
 						      		<p><b>Acervo</b>: ${complementar.acervo}</p>
-						      		<p><b>Tipo</b>: ${complementar.tipo}</p>
+						      		<p><b>Tipo</b>: ${complementar.tipo} <c:if test="${complementar.cadastradoBiblioteca == false}">- Não cadastrado na biblioteca</c:if></p>
 						      		<div class="row">
 						      			<div class="col-md-5">
 											<table class="table table-condensed table-striped table-bordered">
@@ -222,7 +222,7 @@
 											</table>
 										</div> <!-- .col-md-5 -->
 									</div> <!-- .row -->
-								</div> <!-- .disciplina-panel-body -->
+								</div> <!-- .componente-bibliografia-panel-body -->
 							</div> <!-- .panel-collapse -->
 						</div> <!-- .panel -->
 					</c:forEach>
