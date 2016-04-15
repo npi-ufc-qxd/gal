@@ -143,9 +143,9 @@ public class ComponenteCurricular {
 		if(listaBibliografias.get(0).getPrioridade() != null){
 			Collections.sort(listaBibliografias,new Comparator<Bibliografia>(){
 			    @Override
-			    public int compare(Bibliografia lhs,Bibliografia rhs){  
-			    	if(lhs.getPrioridade() != null && rhs.getPrioridade() != null)
-			    		return Integer.signum(lhs.getPrioridade()-rhs.getPrioridade()); 
+			    public int compare(Bibliografia bibliografiaA,Bibliografia bibliografiaB){  
+			    	if(bibliografiaA.getPrioridade() != null && bibliografiaB.getPrioridade() != null)
+			    		return Integer.signum(bibliografiaA.getPrioridade()-bibliografiaB.getPrioridade()); 
 			    	return 0;
 			    }
 			});
@@ -160,6 +160,18 @@ public class ComponenteCurricular {
 	
 	public List<Titulo> getTitulosBibliografiasComplementares() {
 		List<Titulo> titulos = new ArrayList<Titulo>();
+		List<Bibliografia> listaBibliografias = this.bibliografias;
+		
+		if(listaBibliografias.get(0).getPrioridade() != null){
+			Collections.sort(listaBibliografias,new Comparator<Bibliografia>(){
+			    @Override
+			    public int compare(Bibliografia bibliografiaA,Bibliografia bibliografiaB){  
+			    	if(bibliografiaA.getPrioridade() != null && bibliografiaB.getPrioridade() != null)
+			    		return Integer.signum(bibliografiaA.getPrioridade()-bibliografiaB.getPrioridade()); 
+			    	return 0;
+			    }
+			});
+		}
 		for (Bibliografia bibliografia : this.bibliografias) {
 			if (COMPLEMENTAR.equals(bibliografia.getTipoBibliografia())) {
 				titulos.add(bibliografia.getTitulo());

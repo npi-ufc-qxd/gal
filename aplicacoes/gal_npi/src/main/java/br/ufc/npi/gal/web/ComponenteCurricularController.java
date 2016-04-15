@@ -276,7 +276,6 @@ public class ComponenteCurricularController {
 							bibliografiaService.update(bibliografiasAseremModificadas.get(j));
 							
 							bibliografiasAseremModificadas.get(j).setTipoBibliografia(tipoBibliografia);
-							//bibliografiaService.update(bibliografiasAseremModificadas.get(j));
 							bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
 							listaIdTitulo[i] = null;
 							j = bibliografiasAseremModificadas.size() + 1;
