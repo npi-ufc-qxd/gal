@@ -270,7 +270,6 @@ public class ComponenteCurricularController {
 				for (int j = 0; j < bibliografiasAseremModificadas.size(); j++) {
 					if (bibliografiasAseremModificadas.get(j).getTitulo().getId() == id_titulo) {
 						
-						bibliografiasAseremModificadas.get(j).setPrioridade(i);
 						if (!bibliografiasAseremModificadas.get(j).getTipoBibliografia().equals(tipoBibliografia)) {
 							
 							bibliografiasAseremModificadas.get(j).setPrioridade(i);
