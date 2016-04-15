@@ -63,9 +63,13 @@ public class AcervoController {
 	public String uploadDoArquivoXls(ModelMap modelMap,
 			@ModelAttribute("atualizacaoAcervo") AcervoDocumento atualizacaoAcervo,
 			@RequestParam("file") MultipartFile request,BindingResult result , RedirectAttributes redirectAttributes) {
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		List<AcervoDocumento> atualizacoesRealizadas = acervoDocumentoService.find(AcervoDocumento.class);
+		modelMap.addAttribute("atualizacoesRealizadas", atualizacoesRealizadas);
+		
 		Boolean erros = false;
+		
 		if (atualizacaoAcervo.getInicioPeridoDelta() == null) {
 			result.rejectValue("inicioPeridoDelta",
 					"Repeat.AcervoDocumento.inicioPeridoDelta",
