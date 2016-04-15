@@ -29,7 +29,7 @@ public class Bibliografia {
 	
 	@Column(name="prioridade")
 	private Integer prioridade;
-
+	
 	public ComponenteCurricular getComponenteCurricular() {
 		return componente;
 	}

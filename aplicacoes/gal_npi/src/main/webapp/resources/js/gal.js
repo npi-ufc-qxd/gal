@@ -114,13 +114,23 @@ $( document ).ready(function() {
 			"order": default_sort,
 			"columnDefs": [ 
 			    { "orderable": false, "targets": no_sort_fields },
-			    { type: 'portugues', targets: "_all" } 
-			],
+			    // Essa linha foi desativada por gerar conflito com a busca na tabela
+			    // Link da resposta de um desenvolvedor da DataTables que pode significar
+			    // o porque do problema: https://github.com/DataTables/DataTables/issues/43
+			    /*{"targets": "_all", "type": 'portugues'}*/ 			],
 			"destroy": true,
 			"paging": attr_paging,
 			"searching": attr_searching
 		});
 	});
+	
+	$('.dataTables_filter input').keyup( function () {
+		var table = $('table.table-orderable').DataTable();
+		    table.search(
+		  		  $.fn.DataTable.ext.type.search.string( this.value )
+		    )
+		        .draw();
+		  });
 	
 	$('#submitEditarTitulo').click(function(){
 		$('#formfieldtitulo').submit();
