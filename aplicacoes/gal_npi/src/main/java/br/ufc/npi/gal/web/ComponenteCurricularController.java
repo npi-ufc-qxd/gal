@@ -269,14 +269,22 @@ public class ComponenteCurricularController {
 				id_titulo = Integer.parseInt(listaIdTitulo[i]);
 				for (int j = 0; j < bibliografiasAseremModificadas.size(); j++) {
 					if (bibliografiasAseremModificadas.get(j).getTitulo().getId() == id_titulo) {
+						
 						if (!bibliografiasAseremModificadas.get(j).getTipoBibliografia().equals(tipoBibliografia)) {
-							bibliografiasAseremModificadas.get(j).setTipoBibliografia(tipoBibliografia);
+							
+							bibliografiasAseremModificadas.get(j).setPrioridade(i);
 							bibliografiaService.update(bibliografiasAseremModificadas.get(j));
+							
+							bibliografiasAseremModificadas.get(j).setTipoBibliografia(tipoBibliografia);
+							//bibliografiaService.update(bibliografiasAseremModificadas.get(j));
 							bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
 							listaIdTitulo[i] = null;
 							j = bibliografiasAseremModificadas.size() + 1;
 
 						} else {
+							bibliografiasAseremModificadas.get(j).setPrioridade(i);
+							bibliografiaService.update(bibliografiasAseremModificadas.get(j));
+							
 							bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
 							listaIdTitulo[i] = null;
 						}

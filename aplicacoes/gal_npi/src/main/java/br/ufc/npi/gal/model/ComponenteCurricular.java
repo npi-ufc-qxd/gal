@@ -1,6 +1,8 @@
 package br.ufc.npi.gal.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -137,6 +139,17 @@ public class ComponenteCurricular {
 	
 	public List<Titulo> getTitulosBibliografiasBasicas() {
 		List<Titulo> titulos = new ArrayList<Titulo>();
+		List<Bibliografia> listaBibliografias = this.bibliografias;
+		if(listaBibliografias.get(0).getPrioridade() != null){
+			Collections.sort(listaBibliografias,new Comparator<Bibliografia>(){
+			    @Override
+			    public int compare(Bibliografia lhs,Bibliografia rhs){  
+			    	if(lhs.getPrioridade() != null && rhs.getPrioridade() != null)
+			    		return Integer.signum(lhs.getPrioridade()-rhs.getPrioridade()); 
+			    	return 0;
+			    }
+			});
+		}
 		for (Bibliografia bibliografia : this.bibliografias) {
 			if (BASICA.equals(bibliografia.getTipoBibliografia())) {
 				titulos.add(bibliografia.getTitulo());
