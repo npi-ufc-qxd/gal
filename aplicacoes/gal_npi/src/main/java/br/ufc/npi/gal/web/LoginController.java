@@ -1,10 +1,8 @@
 package br.ufc.npi.gal.web;
 
 import java.security.Principal;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -39,7 +37,6 @@ public class LoginController {
 
 	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
 	public String loginerror(ModelMap model) {
-
 		model.addAttribute("error", "Usuário e/ou senha inválidos!");
 		return "login";
 
@@ -53,7 +50,6 @@ public class LoginController {
 	    }
 	    return "redirect:/login";
 	}
-	
 	
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public String acessoNegado(ModelMap model, Principal user) {

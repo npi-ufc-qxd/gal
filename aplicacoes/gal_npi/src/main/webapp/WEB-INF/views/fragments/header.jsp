@@ -31,7 +31,8 @@
 							<li class="divider"></li>
 						</sec:authorize>
 						<li><a href="<c:url value='/componente/listar'/>">Listar</a></li>
-					</ul></li>
+					</ul>
+				</li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Cursos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -40,8 +41,8 @@
 							<li class="divider"></li>
 						</sec:authorize>
 						<li><a href="<c:url value='/curso/listar'/>">Listar</a></li>
-					</ul></li>
-					
+					</ul>
+				</li>				
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Títulos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -50,11 +51,11 @@
 							<li class="divider"></li>
 						</sec:authorize>
 						<li><a href="<c:url value='/titulo/listar'/>">Listar</a></li>
-					</ul></li>
-				
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
+					</ul>
+				</li>	
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">Cálculos de Metas<b class="caret"></b></a>
-						<ul class="dropdown-menu">
+					<ul class="dropdown-menu">
 						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 							<li><a href="<c:url value='/meta/configurar'/>">Configurar</a></li>
 						</sec:authorize>
@@ -63,8 +64,9 @@
 							<li class="divider"></li>
 							<li><a href="<c:url value='/meta/downloadMetaDetalhada'/>">Download</a></li>
 						</sec:authorize>
-						</ul></li>
-					<li>
+					</ul>
+				</li>
+				<li>
 				<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">Acervo<b class="caret"></b></a>
@@ -74,21 +76,20 @@
 							<li class="divider"></li>
 							<li><a href="<c:url value='/acervo/conflitos'/>">Resolver
 									Conflitos</a></li>
-						</ul></li>
-				</sec:authorize>
-				
+						</ul>
+					</li>
+				</sec:authorize>		
 				<li><a href="<c:url value='/contatos'/>">Contato/Suporte</a>
 			</ul>
-			
 			<ul class="nav navbar-nav navbar-right">
-			<sec:authorize access="isAuthenticated()">
-				<li><a href="<c:url value="/logout" />">Sair<span
+				<sec:authorize access="isAuthenticated()">
+					<li><a href="<c:url value="/logout" />">Sair<span
 						class="glyphicon glyphicon-off"></span></a></li>						
-			</sec:authorize>
-			<sec:authorize access="isAnonymous()">
-				<li><a href="<c:url value="/login" />">Login&nbsp;<span
+				</sec:authorize>
+				<sec:authorize access="isAnonymous()">
+					<li><a href="<c:url value="/login" />">Login&nbsp;<span
 						class="glyphicon glyphicon-user"></span></a></li>
-			</sec:authorize>			
+				</sec:authorize>			
 			</ul>
 		</div>
 	</div>
