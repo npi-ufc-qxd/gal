@@ -25,7 +25,7 @@ $( document ).ready(function() {
 	                	.replace( /[éèëêÉÈËÊ]/g, 'e' )
 	                	.replace( /[íìïîÍÌÏÎ]/g, 'i' )
 	                	.replace( /[úùüûÚÙÜÛ]/g, 'u' )
-		                .replace( /ç/g, 'c' )
+		                .replace( /[çÇ]/g, 'c' )
 		                .replace( /\n/g, ' ' ) :
 		            data;
 	}
