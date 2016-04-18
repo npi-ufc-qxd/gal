@@ -25,7 +25,7 @@ $( document ).ready(function() {
 	                	.replace( /[éèëêÉÈËÊ]/g, 'e' )
 	                	.replace( /[íìïîÍÌÏÎ]/g, 'i' )
 	                	.replace( /[úùüûÚÙÜÛ]/g, 'u' )
-		                .replace( /ç/g, 'c' )
+		                .replace( /çÇ/g, 'c' )
 		                .replace( /\n/g, ' ' ) :
 		            data;
 		return r;
@@ -70,33 +70,18 @@ $( document ).ready(function() {
 		else attr_searching = true;
 		
 		
-		jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-		    "portugues-pre": function ( data ) {
-		        var a = 'a';
-		        var e = 'e';
-		        var i = 'i';
-		        var o = 'o';
-		        var u = 'u';
-		        var c = 'c';
-		        var special_letters = {
-		            "Á": a, "á": a, "Ã": a, "ã": a, "À": a, "à": a,
-		            "É": e, "é": e, "Ê": e, "ê": e,
-		            "Í": i, "í": i, "Î": i, "î": i,
-		            "Ó": o, "ó": o, "Õ": o, "õ": o, "Ô": o, "ô": o,
-		            "Ú": u, "ú": u, "Ü": u, "ü": u,
-		            "ç": c, "Ç": c
-		        };
-		        for (var val in special_letters)
-		           data = data.split(val).join(special_letters[val]).toLowerCase();
-		        return data;
-		    },
+		$.extend( $.fn.DataTable.ext.type.order, {
 		    "portugues-asc": function ( a, b ) {
+		    	a = removeAcentos(a);
+		    	b = removeAcentos(b);
 		        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
 		    },
 		    "portugues-desc": function ( a, b ) {
+		    	a = removeAcentos(a);
+		    	b = removeAcentos(b);
 		        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
 		    }
-		} );
+		});
 		
 		
 		$(this).dataTable({
@@ -127,24 +112,38 @@ $( document ).ready(function() {
 				}
 			},
 			"order": default_sort,
-			"columnDefs": [ { type: 'portugues', targets: "_all" } ],
+			"columnDefs": [ 
+			    { "orderable": false, "targets": no_sort_fields },
+			    // Essa linha foi desativada por gerar conflito com a busca na tabela
+			    // Link da resposta de um desenvolvedor da DataTables que pode significar
+			    // o porque do problema: https://github.com/DataTables/DataTables/issues/43
+			    /*{"targets": "_all", "type": 'portugues'}*/ 			],
 			"destroy": true,
 			"paging": attr_paging,
 			"searching": attr_searching
 		});
 	});
 	
+	$('.dataTables_filter input').keyup( function () {
+		var table = $('table.table-orderable').DataTable();
+		    table.search(
+		  		  $.fn.DataTable.ext.type.search.string( this.value )
+		    )
+		        .draw();
+		  });
+	
 	$('#submitEditarTitulo').click(function(){
 		$('#formfieldtitulo').submit();
 	});
 	
-	$('.form-control').on("keyup",function(){
+	$('.form-control').on("keyup change focusout",function(){
 		 
 		document.getElementById("nome").value = document.getElementById("autor").value + " " + document.getElementById("nome_titulo").value + " " +document.getElementById("titulo_n").value + 
 												" " + document.getElementById("sub_titulo").value +	" " + document.getElementById("titulo_revista").value + " " + document.getElementById("pagina").value + " " + document.getElementById("ref_artigo").value +
 												" " + document.getElementById("edicao").value + " " + document.getElementById("publicador").value;
-		console.error(document.getElementById("nome").value);
 	});
+	
+	$('#titulo')
 	
 	$('#expandirTodosAccordions').click(function(){
 		$('.panel-collapse').collapse('show');
@@ -253,6 +252,23 @@ function getAppName() {
 	return url[1];
 
 }
+
+//Função para mostrar o checkbox "vinculado a biblioteca" nas páginas de adição/edição de Título
+function showHideElement(tipo_titulo){
+	if (tipo_titulo === "Físico") { // Mesmo valor do enum br.ufc.npi.gal.model.TipoTitulo
+        $("#inputCadastradoBiblioteca").hide();
+    } 
+	else if (tipo_titulo === "Virtual") { // // Mesmo valor do enum br.ufc.npi.gal.model.TipoTitulo
+		$("#inputCadastradoBiblioteca").show();
+    }
+}
+// Para a página de edição, será necessário identificar previamente o valor do campo "tipo" para a tomada de decisão de mostrar/esconder o campo "vinculado a biblioteca" 
+showHideElement($("#tipo").val());
+
+// Evento para mostrar/esconder o campo "cadastrado na biblioteca" nas páginas de adição/edição de Título de acordo com o tipo do título 
+$("select#tipo").on("change", function(){
+	showHideElement(this.value);
+});
 
 /*mostra a quantidade de exemplares que um titulo possui*/
 $(".open-AddQtdExemplares").on("click", function() {

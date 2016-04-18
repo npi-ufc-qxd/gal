@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page import="br.ufc.npi.gal.model.TipoTitulo" %>
 
 <!DOCTYPE html>
 <html>
@@ -119,10 +120,17 @@
 			    <label for="tipo" class="col-sm-1 control-label">Tipo</label>
 			    <div class="col-sm-10">
 			    	<form:select path="tipo" class="form-control">
-			    		<form:option value="Físico">Físico</form:option>
-			    		<form:option value="Virtual">Virtual</form:option>
+			    		<form:option value="${TipoTitulo.FISICO.descricao}">${TipoTitulo.FISICO.descricao}</form:option>
+			    		<form:option value="${TipoTitulo.VIRTUAL.descricao}">${TipoTitulo.VIRTUAL.descricao}</form:option>
 			    	</form:select>
 			    	<form:errors path="tipo" cssClass="error" />
+			    </div>
+			</div>
+			
+			<div id="inputCadastradoBiblioteca" class="form-group" style="display: none;">
+			    <div class="col-sm-4">
+			    	<form:checkbox path="cadastradoBiblioteca" label="Cadastrado na Biblioteca?" style="margin:0 8px;"/>
+			    	<form:errors path="cadastradoBiblioteca" cssClass="error" />
 			    </div>
 			</div>
 			

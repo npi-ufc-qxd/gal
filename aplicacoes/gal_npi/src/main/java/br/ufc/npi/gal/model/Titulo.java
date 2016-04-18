@@ -12,78 +12,83 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="titulos")
 public class Titulo {
-	
+
+	@Id
+	@Column(name="id_t")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(name="nome_titulo")
+	@NotEmpty(message="Campo obrigatório")
+	private String nome;
+
+	@Pattern.List({
+		@Pattern(regexp = "([^\\s]{0,})", message = "O isbn não pode conter espaços"),
+		@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù0-9]{0,}", message = "O campo não pode contar caracteres especiais")
+	})
+	@NotEmpty(message="Campo obrigatório")
+	@Size(max=13, message="Este campo não pode conter mais de 13 caracteres")
+	private String isbn;
+
+	@Column(name="tipo_titulo")
+	@NotEmpty(message="Campo obrigatório")
+	private String tipo;
+
+	@Column(name = "autor")
+	private String autor;
+
+	@Column(name = "titulo")
+	private String titulo;
+
+	@Column(name = "titulo_n")
+	private String titulo_n;
+
+	@Column(name = "sub_titulo")
+	private String subTitulo;
+
+	@Column(name = "titulo_revista")
+	private String tituloRevista;
+
+	@Column(name = "pagina")
+	private String pagina;
+
+	@Column(name = "ref_artigo")
+	private String refArtigo;
+
+	@Column(name = "edicao")
+	private String edicao;
+
+	@Column(name = "publicador")
+	private String publicador;
+
+	@Column(name = "cadastrado_biblioteca")
+	private Boolean cadastradoBiblioteca;
+
+	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
+
+	private List<Bibliografia> bibliografias;
+
+	@OneToMany(mappedBy = "titulo", targetEntity = Exemplar.class, fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)
+	private List<Exemplar> exemplares;
+
 	public Titulo() {
-		
+		super();
 	}
-	
+
 	public Titulo(String nome, String isbn, String tipo) {
 		super();
 		this.nome = nome;
 		this.isbn = isbn;
 		this.tipo = tipo;
 	}
-	
-	@Id
-	@Column(name="id_t")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
-	@Column(name="nome_titulo")
-	@NotEmpty(message="Campo obrigatório")
-	private String nome;
-	
-	@Pattern.List({
-		@Pattern(regexp = "([^\\s]{0,})", message = "O isbn não pode conter espaços"),
-		@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù0-9]{0,}", message = "O campo não pode contar caracteres especiais")
-	})
-	@NotEmpty(message="Campo obrigatório")
-	private String isbn;
-	
-	@Column(name="tipo_titulo")
-	@NotEmpty(message="Campo obrigatório")
-	private String tipo;
-	
-	@Column(name = "autor")
-	private String autor;
-	
-	@Column(name = "titulo")
-	private String titulo;
-	
-	@Column(name = "titulo_n")
-	private String titulo_n;
-	
-	@Column(name = "sub_titulo")
-	private String subTitulo;
-	
-	@Column(name = "titulo_revista")
-	private String tituloRevista;
-	
-	@Column(name = "pagina")
-	private String pagina;
-	
-	@Column(name = "ref_artigo")
-	private String refArtigo;
-	
-	@Column(name = "edicao")
-	private String edicao;
-	
-	@Column(name = "publicador")
-	private String publicador;
 
-	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
-
-	private List<Bibliografia> bibliografias;
-	
-	@OneToMany(mappedBy = "titulo", targetEntity = Exemplar.class, fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)
-	private List<Exemplar> exemplares;
-	
 	public List<Bibliografia> getBibliografias() {
 		return bibliografias;
 	}
@@ -123,7 +128,7 @@ public class Titulo {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
+
 	public String getAutor() {
 		return autor;
 	}
@@ -195,7 +200,7 @@ public class Titulo {
 	public void setPublicador(String publicador) {
 		this.publicador = publicador;
 	}
-	
+
 	public List<Exemplar> getExemplares() {
 		return exemplares;
 	}
@@ -206,6 +211,14 @@ public class Titulo {
 
 	public int getAcervo() {
 		return this.exemplares.size();
+	}
+	
+	public Boolean getCadastradoBiblioteca() {
+		return cadastradoBiblioteca;
+	}
+
+	public void setCadastradoBiblioteca(Boolean cadastradoBiblioteca) {
+		this.cadastradoBiblioteca = cadastradoBiblioteca;
 	}
 
 	@Override
