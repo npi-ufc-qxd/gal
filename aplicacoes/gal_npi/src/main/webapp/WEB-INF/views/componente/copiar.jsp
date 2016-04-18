@@ -86,7 +86,7 @@
 						aria-multiselectable="true">
 						<c:forEach var="basica" items="${bibliografia_basica}">
 							<div class="panel panel-default">
-								<div class="disciplina-panel-heading panel-heading" role="tab">
+								<div class="componente-bibliografia-panel-heading panel-heading <c:if test="${basica.cadastradoBiblioteca == false}">bibliografia-virtual-nao-cadastrada</c:if>" role="tab">
 									<h4 class="panel-title">
 										<a>${basica.nome}</a>
 									</h4>
@@ -109,7 +109,7 @@
 						aria-multiselectable="true">
 						<c:forEach var="complementar" items="${bibliografia_complementar}">
 							<div class="panel panel-default">
-								<div class="disciplina-panel-heading panel-heading" role="tab">
+								<div class="componente-bibliografia-panel-heading panel-heading <c:if test="${complementar.cadastradoBiblioteca == false}">bibliografia-virtual-nao-cadastrada</c:if>" role="tab">
 									<h4 class="panel-title">
 										<a>${complementar.nome}</a>
 									</h4>

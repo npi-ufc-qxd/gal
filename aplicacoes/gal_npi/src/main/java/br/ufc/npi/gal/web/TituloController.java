@@ -1,8 +1,5 @@
 package br.ufc.npi.gal.web;
 
-import java.util.List;
-import java.util.ListIterator;
-
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.npi.gal.model.Bibliografia;
+import br.ufc.npi.gal.model.TipoTitulo;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.TituloService;
 
@@ -60,6 +58,9 @@ public class TituloController {
 					"Já existe um título com esse nome");
 			return "titulo/adicionar";
 		}
+		if (titulo.getTipo().equals(TipoTitulo.FISICO.getDescricao())){
+			titulo.setCadastradoBiblioteca(true);
+		}
 
 		tituloService.save(titulo);
 		redirectAttributes.addFlashAttribute("info",
@@ -99,6 +100,9 @@ public class TituloController {
 			result.rejectValue("nome", "Repeat.titulo.nome",
 					"Já existe um título com esse nome");
 			return "titulo/editar";
+		}
+		if (titulo.getTipo().equals(TipoTitulo.FISICO.getDescricao())){
+			titulo.setCadastradoBiblioteca(true);
 		}
 
 		tituloService.update(titulo);
