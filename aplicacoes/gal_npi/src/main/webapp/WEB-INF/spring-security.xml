@@ -54,7 +54,7 @@
  		 
 		<form-login login-page="/login" default-target-url="/" 
  			authentication-failure-url="/loginfailed" />
- 		<logout logout-success-url="/login" invalidate-session="true"/>
+ 		<logout logout-success-url="/login" logout-url="/logout" invalidate-session="true" delete-cookies="JSESSIONID"/>
 	</http>
 	
 	<beans:bean id="ldapAuthentication" class="br.ufc.npi.gal.service.LdapAuthentication"></beans:bean>
