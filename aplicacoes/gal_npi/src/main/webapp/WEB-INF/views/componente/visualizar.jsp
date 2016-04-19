@@ -67,15 +67,17 @@
 			
 			<c:if test="${not empty curriculos}">
 				<div class="row">
-					<div class="col-md-8">
+					<div class="col-md-9">
 						<table class="table table-condensed table-striped table-bordered">
 							<thead>
 								<tr>
 									<th>Curso</th>
+									<th>Natureza</th>
 									<th>Semestre de Oferta</th>
 									<th>Quantidade de Alunos</th>
 									<th>Horas Práticas</th>
 									<th>Horas Teóricas</th>
+									<th>Observações</th>
 								</tr>
 							</thead>
 							
@@ -83,10 +85,12 @@
 								<c:forEach var="curriculo" items="${curriculos}">
 									<tr>
 										<td>${curriculo.estruturaCurricular.curso.nome}</td>
+										<td>${curriculo.natureza}</td>
 										<td>${curriculo.semestreOferta}</td>
 										<td>${curriculo.quantidadeAlunos}</td>
 										<td>${curriculo.componente.chPratica}</td>
 										<td>${curriculo.componente.chTeorica}</td>
+										<td>${curriculo.observacoes}</td>
 									</tr>
 								</c:forEach>
 							</tbody>

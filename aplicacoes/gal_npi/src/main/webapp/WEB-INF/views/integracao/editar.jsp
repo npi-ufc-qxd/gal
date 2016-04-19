@@ -19,10 +19,7 @@
 			<form:input path="estruturaCurricular.id" type="hidden" />
 			<form:input path="componente.id" type="hidden" />
 						
-			<div class="form-group">
-				<label class="control-label" style="font-size: 20px;">Editar
-					Vinculo</label>
-			</div>
+			<h4 class="center">Editar Vínculo</h4>
 			
 			<div class="form-group">
 				<label class="control-label" style="font-size: 16px;">${integracao.componente.codigo}
@@ -72,6 +69,14 @@
 						placeholder="Observações" path="observacoes" />
 					<form:errors path="observacoes" cssClass="error" />
 				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="influenciarCalculo" class="col-sm-3 control-label">Influenciar no Cálculo de Metas?</label>
+			    <div class="col-sm-1 fix-checkbox">
+			    	<form:checkbox id="influenciarCalculo" path="influenciarCalculo"/>
+			    	<form:errors path="influenciarCalculo" cssClass="error" />
+			    </div>
 			</div>
 
 			<div class="controls">

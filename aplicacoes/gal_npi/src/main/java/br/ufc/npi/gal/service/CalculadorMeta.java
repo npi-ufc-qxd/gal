@@ -37,35 +37,29 @@ public class CalculadorMeta {
 						detalheMeta = new DetalheMetaCalculada();
 						detalheMeta.setCurriculo(integracaoCurricular.getEstruturaCurricular().getCodigo());
 						detalheMeta.setCurso(integracaoCurricular.getEstruturaCurricular().getCurso().getNome());
-
 						
 						if (BIBLIOGRAFIA_TIPO_COMPLEMENTAR.equals(bibliografia.getTipoBibliografia())) {
-							detalheMeta.setCalculo(meta.getIndiceCalculoComplementar());
-							
-						} else {
+							if(integracaoCurricular.getInfluenciarCalculo() != null && integracaoCurricular.getInfluenciarCalculo() == false)
+								detalheMeta.setCalculo(0); // Não inclui no cálculo
+							else
+								detalheMeta.setCalculo(meta.getIndiceCalculoComplementar());
+						}
+						else {
 							detalheMeta.setCalculo(integracaoCurricular.getQuantidadeAlunos() / meta.getIndiceCalculoBasica());
 						}
 
+						detalheMeta.setTipoBibliografia(bibliografia.getTipoBibliografia());
+						detalheMeta.setComponente(bibliografia.getComponenteCurricular().getNome());
+						detalheMeta.setSemestre(integracaoCurricular.getSemestreOferta());
+						detalheMeta.setCodigoComponente(bibliografia.getComponenteCurricular().getCodigo());
+						detalheMeta.setQuantidadeAlunos(integracaoCurricular.getQuantidadeAlunos());
 						
-
 						if (integracaoCurricular.getSemestreOferta() % 2 == 0) {
-
-							detalheMeta.setTipoBibliografia(bibliografia.getTipoBibliografia());
-							detalheMeta.setComponente(bibliografia.getComponenteCurricular().getNome());
-							detalheMeta.setSemestre(integracaoCurricular.getSemestreOferta());
-							detalheMeta.setCodigoComponente(bibliografia.getComponenteCurricular().getCodigo());
-							detalheMeta.setQuantidadeAlunos(integracaoCurricular.getQuantidadeAlunos());
 							detalhePares.add(detalheMeta);
-						} else {
-
-							detalheMeta.setTipoBibliografia(bibliografia.getTipoBibliografia());
-							detalheMeta.setComponente(bibliografia.getComponenteCurricular().getNome());
-							detalheMeta.setSemestre(integracaoCurricular.getSemestreOferta());
-							detalheMeta.setCodigoComponente(bibliografia.getComponenteCurricular().getCodigo());
-							detalheMeta.setQuantidadeAlunos(integracaoCurricular.getQuantidadeAlunos());
+						}
+						else {
 							detalheImpares.add(detalheMeta);
 						}
-
 					}
 				}
 				metaCalculada.setNome(meta.getNome());

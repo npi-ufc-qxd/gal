@@ -11,6 +11,15 @@
 	width: 100% !important;
 }
 
+h4 {
+	font-size: 20px;
+	font-weight: 700;
+	margin-bottom: 20px;
+}
+
+h4.center{
+	text-align: center;
+}
 
 div.alert {
 	text-align: center;
@@ -166,4 +175,8 @@ div#container {
 
 .panel-default .bibliografia-virtual-nao-cadastrada, .bibliografia-virtual-nao-cadastrada{
 	background-color: #ffcc00;
+}
+
+.fix-checkbox{
+	text-align: left;
 }

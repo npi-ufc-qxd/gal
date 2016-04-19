@@ -25,7 +25,7 @@ $( document ).ready(function() {
 	                	.replace( /[éèëêÉÈËÊ]/g, 'e' )
 	                	.replace( /[íìïîÍÌÏÎ]/g, 'i' )
 	                	.replace( /[úùüûÚÙÜÛ]/g, 'u' )
-		                .replace( /çÇ/g, 'c' )
+		                .replace( /[çÇ]/g, 'c' )
 		                .replace( /\n/g, ' ' ) :
 		            data;
 		return r;
@@ -36,7 +36,7 @@ $( document ).ready(function() {
 	$('table.table-orderable').each(function(){
 		var default_sort = $(this).attr('default-sort');
 		// testa se existe o atributo default_sort no elemento
-		if(typeof default_sort !== typeof undefined && default_sort !== false)
+		if(default_sort !== undefined && default_sort !== false)
 			default_sort = [default_sort.split(' ')];
 		else
 			default_sort = [];
@@ -44,7 +44,7 @@ $( document ).ready(function() {
 		
 		var no_sort_fields = $(this).attr('no-sort-fields');
 		// testa se existe o atributo no_sort_fields
-		if(typeof no_sort_fields !== typeof undefined && no_sort_fields !== false){
+		if(no_sort_fields !== undefined && no_sort_fields !== false){
 			no_sort_fields = no_sort_fields.split(' ');
 			// converte para array de inteiros
 			for(i = 0; i < no_sort_fields.length; i++){
@@ -56,14 +56,14 @@ $( document ).ready(function() {
 			no_sort_fields = [];
 		
 		var attr_paging = $(this).attr('paging');
-		if(typeof attr_paging !== typeof undefined){
+		if(attr_paging !== undefined){
 			if(attr_paging === "false")
 				attr_paging = false;
 		}
 		else attr_paging = true;
 		
 		var attr_searching = $(this).attr('searching');
-		if(typeof attr_searching !== typeof undefined){
+		if(attr_searching !== undefined){
 			if (attr_searching === "false")
 				attr_searching = false;
 		}
@@ -126,24 +126,20 @@ $( document ).ready(function() {
 	
 	$('.dataTables_filter input').keyup( function () {
 		var table = $('table.table-orderable').DataTable();
-		    table.search(
-		  		  $.fn.DataTable.ext.type.search.string( this.value )
-		    )
-		        .draw();
-		  });
+		table
+			.search($.fn.DataTable.ext.type.search.string(this.value))
+			.draw();
+	});
 	
 	$('#submitEditarTitulo').click(function(){
 		$('#formfieldtitulo').submit();
 	});
 	
 	$('.form-control').on("keyup change focusout",function(){
-		 
 		document.getElementById("nome").value = document.getElementById("autor").value + " " + document.getElementById("nome_titulo").value + " " +document.getElementById("titulo_n").value + 
 												" " + document.getElementById("sub_titulo").value +	" " + document.getElementById("titulo_revista").value + " " + document.getElementById("pagina").value + " " + document.getElementById("ref_artigo").value +
 												" " + document.getElementById("edicao").value + " " + document.getElementById("publicador").value;
 	});
-	
-	$('#titulo')
 	
 	$('#expandirTodosAccordions').click(function(){
 		$('.panel-collapse').collapse('show');

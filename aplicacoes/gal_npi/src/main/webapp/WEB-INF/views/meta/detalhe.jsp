@@ -62,7 +62,7 @@
 				<!-- here should go some titles... -->
 				<tr>
 					<th>Curso</th>
-					<th>Disciplina</th>
+					<th>Componente</th>
 					<th>Bibliografia</th>
 					<th>Curriculo</th>
 					<th>Meta individual</th>
@@ -73,8 +73,9 @@
 						<td><c:out value="${par.componente}" /></td>
 						<td><c:out value="${par.tipoBibliografia}" /></td>
 						<td><c:out value="${par.curriculo}" /></td>
-						<td><fmt:formatNumber type="number" maxFractionDigits="1"
-								value="${par.calculo}" /></td>
+						<td>
+							<fmt:formatNumber type="number" maxFractionDigits="1" value="${par.calculo}" />
+						</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -97,7 +98,7 @@
 				<!-- here should go some titles... -->
 				<tr>
 					<th>Curso</th>
-					<th>Disciplina</th>
+					<th>Componente</th>
 					<th>Bibliografia</th>
 					<th>Curriculo</th>
 					<th>Meta individual</th>
@@ -108,8 +109,9 @@
 						<td><c:out value="${impar.componente}" /></td>
 						<td><c:out value="${impar.tipoBibliografia}" /></td>
 						<td><c:out value="${impar.curriculo}" /></td>
-						<td><fmt:formatNumber type="number" maxFractionDigits="1"
-								value="${impar.calculo}"></fmt:formatNumber></td>
+						<td>
+							<fmt:formatNumber type="number" maxFractionDigits="1" value="${impar.calculo}" />
+						</td>
 					</tr>
 				</c:forEach>
 			</table>
