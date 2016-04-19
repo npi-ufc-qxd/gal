@@ -33,22 +33,24 @@
 		
 		<intercept-url pattern="/curso/listar" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/curso/{id}/visualizar" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/curso/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
+		<intercept-url pattern="/curso/{id}/estrutura/**/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
 		<intercept-url pattern="/curso/estrutura/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
+		<intercept-url pattern="/curso/**" access="BIBLIOTECARIO" />
 		
 		<intercept-url pattern="/componente/listar**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/componente/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
+		<intercept-url pattern="/componente/{id}/visualizar**" access="COORDENADOR_CURSO" />
+		<intercept-url pattern="/componente/**" access="BIBLIOTECARIO" />
 		
-		<intercept-url pattern="/titulo/listar/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/titulo/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
+		<intercept-url pattern="/titulo/listar/**" access="IS_AUTHENTICATED_ANONYMOUSLY,COORDENADOR_CURSO" />
+		<intercept-url pattern="/titulo/**" access="BIBLIOTECARIO" />
 		
-		<intercept-url pattern="/acervo/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
+		<intercept-url pattern="/acervo/**" access="BIBLIOTECARIO" />
 		
 		<intercept-url pattern="/integracao/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
 		
 		<intercept-url pattern="/exemplar/listar/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/exemplar/{id}/listar" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/exemplar/**" access="BIBLIOTECARIO,COORDENADOR_CURSO" />
+		<intercept-url pattern="/exemplar/{id}/listar" access="IS_AUTHENTICATED_ANONYMOUSLY,COORDENADOR_CURSO" />
+		<intercept-url pattern="/exemplar/**" access="BIBLIOTECARIO" />
 		
 		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
  		 
