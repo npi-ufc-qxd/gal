@@ -45,6 +45,8 @@ public class Titulo {
 	private String autor;
 
 	@Column(name = "titulo")
+	@NotEmpty(message="Campo obrigatório")
+	@Size(max=255,message="Este campo não pode conter mais de 255 caracteres")
 	private String titulo;
 
 	@Column(name = "titulo_n")
