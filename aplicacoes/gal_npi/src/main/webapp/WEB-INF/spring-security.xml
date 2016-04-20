@@ -24,34 +24,40 @@
 	
 	<http access-decision-manager-ref="accessDecisionManager" auto-config="true">
 		<access-denied-handler error-page="/403" />
- 		<intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" /> 
+		
+		<intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" /> 
  		<intercept-url pattern="/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
  		<intercept-url pattern="/webjars/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
  		
  		<intercept-url pattern="/contatos" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/inicio" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+				
+		<intercept-url pattern="/componente/listar" access="COORDENACAO_ACADEMICA,BIBLIOTECARIO,COORDENADOR_CURSO,DISCENTE,STA,DOCENTE" />
+		<intercept-url pattern="/componente/{id}/visualizar**" access="COORDENACAO_ACADEMICA,BIBLIOTECARIO,COORDENADOR_CURSO,DISCENTE,STA,DOCENTE" />
+		<intercept-url pattern="/componente/**" access="COORDENACAO_ACADEMICA" />
 		
-		<intercept-url pattern="/curso/listar" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/curso/{id}/visualizar" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/curso/{id}/estrutura/**/**" access="BIBLIOTECARIO,COORDENADOR_CURSO,COORDENACAO_ACADEMICA" />
-		<intercept-url pattern="/curso/estrutura/**" access="COORDENADOR_CURSO" />
-		<intercept-url pattern="/curso/**" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA" />
+		<intercept-url pattern="/curso/listar" access="COORDENACAO_ACADEMICA,BIBLIOTECARIO,DISCENTE,STA,DOCENTE" />
+		<intercept-url pattern="/curso/{id}/visualizar" access="COORDENACAO_ACADEMICA,BIBLIOTECARIO,DISCENTE,STA,DOCENTE" />
+		<intercept-url pattern="/curso/{id}/estrutura/**/**" access="COORDENACAO_ACADEMICA,COORDENADOR_CURSO,COORDENACAO_ACADEMICA" />
+		<intercept-url pattern="/curso/estrutura/**" access="COORDENACAO_ACADEMICA,COORDENADOR_CURSO,COORDENACAO_ACADEMICA" />
+		<intercept-url pattern="/curso/**" access="COORDENACAO_ACADEMICA" />
 		
-		<intercept-url pattern="/componente/listar**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/componente/{id}/visualizar**" access="COORDENADOR_CURSO" />
-		<intercept-url pattern="/componente/**" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA" />
-		
-		<intercept-url pattern="/titulo/listar/**" access="IS_AUTHENTICATED_ANONYMOUSLY,COORDENADOR_CURSO" />
-		<intercept-url pattern="/titulo/adicionar" access="COORDENADOR_CURSO,BIBLIOTECARIO,COORDENACAO_ACADEMICA" />
+		<intercept-url pattern="/titulo/adicionar" access="COORDENACAO_ACADEMICA,COORDENADOR_CURSO,BIBLIOTECARIO" />
+		<intercept-url pattern="/titulo/listar" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA,DISCENTE,STA,DOCENTE" />
 		<intercept-url pattern="/titulo/**" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA" />
 		
 		<intercept-url pattern="/acervo/**" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA" />
 		
 		<intercept-url pattern="/integracao/**" access="BIBLIOTECARIO,COORDENADOR_CURSO,COORDENACAO_ACADEMICA" />
 		
-		<intercept-url pattern="/exemplar/listar/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/exemplar/{id}/listar" access="IS_AUTHENTICATED_ANONYMOUSLY,COORDENADOR_CURSO" />
+		<intercept-url pattern="/exemplar/listar/**" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO,DISCENTE,STA,DOCENTE" />
+		<intercept-url pattern="/exemplar/{id}/listar" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO,DISCENTE,STA,DOCENTE" />
 		<intercept-url pattern="/exemplar/**" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA" />
+		
+
+		<intercept-url pattern="/metas/{id}/detalhe/" access="BIBLIOTERCARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO,DISCENTE,STA,DOCENTE" />
+		<intercept-url pattern="/meta/listar" access="BIBLIOTERCARIO,COORDENACAO_ACADEMICACOORDENADOR_CURSO,DISCENTE,STA,DOCENTE" />
+		<intercept-url pattern="/metas/**" access="BIBLIOTERCARIO,COORDENACAO_ACADEMICA" />
 		
 		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
  		 

@@ -26,7 +26,7 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Componentes Curriculares<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<sec:authorize access="hasAnyRole('BIBLIOTECARIO','COORDENACAO_ACADEMICA')">
+						<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
 							<li><a href="<c:url value='/componente/adicionar'/>">Adicionar</a></li>
 							<li class="divider"></li>
 						</sec:authorize>
@@ -36,7 +36,7 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Cursos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<sec:authorize access="hasAnyRole('BIBLIOTECARIO','COORDENACAO_ACADEMICA')">
+						<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
 							<li><a href="<c:url value='/curso/adicionar'/>">Adicionar</a></li>
 							<li class="divider"></li>
 						</sec:authorize>
