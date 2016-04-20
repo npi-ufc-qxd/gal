@@ -1,6 +1,5 @@
 package br.ufc.npi.gal.model;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,7 +7,6 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 
 @Entity
 @Table(name = "integracao_curricular")
@@ -37,21 +35,8 @@ public class IntegracaoCurricular {
 	@Column(name="observacoes")
 	private String observacoes;
 
-	public String getObservacoes() {
-		return observacoes;
-	}
-
-	public void setObservacoes(String observacoes) {
-		this.observacoes = observacoes;
-	}
-
-	public String getNatureza() {
-		return natureza;
-	}
-
-	public void setNatureza(String natureza) {
-		this.natureza = natureza;
-	}
+	@Column(name="influenciar_calculo")
+	private Boolean influenciarCalculo;
 
 	public EstruturaCurricular getEstruturaCurricular() {
 		return estruturaCurricular;
@@ -85,11 +70,35 @@ public class IntegracaoCurricular {
 		this.semestreOferta = semestreOferta;
 	}
 
+	public String getNatureza() {
+		return natureza;
+	}
+
+	public void setNatureza(String natureza) {
+		this.natureza = natureza;
+	}
+
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
+	}
+
+	public Boolean getInfluenciarCalculo() {
+		return influenciarCalculo;
+	}
+
+	public void setInfluenciarCalculo(Boolean influenciarCalculo) {
+		this.influenciarCalculo = influenciarCalculo;
+	}
+
 	@Override
 	public String toString() {
-		return "IntegracaoCurricular [estruturaCurricular=" + estruturaCurricular + ", disciplina=" + componente
-				+ ", quantidadeAlunos=" + quantidadeAlunos + ", semestreOferta=" + semestreOferta + ", observacoes=" +observacoes+ "]";
-
+		return "IntegracaoCurricular [estruturaCurricular=" + estruturaCurricular + ", componente=" + componente
+				+ ", quantidadeAlunos=" + quantidadeAlunos + ", semestreOferta=" + semestreOferta + ", natureza="
+				+ natureza + ", observacoes=" + observacoes + ", influenciarCalculo=" + influenciarCalculo + "]";
 	}
 
 }
