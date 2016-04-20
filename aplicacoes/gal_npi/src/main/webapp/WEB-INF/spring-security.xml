@@ -56,7 +56,7 @@
 		
 
 		<intercept-url pattern="/metas/{id}/detalhe/" access="BIBLIOTERCARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO,DISCENTE,STA,DOCENTE" />
-		<intercept-url pattern="/meta/listar" access="BIBLIOTERCARIO,COORDENACAO_ACADEMICACOORDENADOR_CURSO,DISCENTE,STA,DOCENTE" />
+		<intercept-url pattern="/meta/listar" access="BIBLIOTERCARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO,DISCENTE,STA,DOCENTE" />
 		<intercept-url pattern="/metas/**" access="BIBLIOTERCARIO,COORDENACAO_ACADEMICA" />
 		
 		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
