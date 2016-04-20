@@ -39,7 +39,7 @@ public class CalculadorMeta {
 						detalheMeta.setCurso(integracaoCurricular.getEstruturaCurricular().getCurso().getNome());
 						
 						if (BIBLIOGRAFIA_TIPO_COMPLEMENTAR.equals(bibliografia.getTipoBibliografia())) {
-							if(integracaoCurricular.getInfluenciarCalculo() != null && integracaoCurricular.getInfluenciarCalculo() == false)
+							if(integracaoCurricular.getInfluenciarCalculo() != null && !integracaoCurricular.getInfluenciarCalculo())
 								detalheMeta.setCalculo(0); // Não inclui no cálculo
 							else
 								detalheMeta.setCalculo(meta.getIndiceCalculoComplementar());

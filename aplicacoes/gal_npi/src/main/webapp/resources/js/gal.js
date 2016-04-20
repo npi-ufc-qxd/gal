@@ -33,15 +33,15 @@ $( document ).ready(function() {
 	$.fn.DataTable.ext.type.search.string = removeAcentos;
 	
 	$.extend( $.fn.DataTable.ext.type.order, {
-	    "portugues-asc": function ( a, b ) {
+		"portugues-asc": function ( a, b ) {
 	    	a = removeAcentos(a);
 	    	b = removeAcentos(b);
-	        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-	    },
-	    "portugues-desc": function ( a, b ) {
+	    	return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+		},
+		"portugues-desc": function ( a, b ) {
 	    	a = removeAcentos(a);
 	    	b = removeAcentos(b);
-	        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+	    	return ((a < b) ? 1 : ((a > b) ? -1 : 0));
 	    }
 	});
     
