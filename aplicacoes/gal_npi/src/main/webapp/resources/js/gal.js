@@ -15,7 +15,7 @@ $( document ).ready(function() {
 	
 	// remove acentos de strings
 	function removeAcentos(data){
-		var r = !data ?
+		return ! data ?
 		        '' :
 		        typeof data === 'string' ?
 		            data
@@ -28,10 +28,22 @@ $( document ).ready(function() {
 		                .replace( /[çÇ]/g, 'c' )
 		                .replace( /\n/g, ' ' ) :
 		            data;
-		return r;
 	}
 	
 	$.fn.DataTable.ext.type.search.string = removeAcentos;
+	
+	$.extend( $.fn.DataTable.ext.type.order, {
+	    "portugues-asc": function ( a, b ) {
+	    	a = removeAcentos(a);
+	    	b = removeAcentos(b);
+	        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+	    },
+	    "portugues-desc": function ( a, b ) {
+	    	a = removeAcentos(a);
+	    	b = removeAcentos(b);
+	        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+	    }
+	});
     
 	$('table.table-orderable').each(function(){
 		var default_sort = $(this).attr('default-sort');
@@ -69,21 +81,6 @@ $( document ).ready(function() {
 		}
 		else attr_searching = true;
 		
-		
-		$.extend( $.fn.DataTable.ext.type.order, {
-		    "portugues-asc": function ( a, b ) {
-		    	a = removeAcentos(a);
-		    	b = removeAcentos(b);
-		        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-		    },
-		    "portugues-desc": function ( a, b ) {
-		    	a = removeAcentos(a);
-		    	b = removeAcentos(b);
-		        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-		    }
-		});
-		
-		
 		$(this).dataTable({
 			"pageLength": 25,
 			"pagingType" : "full_numbers",
@@ -113,17 +110,19 @@ $( document ).ready(function() {
 			},
 			"order": default_sort,
 			"columnDefs": [ 
-			    { "orderable": false, "targets": no_sort_fields },
+			    {"orderable": true, "targets": no_sort_fields},
 			    // Essa linha foi desativada por gerar conflito com a busca na tabela
 			    // Link da resposta de um desenvolvedor da DataTables que pode significar
 			    // o porque do problema: https://github.com/DataTables/DataTables/issues/43
-			    /*{"targets": "_all", "type": 'portugues'}*/ 			],
+			    /*{"targets": "_all", "type": 'portugues'}*/ 
+			],
 			"destroy": true,
 			"paging": attr_paging,
 			"searching": attr_searching
 		});
 	});
 	
+	//aplica o filtro no input da busca
 	$('.dataTables_filter input').keyup( function () {
 		var table = $('table.table-orderable').DataTable();
 		table
