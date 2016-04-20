@@ -26,7 +26,7 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Componentes Curriculares<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 							<li><a href="<c:url value='/componente/adicionar'/>">Adicionar</a></li>
 							<li class="divider"></li>
 						</sec:authorize>
@@ -36,7 +36,7 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Cursos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 							<li><a href="<c:url value='/curso/adicionar'/>">Adicionar</a></li>
 							<li class="divider"></li>
 						</sec:authorize>
@@ -46,7 +46,7 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Títulos<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 							<li><a href="<c:url value='/titulo/adicionar'/>">Adicionar</a></li>
 							<li class="divider"></li>
 						</sec:authorize>
@@ -56,18 +56,18 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">Cálculos de Metas<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 							<li><a href="<c:url value='/meta/configurar'/>">Configurar</a></li>
 						</sec:authorize>
 							<li><a href="<c:url value='/meta/listar'/>">Listar</a></li>
-						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 							<li class="divider"></li>
 							<li><a href="<c:url value='/meta/downloadMetaDetalhada'/>">Download</a></li>
 						</sec:authorize>
 					</ul>
 				</li>
 				<li>
-				<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+				<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown">Acervo<b class="caret"></b></a>
 						<ul class="dropdown-menu">
