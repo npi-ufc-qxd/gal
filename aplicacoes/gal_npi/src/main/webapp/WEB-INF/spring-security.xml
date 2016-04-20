@@ -42,6 +42,7 @@
 		<intercept-url pattern="/componente/**" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA" />
 		
 		<intercept-url pattern="/titulo/listar/**" access="IS_AUTHENTICATED_ANONYMOUSLY,COORDENADOR_CURSO" />
+		<intercept-url pattern="/titulo/adicionar" access="COORDENADOR_CURSO" />
 		<intercept-url pattern="/titulo/**" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA" />
 		
 		<intercept-url pattern="/acervo/**" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA" />
