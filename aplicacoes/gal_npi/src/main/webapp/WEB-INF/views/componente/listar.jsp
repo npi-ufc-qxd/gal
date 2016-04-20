@@ -34,7 +34,7 @@
 			</div>
 		</c:if>
 
-		<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+		<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
 			<div id="button-add">
 				<a href="<c:url value="/componente/adicionar" ></c:url>">
 					<button class="btn btn-primary">
@@ -54,7 +54,7 @@
 		</c:if>
 
 		<c:if test="${not empty componentes}">
-			<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+			<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
 				<table id="disciplinaTable" class="table table-striped table-orderable" no-sort-fields="5 6 7 8" default-sort="0 asc">
 					<thead>
 						<tr>
@@ -104,7 +104,7 @@
 					</tbody>
 				</table>
 			</sec:authorize>
-			<sec:authorize access="!hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+			<sec:authorize access="!hasAnyRole('COORDENACAO_ACADEMICA')">
 				<table id="disciplinaTable" class="table table-striped table-orderable" default-sort="0 asc">
 					<thead>
 						<tr>
