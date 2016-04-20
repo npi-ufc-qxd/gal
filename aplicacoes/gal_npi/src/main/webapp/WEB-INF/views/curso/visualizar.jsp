@@ -46,7 +46,7 @@
 						data-toggle="tab">${curriculo.codigo}</a></li>
 				</c:forEach>
 				<sec:authorize
-					access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+					access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 					<div id="button-add">
 						<a
 							href="<c:url value="/curso/${curso.codigo}/estrutura/adicionar" ></c:url>">
@@ -83,7 +83,7 @@
 					<div class="tab-pane ${active }" id="${curriculo.codigo }"></div>
 					<div id="${curriculo.id}" class="tab-pane ${active }">
 						<sec:authorize
-							access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+							access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 							<div id="button-add">
 								<a style="float: left;" class="btn btn-success"
 									href="<c:url value="/integracao/${curriculo.id}/adicionar" ></c:url>">
@@ -152,7 +152,7 @@
 							</div>
 						</sec:authorize>
 						<sec:authorize
-							access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+							access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 							<div class="panel panel-default">
 								<datatables:table id="${curso.id}"
 									data="${curriculo.curriculos}" cdn="false" row="integracao"
@@ -189,7 +189,7 @@
 							</div>
 						</sec:authorize>
 						<sec:authorize
-							access="!hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+							access="!hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 							<div class="panel panel-default">
 								<datatables:table id="estrutura${curso.id}"
 									data="${curriculo.curriculos}" cdn="false" row="integracao"
