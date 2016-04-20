@@ -34,14 +34,14 @@ $( document ).ready(function() {
 	
 	$.extend( $.fn.DataTable.ext.type.order, {
 		"portugues-asc": function ( a, b ) {
-	    	a = removeAcentos(a);
-	    	b = removeAcentos(b);
-	    	return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+			a = removeAcentos(a);
+			b = removeAcentos(b);
+			return ((a < b) ? -1 : ((a > b) ? 1 : 0));
 		},
 		"portugues-desc": function ( a, b ) {
-	    	a = removeAcentos(a);
-	    	b = removeAcentos(b);
-	    	return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+			a = removeAcentos(a);
+			b = removeAcentos(b);
+			return ((a < b) ? 1 : ((a > b) ? -1 : 0));
 	    }
 	});
     
