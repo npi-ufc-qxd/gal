@@ -19,20 +19,17 @@
 			<form:input path="estruturaCurricular.id" type="hidden" />
 			<form:input path="componente.id" type="hidden" />
 						
-			<div class="form-group">
-				<label class="control-label" style="font-size: 20px;">Editar
-					Vinculo</label>
-			</div>
+			<h4 class="center">Editar Vínculo</h4>
 			
 			<div class="form-group">
-				<label class="control-label" style="font-size: 16px;">${integracao.componente.codigo}
-				 - ${integracao.componente.nome}</label>
+				<label class="control-label" style="font-size: 16px;">
+					${integracao.componente.codigo} - ${integracao.componente.nome}
+				</label>
 			</div>
 
 			<div class="form-group">
-				<label for="componente.codigo" class="col-sm-2 control-label">Código
-					Componente Curricular</label>
-				<div class="col-sm-10">
+				<label for="componente.codigo" class="col-sm-3 control-label">Código Componente Curricular</label>
+				<div class="col-sm-9">
 					<form:input id="componente.codigo" class="form-control"
 						placeholder="Código componente curricular" disabled="true"
 						path="componente.codigo" required="true" /> 
@@ -41,8 +38,8 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="semestreOferta" class="col-sm-2 control-label">Semestre oferta</label>
-				<div class="col-sm-10">
+				<label for="semestreOferta" class="col-sm-3 control-label">Semestre oferta</label>
+				<div class="col-sm-9">
 					<form:select path="semestreOferta" class="form-control">
 						<c:forEach var="i" begin="1" end="${semestreMax}">
 							<form:option value="${i}">${i}º Semestre</form:option>
@@ -53,9 +50,8 @@
 			</div>
 
 			<div class="form-group">
-				<label for="quantidadeAlunos" class="col-sm-2 control-label">Quantidade
-					alunos</label>
-				<div class="col-sm-10">
+				<label for="quantidadeAlunos" class="col-sm-3 control-label">Quantidade de alunos</label>
+				<div class="col-sm-9">
 					<form:input id="quantidadedeAlunos" class="form-control numeros"
 						maxlength="4" placeholder="Quantidade alunos"
 						path="quantidadeAlunos" onkeypress="mascara(this,soNumeros)" onchange="mascara(this,soNumeros)"
@@ -65,24 +61,29 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="observacoes" class="col-sm-2 control-label">Observações
-				</label>
-				<div class="col-sm-10">
+				<label for="observacoes" class="col-sm-3 control-label">Observações</label>
+				<div class="col-sm-9">
 					<form:textarea id="observacoes" class="form-control" rows="2"
 						placeholder="Observações" path="observacoes" />
 					<form:errors path="observacoes" cssClass="error" />
 				</div>
 			</div>
 
-			<div class="controls">
-				<input id="criar" class="btn btn-primary" type="submit"
-					value="Salvar" /> 
-					
-				<a	href="<c:url value="javascript:window.history.go(-1)"></c:url>"
-					class="btn btn-default">Cancelar</a>
+			<div class="form-group">
+				<label for="influenciarCalculo" class="col-sm-3 control-label">Influenciar no Cálculo de Metas?</label>
+			    <div class="col-sm-1 fix-checkbox">
+			    	<form:checkbox id="influenciarCalculo" path="influenciarCalculo"/>
+			    	<form:errors path="influenciarCalculo" cssClass="error" />
+			    </div>
 			</div>
 
-
+			<div class="controls">
+				<input id="criar" class="btn btn-primary" type="submit" value="Salvar" /> 
+					
+				<a href="<c:url value="javascript:window.history.go(-1)"></c:url>" class="btn btn-default">
+					Cancelar
+				</a>
+			</div>
 		</form:form>
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
