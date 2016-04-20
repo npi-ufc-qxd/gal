@@ -22,8 +22,9 @@
 			<h4 class="center">Editar Vínculo</h4>
 			
 			<div class="form-group">
-				<label class="control-label" style="font-size: 16px;">${integracao.componente.codigo}
-				 - ${integracao.componente.nome}</label>
+				<label class="control-label" style="font-size: 16px;">
+					${integracao.componente.codigo} - ${integracao.componente.nome}
+				</label>
 			</div>
 
 			<div class="form-group">
@@ -79,12 +80,10 @@
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit" value="Salvar" /> 
 					
-				<a	href="<c:url value="javascript:window.history.go(-1)"></c:url>" class="btn btn-default">
+				<a href="<c:url value="javascript:window.history.go(-1)"></c:url>" class="btn btn-default">
 					Cancelar
 				</a>
 			</div>
-
-
 		</form:form>
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
