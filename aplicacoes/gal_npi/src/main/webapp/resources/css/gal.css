@@ -13,8 +13,11 @@
 
 h4 {
 	font-size: 20px;
+	margin: 20px 0;
+}
+
+.negrito {
 	font-weight: 700;
-	margin-bottom: 20px;
 }
 
 .center{
@@ -174,6 +177,7 @@ div.panel-heading #editar {
 }
 .panel-default .componente-bibliografia-panel-body{
 	background-color: #eaebff;
+	padding-bottom: 0;
 }
 
 .panel-default .bibliografia-virtual-nao-cadastrada, .bibliografia-virtual-nao-cadastrada{
@@ -182,4 +186,8 @@ div.panel-heading #editar {
 
 .fix-checkbox{
 	text-align: left;
+}
+
+.alert{
+	padding: 13px;
 }

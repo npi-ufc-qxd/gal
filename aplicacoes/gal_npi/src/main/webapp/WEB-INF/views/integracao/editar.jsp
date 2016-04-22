@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="br.ufc.npi.gal.model.EnumNatureza" %>
 
 <!DOCTYPE html>
 <html>
@@ -53,8 +53,8 @@
 				<label for="natureza" class="col-sm-3 control-label">Natureza</label>
 				<div class="col-sm-9">
 					<form:select path="natureza" class="form-control">
-						<form:option value="OBRIGATORIA">Obrigatória</form:option>
-						<form:option value="OPTATIVA">Optativa</form:option>
+						<form:option value="${EnumNatureza.OBRIGATORIA.descricao}">${EnumNatureza.OBRIGATORIA.descricao}</form:option>
+						<form:option value="${EnumNatureza.OPTATIVA.descricao}">${EnumNatureza.OPTATIVA.descricao}</form:option>
 					</form:select>
 					<form:errors path="natureza" cssClass="error" />
 				</div>
@@ -90,7 +90,6 @@
 
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit" value="Salvar" /> 
-					
 				<a href="<c:url value="javascript:window.history.go(-1)"></c:url>" class="btn btn-default">
 					Cancelar
 				</a>

@@ -31,22 +31,22 @@
 			</div>
 		</c:if>
 		
-		<button class="btn btn-default" onclick="goBack()">
-			Voltar
-		</button>
+		<button class="btn btn-default" onclick="goBack()">Voltar</button>
 		
 		<c:if test="${empty componente}">
 			<div class="alert alert-warning" role="alert">Componente curricular inexistente</div>
 		</c:if>
 		
 		<c:if test="${not empty componente}">
-			<div style="text-align: center;">
-				<label class="control-label" style="font-size: 20px;">Componente Curricular</label>
-			</div>
+			<h4 class="center negrito">Componente Curricular</h4>
 			
 			<p>Nome: <b>${componente.nome}</b></p>
 			<p>Código: <b>${componente.codigo}</b></p>
 			<p>Tipo: <b>${componente.tipo}</b></p>
+			<p>
+				<a class="btn btn-primary btn-xs" href="<c:url value="/componente/${componente.id}/editar"></c:url>">Editar</a>
+				<a id="excluir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/componente/${componente.id}/excluir"></c:url>">Excluir</a>
+			</p>
 			
 			<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
 				<div id="button-add">
@@ -102,6 +102,8 @@
 			<hr>
 			
 			<h4>Bibliografias</h4>
+			
+			<a class="btn btn-success btn-xs" href="<c:url value="/componente/${componente.id}/vincular" ></c:url>">Vincular Bibliografias</a>
 			<button id="expandirTodosAccordions" class="btn btn-default btn-xs">Expandir Todas</button>
 			<button id="esconderTodosAccordions" class="btn btn-default btn-xs">Esconder Todas</button>
 			
@@ -116,11 +118,11 @@
 					<c:forEach var="basica" items="${bibliografia_basica}">
 						<div class="panel panel-default">
 							<div class="componente-bibliografia-panel-heading panel-heading <c:if test="${basica.cadastradoBiblioteca == false}">bibliografia-virtual-nao-cadastrada</c:if>" role="tab">
-								<h4 class="panel-title">
+								<div class="panel-title">
 									<a role="button" data-toggle="collapse" href="#${basica.id}" aria-expanded="false" aria-controls="${basica.id}">
 							        	${basica.nome}
 									</a>
-								</h4>
+								</div>
 							</div>
 							<div id="${basica.id}" class="panel-collapse collapse" role="tabpanel">
 								<div class="componente-bibliografia-panel-body panel-body">
@@ -236,6 +238,20 @@
 		</c:if>
 
 		<jsp:include page="../fragments/footer.jsp" />
+	</div>
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">Excluir</div>
+				<div class="modal-body">Tem certeza de que deseja excluir esse
+					componente curricular?</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-danger">Excluir</a>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
