@@ -48,6 +48,17 @@
 					<form:errors path="semestreOferta" cssClass="error" />
 				</div>
 			</div>
+			
+			<div class="form-group">
+				<label for="natureza" class="col-sm-3 control-label">Natureza</label>
+				<div class="col-sm-9">
+					<form:select path="natureza" class="form-control">
+						<form:option value="OBRIGATORIA">Obrigatória</form:option>
+						<form:option value="OPTATIVA">Optativa</form:option>
+					</form:select>
+					<form:errors path="natureza" cssClass="error" />
+				</div>
+			</div>
 
 			<div class="form-group">
 				<label for="quantidadeAlunos" class="col-sm-3 control-label">Quantidade de alunos</label>

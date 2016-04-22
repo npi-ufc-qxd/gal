@@ -165,6 +165,9 @@
 									<datatables:column title="Código componente">
 										<c:out value="${integracao.componente.codigo}"></c:out>
 									</datatables:column>
+									<datatables:column title="Natureza">
+										<c:out value="${integracao.natureza}"></c:out>
+									</datatables:column>
 									<datatables:column title="Quantidade aluno">
 										<c:out value="${integracao.quantidadeAlunos}"></c:out>
 									</datatables:column>
