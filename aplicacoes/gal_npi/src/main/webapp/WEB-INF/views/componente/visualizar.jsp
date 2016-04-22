@@ -48,7 +48,7 @@
 			<p>Código: <b>${componente.codigo}</b></p>
 			<p>Tipo: <b>${componente.tipo}</b></p>
 			
-			<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+			<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
 				<div id="button-add">
 					<a href="<c:url value="/componente/${componente.id}/copiar" ></c:url>">
 						<button class="btn btn-primary">
