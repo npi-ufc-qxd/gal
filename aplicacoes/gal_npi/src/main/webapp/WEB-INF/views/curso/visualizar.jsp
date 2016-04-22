@@ -33,6 +33,7 @@
 			</div>
 		</c:if>
 		<div class="panel-body">
+			<h4 class="center">${curso.sigla} - ${curso.nome}</h4>
 			<ul class="nav nav-tabs" role="tablist">
 				<c:forEach items="${curso.curriculos}" var="curriculo"
 					varStatus="ct">

@@ -103,7 +103,7 @@ public class ComponenteCurricularController {
 		componente.setNome(componente.getNome().toUpperCase());
 		componenteCurricularService.update(componente);
 		redirectAttributes.addFlashAttribute("info", "Componente curricular atualizado com sucesso.");
-		return "redirect:/componente/listar";
+		return "redirect:/componente/" + componente.getId() + "/visualizar";
 
 	}
 
@@ -205,7 +205,7 @@ public class ComponenteCurricularController {
 			bibliografiaService.delete(bibliografiaLista.get(i));
 		}
 		redirectAttributes.addFlashAttribute("info", "Vinculações realizadas com sucesso.");
-		return "/componente/listar";
+		return "redirect:/componente/" + componente.getId() + "/visualizar";
 	}
 
 	@RequestMapping(value = "/{id}/visualizar", method = RequestMethod.GET)

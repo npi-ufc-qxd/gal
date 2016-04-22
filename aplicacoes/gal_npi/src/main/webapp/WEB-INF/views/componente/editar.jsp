@@ -16,9 +16,7 @@
 		<jsp:include page="../fragments/header.jsp" />
 
 		<form:form modelAttribute="componente" id="reg" servletRelativeAction="/componente/editar" method="post" role="form" class="form-horizontal">
-			<div class="form-group" style="text-align: center;">
-					<label class="control-label" style="font-size: 20px;">Editar Componente Curricular</label>
-			</div>
+			<h4 class="center negrito">Editar Componente Curricular</h4>
 			
 			<form:input path="id" type="hidden" />
 			
@@ -74,7 +72,7 @@
 			
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit" value="Salvar"/>
-				<a href="<c:url value="/componente/listar"></c:url>" class="btn btn-default">Cancelar</a>
+				<button class="btn btn-default" onclick="goBack()">Cancelar</button>
 			</div>
 		</form:form>
 		<jsp:include page="../fragments/footer.jsp" />
