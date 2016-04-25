@@ -13,8 +13,10 @@ import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.read.biff.BiffException;
 
+import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.ufc.npi.gal.exception.ArquivoNaoSuportadoException;
 import br.ufc.npi.gal.model.AcervoDocumento;
 import br.ufc.npi.gal.model.Exemplar;
 import br.ufc.npi.gal.model.ExemplarConflitante;
@@ -24,12 +26,13 @@ import br.ufc.npi.gal.repository.ExemplarConflitanteRepository;
 import br.ufc.npi.gal.repository.ExemplarRepository;
 import br.ufc.npi.gal.repository.TituloRespository;
 import br.ufc.npi.gal.service.AcervoService;
+import br.ufc.npi.gal.service.ValidadorXSL;
 import br.ufc.quixada.npi.service.impl.GenericServiceImpl;
 
 @Named
 public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> implements AcervoService {
 	private static final int COLUNA_COD_EXEMPLAR = 2;
-	private static final int TIPO = 26;  //0 tipo = fisico - 1 midia digital
+	private static final int COLUNA_TIPO = 26;  //0 tipo = fisico - 1 midia digital
 	//CAMPOS DO NOME TITULO
 	private static final int COLUNA_AUTOR = 36;
 	private static final int COLUNA_TITULO = 37;	
@@ -41,6 +44,10 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	private static final int COLUNA_EDICAO = 43;
 	private static final int COLUNA_ISBN = 45;
 	private static final int COLUNA_PUBLICADOR = 46;
+	
+	private static final int MIDIA_FISICA = 0;
+	private static final int MIDIA_DIGITAL = 1;
+	private static final String ECLIPSE_ENCODE = "Cp1252";
 	
 	@Inject
 	private AcervoDocumentoRepository acervoDocumentoRepository;
@@ -58,55 +65,54 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	}
 	
 	@Override
-	public void processarArquivo(MultipartFile multipartFile) {
+	public void processarArquivo(MultipartFile multipartFile) throws ArquivoNaoSuportadoException {
 		try {
+			
 			File arquivo = new File("temp.xls");
 			multipartFile.transferTo(arquivo);
-			realizarAtualização(arquivoParaLista(arquivo));
+			
+			Workbook workbook = gerarWorkBook(arquivo);
+			Sheet sheet = workbook.getSheet(0);
+			
+			ValidadorXSL validadorXSL = new ValidadorXSLImpl();
+			boolean arquivoValido = validadorXSL.dadosValidos(sheet);
+			if (arquivoValido) {
+				List<Exemplar> exemplares = arquivoParaLista(sheet);
+				realizarAtualização(exemplares);
+			}else {
+				throw new ArquivoNaoSuportadoException("Dados inválidos.");
+			}
+			
+			workbook.close();
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
+			throw new ArquivoNaoSuportadoException(e.getMessage());
 		} catch (IOException e) {
 			e.printStackTrace();
+			throw new ArquivoNaoSuportadoException(e.getMessage());
+		} catch (BiffException e) {
+			e.printStackTrace();
+			throw new ArquivoNaoSuportadoException(e.getMessage());
 		}		
 	}
 
-	public List<Exemplar> arquivoParaLista(File planilha) {
-		int valorlinhas = 0;
-		Workbook workbook;
+	public List<Exemplar> arquivoParaLista(Sheet sheet) {
 		List<Exemplar> relatorioDeExemplares = new ArrayList<Exemplar>();
-		try{
+		int linhas = sheet.getRows();
+		ExemplarConflitante exemplarConflitante = new ExemplarConflitante();
+		
+		for (int i = 1; i < linhas; i++) {
 			
-			WorkbookSettings configuracao =new WorkbookSettings();
-			configuracao.setEncoding("Cp1252");
-			workbook = Workbook.getWorkbook(planilha,configuracao);
-			
-			Sheet sheet = workbook.getSheet(0);
-			int linhas = sheet.getRows();
-			ExemplarConflitante exemplarConflitante = new ExemplarConflitante();
-			
-			for (int i = 1; i < linhas; i++) {
-				
-				if(sheet.getCell(TIPO,i).getContents().equals("0")) {
-					exemplarConflitante = validarLinha(sheet,i);
-					exemplarConflitante.setLinha(i);
-					if(exemplarConflitante.getDescricaoErro().isEmpty() ){
-						relatorioDeExemplares.add(formatarExemplar(sheet,i));
-					}else{
-						adicionarConflito(exemplarConflitante);
-					}
-				} else {
-					
+			if(sheet.getCell(COLUNA_TIPO,i).getContents().equals(MIDIA_FISICA)) {
+				exemplarConflitante = validarLinha(sheet,i);
+				exemplarConflitante.setLinha(i);
+				if(exemplarConflitante.getDescricaoErro().isEmpty() ){
+					relatorioDeExemplares.add(formatarExemplar(sheet,i));
+				}else{
+					adicionarConflito(exemplarConflitante);
 				}
 			}
-		workbook.close();	
-		} catch (BiffException e) {
-
-			e.printStackTrace();
-		} catch (IOException e) {
-
-			e.printStackTrace();
 		}
-		System.out.println(valorlinhas);
 		return relatorioDeExemplares;
 	}
 	
@@ -173,11 +179,11 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		ExemplarConflitante exemplarConflitante = new ExemplarConflitante();
 		String erros = new String();
 		
-		String validadorTipo = validacaoDeTipo(sheet.getCell(TIPO,i).getContents());
+		String validadorTipo = validacaoDeTipo(sheet.getCell(COLUNA_TIPO,i).getContents());
 		if(validadorTipo.equals("valido")){
-			exemplarConflitante.setTipo(sheet.getCell(TIPO,i).getContents());
+			exemplarConflitante.setTipo(sheet.getCell(COLUNA_TIPO,i).getContents());
 		}else{
-			exemplarConflitante.setTipo(sheet.getCell(TIPO,i).getContents());
+			exemplarConflitante.setTipo(sheet.getCell(COLUNA_TIPO,i).getContents());
 			erros = validadorTipo + ",";
 		}
 				
@@ -372,7 +378,12 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 			exemplarConflitanteReposiroty.update(exemplarConflitante);
 			return false;
 		}
-		
-
 	}
+
+	private Workbook gerarWorkBook(File planilha) throws BiffException, IOException{
+		WorkbookSettings configuracao = new WorkbookSettings();
+		configuracao.setEncoding(ECLIPSE_ENCODE);
+		return Workbook.getWorkbook(planilha,configuracao);
+	}
+
 }
