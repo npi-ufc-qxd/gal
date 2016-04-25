@@ -1,13 +1,4 @@
 $( document ).ready(function() {
-
-	var data = $(".data");
-	if (data != null){
-		data.datepicker({
-			language: "pt-BR",
-			autoclose: true,
-			format: "dd/mm/yyyy",
-		});
-	}
 	
 	$("#confirm-delete").on("show.bs.modal", function(e) {
 		$(this).find(".btn-danger").attr("href", $(e.relatedTarget).data("href"));
