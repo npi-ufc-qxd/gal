@@ -1,22 +1,34 @@
 $( document ).ready(function() {
 
-	$(".data").datepicker({
-		language: "pt-BR",
-		autoclose: true,
-		format: "dd/mm/yyyy",
-	});
+	var data = $(".data");
+	if (data != null){
+		data.datepicker({
+			language: "pt-BR",
+			autoclose: true,
+			format: "dd/mm/yyyy",
+		});
+	}
 	
-	$("#confirm-delete").on("show.bs.modal", function(e) {
-		$(this).find(".btn-danger").attr("href", $(e.relatedTarget).data("href"));
-	});
+	var confirm = $("#confirm-delete");
+	if (confirm != null){
+		confirm.on("show.bs.modal", function(e) {
+			$(this).find(".btn-danger").attr("href", $(e.relatedTarget).data("href"));
+		});
+	}
 	
-	$("div:has(span.error)").find("span.error").css("color", "#a94442");
-	$("div:has(span.error)").find("span.error").parent().parent().addClass("has-error has-feedback");
+	var spanError = $("div:has(span.error)");
+	if (spanError != null){
+		spanError.find("span.error").css("color", "#a94442");
+		spanError.find("span.error").parent().parent().addClass("has-error has-feedback");
+	}
 	
-	$(document).on("click", ".open-AddBookDialog", function() {
-		var id = $(this).data("id");
-		$(".modal-body #id").val(id);
-	});
+	var bookDialog = $(".open-AddBookDialog");
+	if (bookDialog != null){
+		$(document).on("click",bookDialog, function() {
+			var id = $(this).data("id");
+			$(".modal-body #id").val(id);
+		});
+	}
 });
 
 function goBack() {
