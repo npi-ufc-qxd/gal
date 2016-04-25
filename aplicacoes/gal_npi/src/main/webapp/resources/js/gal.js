@@ -15,6 +15,7 @@ $( document ).ready(function() {
 	
 	
 	$(".form-control").on("keyup change focusout",function(){
+		alert(".form-control");
 		document.getElementById("nome").value = document.getElementById("autor").value + " " + document.getElementById("nome_titulo").value + " " +document.getElementById("titulo_n").value + 
 												" " + document.getElementById("sub_titulo").value +	" " + document.getElementById("titulo_revista").value + " " + document.getElementById("pagina").value + " " + document.getElementById("ref_artigo").value +
 												" " + document.getElementById("edicao").value + " " + document.getElementById("publicador").value;
@@ -38,33 +39,6 @@ $( document ).ready(function() {
 	$("div:has(span.error)").find("span.error").parent().parent().addClass("has-error has-feedback");
 	
 	$("#txtBusca").fastLiveFilter("#acervo");
-		
-	$("select#selecionaCurso").change(function() { 
-		alert("select#selecionaCurso");
-		var option = $(this).val();
-
-		if(option == -1){
-			newUrl = '/' + getAppName() + "/meta/listar";
-		}else{
-			newUrl = '/' + getAppName() + "/meta/"+(option)+"/listar";
-		}
-
-		$(location).attr("href", newUrl);
-	});
-	
-	$("select#selecionaComponente").change(function() { 
-		alert("select#selecionaComponente");
-		var option = $(this).val();
-
-		if(option == -1){
-			newUrl = '/' + getAppName() + "/meta/listar";
-		}else{
-			newUrl = '/' + getAppName() + "/meta/componente/"+(option)+"/listar";
-		}
-
-		$(location).attr("href", newUrl);
-	});
-
 
 	$(document).on("click", ".open-AddBookDialog", function() {
 		alert(".open-AddBookDialog");
