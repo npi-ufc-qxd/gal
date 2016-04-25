@@ -9,12 +9,9 @@ $( document ).ready(function() {
 		});
 	}
 	
-	var confirm = $("#confirm-delete");
-	if (confirm != null){
-		confirm.on("show.bs.modal", function(e) {
-			$(this).find(".btn-danger").attr("href", $(e.relatedTarget).data("href"));
-		});
-	}
+	$("#confirm-delete").on("show.bs.modal", function(e) {
+		$(this).find(".btn-danger").attr("href", $(e.relatedTarget).data("href"));
+	});
 	
 	var spanError = $("div:has(span.error)");
 	if (spanError != null){
