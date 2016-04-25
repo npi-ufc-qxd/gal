@@ -107,7 +107,7 @@
 			    	<form:errors path="edicao" cssClass="error" />
 			    </div>
 			</div>
-			
+			<script src="<c:url value="/resources/js/titulo-adicionar-editar.js" />"></script>
 			<div class="form-group">
 			    <label for="codigo" class="col-sm-1 control-label">Publicador</label>
 			    <div class="col-sm-10">
@@ -140,6 +140,8 @@
 			</div>
 		</form:form>
 		<jsp:include page="../fragments/footer.jsp" />
+		<script src="<c:url value="/resources/js/titulo-adicionar.js" />"></script>
+		<script src="<c:url value="/resources/js/titulo-editar.js" />"></script>
 		
 		<div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
