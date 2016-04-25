@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	
+	$("#txtBusca").fastLiveFilter("#acervo");
+	
 	function getItems(exampleNr) {
 		var columns = [];
 		$(exampleNr + " ul.sortable-list").each(function() {

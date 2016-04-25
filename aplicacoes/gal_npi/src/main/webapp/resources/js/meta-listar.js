@@ -1,5 +1,12 @@
 $(document).ready(function(){
 	
+	// adiciona busca nos select box
+	$(".select-filter").select2();
+	
+	// Marca no select box o filtro que foi executado
+	$("#selecionaCurso").val($("#idCurso").val());
+	$("#selecionaComponente").val($("#idComponente").val());
+	
 	$("select#selecionaCurso").change(function() { 
 		var option = $(this).val();
 

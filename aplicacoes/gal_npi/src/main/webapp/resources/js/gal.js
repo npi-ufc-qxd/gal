@@ -6,13 +6,6 @@ $( document ).ready(function() {
 		format: "dd/mm/yyyy",
 	});
 	
-	// Marca no select box o filtro que foi executado
-	$("#selecionaCurso").val($("#idCurso").val());
-	$("#selecionaComponente").val($("#idComponente").val());
-	
-	// adiciona busca nos select box
-	$(".select-filter").select2();
-	
 	$("#confirm-delete").on("show.bs.modal", function(e) {
 		$(this).find(".btn-danger").attr("href", $(e.relatedTarget).data("href"));
 	});
@@ -20,10 +13,7 @@ $( document ).ready(function() {
 	$("div:has(span.error)").find("span.error").css("color", "#a94442");
 	$("div:has(span.error)").find("span.error").parent().parent().addClass("has-error has-feedback");
 	
-	$("#txtBusca").fastLiveFilter("#acervo");
-
 	$(document).on("click", ".open-AddBookDialog", function() {
-		alert(".open-AddBookDialog");
 		var id = $(this).data("id");
 		$(".modal-body #id").val(id);
 	});
