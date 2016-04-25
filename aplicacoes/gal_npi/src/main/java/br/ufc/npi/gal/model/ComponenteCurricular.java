@@ -44,6 +44,7 @@ public class ComponenteCurricular {
 	
 	@OrderBy(clause = "prioridade ASC")
 	@OneToMany(mappedBy = "componente", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
+	@OrderBy(clause = "prioridade ASC")
 	private List<Bibliografia> bibliografias;
 
 	@Column(name = "ch_pratica")

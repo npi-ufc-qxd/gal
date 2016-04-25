@@ -32,7 +32,7 @@
 			</div>
 		</c:if>
 
-		<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+		<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
 			<div id="button-add">
 				<a href="<c:url value="/curso/adicionar" ></c:url>">
 					<button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Adicionar</button>
@@ -59,7 +59,7 @@
 							<a id="visualizar" style="margin-right: 12px" class="btn btn-success" href="<c:url value="/curso/${curso.codigo}/visualizar" ></c:url>">
 								<span class="glyphicon glyphicon-eye-open"></span> Visualizar
 							</a> 
-							<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+							<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
 								<div style="float: right;">
 									<a id="excluir" style="float: right;" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/curso/${curso.id}/excluir" ></c:url>">
 										<span class="glyphicon glyphicon-trash"></span> Excluir

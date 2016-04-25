@@ -46,7 +46,6 @@ public class IntegracaoCurricularController {
 	}
 	
 	@RequestMapping(value = "/adicionar", method = RequestMethod.POST)
-
 	public String adicionar(String componente, Integer quantidadeAlunos, Integer semestreOferta, Integer estruturaCurricular, final RedirectAttributes redirectAttributes) {
 
 		
@@ -103,15 +102,16 @@ public class IntegracaoCurricularController {
 	}
 	
 	@RequestMapping(value = "/{idComponente}/{idCurriculo}/editar", method = RequestMethod.GET)
-	public String editar(@PathVariable("idComponente") Integer idComponente,@PathVariable("idCurriculo") Integer idCurriculo, ModelMap modelMap) {
+	public String editar(@PathVariable("idComponente") Integer idComponente,@PathVariable("idCurriculo") Integer idCurriculo, ModelMap modelMap, RedirectAttributes redirectAttributes) {
 
 		EstruturaCurricular estrutura = this.estruturaService.find(EstruturaCurricular.class, idCurriculo);
 		IntegracaoCurricular integracao = this.integracaoService.getIntegracaoByIdComponenteCurricularIdCurriculo(idComponente, idCurriculo);
 
 		if (integracao == null) {
+			redirectAttributes.addFlashAttribute("error", "Esta integração curricular não existe");
 			return "redirect:/curso/listar";
-
 		}
+		
 		modelMap.addAttribute("semestreMax", estrutura.getPrazoConclusaoMedio());
 		modelMap.addAttribute("integracao", integracao);
 		return "integracao/editar";
@@ -124,10 +124,8 @@ public class IntegracaoCurricularController {
 				integracao.getEstruturaCurricular().getId());
 
 		integracaoService.update(integracao);
-		redirectAttributes.addFlashAttribute("info",
-				"Integração atualizada com sucesso.");
+		redirectAttributes.addFlashAttribute("info", "Integração atualizada com sucesso.");
 		return "redirect:/curso/" + estrutura.getCurso().getCodigo() + "/visualizar";
-
 	}
 	
 	

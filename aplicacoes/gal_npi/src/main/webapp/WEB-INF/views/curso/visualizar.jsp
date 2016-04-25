@@ -33,6 +33,7 @@
 			</div>
 		</c:if>
 		<div class="panel-body">
+			<h4 class="center">${curso.sigla} - ${curso.nome}</h4>
 			<ul class="nav nav-tabs" role="tablist">
 				<c:forEach items="${curso.curriculos}" var="curriculo"
 					varStatus="ct">
@@ -46,7 +47,7 @@
 						data-toggle="tab">${curriculo.codigo}</a></li>
 				</c:forEach>
 				<sec:authorize
-					access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+					access="hasAnyRole('COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 					<div id="button-add">
 						<a
 							href="<c:url value="/curso/${curso.codigo}/estrutura/adicionar" ></c:url>">
@@ -83,7 +84,7 @@
 					<div class="tab-pane ${active }" id="${curriculo.codigo }"></div>
 					<div id="${curriculo.id}" class="tab-pane ${active }">
 						<sec:authorize
-							access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+							access="hasAnyRole('COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 							<div id="button-add">
 								<a style="float: left;" class="btn btn-success"
 									href="<c:url value="/integracao/${curriculo.id}/adicionar" ></c:url>">
@@ -152,7 +153,7 @@
 							</div>
 						</sec:authorize>
 						<sec:authorize
-							access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+							access="hasAnyRole('COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 							<div class="panel panel-default">
 								<datatables:table id="${curso.id}"
 									data="${curriculo.curriculos}" cdn="false" row="integracao"
@@ -164,6 +165,9 @@
 									</datatables:column>
 									<datatables:column title="Código componente">
 										<c:out value="${integracao.componente.codigo}"></c:out>
+									</datatables:column>
+									<datatables:column title="Natureza">
+										<c:out value="${integracao.natureza}"></c:out>
 									</datatables:column>
 									<datatables:column title="Quantidade aluno">
 										<c:out value="${integracao.quantidadeAlunos}"></c:out>
@@ -189,7 +193,7 @@
 							</div>
 						</sec:authorize>
 						<sec:authorize
-							access="!hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO')">
+							access="!hasAnyRole('COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 							<div class="panel panel-default">
 								<datatables:table id="estrutura${curso.id}"
 									data="${curriculo.curriculos}" cdn="false" row="integracao"
