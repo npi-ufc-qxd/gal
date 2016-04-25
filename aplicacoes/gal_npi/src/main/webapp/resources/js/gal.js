@@ -19,13 +19,7 @@ $( document ).ready(function() {
 		spanError.find("span.error").parent().parent().addClass("has-error has-feedback");
 	}
 	
-	var bookDialog = $(".open-AddBookDialog");
-	if (bookDialog != null){
-		$(document).on("click",bookDialog, function() {
-			var id = $(this).data("id");
-			$(".modal-body #id").val(id);
-		});
-	}
+	
 });
 
 function goBack() {
