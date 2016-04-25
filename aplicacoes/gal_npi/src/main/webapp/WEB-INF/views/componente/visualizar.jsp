@@ -232,6 +232,7 @@
 		</c:if>
 
 		<jsp:include page="../fragments/footer.jsp" />
+		<script src="<c:url value="/resources/js/componente-visualizar.js" />"></script>
 	</div>
 </body>
 </html>

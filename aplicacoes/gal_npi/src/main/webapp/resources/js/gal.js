@@ -13,24 +13,6 @@ $( document ).ready(function() {
 	// adiciona busca nos select box
 	$(".select-filter").select2();
 	
-	
-	$(".form-control").on("keyup change focusout",function(){
-		alert(".form-control");
-		document.getElementById("nome").value = document.getElementById("autor").value + " " + document.getElementById("nome_titulo").value + " " +document.getElementById("titulo_n").value + 
-												" " + document.getElementById("sub_titulo").value +	" " + document.getElementById("titulo_revista").value + " " + document.getElementById("pagina").value + " " + document.getElementById("ref_artigo").value +
-												" " + document.getElementById("edicao").value + " " + document.getElementById("publicador").value;
-	});
-	
-	$("#expandirTodosAccordions").click(function(){
-		alert("#expandirTodosAccordions");
-		$(".panel-collapse").collapse("show");
-	});
-	
-	$("#esconderTodosAccordions").click(function(){
-		alert("#esconderTodosAccordions");
-		$(".panel-collapse").collapse("hide");
-	});
-	
 	$("#confirm-delete").on("show.bs.modal", function(e) {
 		$(this).find(".btn-danger").attr("href", $(e.relatedTarget).data("href"));
 	});
