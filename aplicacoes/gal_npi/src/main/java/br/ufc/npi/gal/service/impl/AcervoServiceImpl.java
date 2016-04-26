@@ -46,6 +46,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	private static final int MIDIA_FISICA = 0;
 	private static final int MIDIA_DIGITAL = 1;
 	private static final String ECLIPSE_ENCODE = "Cp1252";
+	private static final String SEPARADOR = "; ";
 	
 	@Inject
 	private AcervoDocumentoRepository acervoDocumentoRepository;
@@ -102,11 +103,8 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		for (int linha = 1; linha < linhas; linha++) {
 			
 			if(sheet.getCell(COLUNA_TIPO,linha).getContents().equals(MIDIA_FISICA)) {
-				//TODO proximo passo. e fornecer o getbytes para o controller.
 				exemplarConflitante = extrairExemplar(sheet, linha);
 				exemplarConflitante.setLinha(linha);
-				
-				//exemplarConflitante = validarLinha(sheet,i);
 				
 				if(exemplarConflitante.getDescricaoErro().isEmpty()){
 					relatorioDeExemplares.add(formatarExemplar(sheet,linha));
@@ -178,65 +176,13 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	}
 
 	/*
-	private ExemplarConflitante validarLinha(Sheet sheet, int i) {
-		ExemplarConflitante exemplarConflitante = new ExemplarConflitante();
-		String erros = new String();
-		
-		/* Refatorado --> extrairTipoExemplar
-		String validadorTipo = validacaoDeTipo(sheet.getCell(COLUNA_TIPO,i).getContents());
-		if(validadorTipo.equals("valido")){
-			exemplarConflitante.setTipo(sheet.getCell(COLUNA_TIPO,i).getContents());
-		}else{
-			exemplarConflitante.setTipo(sheet.getCell(COLUNA_TIPO,i).getContents());
-			erros = validadorTipo + ",";
-		}
-		*/
-			
-		/* Refatorado --> extrairNomeTitulo
-		if(!formatarNomeTituloVerificacao(sheet,i).isEmpty()){
-			exemplarConflitante = preencherCamposNomeTitulo(sheet,i,exemplarConflitante);
-		}else {
-			exemplarConflitante = preencherCamposNomeTitulo(sheet,i,exemplarConflitante);
-			erros +=" Nome do título não especificado, ";
-		}
-		*/
-		
-		/* Refatorado --> extrairCodigoExemplar
-		String validadorCodExemplar = formatarCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
-		if(validadorCodExemplar.equals("valido")){
-			exemplarConflitante.setCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
-			//if (exemplarRepository.getExemplarByCodigo(exemplarConflitante.getCodigoExemplar())!=null) {
-				//erros+= " codigo de exemplar já existe no banco,";
-			//}
-		}else{
-			exemplarConflitante.setCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR,i).getContents());
-			erros+= " "+validadorCodExemplar + ", ";
-		}
-		*/
-		
-		/* Refatorado --> extrairISBN
-		String isbn = extrairISBNDaCelula(sheet.getCell(COLUNA_ISBN,i).getContents());
-		String validadorIsbn = formatarIsbn(isbn);
-		if(validadorIsbn.equals("valido")){
-			exemplarConflitante.setIsbn(isbn);
-		}else{
-			exemplarConflitante.setIsbn(isbn);
-			erros+=" "+validadorIsbn+ ", ";
-		}
-		
-		exemplarConflitante.setDescricaoErro(erros);
-		return exemplarConflitante;
-		
-	}*/
-	
-
 	private String formatarIsbn(String contents) {
 		if(contents.matches("([0-9]{7,13})") || contents.matches("[0-9]{7,13}[X|x]")) {
 			return "valido";
 		}
 		return "ISBN inválido";
 	}
-
+	*/
 	private ExemplarConflitante extrairExemplar(Sheet sheet, int linha){
 		StringBuilder notificacao = new StringBuilder();
 		ExemplarConflitante exemplar = new ExemplarConflitante();
@@ -254,46 +200,46 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		String isbn = extrairISBNDaCelula(sheet.getCell(COLUNA_ISBN,linha).getContents());
 		exemplar.setIsbn(isbn);
 		if (!isbn.matches("([0-9]{7,13})") && !isbn.matches("[0-9]{7,13}[X|x]")) {
-			notificacao.append("ISBN inválido");
+			notificacao.append("ISBN inválido" +SEPARADOR);
 		}
 	}
 
 	private void extrairNomeTituloExemplar(ExemplarConflitante exemplar, Sheet sheet, int linha, StringBuilder notificacao) {
 		exemplar.setAutor(sheet.getCell(COLUNA_AUTOR,linha).getContents());
 		if (exemplar.getAutor().isEmpty()) {
-			notificacao.append("Autor não informado. ");
+			notificacao.append("Autor não informado." +SEPARADOR);
 		}
 		exemplar.setEdicao(sheet.getCell(COLUNA_EDICAO,linha).getContents());
 		if (exemplar.getEdicao().isEmpty()) {
-			notificacao.append("Ediçao não informada. ");
+			notificacao.append("Ediçao não informada." +SEPARADOR);
 		}
 		exemplar.setPagina(sheet.getCell(COLUNA_PAGINA,linha).getContents());
 		if (exemplar.getPagina().isEmpty()) {
-			notificacao.append("Página não informada. ");
+			notificacao.append("Página não informada." +SEPARADOR);
 		}
 		exemplar.setPublicador(sheet.getCell(COLUNA_PUBLICADOR,linha).getContents());
 		if (exemplar.getPublicador().isEmpty()) {
-			notificacao.append("Publicador não informado. ");
+			notificacao.append("Publicador não informado." +SEPARADOR);
 		}
 		exemplar.setRefArtigo(sheet.getCell(COLUNA_REF_ARTIGO,linha).getContents());
 		if (exemplar.getRefArtigo().isEmpty()) {
-			notificacao.append("Ref. Artigo não informado. ");
+			notificacao.append("Ref. Artigo não informado." +SEPARADOR);
 		}
 		exemplar.setSubTitulo(sheet.getCell(COLUNA_SUB_TITULO,linha).getContents());
 		if (exemplar.getSubTitulo().isEmpty()) {
-			notificacao.append("SubTitulo não informado. ");
+			notificacao.append("SubTitulo não informado." +SEPARADOR);
 		}
 		exemplar.setTitulo(sheet.getCell(COLUNA_TITULO,linha).getContents());
 		if (exemplar.getTitulo().isEmpty()) {
-			notificacao.append("Titulo não informado. ");
+			notificacao.append("Titulo não informado." +SEPARADOR);
 		}
 		exemplar.setTitulo_n(sheet.getCell(COLUNA_TITULO_N,linha).getContents());
 		if (exemplar.getTitulo_n().isEmpty()) {
-			notificacao.append("Titulo_N não informado. ");
+			notificacao.append("Titulo_N não informado." +SEPARADOR);
 		}
 		exemplar.setTituloRevista(sheet.getCell(COLUNA_TITULO_REVISTA,linha).getContents());
 		if (exemplar.getTituloRevista().isEmpty()) {
-			notificacao.append("Titulo Revista não informado. ");
+			notificacao.append("Titulo Revista não informado." +SEPARADOR);
 		}
 	}
 
@@ -301,9 +247,9 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		String codigo = sheet.getCell(COLUNA_COD_EXEMPLAR,linha).getContents();
 		exemplar.setCodigoExemplar(codigo);
 		if (codigo.isEmpty()) {
-			notificacao.append("Codigo do exemplar não informado. ");
-		} else if(!codigo.matches("[0-9]+")){
-			notificacao.append("Código do exemplar inválido. ");
+			notificacao.append("Codigo do exemplar não informado." +SEPARADOR);
+		} else if(!validarCodigo(codigo)){
+			notificacao.append("Código do exemplar inválido." +SEPARADOR);
 		}
 	}
 	
@@ -311,14 +257,15 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		String tipo = sheet.getCell(COLUNA_TIPO,linha).getContents();
 		exemplar.setTipo(tipo);
 		if (tipo.isEmpty()) {
-			notificacao.append("Tipo do exemplar não informado. ");
+			notificacao.append("Tipo do exemplar não informado" +SEPARADOR);
 		} else if(tipo.equals(MIDIA_DIGITAL)){
-			notificacao.append("Tipo do exemplar virtual. ");
+			notificacao.append("Tipo do exemplar virtual." +SEPARADOR);
 		} else if(!tipo.equals(MIDIA_FISICA)){
-			notificacao.append("Tipo do exemplar inválido. ");
+			notificacao.append("Tipo do exemplar inválido." +SEPARADOR);
 		}
 	}
 
+	/*
 	private String validacaoDeTipo(String tipo) {
 		if(tipo.equals("0") ){
 			return "valido";
@@ -329,7 +276,7 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		}
 		return "Tipo de exemplar inválido";
 	}
-
+	*/
 	private String extrairISBNDaCelula(String isbnForaDeFormato) {
 		isbnForaDeFormato = isbnForaDeFormato.replaceAll("\\.", "");
 		isbnForaDeFormato = isbnForaDeFormato.replaceAll("ISBN", "");
@@ -351,43 +298,37 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 				+" "+sheet.getCell(COLUNA_REF_ARTIGO,i).getContents() +" "+sheet.getCell(COLUNA_EDICAO,i).getContents() +" "+sheet.getCell(COLUNA_PUBLICADOR,i).getContents();
 	}
 	
-	/*
-	private String formatarNomeTituloVerificacao(Sheet sheet, int i) {
-		// concatena os campos que compoem o titulo
-		return sheet.getCell(COLUNA_AUTOR, i).getContents() + sheet.getCell(COLUNA_TITULO, i).getContents() + sheet.getCell(COLUNA_TITULO_N, i).getContents() + 
-				sheet.getCell(COLUNA_SUB_TITULO,i).getContents() + sheet.getCell(COLUNA_TITULO_REVISTA, i).getContents() + sheet.getCell(COLUNA_PAGINA,i).getContents()
-				+ sheet.getCell(COLUNA_REF_ARTIGO,i).getContents() + sheet.getCell(COLUNA_EDICAO,i).getContents() + sheet.getCell(COLUNA_PUBLICADOR,i).getContents();
-	}
-	*/
 	private String formatarNomeTitulo(ExemplarConflitante exemplar) {
 		return exemplar.getAutor() + " " + exemplar.getTitulo() + " " + exemplar.getTitulo_n() + " " +
 				exemplar.getSubTitulo() + " " + exemplar.getTituloRevista() + " " + exemplar.getPagina() + " " +
 				exemplar.getRefArtigo() + " " + exemplar.getEdicao() + " " + exemplar.getPublicador();
 	}
 	
+	/*
 	private String formatarNomeTituloVerificacao(ExemplarConflitante exemplar) {
 		return exemplar.getAutor() + exemplar.getTitulo() + exemplar.getTitulo_n() + exemplar.getSubTitulo() + 
 			   exemplar.getTituloRevista() + exemplar.getPagina() + exemplar.getRefArtigo() + 
 			   exemplar.getEdicao() + exemplar.getPublicador();
 	}
+	*/
 
-	private Exemplar formatarExemplar(Sheet sheet, int i) {
+	private Exemplar formatarExemplar(Sheet sheet, int linha) {
 		Titulo titulo = new Titulo();
-		titulo.setIsbn(extrairISBNDaCelula(sheet.getCell(COLUNA_ISBN, i).getContents()));
-		titulo.setAutor(sheet.getCell(COLUNA_AUTOR, i).getContents());
-		titulo.setTitulo(sheet.getCell(COLUNA_TITULO, i).getContents());
-		titulo.setTitulo_n(sheet.getCell(COLUNA_TITULO_N, i).getContents());
-		titulo.setTituloRevista(sheet.getCell(COLUNA_TITULO_REVISTA, i).getContents());
-		titulo.setSubTitulo(sheet.getCell(COLUNA_SUB_TITULO,i).getContents());
-		titulo.setPagina(sheet.getCell(COLUNA_PAGINA,i).getContents());
-		titulo.setEdicao(sheet.getCell(COLUNA_EDICAO,i).getContents());
-		titulo.setRefArtigo(sheet.getCell(COLUNA_REF_ARTIGO,i).getContents());
-		titulo.setPublicador(sheet.getCell(COLUNA_PUBLICADOR,i).getContents());
-		titulo.setNome(formatarNomeTitulo(sheet,i));
+		titulo.setIsbn(extrairISBNDaCelula(sheet.getCell(COLUNA_ISBN, linha).getContents()));
+		titulo.setAutor(sheet.getCell(COLUNA_AUTOR, linha).getContents());
+		titulo.setTitulo(sheet.getCell(COLUNA_TITULO, linha).getContents());
+		titulo.setTitulo_n(sheet.getCell(COLUNA_TITULO_N, linha).getContents());
+		titulo.setTituloRevista(sheet.getCell(COLUNA_TITULO_REVISTA, linha).getContents());
+		titulo.setSubTitulo(sheet.getCell(COLUNA_SUB_TITULO,linha).getContents());
+		titulo.setPagina(sheet.getCell(COLUNA_PAGINA,linha).getContents());
+		titulo.setEdicao(sheet.getCell(COLUNA_EDICAO,linha).getContents());
+		titulo.setRefArtigo(sheet.getCell(COLUNA_REF_ARTIGO,linha).getContents());
+		titulo.setPublicador(sheet.getCell(COLUNA_PUBLICADOR,linha).getContents());
+		titulo.setNome(formatarNomeTitulo(sheet,linha));
 		titulo.setTipo("Físico");
 		Exemplar exemplar = new Exemplar();
 		exemplar.setTitulo(titulo);
-		exemplar.setCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR, i).getContents());
+		exemplar.setCodigoExemplar(sheet.getCell(COLUNA_COD_EXEMPLAR, linha).getContents());
 		return exemplar;
 	}
 	
@@ -412,20 +353,6 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	}
 	
 	/*
-	private ExemplarConflitante preencherCamposNomeTitulo(Sheet sheet, int i,
-			ExemplarConflitante exemplarConflitante) {
-		exemplarConflitante.setAutor(sheet.getCell(COLUNA_AUTOR,i).getContents());
-		exemplarConflitante.setEdicao(sheet.getCell(COLUNA_EDICAO,i).getContents());
-		exemplarConflitante.setPagina(sheet.getCell(COLUNA_PAGINA,i).getContents());
-		exemplarConflitante.setPublicador(sheet.getCell(COLUNA_PUBLICADOR,i).getContents());
-		exemplarConflitante.setRefArtigo(sheet.getCell(COLUNA_REF_ARTIGO,i).getContents());
-		exemplarConflitante.setSubTitulo(sheet.getCell(COLUNA_SUB_TITULO,i).getContents());
-		exemplarConflitante.setTitulo(sheet.getCell(COLUNA_TITULO,i).getContents());
-		exemplarConflitante.setTitulo_n(sheet.getCell(COLUNA_TITULO_N,i).getContents());
-		exemplarConflitante.setTituloRevista(sheet.getCell(COLUNA_TITULO_REVISTA,i).getContents());
-		return exemplarConflitante;
-	}
-	*/
 	private String formatarCodigoExemplar(String contents) {
 		if(contents.isEmpty()){
 			return "Código do exemplar não especificado";
@@ -434,8 +361,29 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		}else
 			return "valido";
 	}
-	
+	*/
 	public boolean submeterExemplarConflitante(ExemplarConflitante exemplarConflitante) {
+		StringBuilder notificacao;
+		notificacao = new StringBuilder(exemplarConflitante.getDescricaoErro());
+		String codigo = exemplarConflitante.getCodigoExemplar();
+		if (!codigo.isEmpty() && validarCodigo(codigo)) {
+			if (exemplarRepository.getExemplarByCodigo(codigo) != null) {
+				notificacao.append("codigo de exemplar já existe no banco" +SEPARADOR);
+				exemplarConflitante.setDescricaoErro(notificacao.toString());
+			}
+		}
+		
+		if (notificacao.toString().isEmpty()) {
+			Exemplar exemplar = formatarExemplar(exemplarConflitante);
+			realizarAtualização(exemplar);
+			exemplarConflitanteReposiroty.delete(exemplarConflitante);
+			return true;
+		} else {
+			exemplarConflitanteReposiroty.update(exemplarConflitante);
+			return false;
+		}
+		
+		/*
 		exemplarConflitante.setDescricaoErro("");
 		String erros = new String();
 		
@@ -474,6 +422,11 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 			exemplarConflitanteReposiroty.update(exemplarConflitante);
 			return false;
 		}
+		*/
+	}
+
+	private boolean validarCodigo(String codigo) {
+		return codigo.matches("[0-9]+");
 	}
 
 	private Workbook gerarWorkBook(File planilha) throws BiffException, IOException{

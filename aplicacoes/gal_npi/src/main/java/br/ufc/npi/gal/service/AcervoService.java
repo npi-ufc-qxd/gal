@@ -1,6 +1,5 @@
 package br.ufc.npi.gal.service;
 
-import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.ufc.npi.gal.exception.ArquivoNaoSuportadoException;
