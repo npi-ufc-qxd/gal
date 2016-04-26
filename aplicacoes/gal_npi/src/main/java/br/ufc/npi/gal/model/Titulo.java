@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -22,10 +23,12 @@ public class Titulo {
 
 	@Id
 	@Column(name="id_t")
+	@Audited
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column(name="nome_titulo")
+	@Audited
 	@NotEmpty(message="Campo obrigatório")
 	private String nome;
 
@@ -34,43 +37,55 @@ public class Titulo {
 		@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù0-9]{0,}", message = "O campo não pode contar caracteres especiais")
 	})
 	@NotEmpty(message="Campo obrigatório")
+	@Audited
 	@Size(max=13, message="Este campo não pode conter mais de 13 caracteres")
 	private String isbn;
 
 	@Column(name="tipo_titulo")
+	@Audited
 	@NotEmpty(message="Campo obrigatório")
 	private String tipo;
 
 	@Column(name = "autor")
+	@Audited
 	private String autor;
 
 	@Column(name = "titulo")
+	@Audited
 	@NotEmpty(message="Campo obrigatório")
 	@Size(max=255,message="Este campo não pode conter mais de 255 caracteres")
 	private String titulo;
 
 	@Column(name = "titulo_n")
+	@Audited
 	private String titulo_n;
 
 	@Column(name = "sub_titulo")
+	@Audited
 	private String subTitulo;
 
 	@Column(name = "titulo_revista")
+	@Audited
 	private String tituloRevista;
 
 	@Column(name = "pagina")
+	@Audited
 	private String pagina;
 
 	@Column(name = "ref_artigo")
+	@Audited
 	private String refArtigo;
 
 	@Column(name = "edicao")
+	@Audited
 	private String edicao;
 
 	@Column(name = "publicador")
+	@Audited
 	private String publicador;
 
 	@Column(name = "cadastrado_biblioteca")
+	@Audited
 	private Boolean cadastradoBiblioteca;
 
 	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
