@@ -1,5 +1,7 @@
+/*eslint-env jquery*/
+
 $(document).ready(function(){
-	
+
 	// remove acentos de strings
 	function removeAcentos(data){
 		return ! data ?
@@ -16,9 +18,9 @@ $(document).ready(function(){
 		                .replace( /\n/g, ' ' ) :
 		            data;
 	}
-	
+
 	$.fn.DataTable.ext.type.search.string = removeAcentos;
-	
+
 	$.extend( $.fn.DataTable.ext.type.order, {
 	    "portugues-asc": function ( a, b ) {
 	    	a = removeAcentos(a);
@@ -31,7 +33,7 @@ $(document).ready(function(){
 	        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
 	    }
 	});
-    
+
 	$("table.table-orderable").each(function(){
 		var default_sort = $(this).attr("default-sort");
 		// testa se existe o atributo default_sort no elemento
@@ -39,8 +41,8 @@ $(document).ready(function(){
 			default_sort = [default_sort.split(' ')];
 		else
 			default_sort = [];
-		
-		
+
+
 		var no_sort_fields = $(this).attr("no-sort-fields");
 		// testa se existe o atributo no_sort_fields
 		if(typeof no_sort_fields !== typeof undefined && no_sort_fields !== false){
@@ -50,10 +52,10 @@ $(document).ready(function(){
 				no_sort_fields[i] = Number(no_sort_fields[i]);
 			}
 		}
-		
+
 		else
 			no_sort_fields = [];
-		
+
 		var attr_paging = $(this).attr("paging");
 		if(typeof attr_paging !== typeof undefined){
 			if(attr_paging === "false"){
@@ -61,7 +63,7 @@ $(document).ready(function(){
 			}
 		}
 		else attr_paging = true;
-		
+
 		var attr_searching = $(this).attr("searching");
 		if(typeof attr_searching !== typeof undefined){
 			if (attr_searching === "false"){
@@ -69,7 +71,7 @@ $(document).ready(function(){
 			}
 		}
 		else attr_searching = true;
-		
+
 		$(this).dataTable({
 			"pageLength": 25,
 			"pagingType" : "full_numbers",
@@ -98,19 +100,19 @@ $(document).ready(function(){
 				}
 			},
 			"order": default_sort,
-			"columnDefs": [ 
+			"columnDefs": [
 			    {"orderable": true, "targets": no_sort_fields},
 			    // Essa linha foi desativada por gerar conflito com a busca na tabela
 			    // Link da resposta de um desenvolvedor da DataTables que pode significar
 			    // o porque do problema: https://github.com/DataTables/DataTables/issues/43
-			    /*{"targets": "_all", "type": 'portugues'}*/ 
+			    /*{"targets": "_all", "type": 'portugues'}*/
 			],
 			"destroy": true,
 			"paging": attr_paging,
 			"searching": attr_searching
 		});
 	});
-	
+
 	//aplica o filtro no input da busca
 	$(".dataTables_filter input").keyup( function () {
 		var table = $("table.table-orderable").DataTable();
@@ -120,5 +122,5 @@ $(document).ready(function(){
           )
           .draw();
     } );
-	
+
 });
