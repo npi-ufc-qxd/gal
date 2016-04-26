@@ -8,8 +8,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 
 @Entity
+@Audited
 @Table(name = "bibliografias")
 @IdClass(BibliografiaId.class)
 public class Bibliografia {
