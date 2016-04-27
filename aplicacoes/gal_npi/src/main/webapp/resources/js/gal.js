@@ -31,10 +31,3 @@ function execmascara(){
 function soNumeros(v){
     return v.replace(/\D/g,"");
 }
-
-function getAppName() {
-	var url = location.pathname;
-	url = url.split("/");
-	return url[1];
-
-}

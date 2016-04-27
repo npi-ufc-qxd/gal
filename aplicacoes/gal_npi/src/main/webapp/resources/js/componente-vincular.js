@@ -18,6 +18,13 @@ $(document).ready(function(){
 		});
 		return columns;
 	}
+	
+	function getAppName() {
+		var url = location.pathname;
+		url = url.split("/");
+		return url[1];
+
+	}
 
 	$("#btn-get").click(function() {
 		var allItems = getItems("#drag-and-drop");

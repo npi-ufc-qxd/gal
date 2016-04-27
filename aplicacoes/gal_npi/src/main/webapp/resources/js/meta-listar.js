@@ -9,6 +9,13 @@ $(document).ready(function(){
 	$("#selecionaCurso").val($("#idCurso").val());
 	$("#selecionaComponente").val($("#idComponente").val());
 
+	function getAppName() {
+		var url = location.pathname;
+		url = url.split("/");
+		return url[1];
+
+	}
+	
 	$("select#selecionaCurso").change(function() {
 		var option = $(this).val();
 		var newUrl;
