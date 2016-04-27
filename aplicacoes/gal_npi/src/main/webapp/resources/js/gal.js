@@ -1,3 +1,4 @@
+/*eslint-env jquery*/
 $( document ).ready(function() {
 	
 	$("#confirm-delete").on("show.bs.modal", function(e) {

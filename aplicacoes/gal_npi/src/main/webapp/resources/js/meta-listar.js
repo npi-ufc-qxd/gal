@@ -13,9 +13,9 @@ $(document).ready(function(){
 		var option = $(this).val();
 
 		if(option == -1){
-			newUrl = '/' + getAppName() + "/meta/listar";
+			newUrl = "/" + getAppName() + "/meta/listar";
 		}else{
-			newUrl = '/' + getAppName() + "/meta/"+(option)+"/listar";
+			newUrl = "/" + getAppName() + "/meta/"+(option)+"/listar";
 		}
 
 		$(location).attr("href", newUrl);
@@ -25,9 +25,9 @@ $(document).ready(function(){
 		var option = $(this).val();
 
 		if(option == -1){
-			newUrl = '/' + getAppName() + "/meta/listar";
+			newUrl = "/" + getAppName() + "/meta/listar";
 		}else{
-			newUrl = '/' + getAppName() + "/meta/componente/"+(option)+"/listar";
+			newUrl = "/" + getAppName() + "/meta/componente/"+(option)+"/listar";
 		}
 
 		$(location).attr("href", newUrl);

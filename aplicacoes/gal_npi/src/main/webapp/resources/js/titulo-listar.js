@@ -16,7 +16,7 @@ $(document).ready(function(){
 
 	/*mostra o codigo do exemplar ao tentar exclui-lo*/
 	$(".open-CodigoExemplar").on("click", function() {
-		var codigo = $(this).data('id');
+		var codigo = $(this).data("id");
 		var mensagem = "Tem certeza de que deseja excluir o exemplar " + codigo + " ?";
 		$("#mensagem").text(mensagem);
 	});
