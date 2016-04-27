@@ -11,11 +11,11 @@ $(document).ready(function(){
 
 	$("select#selecionaCurso").change(function() {
 		var option = $(this).val();
-		
+		var newUrl;
 		if(option === -1){
-			var newUrl = "/" + getAppName() + "/meta/listar";
+			newUrl = "/" + getAppName() + "/meta/listar";
 		}else{
-			var newUrl = "/" + getAppName() + "/meta/"+(option)+"/listar";
+			newUrl = "/" + getAppName() + "/meta/"+(option)+"/listar";
 		}
 
 		$(location).attr("href", newUrl);
@@ -23,13 +23,12 @@ $(document).ready(function(){
 
 	$("select#selecionaComponente").change(function() {
 		var option = $(this).val();
-		
+		var newUrl;
 		if(option === -1){
-			var newUrl = "/" + getAppName() + "/meta/listar";
+			newUrl = "/" + getAppName() + "/meta/listar";
 		}else{
-			var newUrl = "/" + getAppName() + "/meta/componente/"+(option)+"/listar";
+			newUrl = "/" + getAppName() + "/meta/componente/"+(option)+"/listar";
 		}
-
 		$(location).attr("href", newUrl);
 	});
 
