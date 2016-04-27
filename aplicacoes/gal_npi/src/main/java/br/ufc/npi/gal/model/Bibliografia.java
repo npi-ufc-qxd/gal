@@ -12,7 +12,6 @@ import org.hibernate.envers.Audited;
 
 
 @Entity
-@Audited
 @Table(name = "bibliografias")
 @IdClass(BibliografiaId.class)
 public class Bibliografia {

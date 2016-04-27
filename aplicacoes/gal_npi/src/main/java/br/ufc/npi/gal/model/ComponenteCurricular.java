@@ -18,50 +18,48 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OrderBy;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "componentes")
+@Audited
 public class ComponenteCurricular {
 
 	@Id
 	@Column(name = "id_c")
-	@Audited
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@NotEmpty(message = "Campo obrigatório")
 	@Column(name = "nome")
-	@Audited
 	@Size(min = 5, max= 255, message = "O nome do Componente Curricular deve ter no mínimo 5 e no maximo 255 caracteres")
 	private String nome;
 
 	@NotEmpty(message = "Campo obrigatório")
 	@Column(name = "cod_d")
-	@Audited
 	@Pattern(regexp = "[a-zA-Z\\sà-ùÀ-Ù0-9]{0,}", message = "O campo código do Componente Curricular não pode possuir caracteres especiais.")//12
 	@Size(min = 5, max = 12, message = "O código do Componente Curricular deve ter entre 5 e 12 caracteres")
 	private String codigo;
-
+	
+	@NotAudited
 	@OneToMany(mappedBy = "componente", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
 	private List<IntegracaoCurricular> curriculos;
 
+	@NotAudited
 	@OneToMany(mappedBy = "componente", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
 	@OrderBy(clause = "prioridade ASC")
 	private List<Bibliografia> bibliografias;
 
 	@Column(name = "ch_pratica")
-	@Audited
 	@NotNull(message = "Campo obrigatório")
 	private Integer chPratica;
 
 	@Column(name = "ch_teorica")
-	@Audited
 	@NotNull(message = "Campo obrigatório")
 	private Integer chTeorica;
 
 	@Column(name = "tipo")
-	@Audited
 	private String tipo;
 	
 	@Transient
