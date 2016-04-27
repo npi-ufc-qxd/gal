@@ -43,17 +43,15 @@
 			<p>Nome: <b>${componente.nome}</b></p>
 			<p>Código: <b>${componente.codigo}</b></p>
 			<p>Tipo: <b>${componente.tipo}</b></p>
-			<p>
-				<a class="btn btn-primary btn-xs" href="<c:url value="/componente/${componente.id}/editar"></c:url>">Editar</a>
-				<a id="excluir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/componente/${componente.id}/excluir"></c:url>">Excluir</a>
-			</p>
 			
 			<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
+				<p>
+					<a class="btn btn-primary btn-xs" href="<c:url value="/componente/${componente.id}/editar"></c:url>">Editar</a>
+					<a id="excluir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/componente/${componente.id}/excluir"></c:url>">Excluir</a>
+				</p>
 				<div id="button-add">
-					<a href="<c:url value="/componente/${componente.id}/copiar" ></c:url>">
-						<button class="btn btn-primary">
-							<span class="glyphicon glyphicon-copy"></span> Copiar Componente Curricular
-						</button>
+					<a class="btn btn-primary" href="<c:url value="/componente/${componente.id}/copiar" ></c:url>">
+						Copiar Componente Curricular
 					</a>
 				</div>
 			</sec:authorize>
@@ -102,8 +100,9 @@
 			<hr>
 			
 			<h4>Bibliografias</h4>
-			
-			<a class="btn btn-success btn-xs" href="<c:url value="/componente/${componente.id}/vincular" ></c:url>">Vincular Bibliografias</a>
+			<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
+				<a class="btn btn-success btn-xs" href="<c:url value="/componente/${componente.id}/vincular" ></c:url>">Vincular Bibliografias</a>
+			</sec:authorize>
 			<button id="expandirTodosAccordions" class="btn btn-default btn-xs">Expandir Todas</button>
 			<button id="esconderTodosAccordions" class="btn btn-default btn-xs">Esconder Todas</button>
 			
