@@ -1,17 +1,23 @@
 package br.ufc.npi.gal.auditoria;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.hibernate.envers.DefaultRevisionEntity;
 import org.hibernate.envers.RevisionEntity;
+import org.hibernate.envers.RevisionNumber;
+import org.hibernate.envers.RevisionTimestamp;
 
 @Entity
 @RevisionEntity(InformacoeRevisaoTitulo.class)
-public class AuditoriaTitulo extends DefaultRevisionEntity{
-	@Id
-    private static final long serialVersionUID = 0829486158L;
-
+public class RevisionAuditoriaTitulo{
+    @Id
+    @GeneratedValue
+    @RevisionNumber
+	private int id;
+    
+    @RevisionTimestamp
+    private long timestemp;
     private String username;
 
     public String getUsername() {
