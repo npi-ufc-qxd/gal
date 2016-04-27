@@ -119,9 +119,7 @@ $(document).ready(function(){
 	$(".dataTables_filter input").keyup( function () {
 		var table = $("table.table-orderable").DataTable();
         table
-          .search(
-        		  $.fn.DataTable.ext.type.search.string( this.value )
-          )
+          .search($.fn.DataTable.ext.type.search.string( this.value ))
           .draw();
     } );
 
