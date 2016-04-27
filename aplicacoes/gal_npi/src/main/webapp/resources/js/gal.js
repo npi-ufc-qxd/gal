@@ -34,7 +34,7 @@ function soNumeros(v){
 
 function getAppName() {
 	var url = location.pathname;
-	url = url.split('/');
+	url = url.split("/");
 	return url[1];
 
 }

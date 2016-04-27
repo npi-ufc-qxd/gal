@@ -11,8 +11,8 @@ $(document).ready(function(){
 
 	$("select#selecionaCurso").change(function() {
 		var option = $(this).val();
-
-		if(option == -1){
+			var newUrl;
+		if(option === -1){
 			newUrl = "/" + getAppName() + "/meta/listar";
 		}else{
 			newUrl = "/" + getAppName() + "/meta/"+(option)+"/listar";

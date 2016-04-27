@@ -4,73 +4,73 @@ $(document).ready(function(){
 
 	// remove acentos de strings
 	function removeAcentos(data){
-		return ! data ?
-		        '' :
-		        typeof data === "string" ?
-		            data
-		            	.toLowerCase()
-	                	.replace( /[áàäâãÁÀÄÂÃ]/g, 'a' )
-	                	.replace( /[óòöôõÓÒÖÔÕ]/g, 'o' )
-	                	.replace( /[éèëêÉÈËÊ]/g, 'e' )
-	                	.replace( /[íìïîÍÌÏÎ]/g, 'i' )
-	                	.replace( /[úùüûÚÙÜÛ]/g, 'u' )
-		                .replace( /[çÇ]/g, 'c' )
-		                .replace( /\n/g, ' ' ) :
-		            data;
+		return ! data ? 
+				"" :
+					typeof data === "string" ?
+					data
+					.toLowerCase()
+					.replace( /[áàäâãÁÀÄÂÃ]/g, "a" )
+					.replace( /[óòöôõÓÒÖÔÕ]/g, "o" )
+					.replace( /[éèëêÉÈËÊ]/g, "e" )
+					.replace( /[íìïîÍÌÏÎ]/g, "i" )
+					.replace( /[úùüûÚÙÜÛ]/g, "u" )
+					.replace( /[çÇ]/g, "c" )
+					.replace( /\n/g, " " ) :
+					data;
 	}
 
 	$.fn.DataTable.ext.type.search.string = removeAcentos;
 
 	$.extend( $.fn.DataTable.ext.type.order, {
-	    "portugues-asc": function ( a, b ) {
-	    	a = removeAcentos(a);
-	    	b = removeAcentos(b);
-	        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-	    },
-	    "portugues-desc": function ( a, b ) {
-	    	a = removeAcentos(a);
-	    	b = removeAcentos(b);
-	        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-	    }
+		"portugues-asc": function ( a, b ) {
+			a = removeAcentos(a);
+			b = removeAcentos(b);
+			return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+		},
+		"portugues-desc": function ( a, b ) {
+			a = removeAcentos(a);
+			b = removeAcentos(b);
+			return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+		}
 	});
 
 	$("table.table-orderable").each(function(){
-		var default_sort = $(this).attr("default-sort");
-		// testa se existe o atributo default_sort no elemento
-		if(typeof default_sort !== typeof undefined && default_sort !== false)
-			default_sort = [default_sort.split(' ')];
-		else
-			default_sort = [];
+		var defaultSort = $(this).attr("default-sort");
+		// testa se existe o atributo defaultSort no elemento
+		if(typeof defaultSort !== typeof undefined && defaultSort !== false){
+			defaultSort = [defaultSort.split(" ")];
+		}else{
+			defaultSort = [];
+		}
 
 
-		var no_sort_fields = $(this).attr("no-sort-fields");
-		// testa se existe o atributo no_sort_fields
-		if(typeof no_sort_fields !== typeof undefined && no_sort_fields !== false){
-			no_sort_fields = no_sort_fields.split(' ');
+		var noSortFields = $(this).attr("no-sort-fields");
+		// testa se existe o atributo noSortFields
+		if(typeof noSortFields !== typeof undefined && noSortFields !== false){
+			noSortFields = noSortFields.split(" ");
 			// converte para array de inteiros
-			for(i = 0; i < no_sort_fields.length; i++){
-				no_sort_fields[i] = Number(no_sort_fields[i]);
+			for(var i = 0; i < noSortFields.length; i++){
+				noSortFields[i] = Number(noSortFields[i]);
 			}
+		}else{
+			noSortFields = [];
 		}
 
-		else
-			no_sort_fields = [];
-
-		var attr_paging = $(this).attr("paging");
-		if(typeof attr_paging !== typeof undefined){
-			if(attr_paging === "false"){
-				attr_paging = false;
+		var attrPaging = $(this).attr("paging");
+		if(typeof attrPaging !== typeof undefined){
+			if(attrPaging === "false"){
+				attrPaging = false;
 			}
 		}
-		else attr_paging = true;
+		else attrPaging = true;
 
-		var attr_searching = $(this).attr("searching");
-		if(typeof attr_searching !== typeof undefined){
-			if (attr_searching === "false"){
-				attr_searching = false;
+		var attrSearching = $(this).attr("searching");
+		if(typeof attrSearching !== typeof undefined){
+			if (attrSearching === "false"){
+				attrSearching = false;
 			}
 		}
-		else attr_searching = true;
+		else attrSearching = true;
 
 		$(this).dataTable({
 			"pageLength": 25,
@@ -99,17 +99,17 @@ $(document).ready(function(){
 					"sortDescending" : ": Ordenar colunas de forma descendente"
 				}
 			},
-			"order": default_sort,
+			"order": defaultSort,
 			"columnDefs": [
-			    {"orderable": true, "targets": no_sort_fields},
+			    {"orderable": true, "targets": noSortFields},
 			    // Essa linha foi desativada por gerar conflito com a busca na tabela
 			    // Link da resposta de um desenvolvedor da DataTables que pode significar
 			    // o porque do problema: https://github.com/DataTables/DataTables/issues/43
 			    /*{"targets": "_all", "type": 'portugues'}*/
 			],
 			"destroy": true,
-			"paging": attr_paging,
-			"searching": attr_searching
+			"paging": attrPaging,
+			"searching": attrSearching
 		});
 	});
 

@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 	/*mostra a quantidade de exemplares que um titulo possui ao excluir*/
 	$(".open-AddQtdExemplares").on("click", function() {
-		var acervo = $(this).data('id');
+		var acervo = $(this).data("id");
 		var mensagem;
 		if (acervo > 0) {
 			mensagem = "Esse título possui " + acervo + " exemplares, tem certeza de que deseja exclui-lo?";
