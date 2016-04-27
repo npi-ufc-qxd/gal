@@ -23,8 +23,8 @@ $(document).ready(function(){
 
 	$("select#selecionaComponente").change(function() {
 		var option = $(this).val();
-
-		if(option == -1){
+		var newUrl;
+		if(option === -1){
 			newUrl = "/" + getAppName() + "/meta/listar";
 		}else{
 			newUrl = "/" + getAppName() + "/meta/componente/"+(option)+"/listar";

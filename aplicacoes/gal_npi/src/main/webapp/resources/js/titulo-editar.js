@@ -5,7 +5,7 @@ $(document).ready(function(){
 	//Função para mostrar o checkbox "vinculado a biblioteca" nas páginas de adição/edição de Título
 	function showHideElement(tipoTitulo){
 		if (tipoTitulo === "Físico") { // Mesmo valor do enum br.ufc.npi.gal.model.TipoTitulo
-		    $("#inputCadastradoBiblioteca").hide();
+			$("#inputCadastradoBiblioteca").hide();
 		}
 		else if (tipoTitulo === "Virtual") { // // Mesmo valor do enum br.ufc.npi.gal.model.TipoTitulo
 			$("#inputCadastradoBiblioteca").show();

@@ -61,16 +61,18 @@ $(document).ready(function(){
 			if(attrPaging === "false"){
 				attrPaging = false;
 			}
+		}else{
+			attrPaging = true;
 		}
-		else attrPaging = true;
 
 		var attrSearching = $(this).attr("searching");
 		if(typeof attrSearching !== typeof undefined){
 			if (attrSearching === "false"){
 				attrSearching = false;
 			}
+		}else{
+			attrSearching = true;
 		}
-		else attrSearching = true;
 
 		$(this).dataTable({
 			"pageLength": 25,
@@ -101,11 +103,11 @@ $(document).ready(function(){
 			},
 			"order": defaultSort,
 			"columnDefs": [
-			    {"orderable": true, "targets": noSortFields},
-			    // Essa linha foi desativada por gerar conflito com a busca na tabela
-			    // Link da resposta de um desenvolvedor da DataTables que pode significar
-			    // o porque do problema: https://github.com/DataTables/DataTables/issues/43
-			    /*{"targets": "_all", "type": 'portugues'}*/
+				{"orderable": true, "targets": noSortFields},
+				// Essa linha foi desativada por gerar conflito com a busca na tabela
+				// Link da resposta de um desenvolvedor da DataTables que pode significar
+				// o porque do problema: https://github.com/DataTables/DataTables/issues/43
+				/*{"targets": "_all", "type": 'portugues'}*/
 			],
 			"destroy": true,
 			"paging": attrPaging,
