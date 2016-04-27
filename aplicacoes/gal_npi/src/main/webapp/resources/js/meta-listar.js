@@ -11,7 +11,7 @@ $(document).ready(function(){
 
 	$("select#selecionaCurso").change(function() {
 		var option = $(this).val();
-			var newUrl;
+		var newUrl = "";
 		if(option === -1){
 			newUrl = "/" + getAppName() + "/meta/listar";
 		}else{
@@ -23,7 +23,7 @@ $(document).ready(function(){
 
 	$("select#selecionaComponente").change(function() {
 		var option = $(this).val();
-		var newUrl;
+		var newUrl = "";
 		if(option === -1){
 			newUrl = "/" + getAppName() + "/meta/listar";
 		}else{
