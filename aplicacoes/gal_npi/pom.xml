@@ -37,6 +37,11 @@
 		
 		<!-- Database Migrations -->
 		<flyway.version>4.0</flyway.version>
+		
+		<!-- DB Default Dev Settings -->
+		<url.db>jdbc:postgresql://localhost:5432/bd_gal</url.db>
+		<user.db>postgres</user.db>
+		<password.db>postgres</password.db>
 
 		<!-- Spring Security -->
 		<spring.security.version>3.2.1.RELEASE</spring.security.version>
@@ -312,8 +317,8 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.8.3</version>
 		</dependency>
-
 	</dependencies>
+	
 	<build>
 		<finalName>gal</finalName>
 		<plugins>
@@ -326,18 +331,17 @@
 				</configuration>
 			</plugin>
 			<plugin>
-			    <groupId>org.flywaydb</groupId>
-			    <artifactId>flyway-maven-plugin</artifactId>
-			    <version>${flyway.version}</version>
-			    <configuration>
-					<url>jdbc:postgresql://localhost/bd_gal</url>
-					<user>postgres</user>
-    				<password>postgres</password>
-    				<baselineOnMigrate>true</baselineOnMigrate>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>${flyway.version}</version>
+				<configuration>
+					<url>${url.db}</url>
+					<user>${user.db}</user>
+					<password>${password.db}</password>
+					<baselineOnMigrate>true</baselineOnMigrate>
 					<!-- Parametros Default - https://flywaydb.org/documentation/maven/migrate -->
 			    </configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
