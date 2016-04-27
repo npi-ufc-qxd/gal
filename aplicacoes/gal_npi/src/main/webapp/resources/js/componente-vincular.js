@@ -5,13 +5,13 @@ $(document).ready(function(){
 	function getItems(exampleNr) {
 		var columns = [];
 		$(exampleNr + " ul.sortable-list").each(function() {
-			var idLista = $(this).attr("id")
-			if (idLista != "acervo") {
-				var lista_aux_titulos = []
-				$('#'+idLista+" .sortable-item").each(function(){
-					lista_aux_titulos.push($(this).attr("id"));
+			var idLista = $(this).attr("id");
+			if (idLista !== "acervo") {
+				var listaAuxTitulos = [];
+				$("#"+idLista+" .sortable-item").each(function(){
+					listaAuxTitulos.push($(this).attr("id"));
 				});
-				columns.push(lista_aux_titulos.join(','));
+				columns.push(listaAuxTitulos.join(","));
 			}
 		});
 		return columns;
@@ -24,18 +24,18 @@ $(document).ready(function(){
 			complementar : allItems[1],
 			idComponente : $("#componenteId").val()
 		};
-		$.post('/' + getAppName() + "/componente/vincular", data);
+		$.post("/" + getAppName() + "/componente/vincular", data);
 	});
 	
 	if($("#drag-and-drop .sortable-list").length > 0){
-		var lista_drag_and_drop_basica = $("#drag-and-drop .sortable-list#basica");
-		Sortable.create(lista_drag_and_drop_basica[0], { group: "drag_and_drop" });
+		var listaDragAndDropBasica = $("#drag-and-drop .sortable-list#basica");
+		Sortable.create(listaDragAndDropBasica[0], { group: "drag_and_drop" });
 
-		var lista_drag_and_drop_complementar = $("#drag-and-drop .sortable-list#complementar");
-		Sortable.create(lista_drag_and_drop_complementar[0], { group: "drag_and_drop" });
+		var listaDragAndDropComplementar = $("#drag-and-drop .sortable-list#complementar");
+		Sortable.create(listaDragAndDropComplementar[0], { group: "drag_and_drop" });
 
-		var lista_drag_and_drop_acervo = $("#drag-and-drop .sortable-list#acervo");
-		Sortable.create(lista_drag_and_drop_acervo[0], { group: "drag_and_drop" });
+		var listaDragAndDropAcervo = $("#drag-and-drop .sortable-list#acervo");
+		Sortable.create(listaDragAndDropAcervo[0], { group: "drag_and_drop" });
 	}
 	
 });
