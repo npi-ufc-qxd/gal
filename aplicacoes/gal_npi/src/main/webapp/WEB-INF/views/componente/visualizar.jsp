@@ -50,10 +50,8 @@
 					<a id="excluir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/componente/${componente.id}/excluir"></c:url>">Excluir</a>
 				</p>
 				<div id="button-add">
-					<a href="<c:url value="/componente/${componente.id}/copiar" ></c:url>">
-						<button class="btn btn-primary">
-							<span class="glyphicon glyphicon-copy"></span> Copiar Componente Curricular
-						</button>
+					<a class="btn btn-primary" href="<c:url value="/componente/${componente.id}/copiar" ></c:url>">
+						Copiar Componente Curricular
 					</a>
 				</div>
 			</sec:authorize>
