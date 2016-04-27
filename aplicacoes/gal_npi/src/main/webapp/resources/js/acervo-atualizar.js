@@ -1,3 +1,5 @@
+/*eslint-env jquery*/
+
 $(document).ready(function(){
 	var data = $(".data");
 	if (data != null){

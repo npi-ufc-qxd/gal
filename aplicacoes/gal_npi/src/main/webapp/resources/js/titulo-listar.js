@@ -1,5 +1,7 @@
+/*eslint-env jquery*/
+
 $(document).ready(function(){
-	
+
 	/*mostra a quantidade de exemplares que um titulo possui ao excluir*/
 	$(".open-AddQtdExemplares").on("click", function() {
 		var acervo = $(this).data('id');
@@ -11,7 +13,7 @@ $(document).ready(function(){
 		}
 		$("#mensagem").text(mensagem);
 	});
-	
+
 	/*mostra o codigo do exemplar ao tentar exclui-lo*/
 	$(".open-CodigoExemplar").on("click", function() {
 		var codigo = $(this).data('id');
