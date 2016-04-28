@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.web;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.ufc.npi.gal.auditoria.TituloAuditoria;
+import br.ufc.npi.gal.auditoria.TituloAuditoriaService;
 import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.TipoTitulo;
 import br.ufc.npi.gal.model.Titulo;
@@ -22,7 +26,10 @@ public class TituloController {
 
 	@Inject
 	private TituloService tituloService;
-
+	
+	@Inject
+	private TituloAuditoriaService tituloAudService;
+	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(ModelMap modelMap) {
 		modelMap.addAttribute("titulos", this.tituloService.find(Titulo.class));
@@ -72,7 +79,13 @@ public class TituloController {
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
 	public String editar(@PathVariable("id") Integer id, ModelMap modelMap) {
 		Titulo titulo = this.tituloService.find(Titulo.class, id);
-
+		
+		List<TituloAuditoria> teste = this.tituloAudService.getTituloAuditoriaById(id);
+		
+		for(int i = 0; i < teste.size();i++){
+			System.out.println(teste.size()+" <<< tamanho, nome >>>" +teste.get(i).getNome());
+		}
+		
 		if (titulo == null) {
 			return "redirect:/titulo/listar";
 		}
