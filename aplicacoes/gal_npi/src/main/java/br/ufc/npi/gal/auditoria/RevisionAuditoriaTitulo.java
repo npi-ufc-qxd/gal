@@ -3,12 +3,14 @@ package br.ufc.npi.gal.auditoria;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
 
 @Entity
+@Table(name="revisionauditoriatitulo")
 @RevisionEntity(InformacoeRevisaoTitulo.class)
 public class RevisionAuditoriaTitulo{
     @Id
@@ -18,6 +20,7 @@ public class RevisionAuditoriaTitulo{
     
     @RevisionTimestamp
     private long timestemp;
+    
     private String username;
 
     public String getUsername() {
