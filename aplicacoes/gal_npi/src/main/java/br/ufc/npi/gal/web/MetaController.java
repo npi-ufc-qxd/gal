@@ -28,6 +28,7 @@ import br.ufc.npi.gal.model.DetalheMetaCalculada;
 import br.ufc.npi.gal.model.Meta;
 import br.ufc.npi.gal.model.MetaForm;
 import br.ufc.npi.gal.model.Titulo;
+import br.ufc.npi.gal.cache.CacheFlags;
 import br.ufc.npi.gal.model.ComponenteCurricular;
 import br.ufc.npi.gal.service.CalculoMetaService;
 import br.ufc.npi.gal.service.CursoService;
@@ -59,6 +60,13 @@ public class MetaController {
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(ModelMap modelMap) {
 
+		CacheFlags c = new CacheFlags();
+		if(c.ATUALIZAR_CALCULO_META){
+			calculo.limparCache();
+			c.ATUALIZAR_CALCULO_META = false;
+		}
+		
+		
 		modelMap.addAttribute("resultados", calculo.gerarCalculo());
 		modelMap.addAttribute("cursos", cursoService.find(Curso.class));
 		modelMap.addAttribute("componentes", componenteCurricularService.getTodosComponenteCurricular());
@@ -239,6 +247,10 @@ public class MetaController {
 			}
 
 		}
+		
+		CacheFlags c  = new CacheFlags();
+		c.ATUALIZAR_CALCULO_META = true;
+		
 		redirectAttributes.addFlashAttribute("info", "Meta configurada com sucesso.");
 		return "redirect:/meta/listar";
 	}

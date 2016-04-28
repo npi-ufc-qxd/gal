@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.ufc.npi.gal.cache.CacheFlags;
 import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.DetalheMetaCalculada;
 import br.ufc.npi.gal.model.ComponenteCurricular;
@@ -99,6 +100,10 @@ public class ComponenteCurricularController {
 		if (analiseComponente(componente, result, redirectAttributes, errors)) {
 			return "componente/editar";
 		}
+		
+		CacheFlags c = new CacheFlags();
+		c.ATUALIZAR_CALCULO_META = true;
+		
 
 		componente.setNome(componente.getNome().toUpperCase());
 		componenteCurricularService.update(componente);
@@ -120,7 +125,10 @@ public class ComponenteCurricularController {
 			redirectAttributes.addFlashAttribute("error", "O Componente Curricular (" + componente.getNome()
 					+ ") faz parte de Estruturas Curriculares de alguns cursos. Por favor, resolva estas dependências para tentar excluir este componente curricular.");
 		}
-
+		
+		CacheFlags c = new CacheFlags();
+		c.ATUALIZAR_CALCULO_META = true;
+		
 		return "redirect:/componente/listar";
 	}
 
@@ -204,6 +212,10 @@ public class ComponenteCurricularController {
 		for (int i = 0; i < bibliografiaLista.size(); i++) {
 			bibliografiaService.delete(bibliografiaLista.get(i));
 		}
+		
+		CacheFlags c = new CacheFlags();
+		c.ATUALIZAR_CALCULO_META = true;
+		
 		redirectAttributes.addFlashAttribute("info", "Vinculações realizadas com sucesso.");
 		return "redirect:/componente/" + componente.getId() + "/visualizar";
 	}

@@ -5,6 +5,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.CalculadorMeta;
 import br.ufc.npi.gal.service.CalculoMetaService;
@@ -22,9 +25,13 @@ public class CalculoMetaServiceImpl implements CalculoMetaService {
 
 	@Inject
 	private MetaService metaService;
-
+	
+	@Cacheable("metas")
 	public List<ResultadoCalculo> gerarCalculo() {
 		return calculadorMeta.calcular(tituloService.find(Titulo.class),metaService.getMeta());
 	}
+
+	@CacheEvict(value="metas", allEntries = true)
+	public void limparCache() {}
 
 }

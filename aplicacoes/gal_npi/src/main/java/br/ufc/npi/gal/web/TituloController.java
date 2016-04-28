@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.ufc.npi.gal.cache.CacheFlags;
 import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.TipoTitulo;
 import br.ufc.npi.gal.model.Titulo;
@@ -61,7 +62,10 @@ public class TituloController {
 		if (titulo.getTipo().equals(TipoTitulo.FISICO.getDescricao())){
 			titulo.setCadastradoBiblioteca(true);
 		}
-
+		
+		CacheFlags c = new CacheFlags();
+		c.ATUALIZAR_CALCULO_META = true;
+		
 		tituloService.save(titulo);
 		redirectAttributes.addFlashAttribute("info",
 				"Título adicionado com sucesso.");
@@ -105,6 +109,10 @@ public class TituloController {
 			titulo.setCadastradoBiblioteca(true);
 		}
 
+		CacheFlags c = new CacheFlags();
+		c.ATUALIZAR_CALCULO_META = true;
+		
+		
 		tituloService.update(titulo);
 		redirectAttributes.addFlashAttribute("info",
 				"Título atualizado com sucesso.");
@@ -135,6 +143,10 @@ public class TituloController {
 						" não pode ser excluído, pois está vinculado a bibliografia das seguintes disciplinas: " + nomeDisciplinas);
 			}
 		}
+		
+		CacheFlags c = new CacheFlags();
+		c.ATUALIZAR_CALCULO_META = true;
+		
 		return "redirect:/titulo/listar";
 	}
 

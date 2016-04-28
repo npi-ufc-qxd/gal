@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.ufc.npi.gal.cache.CacheFlags;
 import br.ufc.npi.gal.model.Exemplar;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.ExemplarService;
@@ -55,6 +56,10 @@ public class ExemplarController {
 			result.rejectValue("codigoExemplar", "Repeat.exemplar.codigoExemplar", "Já existe um exemplar com esse codigo");
 			return "exemplar/adicionar";
 		}
+		
+		CacheFlags c = new CacheFlags();
+		c.ATUALIZAR_CALCULO_META = true;
+		
 		exemplar.setId(null);
 		exemplar.setTitulo(titulo);	
 		exemplarService.save(exemplar);
@@ -85,6 +90,10 @@ public class ExemplarController {
 			return "exemplar/editar";
 		}
 		
+		CacheFlags c = new CacheFlags();
+		c.ATUALIZAR_CALCULO_META = true;
+		
+		
 		exemplar.setTitulo(titulo);
 		exemplarService.update(exemplar);
 		redirectAttributes.addFlashAttribute("info",
@@ -99,6 +108,9 @@ public class ExemplarController {
 			this.exemplarService.delete(exemplar);
 			redirectAttributes.addFlashAttribute("info", "Exemplar removido com sucesso.");
 		}
+		
+		CacheFlags c = new CacheFlags();
+		c.ATUALIZAR_CALCULO_META = true;
 		
 		return "redirect:/exemplar/"+exemplar.getTitulo().getId()+"/listar";
 	}

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.ufc.npi.gal.cache.CacheFlags;
 import br.ufc.npi.gal.model.ComponenteCurricular;
 import br.ufc.npi.gal.model.EstruturaCurricular;
 import br.ufc.npi.gal.model.IntegracaoCurricular;
@@ -41,6 +42,9 @@ public class IntegracaoCurricularController {
 			this.integracaoService.delete(integracao);
 			redirectAttributes.addFlashAttribute("info", "Componente curricular removido do currículo com sucesso.");
 		}
+		
+		CacheFlags c = new CacheFlags();
+		c.ATUALIZAR_CALCULO_META = true;
 		
 		return "redirect:/curso/" + codigoCurso + "/visualizar";
 	}
@@ -74,6 +78,10 @@ public class IntegracaoCurricularController {
 				return "redirect:/curso/" + estruturaBD.getCurso().getCodigo() + "/visualizar";
 			}
 		}		
+		
+		CacheFlags c = new CacheFlags();
+		c.ATUALIZAR_CALCULO_META = true;
+		
 		
 		integracao.setComponente(componenteBD);
 		integracao.setEstruturaCurricular(estruturaBD);
@@ -122,7 +130,11 @@ public class IntegracaoCurricularController {
 			RedirectAttributes redirectAttributes) {
 		EstruturaCurricular estrutura = this.estruturaService.find(EstruturaCurricular.class,
 				integracao.getEstruturaCurricular().getId());
-
+		
+		CacheFlags c = new CacheFlags();
+		c.ATUALIZAR_CALCULO_META = true;
+		
+		
 		integracaoService.update(integracao);
 		redirectAttributes.addFlashAttribute("info", "Integração atualizada com sucesso.");
 		return "redirect:/curso/" + estrutura.getCurso().getCodigo() + "/visualizar";
