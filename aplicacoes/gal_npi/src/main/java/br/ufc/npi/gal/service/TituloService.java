@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.service;
 
+import java.util.List;
+
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.quixada.npi.service.GenericService;
 
@@ -14,4 +16,5 @@ public interface TituloService extends GenericService<Titulo> {
 	
 	public abstract Titulo getOutroTituloByIsbn(Integer id, String isbn);
 
+	public abstract List<Titulo> getTituloAuditoriaById(Integer id);
 }

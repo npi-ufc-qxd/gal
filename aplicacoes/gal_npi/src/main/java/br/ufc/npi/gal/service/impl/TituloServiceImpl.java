@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.service.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -33,6 +35,10 @@ public class TituloServiceImpl extends GenericServiceImpl<Titulo> implements Tit
 	public Titulo getOutroTituloByIsbn(Integer id, String isbn) {
 		return tituloRespository.getOutroTituloByIsbn(id, isbn);
 	}
-	
+
+	@Override
+	public List<Titulo> getTituloAuditoriaById(Integer id) {
+		return tituloRespository.getTituloAuditoriaById(id);
+	}
 
 }

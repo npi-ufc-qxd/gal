@@ -1,10 +1,16 @@
 package br.ufc.npi.gal.repository.jpa;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
 
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.repository.TituloRespository;
@@ -13,6 +19,8 @@ import br.ufc.quixada.npi.repository.jpa.JpaGenericRepositoryImpl;
 
 @Named
 public class TituloRespositoryImpl extends JpaGenericRepositoryImpl<Titulo> implements TituloRespository {
+	@PersistenceContext
+	EntityManager manager;
 
 	@Override
 	public Titulo getTituloByNome(String nome) {
@@ -58,6 +66,21 @@ public class TituloRespositoryImpl extends JpaGenericRepositoryImpl<Titulo> impl
 			return result.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public List<Titulo> getTituloAuditoriaById(Integer id) {
+		AuditReader reader = AuditReaderFactory.get(manager);
+
+		List<Number> alteracoes = reader.getRevisions(Titulo.class, id);
+		List<Titulo> tituloAuditoria = new ArrayList<Titulo>();
+		Titulo t;
+
+		for(Number n : alteracoes){
+			t = (Titulo) reader.createQuery().forEntitiesAtRevision(Titulo.class, n).getSingleResult();
+			tituloAuditoria.add(t);
+		}
+		return tituloAuditoria;
 	}
 
 
