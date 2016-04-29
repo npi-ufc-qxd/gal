@@ -136,7 +136,7 @@
 			
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirm-submit" value="Salvar"/>
-				<a href="<c:url value="/titulo/listar"></c:url>" class="btn btn-default">Cancelar</a>
+				<button class="btn btn-default" onclick="goBack()">Cancelar</button>
 			</div>
 		</form:form>
 		<jsp:include page="../fragments/footer.jsp" />

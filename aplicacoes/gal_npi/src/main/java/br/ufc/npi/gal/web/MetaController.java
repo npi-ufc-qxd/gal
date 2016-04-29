@@ -307,7 +307,7 @@ public class MetaController {
 					linha = "\"" + element.getTitulo().getNome() + "\";\"" + element.getTitulo().getIsbn()
 							+ "\";\"Impar\";\"" + detalheMetaCalculada.getCurso() + "\";\""
 							+ detalheMetaCalculada.getComponente() + "\";\""
-							+ detalheMetaCalculada.getCodigoComponenteCurricular() + "\";\"" + detalheMetaCalculada.getSemestre()
+							+ detalheMetaCalculada.getCodigoComponente() + "\";\"" + detalheMetaCalculada.getSemestre()
 							+ "\";\"" + detalheMetaCalculada.getQuantidadeAlunos() + "\";\""
 							+ detalheMetaCalculada.getTipoBibliografia() + "\";\""
 							+ df.format(detalheMetaCalculada.getCalculo()) + "\";\"" + element.getTitulo().getAcervo()
@@ -323,7 +323,7 @@ public class MetaController {
 					linha = "\"" + element.getTitulo().getNome() + "\";\"" + element.getTitulo().getIsbn()
 							+ "\";\"Par\";\"" + detalheMetaCalculada.getCurso() + "\";\""
 							+ detalheMetaCalculada.getComponente() + "\";\""
-							+ detalheMetaCalculada.getCodigoComponenteCurricular() + "\";\"" + detalheMetaCalculada.getSemestre()
+							+ detalheMetaCalculada.getCodigoComponente() + "\";\"" + detalheMetaCalculada.getSemestre()
 							+ "\";\"" + detalheMetaCalculada.getQuantidadeAlunos() + "\";\""
 							+ detalheMetaCalculada.getTipoBibliografia() + "\";\""
 							+ df.format(detalheMetaCalculada.getCalculo()) + "\";\"" + element.getTitulo().getAcervo()
