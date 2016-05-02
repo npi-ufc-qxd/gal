@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.web;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -72,7 +74,7 @@ public class TituloController {
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
 	public String editar(@PathVariable("id") Integer id, ModelMap modelMap) {
 		Titulo titulo = this.tituloService.find(Titulo.class, id);
-
+		List<Titulo> t = this.tituloService.getTituloAuditoriaById(id);
 		if (titulo == null) {
 			return "redirect:/titulo/listar";
 		}

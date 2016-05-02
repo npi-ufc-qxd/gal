@@ -13,7 +13,7 @@ import org.hibernate.envers.RevisionTimestamp;
 @Table(name="revisionauditoriatitulo")
 @RevisionEntity(InformacoeRevisaoTitulo.class)
 public class RevisionAuditoriaTitulo{
-    @Id
+	@Id
     @GeneratedValue
     @RevisionNumber
 	private int id;
@@ -30,4 +30,12 @@ public class RevisionAuditoriaTitulo{
     public void setUsername(String username) {
         this.username = username;
     }
+    
+    public long getTimestemp() {
+		return timestemp;
+	}
+
+	public void setTimestemp(long timestemp) {
+		this.timestemp = timestemp;
+	}
 }
