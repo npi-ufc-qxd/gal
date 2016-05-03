@@ -42,7 +42,6 @@ public class ComponenteCurricular {
 	@OneToMany(mappedBy = "componente", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
 	private List<IntegracaoCurricular> curriculos;
 	
-
 	@OneToMany(mappedBy = "componente", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
 	@OrderBy(clause = "prioridade ASC")
 	private List<Bibliografia> bibliografias;

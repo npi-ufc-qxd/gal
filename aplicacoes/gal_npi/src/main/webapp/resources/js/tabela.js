@@ -1,6 +1,5 @@
 /*eslint-env jquery*/
 /*eslint new-cap: ["error", {"capIsNewExceptions": ["DataTable"]}]*/
-/*eslint no-undefined: "error"*/
 
 $(document).ready(function(){
 
@@ -35,20 +34,25 @@ $(document).ready(function(){
 			return ((a < b) ? 1 : ((a > b) ? -1 : 0));
 		}
 	});
-
-	$("table.table-orderable").each(function(){
-		var defaultSort = $(this).attr("default-sort");
+	
+	function getDefaultSort(table){
+		var defaultSort = table.attr("default-sort");
+		console.log("defaultsort:"+typeof defaultSort+" = "+defaultSort);
 		// testa se existe o atributo defaultSort no elemento
-		if(typeof defaultSort !== typeof "undefined" && defaultSort !== false){
+		if(typeof defaultSort !== typeof window.undefined && defaultSort !== false){
 			defaultSort = [defaultSort.split(" ")];
 		}else{
 			defaultSort = [];
 		}
-
-
-		var noSortFields = $(this).attr("no-sort-fields");
+		console.log("defaultsort:"+typeof defaultSort+" = "+defaultSort);
+		return defaultSort;
+	}
+	
+	function getNoSortFields(table){
+		var noSortFields = table.attr("no-sort-fields");
+		console.log("noSortFields:"+typeof noSortFields+" = "+noSortFields);
 		// testa se existe o atributo noSortFields
-		if(typeof noSortFields !== typeof "undefined" && noSortFields !== false){
+		if(typeof noSortFields !== typeof window.undefined && noSortFields !== false){
 			noSortFields = noSortFields.split(" ");
 			// converte para array de inteiros
 			for(var i = 0; i < noSortFields.length; i++){
@@ -57,24 +61,39 @@ $(document).ready(function(){
 		}else{
 			noSortFields = [];
 		}
-
-		var attrPaging = $(this).attr("paging");
-		if(typeof attrPaging !== typeof "undefined"){
+		console.log("noSortFields:"+typeof noSortFields+" = "+noSortFields);
+		return noSortFields;
+	}
+	
+	function getAttrPaging(table){
+		var attrPaging = table.attr("paging");
+		console.log("attrPaging:"+typeof attrPaging+" = "+attrPaging);
+		if(typeof attrPaging !== typeof window.undefined){
 			if(attrPaging === "false"){
 				attrPaging = false;
 			}
 		}else{
 			attrPaging = true;
 		}
+		console.log("attrPaging:"+typeof attrPaging+" = "+attrPaging);
+		return attrPaging;
+	}
 
-		var attrSearching = $(this).attr("searching");
-		if(typeof attrSearching !== typeof "undefined"){
+	function getAttrSearching(table){
+		var attrSearching = table.attr("searching");
+		console.log("attrSearching:"+typeof attrSearching+" = "+attrSearching);
+		if(typeof attrSearching !== typeof window.undefined){
 			if (attrSearching === "false"){
 				attrSearching = false;
 			}
 		}else{
 			attrSearching = true;
 		}
+		console.log("attrSearching:"+typeof attrSearching+" = "+attrSearching);
+		return attrSearching;
+	}
+	
+	$("table.table-orderable").each(function(){
 
 		$(this).dataTable({
 			"pageLength": 25,
@@ -103,17 +122,17 @@ $(document).ready(function(){
 					"sortDescending" : ": Ordenar colunas de forma descendente"
 				}
 			},
-			"order": defaultSort,
+			"order": getDefaultSort($(this)),
 			"columnDefs": [
-				{"orderable": true, "targets": noSortFields},
+				{"orderable": true, "targets": getNoSortFields($(this))},
 				// Essa linha foi desativada por gerar conflito com a busca na tabela
 				// Link da resposta de um desenvolvedor da DataTables que pode significar
 				// o porque do problema: https://github.com/DataTables/DataTables/issues/43
 				/*{"targets": "_all", "type": 'portugues'}*/
 			],
 			"destroy": true,
-			"paging": attrPaging,
-			"searching": attrSearching
+			"paging": getAttrPaging($(this)),
+			"searching": getAttrSearching($(this))
 		});
 	});
 
