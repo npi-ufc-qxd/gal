@@ -24,11 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.ufc.npi.gal.exception.ArquivoNaoSuportadoException;
 import br.ufc.npi.gal.model.AcervoDocumento;
 import br.ufc.npi.gal.model.ExemplarConflitante;
 import br.ufc.npi.gal.service.AcervoDocumentoService;
 import br.ufc.npi.gal.service.AcervoService;
 import br.ufc.npi.gal.service.UsuarioServiceGal;
+import br.ufc.npi.gal.service.ValidadorXSL;
+import br.ufc.npi.gal.service.impl.ValidadorXSLImpl;
 
 @Controller
 @RequestMapping("acervo")
@@ -95,36 +98,36 @@ public class AcervoController {
 			erros = true;
 		}
 		
-		if (request.isEmpty()) {
-			result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo",
-					"Arquivo enviado inexistente");
+		ValidadorXSL validadorXSL = new ValidadorXSLImpl();
+		
+		if (validadorXSL.isEmpty(request)) {
+			result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo",	"Arquivo enviado inexistente");
 			erros = true;
-		} else if (!TestFormato(request)) {
-			result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo",
-					"formato do arquivo incorreto, por favor selecionar um arquivo xls");
+		} else if (!validadorXSL.isXLS(request)){
+			result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo", "formato do arquivo incorreto, por favor selecionar um arquivo xls");
 			erros = true;
 		}
+				
 		if (erros) {
 			return "acervo/atualizar";
+		} else {
+			try {
+				atualizacaoAcervo.setArquivo(request.getBytes());
+				acervoService.processarArquivo(request);
+			} catch (IOException e) {
+				result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo", e.getMessage());
+				return "acervo/atualizar";
+			} catch (ArquivoNaoSuportadoException e) {
+				result.rejectValue("arquivo", "Repeat.AcervoDocumento.arquivo", e.getMessage());
+				return "acervo/atualizar";
+			}
+			redirectAttributes.addFlashAttribute("info", "Atualização realizada com sucesso.");
+			atualizacaoAcervo.setUsuario(usuarioService.getUsuarioByLogin(auth.getName()));
+			atualizacaoAcervo.setExtensao(request.getContentType());
+			acervoService.registrarAtualizacao(atualizacaoAcervo);
+			
+			return "redirect:/acervo/conflitos";
 		}
-		try {
-			atualizacaoAcervo.setArquivo(request.getBytes());
-			acervoService.processarArquivo(request);
-		} catch (IOException e) {
-			System.err.println("Erro ao processar arquivo: "
-					+ e.getStackTrace());
-			// avisar ao usuario do erro
-		}
-		atualizacaoAcervo.setUsuario(usuarioService.getUsuarioByLogin(auth
-				.getName()));
-		atualizacaoAcervo.setExtensao(request.getContentType());
-		acervoService.registrarAtualizacao(atualizacaoAcervo);
-		
-		redirectAttributes.addFlashAttribute("info",
-				"Atualização realizada com sucesso.");
-		
-		return "redirect:/acervo/conflitos";
-
 	}
 
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
@@ -154,16 +157,6 @@ public class AcervoController {
 
 	}
 
-	private boolean TestFormato(MultipartFile request) {
-		String nome = request.getOriginalFilename();
-		String extencao = (String) nome.subSequence(nome.length() - 4,
-				nome.length());
-		if (extencao.equals(".xls")) {
-			return true;
-		}
-		return false;
-	}
-
 	@RequestMapping(value = "/download/{idArquivo}", method = RequestMethod.GET)
 	public void getArquivo(@PathVariable("idArquivo") int idArquivo,
 			HttpServletResponse response, HttpSession session) {
@@ -174,8 +167,7 @@ public class AcervoController {
 				InputStream is = new ByteArrayInputStream(
 						documento.getArquivo());
 				response.setContentType(documento.getExtensao());
-				response.setHeader("Content-Disposition",
-						"attachment; filename=Delta - " + documento.getInicioPeridoDelta()+" à "+documento.getFinalPeridoDelta());
+				response.setHeader("Content-Disposition", "attachment; filename=Delta - " + documento.getInicioPeridoDelta()+" à "+documento.getFinalPeridoDelta());
 				IOUtils.copy(is, response.getOutputStream());
 				response.flushBuffer();
 			}
