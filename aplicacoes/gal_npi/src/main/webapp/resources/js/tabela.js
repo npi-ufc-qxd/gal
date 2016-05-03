@@ -37,22 +37,19 @@ $(document).ready(function(){
 	
 	function getDefaultSort(table){
 		var defaultSort = table.attr("default-sort");
-		console.log("defaultsort:"+typeof defaultSort+" = "+defaultSort);
 		// testa se existe o atributo defaultSort no elemento
-		if(typeof defaultSort !== typeof window.undefined && defaultSort !== false){
+		if(typeof defaultSort !== typeof window.undefined){
 			defaultSort = [defaultSort.split(" ")];
 		}else{
 			defaultSort = [];
 		}
-		console.log("defaultsort:"+typeof defaultSort+" = "+defaultSort);
 		return defaultSort;
 	}
 	
 	function getNoSortFields(table){
 		var noSortFields = table.attr("no-sort-fields");
-		console.log("noSortFields:"+typeof noSortFields+" = "+noSortFields);
 		// testa se existe o atributo noSortFields
-		if(typeof noSortFields !== typeof window.undefined && noSortFields !== false){
+		if(typeof noSortFields !== typeof window.undefined){
 			noSortFields = noSortFields.split(" ");
 			// converte para array de inteiros
 			for(var i = 0; i < noSortFields.length; i++){
@@ -61,35 +58,22 @@ $(document).ready(function(){
 		}else{
 			noSortFields = [];
 		}
-		console.log("noSortFields:"+typeof noSortFields+" = "+noSortFields);
 		return noSortFields;
 	}
 	
 	function getAttrPaging(table){
 		var attrPaging = table.attr("paging");
-		console.log("attrPaging:"+typeof attrPaging+" = "+attrPaging);
-		if(typeof attrPaging !== typeof window.undefined){
-			if(attrPaging === "false"){
-				attrPaging = false;
-			}
-		}else{
+		if(typeof attrPaging === typeof window.undefined){
 			attrPaging = true;
 		}
-		console.log("attrPaging:"+typeof attrPaging+" = "+attrPaging);
 		return attrPaging;
 	}
 
 	function getAttrSearching(table){
 		var attrSearching = table.attr("searching");
-		console.log("attrSearching:"+typeof attrSearching+" = "+attrSearching);
-		if(typeof attrSearching !== typeof window.undefined){
-			if (attrSearching === "false"){
-				attrSearching = false;
-			}
-		}else{
+		if(typeof attrSearching === typeof window.undefined){
 			attrSearching = true;
 		}
-		console.log("attrSearching:"+typeof attrSearching+" = "+attrSearching);
 		return attrSearching;
 	}
 	
