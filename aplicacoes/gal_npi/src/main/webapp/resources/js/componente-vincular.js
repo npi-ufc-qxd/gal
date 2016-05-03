@@ -1,4 +1,5 @@
 /*eslint-env jquery*/
+/*global Sortable*/
 
 $(document).ready(function(){
 

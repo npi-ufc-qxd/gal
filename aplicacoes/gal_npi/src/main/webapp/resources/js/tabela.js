@@ -1,4 +1,6 @@
 /*eslint-env jquery*/
+/*eslint new-cap: ["error", {"capIsNewExceptions": ["DataTable"]}]*/
+/*eslint no-undefined: "error"*/
 
 $(document).ready(function(){
 
