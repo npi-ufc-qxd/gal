@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.ufc.npi.gal.auditoria.RevisionAuditoriaTitulo;
 import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.TipoTitulo;
 import br.ufc.npi.gal.model.Titulo;
@@ -74,7 +75,7 @@ public class TituloController {
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
 	public String editar(@PathVariable("id") Integer id, ModelMap modelMap) {
 		Titulo titulo = this.tituloService.find(Titulo.class, id);
-		List<Titulo> t = this.tituloService.getTituloAuditoriaById(id);
+		
 		if (titulo == null) {
 			return "redirect:/titulo/listar";
 		}
@@ -139,5 +140,16 @@ public class TituloController {
 		}
 		return "redirect:/titulo/listar";
 	}
+	
+	@RequestMapping(value = "/{id}/historicoTitulo", method = RequestMethod.GET)
+	public String historicoTitulo(@PathVariable("id") Integer id, ModelMap modelMap) {
+			List<Titulo> titulosAuditoria = this.tituloService.getTitulosAuditoriaById(id);
+			List<RevisionAuditoriaTitulo> revisionsuditoria = this.tituloService.getRevisionsAuditoriaTituloById(id);
+			List<RevisionAuditoriaTitulo> mudancas = this.tituloService.getAlteracoes(titulosAuditoria,revisionsuditoria);
+			
+			modelMap.addAttribute("tituloMudancas", mudancas);
+			return "titulo/historicoTitulo";
 
+	}
+	
 }

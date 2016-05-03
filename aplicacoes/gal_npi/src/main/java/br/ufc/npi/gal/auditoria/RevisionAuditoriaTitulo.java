@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.auditoria;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,8 +24,24 @@ public class RevisionAuditoriaTitulo{
     private long timestemp;
     
     private String username;
+    
+    private Date data;
+    
+    private String mudanca;
+    
+    public int getId() {
+		return id;
+	}
 
-    public String getUsername() {
+	public String getMudanca() {
+		return mudanca;
+	}
+
+	public void setMudanca(String mudanca) {
+		this.mudanca = mudanca;
+	}
+
+	public String getUsername() {
         return this.username;
     }
 
@@ -37,5 +55,12 @@ public class RevisionAuditoriaTitulo{
 
 	public void setTimestemp(long timestemp) {
 		this.timestemp = timestemp;
+	}
+
+	public Date getData() {
+		return data;
+	}
+	public void conversao(){
+		this.data = new Date(this.timestemp);
 	}
 }

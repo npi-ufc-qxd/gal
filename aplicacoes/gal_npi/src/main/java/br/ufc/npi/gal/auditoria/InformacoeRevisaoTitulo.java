@@ -13,9 +13,4 @@ public class InformacoeRevisaoTitulo implements RevisionListener{
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		revison.setUsername(auth.getName());
 	}
-	
-	public long getTimesTemp(){
-		
-		return 0;
-	}
 }

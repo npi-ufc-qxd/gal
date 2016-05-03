@@ -1,7 +1,6 @@
 package br.ufc.npi.gal.repository.jpa;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +11,10 @@ import javax.persistence.PersistenceContext;
 
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.RevisionType;
+import org.hibernate.envers.query.AuditEntity;
+import org.hibernate.envers.query.AuditQuery;
+import org.hibernate.envers.query.criteria.AuditCriterion;
 
 import br.ufc.npi.gal.auditoria.RevisionAuditoriaTitulo;
 import br.ufc.npi.gal.model.Titulo;
@@ -71,22 +74,44 @@ public class TituloRespositoryImpl extends JpaGenericRepositoryImpl<Titulo> impl
 	}
 
 	@Override
-	public List<Titulo> getTituloAuditoriaById(Integer id) {
+	public List<Titulo> getTitulosAuditoriaById(Integer id) {
 		AuditReader reader = AuditReaderFactory.get(manager);
 
 		List<Number> alteracoes = reader.getRevisions(Titulo.class, id);
 		List<Titulo> tituloAuditoria = new ArrayList<Titulo>();
 		Titulo t;
-		
-		for(Number n : alteracoes){
-			t = (Titulo) reader.createQuery().forEntitiesAtRevision(Titulo.class, n).getSingleResult();
-			RevisionAuditoriaTitulo r = (RevisionAuditoriaTitulo) reader.findRevision(RevisionAuditoriaTitulo.class, n);
-			Date d = new Date(r.getTimestemp());
-			System.out.println("TEMPO: "+ d + "NOME: " + r.getUsername());
+		AuditQuery query = reader.createQuery()
+				.forRevisionsOfEntity(Titulo.class, false, true).add(AuditEntity.id().eq(id))
+				.add(AuditEntity.revisionType().eq(RevisionType.MOD));
+
+	    List<Object[]> list = query.getResultList();
+	    List<Object> lt = null;
+	    for(Number revisionNumber : alteracoes){
+	    	AuditQuery query2 = reader.createQuery().forEntitiesAtRevision(Titulo.class, revisionNumber).add(AuditEntity.revisionType().eq(RevisionType.MOD));
+	    	//query2.getResultList().toArray()[0];
+	    }
+		for(Object[] n : list){
+			t = (Titulo) n[0];
 			tituloAuditoria.add(t);
 		}
 
 		return tituloAuditoria;
+	}
+
+	@Override
+	public List<RevisionAuditoriaTitulo> getRevisionsAuditoriaTituloById(Integer id) {
+		AuditReader reader = AuditReaderFactory.get(manager);
+
+		List<Number> alteracoes = reader.getRevisions(Titulo.class, id);
+		List<RevisionAuditoriaTitulo> revisions = new ArrayList<RevisionAuditoriaTitulo>();
+		RevisionAuditoriaTitulo r;
+		
+		for(Number n : alteracoes){
+			r = (RevisionAuditoriaTitulo) reader.findRevision(RevisionAuditoriaTitulo.class, n);
+			revisions.add(r);
+		}
+		
+		return revisions;
 	}
 
 
