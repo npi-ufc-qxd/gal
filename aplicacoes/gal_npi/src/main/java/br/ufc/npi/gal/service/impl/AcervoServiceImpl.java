@@ -197,42 +197,41 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	}
 
 	private void extrairNomeTituloExemplar(ExemplarConflitante exemplar, Sheet sheet, int linha, StringBuilder notificacao) {
+		extrairAutorNomePagina(exemplar, sheet, linha, notificacao);
+		
+		extrairTituloCompleto(exemplar, sheet, linha, notificacao);
+	}
+
+	private void extrairAutorNomePagina(ExemplarConflitante exemplar, Sheet sheet, int linha, StringBuilder notificacao) {
 		exemplar.setAutor(sheet.getCell(COLUNA_AUTOR,linha).getContents());
-		if (exemplar.getAutor().isEmpty()) {
-			notificacao.append("Autor não informado; ");
-		}
 		exemplar.setEdicao(sheet.getCell(COLUNA_EDICAO,linha).getContents());
-		if (exemplar.getEdicao().isEmpty()) {
-			notificacao.append("Ediçao não informada; ");
-		}
 		exemplar.setPagina(sheet.getCell(COLUNA_PAGINA,linha).getContents());
-		if (exemplar.getPagina().isEmpty()) {
-			notificacao.append("Página não informada; ");
-		}
+		verificarAutorEdicaoPaginaVazios(exemplar, notificacao);
+	}
+
+	private void extrairTituloCompleto(ExemplarConflitante exemplar, Sheet sheet, int linha, StringBuilder notificacao) {
 		exemplar.setPublicador(sheet.getCell(COLUNA_PUBLICADOR,linha).getContents());
-		if (exemplar.getPublicador().isEmpty()) {
-			notificacao.append("Publicador não informado; ");
-		}
 		exemplar.setRefArtigo(sheet.getCell(COLUNA_REF_ARTIGO,linha).getContents());
-		if (exemplar.getRefArtigo().isEmpty()) {
-			notificacao.append("Ref. Artigo não informado; ");
-		}
 		exemplar.setSubTitulo(sheet.getCell(COLUNA_SUB_TITULO,linha).getContents());
-		if (exemplar.getSubTitulo().isEmpty()) {
-			notificacao.append("SubTitulo não informado; ");
-		}
 		exemplar.setTitulo(sheet.getCell(COLUNA_TITULO,linha).getContents());
-		if (exemplar.getTitulo().isEmpty()) {
-			notificacao.append("Titulo não informado; ");
-		}
 		exemplar.setTitulo_n(sheet.getCell(COLUNA_TITULO_N,linha).getContents());
-		if (exemplar.getTitulo_n().isEmpty()) {
-			notificacao.append("Titulo_N não informado; ");
-		}
 		exemplar.setTituloRevista(sheet.getCell(COLUNA_TITULO_REVISTA,linha).getContents());
-		if (exemplar.getTituloRevista().isEmpty()) {
-			notificacao.append("Titulo Revista não informado; ");
-		}
+		verificarCamposTitulosVazios(exemplar, notificacao);
+	}
+	
+	private void verificarCamposTitulosVazios(ExemplarConflitante exemplar, StringBuilder notificacao){
+		if (exemplar.getPublicador().isEmpty()) notificacao.append("Publicador não informado; ");
+		if (exemplar.getRefArtigo().isEmpty())notificacao.append("Ref. Artigo não informado; ");
+		if (exemplar.getSubTitulo().isEmpty()) notificacao.append("SubTitulo não informado; ");
+		if (exemplar.getTitulo().isEmpty()) notificacao.append("Titulo não informado; ");
+		if (exemplar.getTitulo_n().isEmpty()) notificacao.append("Titulo_N não informado; ");
+		if (exemplar.getTituloRevista().isEmpty()) notificacao.append("Titulo Revista não informado; ");
+	}
+
+	private void verificarAutorEdicaoPaginaVazios(ExemplarConflitante exemplar, StringBuilder notificacao) {
+		if (exemplar.getAutor().isEmpty()) notificacao.append("Autor não informado; ");
+		if (exemplar.getEdicao().isEmpty()) notificacao.append("Ediçao não informada; ");
+		if (exemplar.getPagina().isEmpty()) notificacao.append("Página não informada; ");
 	}
 
 	private void extrairCodigoExemplar(ExemplarConflitante exemplar, Sheet sheet, int linha, StringBuilder notificacao) {
@@ -258,17 +257,16 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	}
 
 	private String extrairISBNDaCelula(String isbnForaDeFormato) {
-		isbnForaDeFormato = isbnForaDeFormato.replaceAll("\\.", "");
-		isbnForaDeFormato = isbnForaDeFormato.replaceAll("ISBN", "");
-		isbnForaDeFormato = isbnForaDeFormato.replaceAll("\\(.+", "");
-		isbnForaDeFormato = isbnForaDeFormato.replaceAll("(v1)", "");
-		isbnForaDeFormato = isbnForaDeFormato.replaceAll("(v2)", "");
-		isbnForaDeFormato = isbnForaDeFormato.replaceAll("\\s+", "");
-		isbnForaDeFormato = isbnForaDeFormato.replaceAll("-", "");
-		isbnForaDeFormato = isbnForaDeFormato.replaceAll("\\[.+", "");
-		isbnForaDeFormato = isbnForaDeFormato.replaceAll(" ", "");
-		return isbnForaDeFormato;
-	
+		String ISBNFormatado = isbnForaDeFormato.replaceAll("\\.", "");
+		ISBNFormatado = isbnForaDeFormato.replaceAll("ISBN", "");
+		ISBNFormatado = isbnForaDeFormato.replaceAll("\\(.+", "");
+		ISBNFormatado = isbnForaDeFormato.replaceAll("(v1)", "");
+		ISBNFormatado = isbnForaDeFormato.replaceAll("(v2)", "");
+		ISBNFormatado = isbnForaDeFormato.replaceAll("\\s+", "");
+		ISBNFormatado = isbnForaDeFormato.replaceAll("-", "");
+		ISBNFormatado = isbnForaDeFormato.replaceAll("\\[.+", "");
+		ISBNFormatado = isbnForaDeFormato.replaceAll(" ", "");
+		return ISBNFormatado;
 	}
 
 	private void formatarNomeTitulo(Titulo titulo) {
@@ -295,7 +293,8 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	}
 	
 	private void formatarNomeTitulo(ExemplarConflitante exemplar, Titulo titulo) {
-		StringBuilder nome = new StringBuilder(exemplar.getAutor() + " ");
+		StringBuilder nome = new StringBuilder(exemplar.getAutor());
+		nome.append(SEPARADOR);
 		nome.append(exemplar.getTitulo());
 		nome.append(SEPARADOR);
 		nome.append(exemplar.getTitulo_n());
@@ -361,11 +360,9 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 		StringBuilder notificacao;
 		notificacao = new StringBuilder(exemplarConflitante.getDescricaoErro());
 		String codigo = exemplarConflitante.getCodigoExemplar();
-		if (!codigo.isEmpty() && validarCodigo(codigo)) {
-			if (exemplarRepository.getExemplarByCodigo(codigo) != null) {
-				notificacao.append("codigo de exemplar já existe no banco; ");
-				exemplarConflitante.setDescricaoErro(notificacao.toString());
-			}
+		if (!codigo.isEmpty() && validarCodigo(codigo) && (exemplarRepository.getExemplarByCodigo(codigo) != null)) {
+			notificacao.append("codigo de exemplar já existe no banco; ");
+			exemplarConflitante.setDescricaoErro(notificacao.toString());
 		}
 		
 		if (notificacao.toString().isEmpty()) {
