@@ -39,7 +39,7 @@ $(document).ready(function(){
 	$("table.table-orderable").each(function(){
 		var defaultSort = $(this).attr("default-sort");
 		// testa se existe o atributo defaultSort no elemento
-		if(typeof defaultSort !== typeof undefined && defaultSort !== false){
+		if(typeof defaultSort !== typeof "undefined" && defaultSort !== false){
 			defaultSort = [defaultSort.split(" ")];
 		}else{
 			defaultSort = [];
@@ -48,7 +48,7 @@ $(document).ready(function(){
 
 		var noSortFields = $(this).attr("no-sort-fields");
 		// testa se existe o atributo noSortFields
-		if(typeof noSortFields !== typeof undefined && noSortFields !== false){
+		if(typeof noSortFields !== typeof "undefined" && noSortFields !== false){
 			noSortFields = noSortFields.split(" ");
 			// converte para array de inteiros
 			for(var i = 0; i < noSortFields.length; i++){
@@ -59,7 +59,7 @@ $(document).ready(function(){
 		}
 
 		var attrPaging = $(this).attr("paging");
-		if(typeof attrPaging !== typeof undefined){
+		if(typeof attrPaging !== typeof "undefined"){
 			if(attrPaging === "false"){
 				attrPaging = false;
 			}
@@ -68,7 +68,7 @@ $(document).ready(function(){
 		}
 
 		var attrSearching = $(this).attr("searching");
-		if(typeof attrSearching !== typeof undefined){
+		if(typeof attrSearching !== typeof "undefined"){
 			if (attrSearching === "false"){
 				attrSearching = false;
 			}
