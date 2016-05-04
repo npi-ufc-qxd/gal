@@ -53,7 +53,7 @@ public class TituloServiceImpl extends GenericServiceImpl<Titulo> implements Tit
 		StringBuilder alteracoes = new StringBuilder();
 		List<RevisionAuditoriaTitulo> alteracoesRevision = new ArrayList<RevisionAuditoriaTitulo>();
 		if(revisions.size() > 1){
-			for(int i=0; i < revisions.size()- 1;i++){
+			for(int i=0;i<revisions.size()-1;i++){
 				if(!(titulosAudt.get(i+1).getNome().equals(titulosAudt.get(i).getNome()))){
 					alteracoes.append(" Nome, ");
 				}
@@ -88,13 +88,12 @@ public class TituloServiceImpl extends GenericServiceImpl<Titulo> implements Tit
 					alteracoes.append(" Edicao, ");
 				}
 				if(!(titulosAudt.get(i+1).getPublicador().equals(titulosAudt.get(i).getPublicador()))){
-					alteracoes.append(" Publicador, ");
+					alteracoes.append(" Publicador ");
 				}
 				revisions.get(i+1).conversao();
 				revisions.get(i+1).setMudanca(alteracoes.toString());
 				alteracoesRevision.add(revisions.get(i+1));
 			}
-			return alteracoesRevision;
 		}
 		return alteracoesRevision;
 	}

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,7 +21,7 @@
 			</div>
 		</c:if>
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
+			<div class="col-md-8 col-md-offset-2">
 				<c:if test="${empty error}">
 					<table class="table table-condensed table-striped table-bordered">
 						<thead>
@@ -34,7 +35,7 @@
 							<c:forEach var="tituloMudanca" items="${tituloMudancas}">
 								<tr>
 									<td>${tituloMudanca.username}</td>
-									<td>${tituloMudanca.data}</td>
+									<td><fmt:formatDate value="${tituloMudanca.data}" pattern="dd/mm/yyyy - HH:mm"/></td>
 									<td>${tituloMudanca.mudanca}</td>
 								</tr>
 							</c:forEach>	
