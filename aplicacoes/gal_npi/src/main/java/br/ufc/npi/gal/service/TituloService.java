@@ -2,7 +2,7 @@ package br.ufc.npi.gal.service;
 
 import java.util.List;
 
-import br.ufc.npi.gal.auditoria.RevisionAuditoriaTitulo;
+import br.ufc.npi.gal.model.RevisionAuditoriaTitulo;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.quixada.npi.service.GenericService;
 

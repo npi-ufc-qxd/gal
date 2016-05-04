@@ -16,7 +16,7 @@ import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
 import org.hibernate.envers.query.criteria.AuditCriterion;
 
-import br.ufc.npi.gal.auditoria.RevisionAuditoriaTitulo;
+import br.ufc.npi.gal.model.RevisionAuditoriaTitulo;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.repository.TituloRespository;
 import br.ufc.quixada.npi.enumeration.QueryType;
@@ -80,21 +80,11 @@ public class TituloRespositoryImpl extends JpaGenericRepositoryImpl<Titulo> impl
 		List<Number> alteracoes = reader.getRevisions(Titulo.class, id);
 		List<Titulo> tituloAuditoria = new ArrayList<Titulo>();
 		Titulo t;
-		AuditQuery query = reader.createQuery()
-				.forRevisionsOfEntity(Titulo.class, false, true).add(AuditEntity.id().eq(id))
-				.add(AuditEntity.revisionType().eq(RevisionType.MOD));
-
-	    List<Object[]> list = query.getResultList();
-	    List<Object> lt = null;
-	    for(Number revisionNumber : alteracoes){
-	    	AuditQuery query2 = reader.createQuery().forEntitiesAtRevision(Titulo.class, revisionNumber).add(AuditEntity.revisionType().eq(RevisionType.MOD));
-	    	//query2.getResultList().toArray()[0];
-	    }
-		for(Object[] n : list){
-			t = (Titulo) n[0];
+		
+		for(Number n : alteracoes){
+			t = (Titulo) reader.find(Titulo.class,id, n);
 			tituloAuditoria.add(t);
 		}
-
 		return tituloAuditoria;
 	}
 

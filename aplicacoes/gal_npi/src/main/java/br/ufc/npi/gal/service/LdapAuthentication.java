@@ -5,7 +5,6 @@ import static br.ufc.quixada.npi.ldap.model.Constants.LOGIN_INVALIDO;
 import java.util.Collection;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,10 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 
 import br.ufc.npi.gal.model.Usuario;
-import br.ufc.quixada.npi.ldap.model.Constants;
 import br.ufc.quixada.npi.ldap.service.UsuarioService;
 
 public class LdapAuthentication implements AuthenticationProvider{

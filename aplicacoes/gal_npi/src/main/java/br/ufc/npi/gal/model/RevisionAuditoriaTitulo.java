@@ -1,4 +1,4 @@
-package br.ufc.npi.gal.auditoria;
+package br.ufc.npi.gal.model;
 
 import java.util.Date;
 
@@ -10,6 +10,8 @@ import javax.persistence.Table;
 import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
+
+import br.ufc.npi.gal.auditoria.InformacoeRevisaoTitulo;
 
 @Entity
 @Table(name="revisionauditoriatitulo")
