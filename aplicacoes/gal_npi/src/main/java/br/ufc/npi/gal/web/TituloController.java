@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.web;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.npi.gal.model.Bibliografia;
+import br.ufc.npi.gal.model.RevisionAuditoriaTitulo;
 import br.ufc.npi.gal.model.TipoTitulo;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.TituloService;
@@ -22,7 +25,7 @@ public class TituloController {
 
 	@Inject
 	private TituloService tituloService;
-
+	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(ModelMap modelMap) {
 		modelMap.addAttribute("titulos", this.tituloService.find(Titulo.class));
@@ -72,7 +75,7 @@ public class TituloController {
 	@RequestMapping(value = "/{id}/editar", method = RequestMethod.GET)
 	public String editar(@PathVariable("id") Integer id, ModelMap modelMap) {
 		Titulo titulo = this.tituloService.find(Titulo.class, id);
-
+		
 		if (titulo == null) {
 			return "redirect:/titulo/listar";
 		}
@@ -137,5 +140,19 @@ public class TituloController {
 		}
 		return "redirect:/titulo/listar";
 	}
-
+	
+	@RequestMapping(value = "/{id}/historicoTitulo", method = RequestMethod.GET)
+	public String historicoTitulo(@PathVariable("id") Integer id, ModelMap modelMap) {
+			List<Titulo> titulosAuditoria = this.tituloService.getTitulosAuditoriaById(id);
+			List<RevisionAuditoriaTitulo> revisionsAuditoria = this.tituloService.getRevisionsAuditoriaTituloById(id);
+			List<RevisionAuditoriaTitulo> mudancas = this.tituloService.getAlteracoes(titulosAuditoria,revisionsAuditoria);
+			
+			if(!(mudancas.isEmpty()) || mudancas == null)
+				modelMap.addAttribute("tituloMudancas", mudancas);		
+			else
+				modelMap.addAttribute("error", "Não há histórico de mundanças desse título");
+			
+			return "titulo/historicoTitulo";
+	}
+	
 }

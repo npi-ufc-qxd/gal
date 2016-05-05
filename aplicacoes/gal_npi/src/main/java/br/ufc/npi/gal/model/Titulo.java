@@ -14,10 +14,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="titulos")
+@Audited
 public class Titulo {
 
 	@Id
@@ -72,11 +75,12 @@ public class Titulo {
 
 	@Column(name = "cadastrado_biblioteca")
 	private Boolean cadastradoBiblioteca;
-
+	
+	@NotAudited
 	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
-
 	private List<Bibliografia> bibliografias;
-
+	
+	@NotAudited
 	@OneToMany(mappedBy = "titulo", targetEntity = Exemplar.class, fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)
 	private List<Exemplar> exemplares;
 

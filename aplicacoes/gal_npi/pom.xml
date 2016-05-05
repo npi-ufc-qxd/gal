@@ -30,7 +30,8 @@
 		<!-- Hibernate / JPA -->
 		<hibernate.version>4.3.1.Final</hibernate.version>
 		<hibernate.validation.version>4.3.1.Final</hibernate.validation.version>
-
+		<hibernate.envers.version>4.3.1.Final</hibernate.envers.version>
+		
 		<!-- Database access -->
 		<postgresql.version>9.4-1204-jdbc41</postgresql.version>
 		<tomcat-jdbc.version>7.0.42</tomcat-jdbc.version>
@@ -182,7 +183,11 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>${hibernate.validation.version}</version>
 		</dependency>
-
+		<dependency>
+     	 	<groupId>org.hibernate</groupId>
+      		<artifactId>hibernate-envers</artifactId>
+      		<version>${hibernate.envers.version}</version>
+    	</dependency>
 		<!-- Databases - Uses POSTGRESQL by default -->
 		<dependency>
 			<groupId>org.postgresql</groupId>

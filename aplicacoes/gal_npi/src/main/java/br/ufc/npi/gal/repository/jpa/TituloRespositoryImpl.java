@@ -1,13 +1,22 @@
 package br.ufc.npi.gal.repository.jpa;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
-import org.springframework.transaction.annotation.Transactional;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.RevisionType;
+import org.hibernate.envers.query.AuditEntity;
+import org.hibernate.envers.query.AuditQuery;
+import org.hibernate.envers.query.criteria.AuditCriterion;
 
+import br.ufc.npi.gal.model.RevisionAuditoriaTitulo;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.repository.TituloRespository;
 import br.ufc.quixada.npi.enumeration.QueryType;
@@ -15,6 +24,8 @@ import br.ufc.quixada.npi.repository.jpa.JpaGenericRepositoryImpl;
 
 @Named
 public class TituloRespositoryImpl extends JpaGenericRepositoryImpl<Titulo> implements TituloRespository {
+	@PersistenceContext
+	EntityManager manager;
 
 	@Override
 	public Titulo getTituloByNome(String nome) {
@@ -60,6 +71,37 @@ public class TituloRespositoryImpl extends JpaGenericRepositoryImpl<Titulo> impl
 			return result.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public List<Titulo> getTitulosAuditoriaById(Integer id) {
+		AuditReader reader = AuditReaderFactory.get(manager);
+
+		List<Number> alteracoes = reader.getRevisions(Titulo.class, id);
+		List<Titulo> tituloAuditoria = new ArrayList<Titulo>();
+		Titulo t;
+		
+		for(Number n : alteracoes){
+			t = (Titulo) reader.find(Titulo.class,id, n);
+			tituloAuditoria.add(t);
+		}
+		return tituloAuditoria;
+	}
+
+	@Override
+	public List<RevisionAuditoriaTitulo> getRevisionsAuditoriaTituloById(Integer id) {
+		AuditReader reader = AuditReaderFactory.get(manager);
+
+		List<Number> alteracoes = reader.getRevisions(Titulo.class, id);
+		List<RevisionAuditoriaTitulo> revisions = new ArrayList<RevisionAuditoriaTitulo>();
+		RevisionAuditoriaTitulo r;
+		
+		for(Number n : alteracoes){
+			r = (RevisionAuditoriaTitulo) reader.findRevision(RevisionAuditoriaTitulo.class, n);
+			revisions.add(r);
+		}
+		
+		return revisions;
 	}
 
 

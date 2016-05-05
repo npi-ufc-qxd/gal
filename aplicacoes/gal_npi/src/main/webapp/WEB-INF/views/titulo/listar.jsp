@@ -79,7 +79,14 @@
 							<span class="glyphicon glyphicon-edit"></span>
 						</a>
 					</datatables:column>
-
+					
+					<datatables:column title="Historico">
+						<a class="btn btn-info" 
+							href="<c:url value = "/titulo/${titulo.id}/historicoTitulo"></c:url>">
+							<span class="glyphicon glyphicon-eye-open"></span>
+						</a>
+					</datatables:column>
+					
 					<datatables:column title="Excluir">
 						<a id="excluir" class="open-AddQtdExemplares btn btn-danger"
 							data-toggle="modal" data-target="#confirm-delete" href="#"
