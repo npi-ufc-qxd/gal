@@ -17,9 +17,12 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OrderBy;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
+@Audited
 @Table(name = "componentes")
 public class ComponenteCurricular {
 
@@ -39,9 +42,11 @@ public class ComponenteCurricular {
 	@Size(min = 5, max = 12, message = "O código do Componente Curricular deve ter entre 5 e 12 caracteres")
 	private String codigo;
 	
+	@NotAudited
 	@OneToMany(mappedBy = "componente", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
 	private List<IntegracaoCurricular> curriculos;
-
+	
+	@NotAudited
 	@OneToMany(mappedBy = "componente", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
 	@OrderBy(clause = "prioridade ASC")
 	private List<Bibliografia> bibliografias;

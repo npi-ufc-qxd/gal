@@ -11,12 +11,12 @@ import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
 
-import br.ufc.npi.gal.auditoria.InformacoeRevisaoTitulo;
+import br.ufc.npi.gal.auditoria.InformacoeRevisao;
 
 @Entity
 @Table(name="revisionauditoriatitulo")
-@RevisionEntity(InformacoeRevisaoTitulo.class)
-public class RevisionAuditoriaTitulo{
+@RevisionEntity(InformacoeRevisao.class)
+public class RevisionAuditoria{
 	@Id
     @GeneratedValue
     @RevisionNumber

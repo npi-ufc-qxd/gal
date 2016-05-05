@@ -4,13 +4,13 @@ import org.hibernate.envers.RevisionListener;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import br.ufc.npi.gal.model.RevisionAuditoriaTitulo;
+import br.ufc.npi.gal.model.RevisionAuditoria;
 
-public class InformacoeRevisaoTitulo implements RevisionListener{
+public class InformacoeRevisao implements RevisionListener{
 
 	@Override
 	public void newRevision(Object revisionEntity) {
-		RevisionAuditoriaTitulo revison = (RevisionAuditoriaTitulo) revisionEntity;
+		RevisionAuditoria revison = (RevisionAuditoria) revisionEntity;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		revison.setUsername(auth.getName());
 	}
