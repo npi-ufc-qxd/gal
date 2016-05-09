@@ -84,6 +84,7 @@
 	<div style="clear: both;"></div>
 	
 	<jsp:include page="../fragments/footer.jsp" />
+	<script src="<c:url value="/resources/js/acervo-atualizar.js" />"></script>
 
 </body>
 </html>

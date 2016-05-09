@@ -130,6 +130,8 @@
 			</div>
 		</form:form>
 		<jsp:include page="../fragments/footer.jsp" />
+		<script src="<c:url value="/resources/js/titulo-adicionar.js" />"></script>
+		<script src="<c:url value="/resources/js/titulo-editar.js" />"></script>
 	</div>
 </body>
 </html>

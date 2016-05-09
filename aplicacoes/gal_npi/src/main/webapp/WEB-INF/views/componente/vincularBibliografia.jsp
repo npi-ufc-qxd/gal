@@ -62,6 +62,7 @@
 			<div class="clearer"></div>
 		</div>
 		<jsp:include page="../fragments/footer.jsp" />
+		<script src="<c:url value="/resources/js/componente-vincular.js" />"></script>
 	</div>
 </body>
 </html>

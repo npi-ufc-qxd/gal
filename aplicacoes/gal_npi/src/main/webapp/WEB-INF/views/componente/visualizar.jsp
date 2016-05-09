@@ -237,6 +237,7 @@
 		</c:if>
 
 		<jsp:include page="../fragments/footer.jsp" />
+		<script src="<c:url value="/resources/js/componente-visualizar.js" />"></script>
 	</div>
 	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
