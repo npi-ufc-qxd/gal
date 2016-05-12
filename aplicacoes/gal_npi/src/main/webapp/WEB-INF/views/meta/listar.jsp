@@ -121,6 +121,7 @@
 			</datatables:table>
 		</c:if>
 		<jsp:include page="../fragments/footer.jsp" />
+		<script src="<c:url value="/resources/js/tabela.js" />"></script>
 	</div>
 </body>
 </html>
