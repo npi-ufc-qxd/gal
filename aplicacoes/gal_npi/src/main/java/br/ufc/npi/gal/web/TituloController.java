@@ -26,6 +26,7 @@ public class TituloController {
 
 	@Inject
 	private TituloService tituloService;
+	
 	@Inject
 	private RevisionAuditoriaService revisionService;
 	

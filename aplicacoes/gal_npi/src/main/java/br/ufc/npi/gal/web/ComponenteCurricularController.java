@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.npi.gal.model.Bibliografia;
-import br.ufc.npi.gal.model.DetalheMetaCalculada;
 import br.ufc.npi.gal.model.ComponenteCurricular;
+import br.ufc.npi.gal.model.DetalheMetaCalculada;
 import br.ufc.npi.gal.model.IntegracaoCurricular;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.CalculoMetaService;
@@ -30,6 +30,7 @@ import br.ufc.npi.gal.service.ComponenteCurricularService;
 import br.ufc.npi.gal.service.IntegracaoCurricularService;
 import br.ufc.npi.gal.service.MetaCalculada;
 import br.ufc.npi.gal.service.ResultadoCalculo;
+import br.ufc.npi.gal.service.RevisionAuditoriaService;
 import br.ufc.npi.gal.service.TituloService;
 import br.ufc.quixada.npi.service.GenericService;
 
@@ -38,17 +39,15 @@ import br.ufc.quixada.npi.service.GenericService;
 public class ComponenteCurricularController {
 
 	@Inject
-	private ComponenteCurricularService componenteCurricularService;
-
+	private ComponenteCurricularService componenteCurricularService;	
+	@Inject
+	private RevisionAuditoriaService revisionService;	
 	@Inject
 	private TituloService tituloService;
-
 	@Inject
 	private CalculoMetaService calculoService;
-
 	@Inject
 	private GenericService<Bibliografia> bibliografiaService;
-
 	@Inject
 	private IntegracaoCurricularService integracaoCurricularService;
 
@@ -439,6 +438,21 @@ public class ComponenteCurricularController {
 		}
 
 		return errors;
+	}
+	
+	@RequestMapping(value = "/{id}/historicoMudancas", method = RequestMethod.GET)
+	public String historicoMudancas(@PathVariable("id") Integer id, ModelMap modelMap){
+		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class, id);
+		
+		if(componente != null){
+			List<Bibliografia> listaBibliografiaAudit = this.componenteCurricularService.getBibliografiasAuditoria(componente);
+			
+			for(Bibliografia b : listaBibliografiaAudit){
+				System.out.println("AUDITORIAS "+ b.getTitulo()+"  "+b.getTipoBibliografia()+" "+b.getPrioridade());
+			}
+		}
+		
+		return "componente/historicoMudancas";
 	}
 
 }

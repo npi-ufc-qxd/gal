@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.ComponenteCurricular;
 import br.ufc.npi.gal.repository.ComponenteCurricularRepository;
 import br.ufc.npi.gal.service.ComponenteCurricularService;
@@ -40,6 +41,11 @@ public class ComponenteCurricularServiceImpl extends GenericServiceImpl<Componen
 	@Override
 	public List<ComponenteCurricular> getTodosComponenteCurricular() {
 		return componenteCurricularRepository.getTodosComponenteCurricular();
+	}
+
+	@Override
+	public List<Bibliografia> getBibliografiasAuditoria(ComponenteCurricular componente){
+		return componenteCurricularRepository.getBibliografiasAuditoria(componente);
 	}
 
 }

@@ -2,6 +2,8 @@ package br.ufc.npi.gal.repository;
 
 
 import java.util.List;
+
+import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.ComponenteCurricular;
 import br.ufc.quixada.npi.repository.GenericRepository;
 
@@ -16,4 +18,7 @@ public interface ComponenteCurricularRepository extends GenericRepository<Compon
 	public abstract ComponenteCurricular getOutraComponenteCurricularByCodigo(Integer id, String codigo);
 	
 	public abstract List<ComponenteCurricular> getTodosComponenteCurricular();
+	
+	public abstract List<Bibliografia> getBibliografiasAuditoria(ComponenteCurricular componente);
+	
 }

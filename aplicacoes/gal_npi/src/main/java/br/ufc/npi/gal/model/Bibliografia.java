@@ -8,15 +8,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.AuditJoinTable;
+import org.hibernate.envers.Audited;
+
 
 @Entity
 @Table(name = "bibliografias")
+@Audited
 @IdClass(BibliografiaId.class)
 public class Bibliografia {
 
 	@Id
 	@ManyToOne
 	@JoinColumn(name="id_componente")
+	@AuditJoinTable(name="componentes")
 	private ComponenteCurricular componente;
 
 	@Id
