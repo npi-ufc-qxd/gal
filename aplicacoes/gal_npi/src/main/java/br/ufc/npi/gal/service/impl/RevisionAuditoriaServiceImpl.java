@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.RevisionAuditoria;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.repository.RevisionAuditoriaRepository;
@@ -71,6 +72,10 @@ public class RevisionAuditoriaServiceImpl extends GenericServiceImpl<RevisionAud
 			}
 		}
 		return alteracoesRevision;
+	}
+	
+	public List<RevisionAuditoria> getRevisionsAuditoriaByBibliografia(Bibliografia bibliografia){
+		return this.revisionAuditoriaRespository.getRevisionsAuditoriaByBibliografia(bibliografia);
 	}
 
 }

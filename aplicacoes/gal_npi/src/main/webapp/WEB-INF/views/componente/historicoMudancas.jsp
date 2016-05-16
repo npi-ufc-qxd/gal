@@ -21,6 +21,33 @@
 			</div>
 		</c:if>
 		
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<c:if test="${empty error}">
+					<table class="table table-condensed table-striped table-bordered">
+						<thead>
+							<tr>
+								<th>Quem alterou</th>
+								<th>Data</th>
+								<th>O que foi alterado</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="auditoriaBibliografia" items="${revisionsAuditoriaBibliografias}">
+								<c:forEach var="bibliografia" items="${auditoriaBibliografia}">
+									<tr>
+										<td>${bibliografia.username}</td>
+										<td><fmt:formatDate value="${bibliografia.data}" pattern="dd/mm/yyyy - HH:mm"/></td>
+										<td>${bibliografia.mudanca}</td>
+									</tr>
+								</c:forEach>
+							</c:forEach>
+								
+						</tbody>
+					</table>
+				</c:if>
+			</div>
+		</div>
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
 </body>

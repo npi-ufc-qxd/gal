@@ -24,6 +24,7 @@ import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.ComponenteCurricular;
 import br.ufc.npi.gal.model.DetalheMetaCalculada;
 import br.ufc.npi.gal.model.IntegracaoCurricular;
+import br.ufc.npi.gal.model.RevisionAuditoria;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.CalculoMetaService;
 import br.ufc.npi.gal.service.ComponenteCurricularService;
@@ -445,11 +446,13 @@ public class ComponenteCurricularController {
 		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class, id);
 		
 		if(componente != null){
-			List<Bibliografia> listaBibliografiaAudit = this.componenteCurricularService.getBibliografiasAuditoria(componente);
+			List<Bibliografia> bibliografias = componente.getBibliografias();
+			List<List<RevisionAuditoria>> revisionsAuditoriaBibliografias = this.componenteCurricularService.getAuditoriasBibliografias(bibliografias);
 			
-			for(Bibliografia b : listaBibliografiaAudit){
-				System.out.println("AUDITORIAS "+ b.getTitulo()+"  "+b.getTipoBibliografia()+" "+b.getPrioridade());
+			if(!revisionsAuditoriaBibliografias.isEmpty()){
+				modelMap.addAttribute("revisionsAuditoriaBibliografias", revisionsAuditoriaBibliografias);
 			}
+
 		}
 		
 		return "componente/historicoMudancas";

@@ -11,13 +11,11 @@ import javax.persistence.PersistenceContext;
 
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
-import org.hibernate.envers.RevisionType;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
 
 import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.ComponenteCurricular;
-import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.repository.ComponenteCurricularRepository;
 import br.ufc.quixada.npi.enumeration.QueryType;
 import br.ufc.quixada.npi.repository.jpa.JpaGenericRepositoryImpl;
@@ -83,26 +81,22 @@ public class JpaComponenteCurricularRepository extends JpaGenericRepositoryImpl<
 	}
 		
 	@Override
-	public List<Bibliografia> getBibliografiasAuditoria(ComponenteCurricular componente){
-
-//		Session session = manager.unwrap(Session.class);	
-//		Query query = session.createSQLQuery("SELECT * FROM bibliografias_aud WHERE id_componente = :id").addEntity(Bibliografia.class).setParameter("id", componente);		
-//		List<Bibliografia> bibliografiasAuditoria = new ArrayList<Bibliografia>();
-//		bibliografiasAuditoria = query.list();
-//		
-//		if(bibliografiasAuditoria != null && !bibliografiasAuditoria.isEmpty())
-//			return bibliografiasAuditoria;
-//		
-//		return bibliografiasAuditoria;
+	public List<Bibliografia> getBibliografiasAuditoria(Bibliografia biblografia){
 		AuditReader reader = AuditReaderFactory.get(manager);
 		
+		List<Bibliografia> alteracosBibliografia = new ArrayList<Bibliografia>();
+		
 		AuditQuery query = reader.createQuery().forRevisionsOfEntity(Bibliografia.class, false, true);
+		query.add(AuditEntity.id().eq(biblografia));
 		
-		List<Bibliografia> bibliografiasAuditadas = new ArrayList<Bibliografia>();
 		List<Object[]> objeto = query.getResultList();
-
 		
-		return null;
+		for(int i = 0; i < objeto.size(); i++){
+			Object o[] = objeto.get(i);
+			alteracosBibliografia.add((Bibliografia)o[0]);	
+		}
+		
+		return alteracosBibliografia;
 	}
 	
 }
