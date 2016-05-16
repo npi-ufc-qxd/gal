@@ -31,7 +31,6 @@ import br.ufc.npi.gal.service.ComponenteCurricularService;
 import br.ufc.npi.gal.service.IntegracaoCurricularService;
 import br.ufc.npi.gal.service.MetaCalculada;
 import br.ufc.npi.gal.service.ResultadoCalculo;
-import br.ufc.npi.gal.service.RevisionAuditoriaService;
 import br.ufc.npi.gal.service.TituloService;
 import br.ufc.quixada.npi.service.GenericService;
 
@@ -41,8 +40,6 @@ public class ComponenteCurricularController {
 
 	@Inject
 	private ComponenteCurricularService componenteCurricularService;	
-	@Inject
-	private RevisionAuditoriaService revisionService;	
 	@Inject
 	private TituloService tituloService;
 	@Inject
@@ -273,21 +270,13 @@ public class ComponenteCurricularController {
 						
 						if (!bibliografiasAseremModificadas.get(j).getTipoBibliografia().equals(tipoBibliografia)) {
 							
-							bibliografiasAseremModificadas.get(j).setPrioridade(i);
-							bibliografiaService.update(bibliografiasAseremModificadas.get(j));
-							
 							bibliografiasAseremModificadas.get(j).setTipoBibliografia(tipoBibliografia);
-							bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
-							listaIdTitulo[i] = null;
-							j = bibliografiasAseremModificadas.size() + 1;
 
-						} else {
-							bibliografiasAseremModificadas.get(j).setPrioridade(i);
-							bibliografiaService.update(bibliografiasAseremModificadas.get(j));
-							
-							bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
-							listaIdTitulo[i] = null;
 						}
+						bibliografiasAseremModificadas.get(j).setPrioridade(i);
+						listaIdTitulo[i] = null;
+						bibliografiaService.update(bibliografiasAseremModificadas.get(j));
+						bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
 
 					}
 				}
@@ -444,17 +433,19 @@ public class ComponenteCurricularController {
 	@RequestMapping(value = "/{id}/historicoMudancas", method = RequestMethod.GET)
 	public String historicoMudancas(@PathVariable("id") Integer id, ModelMap modelMap){
 		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class, id);
-		
+
 		if(componente != null){
 			List<Bibliografia> bibliografias = componente.getBibliografias();
 			List<List<RevisionAuditoria>> revisionsAuditoriaBibliografias = this.componenteCurricularService.getAuditoriasBibliografias(bibliografias);
 			
-			if(!revisionsAuditoriaBibliografias.isEmpty()){
+			if(!revisionsAuditoriaBibliografias.isEmpty())
 				modelMap.addAttribute("revisionsAuditoriaBibliografias", revisionsAuditoriaBibliografias);
-			}
-
+			else
+				modelMap.addAttribute("error", "Não há histórico de mundanças nesse componente curricular");
+		}else{
+			modelMap.addAttribute("error", "Não há histórico de mundanças nesse componente curricular");
 		}
-		
+
 		return "componente/historicoMudancas";
 	}
 

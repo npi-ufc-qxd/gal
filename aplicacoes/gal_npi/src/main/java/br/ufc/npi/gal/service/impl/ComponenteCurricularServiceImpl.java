@@ -57,11 +57,8 @@ public class ComponenteCurricularServiceImpl extends GenericServiceImpl<Componen
 	@Override
 	public List<List<RevisionAuditoria>> getAuditoriasBibliografias(List<Bibliografia> bibliografias){
 		List<Bibliografia> listaAlditoriaBibliografia = null;
-		
 		List<RevisionAuditoria> auditoriaBibliografia = new ArrayList<RevisionAuditoria>();
-		
 		List<List<RevisionAuditoria>> audioriaComponente = new ArrayList<List<RevisionAuditoria>>();
-		
 		
 		if(bibliografias != null && !bibliografias.isEmpty()){
 			for(Bibliografia b : bibliografias){

@@ -66,15 +66,19 @@ public class RevisionAuditoriaRepositoryImpl extends JpaGenericRepositoryImpl<Re
 		if(!listaAuditoriaBibliografia.isEmpty() && listaAuditoriaBibliografia.size() > 1){
 			for(int i = 0; i < listaAuditoriaBibliografia.size() - 1; i++){
 				
-				if(listaAuditoriaBibliografia.get(i+1).getPrioridade() == listaAuditoriaBibliografia.get(i).getPrioridade()){
-					alteracoes.append("Pioridade mudou de ");
+				if(listaAuditoriaBibliografia.get(i+1).getPrioridade() != listaAuditoriaBibliografia.get(i).getPrioridade()){
+					alteracoes.append("A Pioridade do titulo ");
+					alteracoes.append(listaAuditoriaBibliografia.get(i).getTitulo().getAutor());
+					alteracoes.append(" mudou de ");
 					alteracoes.append(listaAuditoriaBibliografia.get(i).getPrioridade());
 					alteracoes.append(" para ");
 					alteracoes.append(listaAuditoriaBibliografia.get(i+1).getPrioridade());
-					alteracoes.append(" ");
+					alteracoes.append(" ;");
 				}
-				if(listaAuditoriaBibliografia.get(i+1).getTipoBibliografia().equals(listaAuditoriaBibliografia.get(i).getTipoBibliografia())){
-					alteracoes.append("Bibliografia mudou de ");
+				if(!(listaAuditoriaBibliografia.get(i+1).getTipoBibliografia().equals(listaAuditoriaBibliografia.get(i).getTipoBibliografia()))){
+					alteracoes.append("A Bibliografia do titulo ");
+					alteracoes.append(listaAuditoriaBibliografia.get(i).getTitulo().getNome());
+					alteracoes.append(" mudou de ");
 					alteracoes.append(listaAuditoriaBibliografia.get(i).getTipoBibliografia());
 					alteracoes.append(" para ");
 					alteracoes.append(listaAuditoriaBibliografia.get(i+1).getTipoBibliografia());

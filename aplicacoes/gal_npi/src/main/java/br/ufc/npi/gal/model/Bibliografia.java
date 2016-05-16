@@ -14,8 +14,8 @@ import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "bibliografias")
-@Audited
 @IdClass(BibliografiaId.class)
+@Audited
 public class Bibliografia {
 
 	@Id
@@ -27,6 +27,7 @@ public class Bibliografia {
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "id_titulo")
+	@AuditJoinTable(name="titulos")
 	private Titulo titulo;
 
 	@Column(name = "tipo_bibliografia")
@@ -73,7 +74,6 @@ public class Bibliografia {
 		
 		 return "Bibliografia [id_componente=" + componente +
 		 ", id_titulo="
-		 + titulo + ", componente=" + getComponenteCurricular() + ", titulo="
-		 + getTitulo() + ", tipoBibliografia=" + tipoBibliografia + "]";
+		 + titulo + "tipoBibliografia=" + tipoBibliografia + "]";
 	}
 }
