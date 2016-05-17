@@ -1,8 +1,13 @@
 package br.ufc.npi.gal.web;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -194,13 +199,11 @@ public class ComponenteCurricularController {
 
 
 		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class,idComponente);
-		List<Bibliografia> bibliografiaLista = componente.getBibliografias();
+		List<Bibliografia> listaBibliografiaBasica = componente.getBibliografiasPorTipo(BASICA);
+		List<Bibliografia> listaBibliografiaComplementar = componente.getBibliografiasPorTipo(COMPLEMENTAR);
 		
-		bibliografiaLista = atualizarOuCriarBibliografia(basicaArray, bibliografiaLista, componente, ComponenteCurricular.BASICA);
-		bibliografiaLista = atualizarOuCriarBibliografia(complementarArray, bibliografiaLista, componente, ComponenteCurricular.COMPLEMENTAR);
-		for (int i = 0; i < bibliografiaLista.size(); i++) {
-			bibliografiaService.delete(bibliografiaLista.get(i));
-		}
+		atualizarBibliografiaBasica(basicaArray, listaBibliografiaBasica, componente);
+		atualizarBibliografiaComplementar(complementarArray, listaBibliografiaComplementar, componente);
 		redirectAttributes.addFlashAttribute("info", "Vinculações realizadas com sucesso.");
 		return "redirect:/componente/" + componente.getId() + "/visualizar";
 	}
@@ -255,41 +258,67 @@ public class ComponenteCurricularController {
 
 		return "componente/visualizar";
 	}
+	
+	public void atualizarBibliografiaBasica(String[] listaIdTitulo,
+			List<Bibliografia> bibliografiasAseremModificadas, ComponenteCurricular componente){
+		atualizarOuCriarBibliografia(listaIdTitulo, bibliografiasAseremModificadas, componente, BASICA);
+	}
+	
+	public void atualizarBibliografiaComplementar(String[] listaIdTitulo,
+			List<Bibliografia> bibliografiasAseremModificadas, ComponenteCurricular componente){
+		atualizarOuCriarBibliografia(listaIdTitulo, bibliografiasAseremModificadas, componente, COMPLEMENTAR);
+	}
 
-	public List<Bibliografia> atualizarOuCriarBibliografia(String[] listaIdTitulo,
+	public void atualizarOuCriarBibliografia(String[] listaIdTitulo,
 			List<Bibliografia> bibliografiasAseremModificadas, ComponenteCurricular componente,
 			String tipoBibliografia) {
-
-		int id_titulo;
-
-		if (!listaIdTitulo[0].isEmpty()) {
-			for (int i = 0; i < listaIdTitulo.length; i++) {
-				id_titulo = Integer.parseInt(listaIdTitulo[i]);
-				for (int j = 0; j < bibliografiasAseremModificadas.size(); j++) {
-					if (bibliografiasAseremModificadas.get(j).getTitulo().getId() == id_titulo) {
-						
-						if (!bibliografiasAseremModificadas.get(j).getTipoBibliografia().equals(tipoBibliografia)) {
-							
-							bibliografiasAseremModificadas.get(j).setTipoBibliografia(tipoBibliografia);
-
-						}
-						bibliografiasAseremModificadas.get(j).setPrioridade(i);
-						listaIdTitulo[i] = null;
-						bibliografiaService.update(bibliografiasAseremModificadas.get(j));
-						bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
-
+		
+		TreeSet<Integer> informados = new TreeSet<Integer>();
+		for (String id : listaIdTitulo) {
+			informados.add(Integer.parseInt(id));
+		}
+		
+		Set<Integer> atuais = new HashSet<Integer>();
+		for (Bibliografia bibliografia : bibliografiasAseremModificadas) {
+			atuais.add(bibliografia.getTitulo().getId());
+		}
+		
+		Set<Integer> novos = new HashSet<Integer>(informados);
+		novos.removeAll(atuais);
+		
+		Set<Integer> removidos = new HashSet<Integer>(atuais);
+		removidos.removeAll(informados);
+		
+		Set<Integer> atualizar = new HashSet<Integer>(informados);
+		atualizar.retainAll(atuais);
+		
+		int i = 1;
+		Bibliografia aux = new Bibliografia();
+		for (Integer id : informados) {
+			if(novos.contains(id)){
+				aux.setComponenteCurricular(componente);
+				aux.setTitulo(tituloService.find(Titulo.class, id));
+				aux.setTipoBibliografia(tipoBibliografia);
+				aux.setPrioridade(i);
+				bibliografiaService.save(aux);
+			} else if (atualizar.contains(id)){
+				for(Bibliografia b : bibliografiasAseremModificadas){
+					if(b.getTitulo().getId() == id){
+						b.setTipoBibliografia(tipoBibliografia);
+						b.setPrioridade(i);
+						bibliografiaService.update(b);
 					}
 				}
-				if (listaIdTitulo[i] != null) {
-					Bibliografia biblio = new Bibliografia();
-					biblio.setComponenteCurricular(componente);
-					biblio.setTitulo(tituloService.find(Titulo.class, id_titulo));
-					biblio.setTipoBibliografia(tipoBibliografia);
-					bibliografiaService.save(biblio);
+			}			
+		}
+	
+		for(Integer id : removidos){
+			for(Bibliografia b : bibliografiasAseremModificadas){
+				if(b.getTitulo().getId() == id){
+					bibliografiaService.delete(b);
 				}
 			}
 		}
-		return bibliografiasAseremModificadas;
 	}
 	
 	@RequestMapping(value = "/{idComponente}/copiar", method = RequestMethod.GET)

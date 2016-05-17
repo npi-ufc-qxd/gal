@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.RevisionType;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
 
@@ -71,6 +72,8 @@ public class JpaComponenteCurricularRepository extends JpaGenericRepositoryImpl<
 		}
 		return null;
 	}
+	
+	
 
 	public List<ComponenteCurricular> getTodosComponenteCurricular(){
 		List<ComponenteCurricular> result = find(QueryType.JPQL, "from ComponenteCurricular order by nome asc", null);
@@ -95,6 +98,10 @@ public class JpaComponenteCurricularRepository extends JpaGenericRepositoryImpl<
 			Object o[] = objeto.get(i);
 			alteracosBibliografia.add((Bibliografia)o[0]);	
 		}
+		
+		AuditQuery query2 = reader.createQuery().forRevisionsOfEntity(Bibliografia.class, false, true);
+		query2.add(AuditEntity.revisionType().eq(RevisionType.DEL));
+		List<Object[]> objeto2 = query2.getResultList();
 		
 		return alteracosBibliografia;
 	}

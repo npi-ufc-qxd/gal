@@ -157,5 +157,14 @@ public class ComponenteCurricular {
 		}
 		return titulos;
 	}
+	public List<Bibliografia> getBibliografiasPorTipo(String tipoBibliografia){
+		List<Bibliografia> bibliografias = new ArrayList<Bibliografia>();
+		for (Bibliografia bibliografia : this.bibliografias) {
+			if (tipoBibliografia.equals(bibliografia.getTipoBibliografia())) {
+				bibliografias.add(bibliografia);
+			}
+		}
+		return bibliografias;
+	}
 
 }
