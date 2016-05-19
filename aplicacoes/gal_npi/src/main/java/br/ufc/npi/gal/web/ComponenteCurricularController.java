@@ -1,8 +1,6 @@
 package br.ufc.npi.gal.web;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -273,10 +271,15 @@ public class ComponenteCurricularController {
 			List<Bibliografia> bibliografiasAseremModificadas, ComponenteCurricular componente,
 			String tipoBibliografia) {
 		
-		TreeSet<Integer> informados = new TreeSet<Integer>();
-		for (String id : listaIdTitulo) {
-			informados.add(Integer.parseInt(id));
+		List<Integer> convertedId = new ArrayList<Integer>();
+		for (String idTexto : listaIdTitulo) {
+			if(!idTexto.isEmpty()){
+				Integer id = Integer.valueOf(idTexto);
+				convertedId.add(id);
+			}
 		}
+		
+		Set<Integer> informados = new HashSet<Integer>(convertedId);
 		
 		Set<Integer> atuais = new HashSet<Integer>();
 		for (Bibliografia bibliografia : bibliografiasAseremModificadas) {
@@ -292,15 +295,17 @@ public class ComponenteCurricularController {
 		Set<Integer> atualizar = new HashSet<Integer>(informados);
 		atualizar.retainAll(atuais);
 		
-		int i = 1;
-		Bibliografia aux = new Bibliografia();
-		for (Integer id : informados) {
+		
+		
+		for(int i = 0; i < convertedId.size(); i++) {
+			Integer id = convertedId.get(i);
 			if(novos.contains(id)){
+				Bibliografia aux = new Bibliografia();
 				aux.setComponenteCurricular(componente);
 				aux.setTitulo(tituloService.find(Titulo.class, id));
 				aux.setTipoBibliografia(tipoBibliografia);
 				aux.setPrioridade(i);
-				bibliografiaService.save(aux);
+				bibliografiaService.update(aux);
 			} else if (atualizar.contains(id)){
 				for(Bibliografia b : bibliografiasAseremModificadas){
 					if(b.getTitulo().getId() == id){
@@ -309,13 +314,19 @@ public class ComponenteCurricularController {
 						bibliografiaService.update(b);
 					}
 				}
-			}			
+			}
 		}
-	
 		for(Integer id : removidos){
 			for(Bibliografia b : bibliografiasAseremModificadas){
 				if(b.getTitulo().getId() == id){
-					bibliografiaService.delete(b);
+					if(tipoBibliografia.equals(BASICA)){
+						bibliografiaService.delete(b);
+					}else{
+						boolean movidoBasica = bibliografiaService.find(Bibliografia.class, id) != null;
+						if(!movidoBasica){
+							bibliografiaService.delete(b);
+						}
+					}
 				}
 			}
 		}
