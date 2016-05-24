@@ -16,7 +16,5 @@ public interface RevisionAuditoriaRepository extends GenericRepository<RevisionA
 	
 	public abstract RevisionAuditoria getRevisionAuditoriaBibliografiaRemovida(Bibliografia bibliografia);
 	
-	public abstract RevisionAuditoria bibliografiaRemovida(Bibliografia bibliografia, RevisionAuditoria revision);
-	
 	public abstract List<RevisionAuditoria> getAlteracoes(List<Titulo> titulosAudt, List<RevisionAuditoria> revisions);
 }

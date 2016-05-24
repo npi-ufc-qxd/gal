@@ -98,6 +98,7 @@ public class RevisionAuditoriaRepositoryImpl extends JpaGenericRepositoryImpl<Re
 		query.addProjection(AuditEntity.revisionNumber());
 		query.add(AuditEntity.property("componente").eq(bibliografia.getComponenteCurricular()));
 		query.add(AuditEntity.property("titulo").eq(bibliografia.getTitulo()));
+		query.add(AuditEntity.property("titulo").isNotNull());
 		
 		List<Number> alteracoesBibliografia =(List<Number>) query.getResultList();
 		
@@ -111,7 +112,7 @@ public class RevisionAuditoriaRepositoryImpl extends JpaGenericRepositoryImpl<Re
 		
 		return revisions;
 	}
-	//melhorar nome
+
 	@Override
 	public RevisionAuditoria getRevisionAuditoriaBibliografiaRemovida(Bibliografia bibliografia){
 		AuditReader reader = AuditReaderFactory.get(manager);
@@ -169,16 +170,5 @@ public class RevisionAuditoriaRepositoryImpl extends JpaGenericRepositoryImpl<Re
 		}
 		return alteracoesRevision;
 	}
-	//excluir
-	@Override
-	public RevisionAuditoria bibliografiaRemovida(Bibliografia bibliografia, RevisionAuditoria revision){
-		StringBuilder alteracao = new StringBuilder();
-		RevisionAuditoria alteracaoRevision = new RevisionAuditoria();
-		if(bibliografia.getTipoBibliografia() == null){
-			alteracao.append("A Bibliografia  ");
-			alteracao.append(bibliografia.getTitulo().getNome().substring(0,50));
-			alteracao.append(" foi removida");
-		}
-		return alteracaoRevision;
-	}
+
 }

@@ -67,7 +67,8 @@ public class ComponenteCurricularServiceImpl extends GenericServiceImpl<Componen
 				listaAlditoriaDeUmaBibliografia = componenteCurricularRepository.getAuditoriasBibliografia(b);
 				List<RevisionAuditoria> revisions = this.revisionRepository.getRevisionsAuditoriaByBibliografia(b);
 				auditoriaBibliografia = this.revisionRepository.mudancasEmUmaBibliografia(listaAlditoriaDeUmaBibliografia,revisions);
-				audioriaComponente.add(auditoriaBibliografia);
+				if(!auditoriaBibliografia.isEmpty())
+					audioriaComponente.add(auditoriaBibliografia);
 			}
 		}
 		getAuditoriaBibliografiasRemovida(componente, audioriaComponente);
@@ -83,6 +84,7 @@ public class ComponenteCurricularServiceImpl extends GenericServiceImpl<Componen
 			RevisionAuditoria revision = this.revisionRepository.getRevisionAuditoriaBibliografiaRemovida(b);
 			auditoriaBibliografia.add(revision);	
 		}
-		auditoriasComponente.add(auditoriaBibliografia);
-	}
+		if(!auditoriaBibliografia.isEmpty())
+			auditoriasComponente.add(auditoriaBibliografia);
+	}	
 }

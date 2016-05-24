@@ -475,7 +475,7 @@ public class ComponenteCurricularController {
 
 		if(componente != null){
 			List<Bibliografia> bibliografias = componente.getBibliografias();
-			//n pcisa mais passar a lista E AJEITAR ESSE METODO
+			
 			List<List<RevisionAuditoria>> revisionsAuditoriaBibliografias = this.componenteCurricularService.getAuditoriasBibliografias(bibliografias,componente);
 			
 			if(!revisionsAuditoriaBibliografias.isEmpty())
