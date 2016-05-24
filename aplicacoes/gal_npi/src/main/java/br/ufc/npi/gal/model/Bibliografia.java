@@ -8,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.envers.AuditJoinTable;
 import org.hibernate.envers.Audited;
 
 
@@ -21,13 +20,11 @@ public class Bibliografia {
 	@Id
 	@ManyToOne
 	@JoinColumn(name="id_componente")
-	@AuditJoinTable(name="componentes")
 	private ComponenteCurricular componente;
 
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "id_titulo")
-	@AuditJoinTable(name="titulos")
 	private Titulo titulo;
 
 	@Column(name = "tipo_bibliografia")

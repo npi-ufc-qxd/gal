@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -476,7 +475,8 @@ public class ComponenteCurricularController {
 
 		if(componente != null){
 			List<Bibliografia> bibliografias = componente.getBibliografias();
-			List<List<RevisionAuditoria>> revisionsAuditoriaBibliografias = this.componenteCurricularService.getAuditoriasBibliografias(bibliografias);
+			//n pcisa mais passar a lista E AJEITAR ESSE METODO
+			List<List<RevisionAuditoria>> revisionsAuditoriaBibliografias = this.componenteCurricularService.getAuditoriasBibliografias(bibliografias,componente);
 			
 			if(!revisionsAuditoriaBibliografias.isEmpty())
 				modelMap.addAttribute("revisionsAuditoriaBibliografias", revisionsAuditoriaBibliografias);

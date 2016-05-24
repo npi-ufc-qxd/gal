@@ -21,5 +21,5 @@ public interface ComponenteCurricularService extends GenericService<ComponenteCu
 	
 	public abstract List<Bibliografia> getBibliografiasAuditoria(Bibliografia bibliografia);
 	
-	public abstract List<List<RevisionAuditoria>> getAuditoriasBibliografias(List<Bibliografia> bibliografias);
+	public abstract List<List<RevisionAuditoria>> getAuditoriasBibliografias(List<Bibliografia> bibliografias,ComponenteCurricular componente);
 }

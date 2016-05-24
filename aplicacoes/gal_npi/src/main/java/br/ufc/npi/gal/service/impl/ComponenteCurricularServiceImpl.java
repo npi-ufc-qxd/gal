@@ -9,8 +9,10 @@ import javax.inject.Named;
 import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.ComponenteCurricular;
 import br.ufc.npi.gal.model.RevisionAuditoria;
+import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.repository.ComponenteCurricularRepository;
 import br.ufc.npi.gal.repository.RevisionAuditoriaRepository;
+import br.ufc.npi.gal.repository.TituloRespository;
 import br.ufc.npi.gal.service.ComponenteCurricularService;
 import br.ufc.quixada.npi.service.impl.GenericServiceImpl;
 
@@ -51,24 +53,36 @@ public class ComponenteCurricularServiceImpl extends GenericServiceImpl<Componen
 
 	@Override
 	public List<Bibliografia> getBibliografiasAuditoria(Bibliografia bibliografia){
-		return componenteCurricularRepository.getBibliografiasAuditoria(bibliografia);
+		return componenteCurricularRepository.getAuditoriasBibliografia(bibliografia);
 	}
 	
 	@Override
-	public List<List<RevisionAuditoria>> getAuditoriasBibliografias(List<Bibliografia> bibliografias){
-		List<Bibliografia> listaAlditoriaBibliografia = null;
+	public List<List<RevisionAuditoria>> getAuditoriasBibliografias(List<Bibliografia> bibliografias,ComponenteCurricular componente){
+		List<Bibliografia> listaAlditoriaDeUmaBibliografia = new ArrayList<Bibliografia>();
 		List<RevisionAuditoria> auditoriaBibliografia = new ArrayList<RevisionAuditoria>();
 		List<List<RevisionAuditoria>> audioriaComponente = new ArrayList<List<RevisionAuditoria>>();
 		
-		if(bibliografias != null && !bibliografias.isEmpty()){
+		if(!bibliografias.isEmpty()){
 			for(Bibliografia b : bibliografias){
-				listaAlditoriaBibliografia = componenteCurricularRepository.getBibliografiasAuditoria(b);
+				listaAlditoriaDeUmaBibliografia = componenteCurricularRepository.getAuditoriasBibliografia(b);
 				List<RevisionAuditoria> revisions = this.revisionRepository.getRevisionsAuditoriaByBibliografia(b);
-				auditoriaBibliografia = this.revisionRepository.mudancasEmUmaBibliografia(listaAlditoriaBibliografia,revisions);
+				auditoriaBibliografia = this.revisionRepository.mudancasEmUmaBibliografia(listaAlditoriaDeUmaBibliografia,revisions);
 				audioriaComponente.add(auditoriaBibliografia);
 			}
 		}
+		getAuditoriaBibliografiasRemovida(componente, audioriaComponente);
 		
 		return audioriaComponente;
+	}
+	
+	public void getAuditoriaBibliografiasRemovida(ComponenteCurricular componente, List<List<RevisionAuditoria>> auditoriasComponente){
+		List<Bibliografia> listaAlditoriaBibliografia = new ArrayList<Bibliografia>();
+		List<RevisionAuditoria> auditoriaBibliografia = new ArrayList<RevisionAuditoria>();
+		listaAlditoriaBibliografia = componenteCurricularRepository.getBibliografiasRemovidas(componente);
+		for(Bibliografia b : listaAlditoriaBibliografia){
+			RevisionAuditoria revision = this.revisionRepository.getRevisionAuditoriaBibliografiaRemovida(b);
+			auditoriaBibliografia.add(revision);
+			auditoriasComponente.add(auditoriaBibliografia);
+		}
 	}
 }

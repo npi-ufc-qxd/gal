@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.auditoria;
 
+import java.util.Date;
+
 import org.hibernate.envers.RevisionListener;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,8 +12,10 @@ public class InformacoeRevisao implements RevisionListener{
 
 	@Override
 	public void newRevision(Object revisionEntity) {
-		RevisionAuditoria revison = (RevisionAuditoria) revisionEntity;
+		RevisionAuditoria revision = (RevisionAuditoria) revisionEntity;
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		revison.setUsername(auth.getName());
+		revision.setUsername(auth.getName());
+		revision.setMudanca(null);
+		revision.setData(new Date(System.currentTimeMillis()));
 	}
 }

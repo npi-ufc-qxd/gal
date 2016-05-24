@@ -84,26 +84,40 @@ public class JpaComponenteCurricularRepository extends JpaGenericRepositoryImpl<
 	}
 		
 	@Override
-	public List<Bibliografia> getBibliografiasAuditoria(Bibliografia biblografia){
+	public List<Bibliografia> getAuditoriasBibliografia(Bibliografia biblografia){
 		AuditReader reader = AuditReaderFactory.get(manager);
-		
 		List<Bibliografia> alteracosBibliografia = new ArrayList<Bibliografia>();
+		RevisionType revisionType[] = {RevisionType.MOD,RevisionType.ADD};
 		
-		AuditQuery query = reader.createQuery().forRevisionsOfEntity(Bibliografia.class, false, true);
-		query.add(AuditEntity.id().eq(biblografia));
-		
-		List<Object[]> objeto = query.getResultList();
-		
-		for(int i = 0; i < objeto.size(); i++){
-			Object o[] = objeto.get(i);
-			alteracosBibliografia.add((Bibliografia)o[0]);	
-		}
-		
-		AuditQuery query2 = reader.createQuery().forRevisionsOfEntity(Bibliografia.class, false, true);
-		query2.add(AuditEntity.revisionType().eq(RevisionType.DEL));
-		List<Object[]> objeto2 = query2.getResultList();
+		AuditQuery query = reader.createQuery().forRevisionsOfEntity(Bibliografia.class, true, true);
+		query.add(AuditEntity.property("componente").eq(biblografia.getComponenteCurricular()));
+		query.add(AuditEntity.property("titulo").eq(biblografia.getTitulo()));
+		query.add(AuditEntity.property("prioridade").isNotNull());
+		query.add(AuditEntity.revisionType().in(revisionType));
+		alteracosBibliografia =(List<Bibliografia>) query.getResultList();
 		
 		return alteracosBibliografia;
+	}
+	
+	@Override
+	public List<Bibliografia> getBibliografiasRemovidas(ComponenteCurricular componente){
+		AuditReader reader = AuditReaderFactory.get(manager);
+		List<Bibliografia> bibliografiasRemovidas = new ArrayList<Bibliografia>();
+		
+		AuditQuery query = reader.createQuery().forRevisionsOfEntity(Bibliografia.class, false, true);
+		query.add(AuditEntity.property("componente").eq(componente));
+		query.add(AuditEntity.revisionType().eq(RevisionType.DEL));
+		query.add(AuditEntity.property("titulo").isNotNull());
+		
+		List<Object[]> o = query.getResultList();
+		
+		for(int i = 0; i < o.size(); i++){
+			Bibliografia b = (Bibliografia) o.get(i)[0];
+			b.setPrioridade(null);
+			bibliografiasRemovidas.add(b);
+		}
+		
+		return bibliografiasRemovidas;
 	}
 	
 }

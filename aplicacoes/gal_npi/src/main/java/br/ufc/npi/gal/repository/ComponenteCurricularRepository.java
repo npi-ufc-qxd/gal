@@ -19,6 +19,7 @@ public interface ComponenteCurricularRepository extends GenericRepository<Compon
 	
 	public abstract List<ComponenteCurricular> getTodosComponenteCurricular();
 	
-	public abstract List<Bibliografia> getBibliografiasAuditoria(Bibliografia bibliografia);
+	public abstract List<Bibliografia> getAuditoriasBibliografia(Bibliografia bibliografia);
 	
+	public abstract List<Bibliografia> getBibliografiasRemovidas(ComponenteCurricular componente);
 }

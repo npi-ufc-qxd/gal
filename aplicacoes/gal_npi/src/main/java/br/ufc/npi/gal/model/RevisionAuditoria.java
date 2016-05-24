@@ -62,6 +62,9 @@ public class RevisionAuditoria{
 	public Date getData() {
 		return data;
 	}
+	public void setData(Date data) {
+		this.data = data;
+	}
 	public void conversao(){
 		this.data = new Date(this.timestemp);
 	}
