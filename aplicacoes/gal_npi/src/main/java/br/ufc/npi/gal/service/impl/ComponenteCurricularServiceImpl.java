@@ -50,7 +50,7 @@ public class ComponenteCurricularServiceImpl extends GenericServiceImpl<Componen
 	}
 
 	@Override
-	public List<Bibliografia> getBibliografiasAuditoria(Bibliografia bibliografia){
+	public List<Bibliografia> getAuditoriasDeUmaBibliografia(Bibliografia bibliografia){
 		return componenteCurricularRepository.getAuditoriasBibliografia(bibliografia);
 	}
 	
@@ -77,7 +77,7 @@ public class ComponenteCurricularServiceImpl extends GenericServiceImpl<Componen
 	public void getAuditoriaBibliografiasRemovida(ComponenteCurricular componente, List<List<RevisionAuditoria>> auditoriasComponente){
 		List<Bibliografia> listaAlditoriaBibliografia = new ArrayList<Bibliografia>();
 		List<RevisionAuditoria> auditoriaBibliografia = new ArrayList<RevisionAuditoria>();
-		listaAlditoriaBibliografia = componenteCurricularRepository.getBibliografiasRemovidas(componente);
+		listaAlditoriaBibliografia = componenteCurricularRepository.getAuditoriaDeUmaBibliografiasRemovidas(componente);
 		for(Bibliografia b : listaAlditoriaBibliografia){
 			RevisionAuditoria revision = this.revisionRepository.getRevisionAuditoriaBibliografiaRemovida(b);
 			auditoriaBibliografia.add(revision);	

@@ -9,7 +9,7 @@ import br.ufc.quixada.npi.service.GenericService;
 
 public interface RevisionAuditoriaService extends GenericService<RevisionAuditoria> {
 	
-	public abstract List<RevisionAuditoria> getRevisionsAuditoriaTituloById(Integer id);
+	public abstract List<RevisionAuditoria> getIdsRevisionsAuditoriaDoTitulo(Integer id);
 	
 	public abstract List<RevisionAuditoria> getAlteracoes(List<Titulo> titulosAudt,List<RevisionAuditoria> revisions);
 	

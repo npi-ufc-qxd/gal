@@ -99,7 +99,7 @@ public class JpaComponenteCurricularRepository extends JpaGenericRepositoryImpl<
 	}
 	
 	@Override
-	public List<Bibliografia> getBibliografiasRemovidas(ComponenteCurricular componente){
+	public List<Bibliografia> getAuditoriaDeUmaBibliografiasRemovidas(ComponenteCurricular componente){
 		AuditReader reader = AuditReaderFactory.get(manager);
 		List<Bibliografia> bibliografiasRemovidas = new ArrayList<Bibliografia>();
 		

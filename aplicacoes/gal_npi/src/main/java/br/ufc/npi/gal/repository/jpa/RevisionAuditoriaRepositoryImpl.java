@@ -25,7 +25,7 @@ public class RevisionAuditoriaRepositoryImpl extends JpaGenericRepositoryImpl<Re
 	private EntityManager manager;
 
 	@Override
-	public List<RevisionAuditoria> getRevisionsAuditoriaTituloById(Integer id) {
+	public List<RevisionAuditoria> getIdsRevisionsAuditoriaDoTitulo(Integer id) {
 		AuditReader reader = AuditReaderFactory.get(manager);
 
 		List<Number> alteracoes = reader.getRevisions(Titulo.class, id);
@@ -45,46 +45,51 @@ public class RevisionAuditoriaRepositoryImpl extends JpaGenericRepositoryImpl<Re
 		StringBuilder alteracoes = new StringBuilder();
 		List<RevisionAuditoria> alteracoesRevision = new ArrayList<RevisionAuditoria>();
 		if(revisions.size() > 1){
+			int aux;
 			for(int i=0;i<revisions.size()-1;i++){
-				if(!(titulosAudt.get(i+1).getNome().equals(titulosAudt.get(i).getNome()))){
+				aux = i+1;
+				Titulo atual = titulosAudt.get(i);
+				Titulo proximo = titulosAudt.get(i+1); 
+				
+				if(!(atual.getNome().equals(proximo.getNome()))){
 					alteracoes.append(" Nome, ");
 				}
-				if(!(titulosAudt.get(i+1).getIsbn().equals(titulosAudt.get(i).getIsbn()))){
+				if(!(atual.getIsbn().equals(proximo.getIsbn()))){
 					alteracoes.append(" Isbn, ");
 				}
-				if(!(titulosAudt.get(i+1).getTipo().equals(titulosAudt.get(i).getTipo()))){
+				if(!(atual.getTipo().equals(proximo.getTipo()))){
 					alteracoes.append(" Tipo do livro, ");
 				}
-				if(!(titulosAudt.get(i+1).getAutor().equals(titulosAudt.get(i).getAutor()))){
+				if(!(atual.getAutor().equals(proximo.getAutor()))){
 					alteracoes.append(" Autor, ");
 				}
 				if(!(titulosAudt.get(i+1).getTitulo().equals(titulosAudt.get(i).getTitulo()))){
 					alteracoes.append(" Titulo, ");
 				}
-				if(!(titulosAudt.get(i+1).getTitulo_n().equals(titulosAudt.get(i).getTitulo_n()))){
+				if(!(atual.getTitulo_n().equals(proximo.getTitulo_n()))){
 					alteracoes.append(" Titulo_N, ");
 				}
-				if(!(titulosAudt.get(i+1).getTituloRevista().equals(titulosAudt.get(i).getTituloRevista()))){
+				if(!(atual.getTituloRevista().equals(proximo.getTituloRevista()))){
 					alteracoes.append(" Titulo Revista, ");
 				}
-				if(!(titulosAudt.get(i+1).getSubTitulo().equals(titulosAudt.get(i).getSubTitulo()))){
+				if(!(atual.getSubTitulo().equals(proximo.getSubTitulo()))){
 					alteracoes.append(" Sub titulo, ");
 				}
-				if(!(titulosAudt.get(i+1).getPagina().equals(titulosAudt.get(i).getPagina()))){
+				if(!(atual.getPagina().equals(proximo.getPagina()))){
 					alteracoes.append(" Pagina, ");
 				}
-				if(!(titulosAudt.get(i+1).getRefArtigo().equals(titulosAudt.get(i).getRefArtigo()))){
+				if(!(atual.getRefArtigo().equals(proximo.getRefArtigo()))){
 					alteracoes.append(" Refrencia Artigo, ");
 				}
-				if(!(titulosAudt.get(i+1).getEdicao().equals(titulosAudt.get(i).getEdicao()))){
+				if(!(atual.getEdicao().equals(proximo.getEdicao()))){
 					alteracoes.append(" Edicao, ");
 				}
-				if(!(titulosAudt.get(i+1).getPublicador().equals(titulosAudt.get(i).getPublicador()))){
+				if(!(atual.getPublicador().equals(proximo.getPublicador()))){
 					alteracoes.append(" Publicador ");
 				}
-				revisions.get(i+1).conversao();
-				revisions.get(i+1).setMudanca(alteracoes.toString());
-				alteracoesRevision.add(revisions.get(i+1));
+				revisions.get(aux).conversao();
+				revisions.get(aux).setMudanca(alteracoes.toString());
+				alteracoesRevision.add(revisions.get(aux));
 			}
 		}
 		return alteracoesRevision;
@@ -133,40 +138,44 @@ public class RevisionAuditoriaRepositoryImpl extends JpaGenericRepositoryImpl<Re
 	}
 	
 	@Override
-	public List<RevisionAuditoria> mudancasEmUmaBibliografia(List<Bibliografia> listaAuditoriaBibliografia, List<RevisionAuditoria> revisions){
+	public List<RevisionAuditoria> getRevisionAuditoriaDeUmaBibliografia(List<Bibliografia> listaAuditoriaBibliografia, List<RevisionAuditoria> revisions){
 		StringBuilder alteracoes = new StringBuilder();
 		List<RevisionAuditoria> alteracoesRevision = new ArrayList<RevisionAuditoria>();
 		
 		if(!listaAuditoriaBibliografia.isEmpty() && listaAuditoriaBibliografia.size() > 1){
+			int aux;
 			for(int i = 0; i < listaAuditoriaBibliografia.size() - 1; i++){
-				if(listaAuditoriaBibliografia.get(i).getTipoBibliografia() == null){
+				aux = i+1;
+				Bibliografia atual = listaAuditoriaBibliografia.get(i);
+				Bibliografia proxima = listaAuditoriaBibliografia.get(i+1);
+				if(atual.getTipoBibliografia() == null){
 					alteracoes.append("A Bibliografia  ");
-					alteracoes.append(listaAuditoriaBibliografia.get(i).getTitulo().getNome().substring(0,50));
+					alteracoes.append(atual.getTitulo().getNome().substring(0,50));
 					alteracoes.append(" foi removida; ");
 				}else{
-					if(listaAuditoriaBibliografia.get(i).getPrioridade() != listaAuditoriaBibliografia.get(i+1).getPrioridade()){
+					if(atual.getPrioridade() != proxima.getPrioridade()){
 						alteracoes.append("A Pioridade do titulo ");
-						alteracoes.append(listaAuditoriaBibliografia.get(i).getTitulo().getNome().substring(0,50));
+						alteracoes.append(atual.getTitulo().getNome().substring(0,50));
 						alteracoes.append(" mudou de ");
-						alteracoes.append(listaAuditoriaBibliografia.get(i).getPrioridade());
+						alteracoes.append(atual.getPrioridade());
 						alteracoes.append(" para ");
-						alteracoes.append(listaAuditoriaBibliografia.get(i+1).getPrioridade());
+						alteracoes.append(proxima.getPrioridade());
 						alteracoes.append(" ; ");
 					}
-					if(!(listaAuditoriaBibliografia.get(i).getTipoBibliografia().equals(listaAuditoriaBibliografia.get(i+1).getTipoBibliografia()))){
+					if(!(atual.getTipoBibliografia().equals(proxima.getTipoBibliografia()))){
 						alteracoes.append("A Bibliografia do titulo ");
-						alteracoes.append(listaAuditoriaBibliografia.get(i).getTitulo().getNome().substring(0,50));
+						alteracoes.append(atual.getTitulo().getNome().substring(0,50));
 						alteracoes.append(" mudou de ");
-						alteracoes.append(listaAuditoriaBibliografia.get(i).getTipoBibliografia());
+						alteracoes.append(atual.getTipoBibliografia());
 						alteracoes.append(" para ");
-						alteracoes.append(listaAuditoriaBibliografia.get(i+1).getTipoBibliografia());
+						alteracoes.append(proxima.getTipoBibliografia());
 						alteracoes.append(" ; ");
 					}
 				}
 
-				revisions.get(i+1).conversao();
-				revisions.get(i+1).setMudanca(alteracoes.toString());
-				alteracoesRevision.add(revisions.get(i+1));
+				revisions.get(aux).conversao();
+				revisions.get(aux).setMudanca(alteracoes.toString());
+				alteracoesRevision.add(revisions.get(aux));
 			}
 		}
 		return alteracoesRevision;

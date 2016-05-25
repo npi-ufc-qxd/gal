@@ -20,8 +20,8 @@ public class RevisionAuditoriaServiceImpl extends GenericServiceImpl<RevisionAud
 	private RevisionAuditoriaRepository revisionAuditoriaRespository;
 	
 	@Override
-	public List<RevisionAuditoria> getRevisionsAuditoriaTituloById(Integer id) {
-		return this.revisionAuditoriaRespository.getRevisionsAuditoriaTituloById(id);
+	public List<RevisionAuditoria> getIdsRevisionsAuditoriaDoTitulo(Integer id) {
+		return this.revisionAuditoriaRespository.getIdsRevisionsAuditoriaDoTitulo(id);
 	}
 
 	@Override
