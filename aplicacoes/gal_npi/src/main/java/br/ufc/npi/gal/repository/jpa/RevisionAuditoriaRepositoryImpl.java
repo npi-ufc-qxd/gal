@@ -127,7 +127,7 @@ public class RevisionAuditoriaRepositoryImpl extends JpaGenericRepositoryImpl<Re
 		
 		RevisionAuditoria revision = (RevisionAuditoria) reader.findRevision(RevisionAuditoria.class,numeroRevInfo.get(0));
 		
-		revision.setMudanca("A Bibliografia"+ bibliografia.getTitulo().getNome().substring(0,50)+" foi removida");
+		revision.setMudanca("A Bibliografia"+ bibliografia.getTitulo().getNome().substring(0,50)+" foi removida; ");
 		
 		return revision;
 	}
@@ -142,7 +142,7 @@ public class RevisionAuditoriaRepositoryImpl extends JpaGenericRepositoryImpl<Re
 				if(listaAuditoriaBibliografia.get(i).getTipoBibliografia() == null){
 					alteracoes.append("A Bibliografia  ");
 					alteracoes.append(listaAuditoriaBibliografia.get(i).getTitulo().getNome().substring(0,50));
-					alteracoes.append(" foi removida");
+					alteracoes.append(" foi removida; ");
 				}else{
 					if(listaAuditoriaBibliografia.get(i).getPrioridade() != listaAuditoriaBibliografia.get(i+1).getPrioridade()){
 						alteracoes.append("A Pioridade do titulo ");
@@ -151,7 +151,7 @@ public class RevisionAuditoriaRepositoryImpl extends JpaGenericRepositoryImpl<Re
 						alteracoes.append(listaAuditoriaBibliografia.get(i).getPrioridade());
 						alteracoes.append(" para ");
 						alteracoes.append(listaAuditoriaBibliografia.get(i+1).getPrioridade());
-						alteracoes.append(" ;");
+						alteracoes.append(" ; ");
 					}
 					if(!(listaAuditoriaBibliografia.get(i).getTipoBibliografia().equals(listaAuditoriaBibliografia.get(i+1).getTipoBibliografia()))){
 						alteracoes.append("A Bibliografia do titulo ");
@@ -160,6 +160,7 @@ public class RevisionAuditoriaRepositoryImpl extends JpaGenericRepositoryImpl<Re
 						alteracoes.append(listaAuditoriaBibliografia.get(i).getTipoBibliografia());
 						alteracoes.append(" para ");
 						alteracoes.append(listaAuditoriaBibliografia.get(i+1).getTipoBibliografia());
+						alteracoes.append(" ; ");
 					}
 				}
 

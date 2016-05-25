@@ -190,17 +190,16 @@ public class ComponenteCurricularController {
 	@RequestMapping(value = "/vincular", method = RequestMethod.POST)
 	public String vincular(@RequestParam("basica") String basica, @RequestParam("complementar") String complementar, @RequestParam("idComponente") Integer idComponente,
 			RedirectAttributes redirectAttributes) {
-		String[] basicaArray = basica.split(",");
-		
-		String[] complementarArray = complementar.split(",");
 
+		String[] basicaArray = basica.split(",");
+		String[] complementarArray = complementar.split(",");
 
 		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class,idComponente);
 		List<Bibliografia> listaBibliografiaBasica = componente.getBibliografiasPorTipo(BASICA);
 		List<Bibliografia> listaBibliografiaComplementar = componente.getBibliografiasPorTipo(COMPLEMENTAR);
 		
-		atualizarBibliografiaBasica(basicaArray, listaBibliografiaBasica, componente);
-		atualizarBibliografiaComplementar(complementarArray, listaBibliografiaComplementar, componente);
+		atualizarBibliografiaBasica(basicaArray, complementarArray, listaBibliografiaBasica, componente);
+		atualizarBibliografiaComplementar(complementarArray, basicaArray, listaBibliografiaComplementar, componente);
 		redirectAttributes.addFlashAttribute("info", "Vinculações realizadas com sucesso.");
 		return "redirect:/componente/" + componente.getId() + "/visualizar";
 	}
@@ -256,18 +255,20 @@ public class ComponenteCurricularController {
 		return "componente/visualizar";
 	}
 	
-	public void atualizarBibliografiaBasica(String[] listaIdTitulo,
-			List<Bibliografia> bibliografiasAseremModificadas, ComponenteCurricular componente){
-		atualizarOuCriarBibliografia(listaIdTitulo, bibliografiasAseremModificadas, componente, BASICA);
+	public void atualizarBibliografiaBasica(String[] listaIdTituloBasica, 
+			String[] listaIdTituloComplementar, List<Bibliografia> bibliografiasAseremModificadas, ComponenteCurricular componente){
+		atualizarOuCriarBibliografia(listaIdTituloBasica, listaIdTituloComplementar, bibliografiasAseremModificadas, componente, BASICA);
 	}
 	
-	public void atualizarBibliografiaComplementar(String[] listaIdTitulo,
-			List<Bibliografia> bibliografiasAseremModificadas, ComponenteCurricular componente){
-		atualizarOuCriarBibliografia(listaIdTitulo, bibliografiasAseremModificadas, componente, COMPLEMENTAR);
+	public void atualizarBibliografiaComplementar(String[] listaIdTituloComplementar, 
+			String[] listaIdTituloBasica,List<Bibliografia> bibliografiasAseremModificadas, 
+			ComponenteCurricular componente){
+		atualizarOuCriarBibliografia(listaIdTituloComplementar, listaIdTituloBasica, bibliografiasAseremModificadas, componente, COMPLEMENTAR);
 	}
 
 	public void atualizarOuCriarBibliografia(String[] listaIdTitulo,
-			List<Bibliografia> bibliografiasAseremModificadas, ComponenteCurricular componente,
+			String[] listaIdTituloAtualizados, List<Bibliografia> bibliografiasAseremModificadas, 
+			ComponenteCurricular componente,
 			String tipoBibliografia) {
 		
 		List<Integer> convertedId = new ArrayList<Integer>();
@@ -294,18 +295,16 @@ public class ComponenteCurricularController {
 		Set<Integer> atualizar = new HashSet<Integer>(informados);
 		atualizar.retainAll(atuais);
 		
-		
-		
+		atualizarBibliografia(convertedId, atualizar, bibliografiasAseremModificadas, tipoBibliografia);
+		addBibliografia(convertedId, novos, componente, tipoBibliografia);
+		removerBibliografia(bibliografiasAseremModificadas, removidos, tipoBibliografia,listaIdTituloAtualizados);
+	}
+	public void atualizarBibliografia(List<Integer> convertedId,
+			Set<Integer> atualizar,List<Bibliografia> bibliografiasAseremModificadas,
+			String tipoBibliografia){
 		for(int i = 0; i < convertedId.size(); i++) {
 			Integer id = convertedId.get(i);
-			if(novos.contains(id)){
-				Bibliografia aux = new Bibliografia();
-				aux.setComponenteCurricular(componente);
-				aux.setTitulo(tituloService.find(Titulo.class, id));
-				aux.setTipoBibliografia(tipoBibliografia);
-				aux.setPrioridade(i);
-				bibliografiaService.update(aux);
-			} else if (atualizar.contains(id)){
+			if(atualizar.contains(id)){
 				for(Bibliografia b : bibliografiasAseremModificadas){
 					if(b.getTitulo().getId() == id){
 						b.setTipoBibliografia(tipoBibliografia);
@@ -315,22 +314,46 @@ public class ComponenteCurricularController {
 				}
 			}
 		}
+	}
+	public void addBibliografia(List<Integer> convertedId,
+			Set<Integer> novos,ComponenteCurricular componente,
+			String tipoBibliografia){
+		for(int i = 0; i < convertedId.size(); i++) {
+			Integer id = convertedId.get(i);
+			if(novos.contains(id)){
+				Bibliografia aux = new Bibliografia();
+				aux.setComponenteCurricular(componente);
+				aux.setTitulo(tituloService.find(Titulo.class, id));
+				aux.setTipoBibliografia(tipoBibliografia);
+				aux.setPrioridade(i);
+				bibliografiaService.update(aux);
+			} 
+		}
+	}
+	public void removerBibliografia(List<Bibliografia> bibliografiasAseremModificadas,
+			Set<Integer> removidos, String tipoBibliografia,
+			String[] listaIdTituloAtualizados){
+		
+		if(tipoBibliografia.equals(COMPLEMENTAR)){
+			List<Integer> listaIdAtualizadosBasica = new ArrayList<Integer>();
+			for(String idAtualizados : listaIdTituloAtualizados){
+				if(!idAtualizados.isEmpty()){
+					Integer id = Integer.valueOf(idAtualizados);
+					listaIdAtualizadosBasica.add(id);
+				}
+			}
+			Set<Integer> idsAtualizadosEmBasica =  new HashSet<Integer>(listaIdAtualizadosBasica);
+			removidos.removeAll(idsAtualizadosEmBasica);
+		}
+		
 		for(Integer id : removidos){
 			for(Bibliografia b : bibliografiasAseremModificadas){
 				if(b.getTitulo().getId() == id){
-					if(tipoBibliografia.equals(BASICA)){
-						bibliografiaService.delete(b);
-					}else{
-						boolean movidoBasica = bibliografiaService.find(Bibliografia.class, id) != null;
-						if(!movidoBasica){
-							bibliografiaService.delete(b);
-						}
-					}
+					bibliografiaService.delete(b);
 				}
 			}
 		}
 	}
-	
 	@RequestMapping(value = "/{idComponente}/copiar", method = RequestMethod.GET)
 	public String copiar(@PathVariable("idComponente") int idComponente, ModelMap modelMap) {
 		

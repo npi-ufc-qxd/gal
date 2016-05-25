@@ -9,10 +9,8 @@ import javax.inject.Named;
 import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.ComponenteCurricular;
 import br.ufc.npi.gal.model.RevisionAuditoria;
-import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.repository.ComponenteCurricularRepository;
 import br.ufc.npi.gal.repository.RevisionAuditoriaRepository;
-import br.ufc.npi.gal.repository.TituloRespository;
 import br.ufc.npi.gal.service.ComponenteCurricularService;
 import br.ufc.quixada.npi.service.impl.GenericServiceImpl;
 
