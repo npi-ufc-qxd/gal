@@ -1,0 +1,1 @@
+$(".select-filter").select2();

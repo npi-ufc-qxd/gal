@@ -99,6 +99,7 @@
 
 		</form:form>
 		<jsp:include page="../fragments/footer.jsp" />
+		<script src="<c:url value="/resources/js/integracao-adicionar.js" />"></script>
 	</div>
 </body>
 </html>
