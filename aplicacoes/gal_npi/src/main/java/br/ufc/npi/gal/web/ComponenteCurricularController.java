@@ -344,15 +344,17 @@ public class ComponenteCurricularController {
 			}
 			Set<Integer> idsAtualizadosEmBasica =  new HashSet<Integer>(listaIdAtualizadosBasica);
 			removidos.removeAll(idsAtualizadosEmBasica);
-		}
-		
-		for(Integer id : removidos){
-			for(Bibliografia b : bibliografiasAseremModificadas){
-				if(b.getTitulo().getId() == id){
-					bibliografiaService.delete(b);
+		}else{
+			for(Integer id : removidos){
+				for(Bibliografia b : bibliografiasAseremModificadas){
+					if(b.getTitulo().getId() == id){
+						bibliografiaService.delete(b);
+					}
 				}
 			}
 		}
+		
+
 	}
 	@RequestMapping(value = "/{idComponente}/copiar", method = RequestMethod.GET)
 	public String copiar(@PathVariable("idComponente") int idComponente, ModelMap modelMap) {
