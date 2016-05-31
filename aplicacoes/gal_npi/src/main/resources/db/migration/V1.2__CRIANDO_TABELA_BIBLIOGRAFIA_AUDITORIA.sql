@@ -1,4 +1,4 @@
-CREATE TABLE bibliografias_aud
+CREATE TABLE IF NOT EXISTS bibliografias_aud
 (
   id_componente integer NOT NULL,
   id_titulo integer NOT NULL,

@@ -63,7 +63,7 @@
 		<c:if test="${not empty resultados}">
 
 			<datatables:table id="resultadoTable" data="${resultados}" cdn="false"
-				row="resultado" theme="bootstrap2" cssClass="table table-striped table-orderable" no-sort-fields="5 8 11" default-sort="0 asc">
+				row="resultado" cssClass="table table-striped table-orderable" no-sort-fields="5 8 11" default-sort="0 asc">
 
 				<datatables:column title="Titulo">
 					<c:out value="${resultado.titulo.nome}"></c:out>
@@ -122,6 +122,7 @@
 		</c:if>
 		<jsp:include page="../fragments/footer.jsp" />
 		<script src="<c:url value="/resources/js/tabela.js" />"></script>
+		<script src="<c:url value="/resources/js/meta-listar.js" />"></script>
 	</div>
 </body>
 </html>
