@@ -276,6 +276,7 @@ public class ComponenteCurricularController {
 			if(!idTexto.isEmpty()){
 				Integer id = Integer.valueOf(idTexto);
 				convertedId.add(id);
+				int a;
 			}
 		}
 		
@@ -306,7 +307,7 @@ public class ComponenteCurricularController {
 			Integer id = convertedId.get(i);
 			if(atualizar.contains(id)){
 				for(Bibliografia b : bibliografiasAseremModificadas){
-					if(b.getTitulo().getId() == id){
+					if(id.equals( b.getTitulo().getId())){
 						b.setTipoBibliografia(tipoBibliografia);
 						b.setPrioridade(i);
 						bibliografiaService.update(b);
