@@ -2,7 +2,9 @@ package br.ufc.npi.gal.web;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,9 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.npi.gal.model.Bibliografia;
-import br.ufc.npi.gal.model.DetalheMetaCalculada;
 import br.ufc.npi.gal.model.ComponenteCurricular;
+import br.ufc.npi.gal.model.DetalheMetaCalculada;
 import br.ufc.npi.gal.model.IntegracaoCurricular;
+import br.ufc.npi.gal.model.RevisionAuditoria;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.CalculoMetaService;
 import br.ufc.npi.gal.service.ComponenteCurricularService;
@@ -38,17 +41,13 @@ import br.ufc.quixada.npi.service.GenericService;
 public class ComponenteCurricularController {
 
 	@Inject
-	private ComponenteCurricularService componenteCurricularService;
-
+	private ComponenteCurricularService componenteCurricularService;	
 	@Inject
 	private TituloService tituloService;
-
 	@Inject
 	private CalculoMetaService calculoService;
-
 	@Inject
 	private GenericService<Bibliografia> bibliografiaService;
-
 	@Inject
 	private IntegracaoCurricularService integracaoCurricularService;
 
@@ -191,19 +190,16 @@ public class ComponenteCurricularController {
 	@RequestMapping(value = "/vincular", method = RequestMethod.POST)
 	public String vincular(@RequestParam("basica") String basica, @RequestParam("complementar") String complementar, @RequestParam("idComponente") Integer idComponente,
 			RedirectAttributes redirectAttributes) {
+
 		String[] basicaArray = basica.split(",");
-		
 		String[] complementarArray = complementar.split(",");
 
-
 		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class,idComponente);
-		List<Bibliografia> bibliografiaLista = componente.getBibliografias();
+		List<Bibliografia> listaBibliografiaBasica = componente.getBibliografiasPorTipo(BASICA);
+		List<Bibliografia> listaBibliografiaComplementar = componente.getBibliografiasPorTipo(COMPLEMENTAR);
 		
-		bibliografiaLista = atualizarOuCriarBibliografia(basicaArray, bibliografiaLista, componente, ComponenteCurricular.BASICA);
-		bibliografiaLista = atualizarOuCriarBibliografia(complementarArray, bibliografiaLista, componente, ComponenteCurricular.COMPLEMENTAR);
-		for (int i = 0; i < bibliografiaLista.size(); i++) {
-			bibliografiaService.delete(bibliografiaLista.get(i));
-		}
+		atualizarBibliografiaBasica(basicaArray, complementarArray, listaBibliografiaBasica, componente);
+		atualizarBibliografiaComplementar(complementarArray, basicaArray, listaBibliografiaComplementar, componente);
 		redirectAttributes.addFlashAttribute("info", "Vinculações realizadas com sucesso.");
 		return "redirect:/componente/" + componente.getId() + "/visualizar";
 	}
@@ -258,51 +254,106 @@ public class ComponenteCurricularController {
 
 		return "componente/visualizar";
 	}
+	
+	public void atualizarBibliografiaBasica(String[] listaIdTituloBasica, 
+			String[] listaIdTituloComplementar, List<Bibliografia> bibliografiasAseremModificadas, ComponenteCurricular componente){
+		atualizarOuCriarBibliografia(listaIdTituloBasica, listaIdTituloComplementar, bibliografiasAseremModificadas, componente, BASICA);
+	}
+	
+	public void atualizarBibliografiaComplementar(String[] listaIdTituloComplementar, 
+			String[] listaIdTituloBasica,List<Bibliografia> bibliografiasAseremModificadas, 
+			ComponenteCurricular componente){
+		atualizarOuCriarBibliografia(listaIdTituloComplementar, listaIdTituloBasica, bibliografiasAseremModificadas, componente, COMPLEMENTAR);
+	}
 
-	public List<Bibliografia> atualizarOuCriarBibliografia(String[] listaIdTitulo,
-			List<Bibliografia> bibliografiasAseremModificadas, ComponenteCurricular componente,
+	public void atualizarOuCriarBibliografia(String[] listaIdTitulo,
+			String[] listaIdTituloAtualizados, List<Bibliografia> bibliografiasAseremModificadas, 
+			ComponenteCurricular componente,
 			String tipoBibliografia) {
-
-		int id_titulo;
-
-		if (!listaIdTitulo[0].isEmpty()) {
-			for (int i = 0; i < listaIdTitulo.length; i++) {
-				id_titulo = Integer.parseInt(listaIdTitulo[i]);
-				for (int j = 0; j < bibliografiasAseremModificadas.size(); j++) {
-					if (bibliografiasAseremModificadas.get(j).getTitulo().getId() == id_titulo) {
-						
-						if (!bibliografiasAseremModificadas.get(j).getTipoBibliografia().equals(tipoBibliografia)) {
-							
-							bibliografiasAseremModificadas.get(j).setPrioridade(i);
-							bibliografiaService.update(bibliografiasAseremModificadas.get(j));
-							
-							bibliografiasAseremModificadas.get(j).setTipoBibliografia(tipoBibliografia);
-							bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
-							listaIdTitulo[i] = null;
-							j = bibliografiasAseremModificadas.size() + 1;
-
-						} else {
-							bibliografiasAseremModificadas.get(j).setPrioridade(i);
-							bibliografiaService.update(bibliografiasAseremModificadas.get(j));
-							
-							bibliografiasAseremModificadas.remove(bibliografiasAseremModificadas.get(j));
-							listaIdTitulo[i] = null;
-						}
-
+		
+		List<Integer> convertedId = new ArrayList<Integer>();
+		for (String idTexto : listaIdTitulo) {
+			if(!idTexto.isEmpty()){
+				Integer id = Integer.valueOf(idTexto);
+				convertedId.add(id);
+			}
+		}
+		
+		Set<Integer> informados = new HashSet<Integer>(convertedId);
+		
+		Set<Integer> atuais = new HashSet<Integer>();
+		for (Bibliografia bibliografia : bibliografiasAseremModificadas) {
+			atuais.add(bibliografia.getTitulo().getId());
+		}
+		
+		Set<Integer> novos = new HashSet<Integer>(informados);
+		novos.removeAll(atuais);
+		
+		Set<Integer> removidos = new HashSet<Integer>(atuais);
+		removidos.removeAll(informados);
+		
+		Set<Integer> atualizar = new HashSet<Integer>(informados);
+		atualizar.retainAll(atuais);
+		
+		atualizarBibliografia(convertedId, atualizar, bibliografiasAseremModificadas, tipoBibliografia);
+		addBibliografia(convertedId, novos, componente, tipoBibliografia);
+		removerBibliografia(bibliografiasAseremModificadas, removidos, tipoBibliografia,listaIdTituloAtualizados);
+	}
+	public void atualizarBibliografia(List<Integer> convertedId,
+			Set<Integer> atualizar,List<Bibliografia> bibliografiasAseremModificadas,
+			String tipoBibliografia){
+		for(int i = 0; i < convertedId.size(); i++) {
+			Integer id = convertedId.get(i);
+			if(atualizar.contains(id)){
+				for(Bibliografia b : bibliografiasAseremModificadas){
+					if(b.getTitulo().getId() == id){
+						b.setTipoBibliografia(tipoBibliografia);
+						b.setPrioridade(i);
+						bibliografiaService.update(b);
 					}
-				}
-				if (listaIdTitulo[i] != null) {
-					Bibliografia biblio = new Bibliografia();
-					biblio.setComponenteCurricular(componente);
-					biblio.setTitulo(tituloService.find(Titulo.class, id_titulo));
-					biblio.setTipoBibliografia(tipoBibliografia);
-					bibliografiaService.save(biblio);
 				}
 			}
 		}
-		return bibliografiasAseremModificadas;
 	}
-	
+	public void addBibliografia(List<Integer> convertedId,
+			Set<Integer> novos,ComponenteCurricular componente,
+			String tipoBibliografia){
+		for(int i = 0; i < convertedId.size(); i++) {
+			Integer id = convertedId.get(i);
+			if(novos.contains(id)){
+				Bibliografia aux = new Bibliografia();
+				aux.setComponenteCurricular(componente);
+				aux.setTitulo(tituloService.find(Titulo.class, id));
+				aux.setTipoBibliografia(tipoBibliografia);
+				aux.setPrioridade(i);
+				bibliografiaService.update(aux);
+			} 
+		}
+	}
+	public void removerBibliografia(List<Bibliografia> bibliografiasAseremModificadas,
+			Set<Integer> removidos, String tipoBibliografia,
+			String[] listaIdTituloAtualizados){
+		
+		if(tipoBibliografia.equals(COMPLEMENTAR)){
+			List<Integer> listaIdAtualizadosBasica = new ArrayList<Integer>();
+			for(String idAtualizados : listaIdTituloAtualizados){
+				if(!idAtualizados.isEmpty()){
+					Integer id = Integer.valueOf(idAtualizados);
+					listaIdAtualizadosBasica.add(id);
+				}
+			}
+			Set<Integer> idsAtualizadosEmBasica =  new HashSet<Integer>(listaIdAtualizadosBasica);
+			removidos.removeAll(idsAtualizadosEmBasica);
+		}
+		
+		for(Integer id : removidos){
+			for(Bibliografia b : bibliografiasAseremModificadas){
+				if(b.getTitulo().getId() == id){
+					bibliografiaService.delete(b);
+				}
+			}
+		}
+	}
 	@RequestMapping(value = "/{idComponente}/copiar", method = RequestMethod.GET)
 	public String copiar(@PathVariable("idComponente") int idComponente, ModelMap modelMap) {
 		
@@ -439,6 +490,26 @@ public class ComponenteCurricularController {
 		}
 
 		return errors;
+	}
+	
+	@RequestMapping(value = "/{id}/historicoMudancas", method = RequestMethod.GET)
+	public String historicoMudancas(@PathVariable("id") Integer id, ModelMap modelMap){
+		ComponenteCurricular componente = this.componenteCurricularService.find(ComponenteCurricular.class, id);
+
+		if(componente != null){
+			List<Bibliografia> bibliografias = componente.getBibliografias();
+			
+			List<List<RevisionAuditoria>> revisionsAuditoriaBibliografias = this.componenteCurricularService.getAuditoriasBibliografias(bibliografias,componente);
+			
+			if(!revisionsAuditoriaBibliografias.isEmpty())
+				modelMap.addAttribute("revisionsAuditoriaBibliografias", revisionsAuditoriaBibliografias);
+			else
+				modelMap.addAttribute("error", "Não há histórico de mundanças nesse componente curricular");
+		}else{
+			modelMap.addAttribute("error", "Não há histórico de mundanças nesse componente curricular");
+		}
+
+		return "componente/historicoMudancas";
 	}
 
 }

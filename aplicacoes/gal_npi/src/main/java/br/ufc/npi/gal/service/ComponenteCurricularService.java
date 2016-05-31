@@ -2,7 +2,9 @@ package br.ufc.npi.gal.service;
 
 import java.util.List;
 
+import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.ComponenteCurricular;
+import br.ufc.npi.gal.model.RevisionAuditoria;
 import br.ufc.quixada.npi.service.GenericService;
 
 public interface ComponenteCurricularService extends GenericService<ComponenteCurricular> {
@@ -17,4 +19,7 @@ public interface ComponenteCurricularService extends GenericService<ComponenteCu
 	
 	public abstract List<ComponenteCurricular> getTodosComponenteCurricular();
 	
+	public abstract List<Bibliografia> getAuditoriasDeUmaBibliografia(Bibliografia bibliografia);
+	
+	public abstract List<List<RevisionAuditoria>> getAuditoriasBibliografias(List<Bibliografia> bibliografias,ComponenteCurricular componente);
 }

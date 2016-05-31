@@ -42,6 +42,7 @@ public class ComponenteCurricular {
 	@OneToMany(mappedBy = "componente", targetEntity = IntegracaoCurricular.class, fetch = FetchType.LAZY)
 	private List<IntegracaoCurricular> curriculos;
 	
+
 	@OneToMany(mappedBy = "componente", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
 	@OrderBy(clause = "prioridade ASC")
 	private List<Bibliografia> bibliografias;
@@ -156,4 +157,14 @@ public class ComponenteCurricular {
 		}
 		return titulos;
 	}
+	public List<Bibliografia> getBibliografiasPorTipo(String tipoBibliografia){
+		List<Bibliografia> bibliografias = new ArrayList<Bibliografia>();
+		for (Bibliografia bibliografia : this.bibliografias) {
+			if (tipoBibliografia.equals(bibliografia.getTipoBibliografia())) {
+				bibliografias.add(bibliografia);
+			}
+		}
+		return bibliografias;
+	}
+
 }
