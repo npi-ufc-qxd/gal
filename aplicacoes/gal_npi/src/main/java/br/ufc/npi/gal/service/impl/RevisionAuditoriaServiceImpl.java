@@ -1,6 +1,5 @@
 package br.ufc.npi.gal.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;

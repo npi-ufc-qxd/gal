@@ -148,7 +148,7 @@ public class TituloController {
 	@RequestMapping(value = "/{id}/historicoTitulo", method = RequestMethod.GET)
 	public String historicoTitulo(@PathVariable("id") Integer id, ModelMap modelMap) {
 			List<Titulo> titulosAuditoria = this.tituloService.getTitulosAuditoriaById(id);
-			List<RevisionAuditoria> revisionsAuditoria = this.revisionService.getRevisionsAuditoriaTituloById(id);
+			List<RevisionAuditoria> revisionsAuditoria = this.revisionService.getIdsRevisionsAuditoriaDoTitulo(id);
 			List<RevisionAuditoria> mudancas = this.revisionService.getAlteracoes(titulosAuditoria,revisionsAuditoria);
 			
 			if(!(mudancas.isEmpty()) || mudancas == null)
