@@ -48,6 +48,7 @@
 				<p>
 					<a class="btn btn-primary btn-xs" href="<c:url value="/componente/${componente.id}/editar"></c:url>">Editar</a>
 					<a id="excluir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/componente/${componente.id}/excluir"></c:url>">Excluir</a>
+					<a class="btn btn-info btn-xs" href="<c:url value="/componente/${componente.id}/historicoMudancas"></c:url>">Histórico</a>
 				</p>
 				<div id="button-add">
 					<a class="btn btn-primary" href="<c:url value="/componente/${componente.id}/copiar" ></c:url>">
