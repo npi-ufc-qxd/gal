@@ -5,6 +5,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.cache.annotation.CacheEvict;
+
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.repository.TituloRespository;
 import br.ufc.npi.gal.service.TituloService;
@@ -39,5 +41,23 @@ public class TituloServiceImpl extends GenericServiceImpl<Titulo> implements Tit
 	@Override
 	public List<Titulo> getTitulosAuditoriaById(Integer id) {
 		return tituloRespository.getTitulosAuditoriaById(id);
+	}
+	
+	@Override
+	@CacheEvict(value="metas", allEntries=true)
+	public void save(Titulo entity) {
+		super.save(entity);
+	}
+	
+	@Override
+	@CacheEvict(value="metas", allEntries=true)
+	public void update(Titulo entity) {
+		super.update(entity);
+	}
+	
+	@Override
+	@CacheEvict(value="metas", allEntries=true)
+	public void delete(Titulo entity) {
+		super.delete(entity);
 	}
 }
