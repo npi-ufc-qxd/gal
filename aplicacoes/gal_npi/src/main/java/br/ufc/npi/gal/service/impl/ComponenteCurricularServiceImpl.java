@@ -6,7 +6,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.hibernate.annotations.Cache;
 import org.springframework.cache.annotation.CacheEvict;
 
 import br.ufc.npi.gal.model.Bibliografia;
