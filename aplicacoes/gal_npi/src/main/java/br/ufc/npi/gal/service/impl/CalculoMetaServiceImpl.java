@@ -4,11 +4,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.transaction.Transactional;
 
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.transaction.annotation.Propagation;
 
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.CalculadorMeta;
