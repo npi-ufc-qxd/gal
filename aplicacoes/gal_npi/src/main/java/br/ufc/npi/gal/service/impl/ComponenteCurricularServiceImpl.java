@@ -67,7 +67,7 @@ public class ComponenteCurricularServiceImpl extends GenericServiceImpl<Componen
 			for(Bibliografia b : bibliografias){
 				listaAlditoriaDeUmaBibliografia = componenteCurricularRepository.getAuditoriasBibliografia(b);
 				List<RevisionAuditoria> revisions = this.revisionRepository.getRevisionsAuditoriaByBibliografia(b);
-				auditoriaBibliografia = this.revisionRepository.mudancasEmUmaBibliografia(listaAlditoriaDeUmaBibliografia,revisions);
+				auditoriaBibliografia = this.revisionRepository.getRevisionAuditoriaDeUmaBibliografia(listaAlditoriaDeUmaBibliografia,revisions);
 				if(!auditoriaBibliografia.isEmpty())
 					audioriaComponente.add(auditoriaBibliografia);
 			}

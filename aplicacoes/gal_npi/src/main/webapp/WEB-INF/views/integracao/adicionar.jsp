@@ -17,7 +17,7 @@
 			modelAttribute="integracao" role="form" class="form-horizontal">
 
 			<form:input id="estruturaCurricular" class="form-control"
-				style="width: 150px;" type="hidden" value="${idCurriculo}"
+				style="width: 150px;" type="hidden" value="${estrutura.id}"
 				path="estruturaCurricular" required="true" />
 
 			<h4 class="center negrito">Vincular Componente Curricular</h4>
@@ -43,7 +43,7 @@
 				<label for="semestreOferta" class="col-sm-3 control-label">Semestre oferta</label>
 				<div class="col-sm-9">
 					<form:select path="semestreOferta" class="form-control">
-						<c:forEach var="i" begin="1" end="${semestreMax}">
+						<c:forEach var="i" begin="1" end="${estrutura.prazoConclusaoMedio}">
 							<form:option value="${i}">${i}º Semestre</form:option>
 						</c:forEach>
 					</form:select>
@@ -99,6 +99,7 @@
 
 		</form:form>
 		<jsp:include page="../fragments/footer.jsp" />
+		<script src="<c:url value="/resources/js/integracao-adicionar.js" />"></script>
 	</div>
 </body>
 </html>

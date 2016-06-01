@@ -1,4 +1,4 @@
-CREATE TABLE revisionauditoriatitulo
+CREATE TABLE IF NOT EXISTS revisionauditoriatitulo
 (
   id integer NOT NULL,
   timestemp bigint NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE revisionauditoriatitulo
   CONSTRAINT revisionauditoriatitulo_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE titulos_aud
+CREATE TABLE IF NOT EXISTS titulos_aud
 (
   id_t integer NOT NULL,
   rev integer NOT NULL,
@@ -30,22 +30,4 @@ CREATE TABLE titulos_aud
   CONSTRAINT fk_np8n415y2lo20ptg9hhv4ey97 FOREIGN KEY (rev)
       REFERENCES revisionauditoriatitulo (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
-);
-
-CREATE TABLE bibliografias_aud
-(
-  id_componente integer NOT NULL,
-  id_titulo integer NOT NULL,
-  rev integer NOT NULL,
-  revtype smallint,
-  prioridade integer,
-  tipo_bibliografia character varying(255),
-  CONSTRAINT bibliografias_aud_pkey PRIMARY KEY (id_componente, id_titulo, rev),
-  CONSTRAINT fk_j848g65gwlo0u87frj9xm7qoo FOREIGN KEY (id_titulo)
-      REFERENCES titulos (id_t) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_jio5ggb5lrcfhmtdnh9yryg1j FOREIGN KEY (rev)
-      REFERENCES revisionauditoriatitulo (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT uk_81al5asr4enwcd8sgx1bk7uy6 UNIQUE (rev)
 );
