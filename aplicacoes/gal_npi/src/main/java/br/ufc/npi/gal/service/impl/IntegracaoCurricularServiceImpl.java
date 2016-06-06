@@ -3,6 +3,8 @@ package br.ufc.npi.gal.service.impl;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.cache.annotation.CacheEvict;
+
 import br.ufc.npi.gal.model.IntegracaoCurricular;
 import br.ufc.npi.gal.repository.IntegracaoCurricularRepository;
 import br.ufc.npi.gal.service.IntegracaoCurricularService;
@@ -24,4 +26,21 @@ public class IntegracaoCurricularServiceImpl extends GenericServiceImpl<Integrac
 		return integracaoCurricularRepository.getIntegracaoIdComponente(idComponente);
 	}
 	
+	@Override
+	@CacheEvict(value="metas", allEntries = true)
+	public void delete(IntegracaoCurricular entity) {
+		super.delete(entity);
+	}
+	
+	@Override
+	@CacheEvict(value="metas", allEntries = true)
+	public void save(IntegracaoCurricular entity) {
+		super.save(entity);
+	}
+	
+	@Override
+	@CacheEvict(value="metas", allEntries = true)
+	public void update(IntegracaoCurricular entity) {
+		super.update(entity);
+	}
 }

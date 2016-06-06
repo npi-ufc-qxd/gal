@@ -77,11 +77,11 @@ public class Titulo {
 	private Boolean cadastradoBiblioteca;
 	
 	@NotAudited
-	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.EAGER)
 	private List<Bibliografia> bibliografias;
 	
 	@NotAudited
-	@OneToMany(mappedBy = "titulo", targetEntity = Exemplar.class, fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy = "titulo", targetEntity = Exemplar.class, fetch = FetchType.EAGER,cascade=CascadeType.REMOVE)
 	private List<Exemplar> exemplares;
 
 	public Titulo() {

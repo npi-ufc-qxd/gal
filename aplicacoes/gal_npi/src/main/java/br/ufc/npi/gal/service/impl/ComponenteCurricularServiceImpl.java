@@ -6,6 +6,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.cache.annotation.CacheEvict;
+
 import br.ufc.npi.gal.model.Bibliografia;
 import br.ufc.npi.gal.model.ComponenteCurricular;
 import br.ufc.npi.gal.model.RevisionAuditoria;
@@ -85,4 +87,30 @@ public class ComponenteCurricularServiceImpl extends GenericServiceImpl<Componen
 		if(!auditoriaBibliografia.isEmpty())
 			auditoriasComponente.add(auditoriaBibliografia);
 	}	
+	
+	@Override
+	@CacheEvict(value="metas", allEntries = true)
+	public void update(ComponenteCurricular entity) {
+		super.update(entity);
+	}
+	
+	@Override
+	@CacheEvict(value= "metas", allEntries = true)
+	public void delete(ComponenteCurricular entity) {
+		super.delete(entity);
+	}
+	
+	@Override
+	@CacheEvict(value="metas", allEntries = true)
+	public void save(ComponenteCurricular entity) {
+		super.save(entity);
+	}
+	
+	@Override
+	@CacheEvict(value="metas", allEntries = true)
+	public ComponenteCurricular find(Class<ComponenteCurricular> entityClass, Object id) {
+		return super.find(entityClass, id);
+	}
+	
+	
 }
