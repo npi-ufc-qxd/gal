@@ -11,8 +11,12 @@
 	<jsp:include page="../../fragments/htmlHead.jsp" />
 </head>
 <body>
-	<div id="container" style="width: 1000px; margin: 0 auto;">
+	<div id="container">
 		<jsp:include page="../../fragments/header.jsp" />
+		<section id="main-content">
+          	<section class="wrapper"> 
+          	<div class="col-lg-12">
+          	<div class="form-panel">
 		<form:form servletRelativeAction="/curso/${curso.codigo}/estrutura/${curso.id}/editar" method="post" modelAttribute="estruturaCurricular" role="form" class="form-horizontal" >
 			<form:input path="id" type="hidden" />
 			<div class="form-group" style="text-align: center;">
@@ -145,6 +149,10 @@
 				<a	href="<c:url value="javascript:window.history.go(-1)"></c:url>" class="btn btn-default">Cancelar</a>
 			</div>
 		</form:form>
+		</div>
+		</div>
+		</section>
+		</section>
 		<jsp:include page="../../fragments/footer.jsp" />
 	</div>
 </body>

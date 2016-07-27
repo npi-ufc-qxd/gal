@@ -1,12 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="datatables"
-	uri="http://github.com/dandelion/datatables"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="datatables" uri="http://github.com/dandelion/datatables"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +12,10 @@
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="../fragments/header.jsp" />
-		<c:if test="${not empty error}">
+		<jsp:include page="../fragments/header.jsp" />		
+		<section id="main-content">
+          	<section class="wrapper">
+          	<c:if test="${not empty error}">
 			<div class="alert alert-danger alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert">
 					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
@@ -32,6 +31,8 @@
 				<c:out value="${info}"></c:out>
 			</div>
 		</c:if>
+          	<div class="col-lg-12">
+          	<div class="form-panel"> 
 		<div class="panel-body">
 			<h4 class="center">${curso.sigla} - ${curso.nome}</h4>
 			<ul class="nav nav-tabs" role="tablist">
@@ -51,7 +52,7 @@
 					<div id="button-add">
 						<a
 							href="<c:url value="/curso/${curso.codigo}/estrutura/adicionar" ></c:url>">
-							<button class="btn btn-primary">
+							<button class="btn btn-primary pull-left">
 								<span class="glyphicon glyphicon-plus"></span> Adicionar
 								Curriculo
 							</button>
@@ -86,41 +87,42 @@
 						<sec:authorize
 							access="hasAnyRole('COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
 							<div id="button-add">
-								<a style="float: left;" class="btn btn-success"
+								<a style="float: left;" class="btn btn-success pull-left btn-sm"
 									href="<c:url value="/integracao/${curriculo.id}/adicionar" ></c:url>">
 									<span class="glyphicon glyphicon-link"></span> Vincular
 									Componente Curricular
-								</a> <a id="excluir" style="float: right;" class="btn btn-danger"
-									data-toggle="modal" data-target="#confirm-delete" href="#"
-									data-href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/excluir" ></c:url>">
-									<span class="glyphicon glyphicon-trash"></span> Excluir
-									Curriculo
-								</a> 
-								<a
-									href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/relatorioGeral" ></c:url>">
-									<button class="btn btn-primary">
+								</a>
+							<div class=" pull-right">	
+								
+								<a href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/relatorioGeral" ></c:url>">
+									<button class="btn btn-primary btn-sm">
 										<span class="glyphicon glyphicon-file"></span> Relatório Geral
 									</button>
 								</a>
-								<a
-									href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/editar" ></c:url>">
-									<button class="btn btn-primary">
-										<span class="glyphicon glyphicon-edit"></span> Editar
-										Curriculo
+								
+								<a href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/editar" ></c:url>">
+									<button class="btn btn-primary btn-sm">
+										<span class="glyphicon glyphicon-edit"></span> Editar Curriculo
 									</button>
 								</a>
+								
+								<a id="excluir" class="btn btn-danger btn-sm"
+									data-toggle="modal" data-target="#confirm-delete" href="#"
+									data-href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/excluir" ></c:url>">
+									<span class="glyphicon glyphicon-trash"></span> Excluir Curriculo
+								</a> 
+							</div>			
 							</div>
 							<div>
 								<div class="halfContainer">
-									<b>Código: </b> ${curriculo.codigo} <br> <b>Matriz
-										Curricular:</b> ${curriculo.matrizCurricular}<br> <b>Unidade
-										de Vinculação: </b>${curriculo.unidadeVinculacao }<br> <b>Município
-										de funcionamento: </b> ${curriculo.municipio }<br> <b>Período
-										Letivo de Entrada em Vigor: </b>${curriculo.semestreEntradaVigor}<br>
-									<b>Carga Horária Optativa Minima: </b>${curriculo.chOptMinima }<b>
-										hrs</b><br> <b>Carga Horária Máxima de Componentes
-										Curriculares Optativos Livres: </b>${curriculo.chCompOptLivres }<b>
-										hrs</b><br> <br>
+									<b>Código: </b> ${curriculo.codigo} <br> 
+									<b>Matriz Curricular:</b> ${curriculo.matrizCurricular}<br> 
+									<b>Unidade de Vinculação: </b>${curriculo.unidadeVinculacao }<br> 
+									<b>Município de funcionamento: </b> ${curriculo.municipio }<br> 
+									<b>Período Letivo de Entrada em Vigor: </b>${curriculo.semestreEntradaVigor}<br>
+									<b>Carga Horária Optativa Minima: </b>${curriculo.chOptMinima }<b>hrs</b><br>
+									<b>Carga Horária Máxima de Componentes Curriculares Optativos Livres: </b>${curriculo.chCompOptLivres }<b>hrs</b><br>
+									<br>
 								</div>
 								<div class="halfContainer">
 									<div class="littleBox">
@@ -175,14 +177,14 @@
 									<datatables:column title="Semestre oferta">
 										<c:out value="${integracao.semestreOferta}"></c:out>
 									</datatables:column>
-									<datatables:column title="Editar">
-										<a class="btn btn-primary"
+									<datatables:column title="Editar" style="text-align:center;">
+										<a class="btn btn-primary btn-xs"
 											href="<c:url value="/integracao/${integracao.componente.id}/${curriculo.id}/editar" ></c:url>">
-											<span class="glyphicon glyphicon-edit"></span>
+											<span class="glyphicon glyphicon-edit "></span>
 										</a>
-									</datatables:column>
-									<datatables:column title="Excluir">
-										<a id="excluir" class="btn btn-danger" data-toggle="modal"
+									</datatables:column >
+									<datatables:column title="Excluir" style="text-align:center;">
+										<a id="excluir" class="btn btn-danger btn-xs" data-toggle="modal"
 											data-target="#confirm-delete" href="#"
 											data-href="<c:url value="/integracao/${integracao.componente.id}/${curriculo.id}/excluir" ></c:url>">
 											<span class="glyphicon glyphicon-trash"></span>
@@ -219,6 +221,10 @@
 				</c:forEach>
 			</div>
 		</div>
+		</div>
+		</div>
+		</section>
+		</section>
 
 		<jsp:include page="../fragments/footer.jsp" />
 		<div class="modal fade" id="confirm-delete" tabindex="-1"

@@ -7,48 +7,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Editar Curso</title>
-	<jsp:include page="../fragments/htmlHead.jsp" />
+<title>Editar Curso</title>
+<jsp:include page="../fragments/htmlHead.jsp" />
 </head>
 <body>
 	<div id="container">
 		<jsp:include page="../fragments/header.jsp" />
-		<form:form servletRelativeAction="/curso/editar" method="post" modelAttribute="curso" role="form" class="form-horizontal">
-			<form:input path="id" type="hidden" />
-			
-			<div class="form-group" style="text-align: center;">
-				<label class="control-label" style="font-size: 20px;">Editar Curso</label>
-			</div>
-			
-			<div class="form-group">
-			    <label for="codigo" class="col-sm-1 control-label">Código</label>
-			    <div class="col-sm-10">
-			    	<form:input id="codigo" class="form-control" placeholder="Código" path="codigo"/>
-			    	<form:errors path="codigo" cssClass="error" />
-			    </div>
-			</div>
-			
-			<div class="form-group">
-			    <label for="nome" class="col-sm-1 control-label">Nome</label>
-			    <div class="col-sm-10">
-			    	<form:input id="nome" class="form-control" placeholder="Nome" path="nome"/>
-			    	<form:errors path="nome" cssClass="error" />
-			    </div>
-			</div>
-			
-			<div class="form-group">
-			    <label for="sigla" class="col-sm-1 control-label">Sigla</label>
-			    <div class="col-sm-10">
-			    	<form:input id="sigla" class="form-control" placeholder="Sigla" path="sigla"/>
-			    	<form:errors path="sigla" cssClass="error" />
-			    </div>
-			</div>
-			
-			<div class="controls">
-				<input id="criar" class="btn btn-primary" type="submit" value="Salvar"/>
-				<a href="<c:url value="/curso/listar"></c:url>" class="btn btn-default">Cancelar</a>
-			</div>
-		</form:form>
+		<section id="main-content">
+			<section class="wrapper">
+				<div class="col-lg-12">
+					<div class="form-panel">
+						<form:form servletRelativeAction="/curso/editar" method="post"
+							modelAttribute="curso" role="form" class="form-horizontal">
+							<form:input path="id" type="hidden" />
+
+							<div class="form-group" style="text-align: center;">
+								<label class="control-label" style="font-size: 20px;">Editar
+									Curso</label>
+							</div>
+
+							<div class="form-group">
+								<label for="codigo" class="col-sm-1 control-label">Código</label>
+								<div class="col-sm-10">
+									<form:input id="codigo" class="form-control"
+										placeholder="Código" path="codigo" />
+									<form:errors path="codigo" cssClass="error" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="nome" class="col-sm-1 control-label">Nome</label>
+								<div class="col-sm-10">
+									<form:input id="nome" class="form-control" placeholder="Nome"
+										path="nome" />
+									<form:errors path="nome" cssClass="error" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="sigla" class="col-sm-1 control-label">Sigla</label>
+								<div class="col-sm-10">
+									<form:input id="sigla" class="form-control" placeholder="Sigla"
+										path="sigla" />
+									<form:errors path="sigla" cssClass="error" />
+								</div>
+							</div>
+
+							<div class="controls">
+								<input id="criar" class="btn btn-primary" type="submit"
+									value="Salvar" /> <a
+									href="<c:url value="/curso/listar"></c:url>"
+									class="btn btn-default">Cancelar</a>
+							</div>
+						</form:form>
+					</div>
+				</div>
+			</section>
+		</section>
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
 

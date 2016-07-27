@@ -12,7 +12,10 @@
 <body>
 	<div id="container">
 		<jsp:include page="../fragments/header.jsp" />
-
+		<section id="main-content">
+          	<section class="wrapper"> 
+          	<div class="col-lg-12">
+          	<div class="form-panel">
 		<form:form servletRelativeAction="/integracao/adicionar" method="post"
 			modelAttribute="integracao" role="form" class="form-horizontal">
 
@@ -98,6 +101,10 @@
 			</div>
 
 		</form:form>
+		</div>
+		</div>
+		</section>
+		</section>
 		<jsp:include page="../fragments/footer.jsp" />
 		<script src="<c:url value="/resources/js/integracao-adicionar.js" />"></script>
 	</div>

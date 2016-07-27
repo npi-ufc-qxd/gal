@@ -1,0 +1,64 @@
+/*eslint-env jquery*/
+$( document ).ready(function() {
+	
+	$("#confirm-delete").on("show.bs.modal", function(e) {
+		$(this).find(".btn-danger").attr("href", $(e.relatedTarget).data("href"));
+	});
+	
+	var spanError = $("div:has(span.error)");
+	if (spanError != null){
+		spanError.find("span.error").css("color", "#a94442");
+		spanError.find("span.error").parent().parent().addClass("has-error has-feedback");
+	}
+	
+	
+<<<<<<< HEAD
+	$("select#selecionaComponente").change(function() { 
+		var option = $(this).val();
+
+		if(option == -1){
+			newUrl = "/" + getAppName() + "/meta/listar";
+		}else{
+			newUrl = "/" + getAppName() + "/meta/componente/"+(option)+"/listar";
+		}
+
+		$(location).attr("href", newUrl);
+	});
+
+	
+	if($('#drag-and-drop .sortable-list').length > 0){
+		var lista_drag_and_drop_basica = $('#drag-and-drop .sortable-list#basica');
+		Sortable.create(lista_drag_and_drop_basica[0], { group: "drag_and_drop" });
+
+		var lista_drag_and_drop_complementar = $('#drag-and-drop .sortable-list#complementar');
+		Sortable.create(lista_drag_and_drop_complementar[0], { group: "drag_and_drop" });
+
+		var lista_drag_and_drop_acervo = $('#drag-and-drop .sortable-list#acervo');
+		Sortable.create(lista_drag_and_drop_acervo[0], { group: "drag_and_drop" });
+	}
+
+	$(document).on("click", ".open-AddBookDialog", function() {
+		var id = $(this).data('id');
+		$(".modal-body #id").val(id);
+	});
+=======
+>>>>>>> master
+});
+
+function goBack() {
+	window.history.back()
+}
+
+function mascara(o,f){
+    v_obj=o
+    v_fun=f
+    setTimeout("execmascara()",1)
+}
+	
+function execmascara(){
+    v_obj.value=v_fun(v_obj.value)
+}
+
+function soNumeros(v){
+    return v.replace(/\D/g,"");
+}

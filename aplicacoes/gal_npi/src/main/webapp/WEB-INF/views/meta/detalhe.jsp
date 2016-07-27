@@ -19,33 +19,32 @@
 <body>
 	<div id="container">
 		<jsp:include page="../fragments/header.jsp" />
-
-		<c:if test="${not empty error}">
-			<div class="alert alert-danger alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert">
-					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-				</button>
-				<c:out value="${error}"></c:out>
-			</div>
-		</c:if>
-		<c:if test="${not empty info}">
-			<div class="alert alert-info alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert">
-					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-				</button>
-				<c:out value="${info}"></c:out>
-			</div>
-		</c:if>
+		<section id="main-content">
+          	<section class="wrapper">     			
+				<c:if test="${not empty error}">
+					<div class="alert alert-danger alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+						</button>
+						<c:out value="${error}"></c:out>
+					</div>
+				</c:if>
+				<c:if test="${not empty info}">
+					<div class="alert alert-info alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+						</button>
+						<c:out value="${info}"></c:out>
+					</div>
+				</c:if> 
+          	<div class="col-lg-12">
+          	<div class="form-panel">
 
 		<div style="text-align: left;">
 			<label class="control-label" style="font-size: 17px;">Título:
 				${titulo.nome}</label>
 		</div>
 		<br>
-
-		<button class="btn btn-default" onclick="goBack()">
-			Voltar
-		</button>
 		
 		<div style="text-align: left;">
 			<label class="control-label" style="font-size: 15px;">Metas
@@ -117,6 +116,10 @@
 			</table>
 
 		</c:if>
+		</div>
+		</div>
+		</section>
+		</section>
 
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>

@@ -11,15 +11,17 @@
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="../fragments/header.jsp" />
-		
-		<c:if test="${not empty error}">
-			<div class="alert alert-danger alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-				<c:out value="${error}"></c:out>
-			</div>
-		</c:if>
-		
+		<jsp:include page="../fragments/header.jsp" />		
+		<section id="main-content">
+          	<section class="wrapper"> 
+				<c:if test="${not empty error}">
+					<div class="alert alert-danger alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<c:out value="${error}"></c:out>
+					</div>
+				</c:if>
+          	<div class="col-lg-12">
+          	<div class="form-panel">
 		
 		<div style="margin-top: 40px; font-size:17px; " >
 		<p>
@@ -63,6 +65,10 @@
 				<a href="<c:url value="/meta/listar"></c:url>" class="btn btn-default">Cancelar</a>
 			
 		</form:form>
+		</div>
+		</div>
+		</section>
+		</section>
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
 </body>

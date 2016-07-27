@@ -14,6 +14,10 @@
 <body>
 	<div id="container">
 		<jsp:include page="../fragments/header.jsp" />
+		<section id="main-content">
+          	<section class="wrapper"> 
+          	<div class="col-lg-12">
+          	<div class="form-panel">
 		<form:form id="formfieldtitulo" servletRelativeAction="/titulo/editar" method="post" modelAttribute="titulo" role="form" class="form-horizontal">
 			<form:input path="id" type="hidden" />
 			
@@ -139,6 +143,10 @@
 				<button class="btn btn-default" onclick="goBack()">Cancelar</button>
 			</div>
 		</form:form>
+		</div>
+		</div>
+		</section>
+		</section>
 		<jsp:include page="../fragments/footer.jsp" />
 		<script src="<c:url value="/resources/js/titulo-adicionar.js" />"></script>
 		<script src="<c:url value="/resources/js/titulo-editar.js" />"></script>

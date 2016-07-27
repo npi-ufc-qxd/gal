@@ -9,32 +9,34 @@
 <jsp:include page="../../fragments/htmlHead.jsp" />
 </head>
 <body>
-	<div id="container" style="width: 1000px; margin: 0 auto;">
+	<div id="container">
 		<jsp:include page="../../fragments/header.jsp" />
-		<c:if test="${not empty error}">
+		
+		<section id="main-content">
+          	<section class="wrapper">
+          	<c:if test="${not empty error}">
 			<div class="alert alert-danger alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert">
 					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 				</button>
 				<c:out value="${error}"></c:out>
-			</div>
-		</c:if>
-
-		<c:if test="${not empty info}">
-			<div class="alert alert-info alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert">
-					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-				</button>
-				<c:out value="${info}"></c:out>
-			</div>
-		</c:if>
-
-		<button class="btn btn-default" onclick="goBack()">Voltar</button>
-
-		<c:if test="${empty estrutura}">
+				</div>
+			</c:if>
+	
+			<c:if test="${not empty info}">
+				<div class="alert alert-info alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<c:out value="${info}"></c:out>
+				</div>
+			</c:if>
+			<c:if test="${empty estrutura}">
 			<div class="alert alert-warning" role="alert">Estrutura
 				Curricular inexistente</div>
-		</c:if>
+			</c:if> 
+          	<div class="col-lg-12">
+          	<div class="form-panel">
 
 		<c:if test="${not empty estrutura}">
 			<div style="text-align: center;">
@@ -123,6 +125,10 @@
 				</table>
 			</c:if>
 		</c:if>
+		</div>
+		</div>
+		</section>
+		</section>
 		<jsp:include page="../../fragments/footer.jsp" />
 	</div>
 

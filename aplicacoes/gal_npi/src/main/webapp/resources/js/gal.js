@@ -1,5 +1,6 @@
 /*eslint-env jquery*/
 $( document ).ready(function() {
+
 	
 	$("#confirm-delete").on("show.bs.modal", function(e) {
 		$(this).find(".btn-danger").attr("href", $(e.relatedTarget).data("href"));
@@ -31,3 +32,5 @@ function execmascara(){
 function soNumeros(v){
     return v.replace(/\D/g,"");
 }
+
+

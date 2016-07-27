@@ -9,8 +9,12 @@
 <jsp:include page="../../fragments/htmlHead.jsp" />
 </head>
 <body>
-	<div id="container" style="width: 1000px; margin: 0 auto;">
+	<div id="container">
 		<jsp:include page="../../fragments/header.jsp" />
+		<section id="main-content">
+          	<section class="wrapper"> 
+          	<div class="col-lg-12">
+          	<div class="form-panel">
 		<form:form
 			servletRelativeAction="/curso/${curso.codigo}/estrutura/adicionar"
 			method="post" modelAttribute="estruturaCurricular" role="form"
@@ -20,8 +24,6 @@
 				<label class="control-label" style="font-size: 20px;">Adicionar
 					Nova Estrutura Curricular</label>
 			</div>
-
-
 
 			<div class="form-group">
 				<label for="codigo" class="col-sm-1 control-label"style="width:210px;">Código</label>
@@ -119,11 +121,6 @@
 						path="prazoConclusaoMaximo" />
 					<form:errors path="prazoConclusaoMaximo" cssClass="error" />
 				</div></div>
-					
-			
-			
-			
-			
 			
 				<label >Carga Horária por Período Letivo (hrs)</label><br><br>
 				
@@ -152,11 +149,8 @@
 						placeholder="Máxima"
 						path="chPeriodoMaximo" />
 					<form:errors path="chPeriodoMaximo" cssClass="error" />
-				</div>	
-				
-
-
-			<br><br><br><br>
+				</div></div>	
+						
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit"
 					value="Adicionar" /> 
@@ -164,6 +158,10 @@
 					class="btn btn-default">Cancelar</a>
 			</div>
 		</form:form>
+		</div>
+		</div>
+		</section>
+		</section>
 		<jsp:include page="../../fragments/footer.jsp" />
 	</div>
 </body>
