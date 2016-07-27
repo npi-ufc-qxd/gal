@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-	<script src="<c:url value="/resources/bootstrap/js/jquery-1.8.3.min.js" />"></script>
+	<script src="<c:url value="/resources/js/jquery-1.8.3.min.js" />"></script>
 	<script src="<c:url value="/resources/js/jquery-migrate-1.2.1.min.js" />"></script>
 	<script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />"></script>
 	<script src="<c:url value="/resources/js/select2.min.js" />"></script>
@@ -15,9 +15,9 @@
 	<script src="<c:url value="/resources/js/Sortable.js" />"></script> <!-- Nova biblioteca para manipulação de drag and drop -->
 	<script src="<c:url value="/resources/js/bootstrap-datepicker.js" />"></script>
 	<script src="<c:url value="/resources/js/bootstrap-datepicker.pt-BR.js" />"></script>
-	<script src="<c:url value="/resources/bootstrap/js/jquery.scrollTo.min.js" />"></script>
-	<script src="<c:url value="/resources/bootstrap/js/jquery.nicescroll.js" />"></script>
-	<script src="<c:url value="/resources/bootstrap/js/common-scripts.js" />"></script>
+	<script src="<c:url value="/resources/js/jquery.scrollTo.min.js" />"></script>
+	<script src="<c:url value="/resources/js/jquery.nicescroll.js" />"></script>
+	<script src="<c:url value="/resources/js/common-scripts.js" />"></script>
 
 
     <script class="include" type="text/javascript" src="<c:url value="/resources/bootstrap/js/jquery.dcjqaccordion.2.7.js" />"></script>
