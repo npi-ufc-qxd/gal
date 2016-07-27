@@ -1,96 +1,81 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<div class="page-header">
-	<h1>
-		GAL <small>Gestão de Aquisição de Livros</small>
-	</h1>
-</div>
-<sec:authorize access="isAuthenticated()">
-	<div align="right">Olá, ${pageContext.request.userPrincipal.name}!</div>
-</sec:authorize>
-<nav class="navbar navbar-default" role="navigation">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="<c:url value='/inicio'/>">Início</a>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
+<section id="container">
+	<!-- **********************************************************************************************************************************************************
+      TOP BAR CONTENT & NOTIFICATIONS
+      *********************************************************************************************************************************************************** -->
+	<!--header start-->
+	<header class="header black-bg">
+		<div class="sidebar-toggle-box">
+			<div class="fa fa-bars tooltips" data-placement="right"
+				data-original-title="Toggle Navigation"  ></div>
 		</div>
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">Componentes Curriculares<b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
-							<li><a href="<c:url value='/componente/adicionar'/>">Adicionar</a></li>
-							<li class="divider"></li>
-						</sec:authorize>
-						<li><a href="<c:url value='/componente/listar'/>">Listar</a></li>
-					</ul>
-				</li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">Cursos<b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
-							<li><a href="<c:url value='/curso/adicionar'/>">Adicionar</a></li>
-							<li class="divider"></li>
-						</sec:authorize>
-						<li><a href="<c:url value='/curso/listar'/>">Listar</a></li>
-					</ul>
-				</li>				
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown">Títulos<b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
-							<li><a href="<c:url value='/titulo/adicionar'/>">Adicionar</a></li>
-							<li class="divider"></li>
-						</sec:authorize>
-						<li><a href="<c:url value='/titulo/listar'/>">Listar</a></li>
-					</ul>
-				</li>	
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Cálculos de Metas<b class="caret"></b></a>
-					<ul class="dropdown-menu">
+		<!--logo start-->
+		<a href="<c:url value='/'/>" class="logo"><b>GAL</b></a>
+		<!--logo end-->
+
+		<div class="top-menu">
+			<ul class="nav pull-right top-menu">
+				
+				<sec:authorize access="isAuthenticated()">
+					<li><a class="logout" href="<c:url value="/logout" />">Sair<span
+						class="glyphicon glyphicon-off"></span></a></li>						
+				</sec:authorize>
+				<sec:authorize access="isAnonymous()">
+					<li><a class="logout" href="<c:url value="/login" />">Login&nbsp;<span
+						class="glyphicon glyphicon-user"></span></a></li>
+				</sec:authorize>	
+			</ul>
+		</div>
+	</header>
+	<!--header end-->
+
+	<!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+	<!--sidebar start-->
+	<aside>
+		<div id="sidebar" class="nav-collapse ">
+			<!-- sidebar menu start-->
+			<ul class="sidebar-menu" id="nav-accordion">
+				<sec:authorize access="isAuthenticated()">
+					<h5 class="centered">${pageContext.request.userPrincipal.name}</h5>
+				</sec:authorize>
+				<li><a href="<c:url value='/componente/listar'/>">Componentes Curriculares</a></li>
+
+				<li><a href="<c:url value='/curso/listar'/>">Cursos</a></li>
+				
+				<li><a href="<c:url value='/titulo/listar'/>">Titulos</a></li>
+
+				<li class="sub-menu"><a href="javascript:;"><span>Caulculo de Metas</span></a>
+					<ul class="sub">
 						<sec:authorize access="hasAnyRole('BIBLIOTECARIO','COORDENACAO_ACADEMICA')">
 							<li><a href="<c:url value='/meta/configurar'/>">Configurar</a></li>
 						</sec:authorize>
 							<li><a href="<c:url value='/meta/listar'/>">Listar</a></li>
-						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
-							<li class="divider"></li>
+						<sec:authorize access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">		
 							<li><a href="<c:url value='/meta/downloadMetaDetalhada'/>">Download</a></li>
-						</sec:authorize>
+						</sec:authorize>	
 					</ul>
 				</li>
-				<li>
 				<sec:authorize access="hasAnyRole('BIBLIOTECARIO','COORDENACAO_ACADEMICA')">
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Acervo<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="<c:url value='/acervo/atualizar'/>">Atualizar
-									acervo</a></li>
-							<li class="divider"></li>
-							<li><a href="<c:url value='/acervo/conflitos'/>">Resolver
-									Conflitos</a></li>
+					<li class="sub-menu"><a href="javascript:;"> <span>Acervo</span></a>
+						<ul class="sub">
+							<li><a href="<c:url value='/acervo/atualizar'/>">Atualizar Acervo</a></li>
+							<li><a href="<c:url value='/acervo/conflitos'/>">Resolver Conflitos</a></li>
 						</ul>
 					</li>
 				</sec:authorize>		
-				<li><a href="<c:url value='/contatos'/>">Contato/Suporte</a>
+
 			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<sec:authorize access="isAuthenticated()">
-					<li><a href="<c:url value="/logout" />">Sair<span
-						class="glyphicon glyphicon-off"></span></a></li>						
-				</sec:authorize>
-				<sec:authorize access="isAnonymous()">
-					<li><a href="<c:url value="/login" />">Login&nbsp;<span
-						class="glyphicon glyphicon-user"></span></a></li>
-				</sec:authorize>			
-			</ul>
+			<!-- sidebar menu end-->
 		</div>
-	</div>
-</nav>
+	</aside>
+	<!--sidebar end-->
+	
+
+</section>

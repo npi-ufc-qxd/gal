@@ -1,0 +1,193 @@
+@CHARSET "utf-8";
+
+.dataTables_filter, .dataTables_scroll {
+	margin-bottom: 20px;
+}
+.form-horizontal {
+	text-align: center;
+}
+
+.tab-content {
+	width: 100% !important;
+}
+
+h4 {
+	font-size: 20px;
+	margin: 20px 0;
+}
+
+.negrito {
+	font-weight: 700;
+}
+
+.center{
+	text-align: center;
+}
+
+div.alert {
+	text-align: center;
+}
+
+#button-add {
+	text-align: right;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+/* Só sobrescreva classes default do bootstrap caso necessario */
+div.panel-heading {
+	padding-bottom: 44px;/* !important;*/
+}
+
+div.panel-default {
+	margin-top: 7px;/* !important;*/
+}
+
+div.panel-heading #editar {
+	margin-right: 10px;
+}
+
+.nav-tabs > li.active > a {
+	background-color: #f5f5f5;
+	font-weight: bold;
+}
+.nav-tabs > li.active > a:hover {
+	background-color: #f5f5f5;
+}
+.nav-tabs > li.active > a:focus {
+    color: black;
+    background-color: #f5f5f5;  
+}
+.nav-tabs > li > a {
+	font-weight: bold;
+}
+
+#resultado tbody tr td,
+#resultado thead tr th {
+	text-align: center;
+	vertical-align: middle;
+}
+
+#container {
+	margin: 0px auto;
+	width: 90%;
+}
+
+.halfContainer{
+	box-sizing: border-box;
+	border-width: thin;
+	margin: 0px auto;
+	width: 49%;
+	position: relative;
+	float:left;
+	padding:6px 12px;
+	word-wrap: break-word;
+	line-height:2;
+}
+
+.littleBox{
+	border-style: solid; 
+	border-width: 1px;
+	border-color: #E7E7E7; 
+	border-radius: 5px;
+	margin: 0 auto; 
+	padding: 0 12px
+}
+
+.sidebyside {
+	box-sizing: border-box;
+	width: 75px; 
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	-webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+#informacao{
+	margin-top: 100px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.nomeComponente{
+	color: #333;
+}
+
+/* fix accordion de bibliografias visualizar componente */
+.panel-default .componente-bibliografia-panel-heading{
+	padding-bottom: 9px;
+	background-color: #d3d6ff;
+}
+.panel-default .componente-bibliografia-panel-body{
+	background-color: #eaebff;
+	padding-bottom: 0;
+}
+
+.panel-default .bibliografia-virtual-nao-cadastrada, .bibliografia-virtual-nao-cadastrada{
+	background-color: #ffcc00;
+}
+
+.fix-checkbox{
+	text-align: left;
+}
+
+.alert{
+	padding: 13px;
+}

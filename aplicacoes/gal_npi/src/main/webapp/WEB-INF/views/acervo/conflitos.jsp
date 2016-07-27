@@ -23,16 +23,19 @@
 <title>Resolver Conflitos de Atualização de Acervo</title>
 <jsp:include page="../fragments/htmlHead.jsp" />
 </head>
-<body><div id="container">
+<body>
+<div id="container">
 		<jsp:include page="../fragments/header.jsp" />
-		
-		<c:if test="${not empty info}">
-			<div class="alert alert-info alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-				<c:out value="${info}"></c:out>
-			</div>
-		</c:if>
-		
+		<section id="main-content">
+          	<section class="wrapper"> 
+          	<c:if test="${not empty info}">
+				<div class="alert alert-info alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<c:out value="${info}"></c:out>
+				</div>
+			</c:if>
+          	<div class="col-lg-12">
+          	<div class="form-panel">
 		<datatables:table id="exemplarTable" data="${exemplares}" cdn="true"
 					row="exemplar" theme="bootstrap2" cssClass="table table-striped">
 					
@@ -48,6 +51,10 @@
 						<a class="btn btn-primary" href="<c:url value="../acervo/${exemplar.id }/editar" ></c:url>"><span class="glyphicon glyphicon-edit"></span></a>
 					</datatables:column>
 			</datatables:table>
+		</div>
+		</div>
+		</section>
+		</section>	
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
 </body>

@@ -12,6 +12,10 @@
 <body>
 	<div id="container">
 		<jsp:include page="../fragments/header.jsp" />
+		<section id="main-content">
+          <section class="wrapper">
+          <div class="col-lg-12">
+          	<div class="form-panel">
 		<form:form servletRelativeAction="/componente/copiar" method="post"
 			modelAttribute="componente" role="form" class="form-horizontal">
 
@@ -73,7 +77,7 @@
 				</div>
 			</div>
 
-			<div class=container>
+	
 				<h4>Bibliografias</h4>
 				<hr>
 				<h4>Bibliografia Básica</h4>
@@ -118,7 +122,7 @@
 						</c:forEach>
 					</div>
 				</c:if>
-			</div>
+	
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit"
 					value="Copiar" /> <a
@@ -126,8 +130,10 @@
 					class="btn btn-default" onclick="goBack()">Cancelar</a>
 			</div>
 		</form:form>
-
-
+		</div>
+		</div>
+		</section>
+		</section>
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
 </body>

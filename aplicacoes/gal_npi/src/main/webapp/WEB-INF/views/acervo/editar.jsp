@@ -14,13 +14,17 @@
 <body>
 	<div id="container">
 		<jsp:include page="../fragments/header.jsp" />
+		<section id="main-content">
+          	<section class="wrapper">
+	          	<c:if test="${not empty info}">
+					<div class="alert alert-info alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<c:out value="${info}"></c:out>
+					</div>
+				</c:if> 
+          		<div class="col-lg-12">
+        	  	<div class="form-panel">
 		
-		<c:if test="${not empty info}">
-			<div class="alert alert-info alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-				<c:out value="${info}"></c:out>
-			</div>
-		</c:if>
 
 		<form:form modelAttribute="exemplar" id="reg" servletRelativeAction="/acervo/editar" method="post" role="form" class="form-horizontal">
 			<div class="form-group" style="text-align: center;">
@@ -143,6 +147,10 @@
 				<a href="<c:url value="/acervo/conflitos"></c:url>" class="btn btn-default">Cancelar</a>
 			</div>
 		</form:form>
+		</div>
+		</div>
+		</section>
+		</section>
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
 

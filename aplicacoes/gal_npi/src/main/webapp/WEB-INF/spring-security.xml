@@ -61,7 +61,7 @@
 		
 		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
  		 
-		<form-login login-page="/login" default-target-url="/" 
+		<form-login login-page="/login" default-target-url="/"
  			authentication-failure-url="/loginfailed" />
  		<logout logout-success-url="/login" logout-url="/logout" invalidate-session="true" delete-cookies="JSESSIONID"/>
 	</http>
@@ -70,5 +70,5 @@
 		<authentication-manager alias="authenticationManager">
 		    <authentication-provider ref="ldapAuthentication"></authentication-provider>
 		</authentication-manager>
-  	<global-method-security  secured-annotations = "enabled"  />
+  	<global-method-security  secured-annotations = "enabled" />
 </beans:beans>

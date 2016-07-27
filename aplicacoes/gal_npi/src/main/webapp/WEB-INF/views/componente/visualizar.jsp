@@ -14,48 +14,50 @@
 </head>
 <body>
 	<div id="container">
-		
-		<jsp:include page="../fragments/header.jsp" />
-		
-		<c:if test="${not empty error}">
+		<jsp:include page="../fragments/header.jsp" />		
+		<section id="main-content">
+          	<section class="wrapper">
+          		<c:if test="${not empty error}">
 			<div class="alert alert-danger alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<c:out value="${error}"></c:out>
-			</div>
-		</c:if>
+				</div>
+			</c:if>
 		
-		<c:if test="${not empty info}">
-			<div class="alert alert-info alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-				<c:out value="${info}"></c:out>
-			</div>
-		</c:if>
-		
-		<button class="btn btn-default" onclick="goBack()">Voltar</button>
-		
-		<c:if test="${empty componente}">
-			<div class="alert alert-warning" role="alert">Componente curricular inexistente</div>
-		</c:if>
-		
+			<c:if test="${not empty info}">
+				<div class="alert alert-info alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<c:out value="${info}"></c:out>
+				</div>
+			</c:if>
+			
+			<c:if test="${empty componente}">
+				<div class="alert alert-warning" role="alert">Componente curricular inexistente</div>
+			</c:if>
+			
+          		<div class="col-lg-12">
+          		<div class="form-panel"> 
+          			<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
+						<div class=" pull-right">	
+							<p class="text-right">
+								<a class="btn btn-primary btn-xs " href="<c:url value="/componente/${componente.id}/editar"></c:url>">Editar</a>
+								<a id="excluir" class="btn btn-danger btn-xs " data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/componente/${componente.id}/excluir"></c:url>">Excluir</a>
+							</p>
+							<div id="button-add">
+								<a class="btn btn-primary " href="<c:url value="/componente/${componente.id}/copiar" ></c:url>">
+									Copiar Componente Curricular
+								</a>
+							</div>
+						</div>	
+					</sec:authorize>
 		<c:if test="${not empty componente}">
+			
 			<h4 class="center negrito">Componente Curricular</h4>
 			
 			<p>Nome: <b>${componente.nome}</b></p>
 			<p>Código: <b>${componente.codigo}</b></p>
 			<p>Tipo: <b>${componente.tipo}</b></p>
-			
-			<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
-				<p>
-					<a class="btn btn-primary btn-xs" href="<c:url value="/componente/${componente.id}/editar"></c:url>">Editar</a>
-					<a id="excluir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/componente/${componente.id}/excluir"></c:url>">Excluir</a>
-				</p>
-				<div id="button-add">
-					<a class="btn btn-primary" href="<c:url value="/componente/${componente.id}/copiar" ></c:url>">
-						Copiar Componente Curricular
-					</a>
-				</div>
-			</sec:authorize>
-			
+		
 			<hr>
 			
 			<h4>Integrações Curriculares</h4>
@@ -235,8 +237,11 @@
 			</c:if>
 			
 		</c:if>
-
-		<jsp:include page="../fragments/footer.jsp" />
+		</div>
+		</div>
+	</section>
+</section>
+	<jsp:include page="../fragments/footer.jsp" />
 	</div>
 	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">

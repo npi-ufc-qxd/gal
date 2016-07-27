@@ -14,7 +14,11 @@
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="../fragments/header.jsp" />
+		<jsp:include page="../fragments/header.jsp" />	
+		<section id="main-content">
+          	<section class="wrapper"> 
+          	<div class="col-lg-12">
+          	<div class="form-panel">
 		<div class="form-group" style="text-align: center;">
 			<label class="control-label" style="font-size: 20px;">Atualizar
 				Acervo</label>
@@ -81,7 +85,11 @@
 
 		</div>
 	</div>
-	<div style="clear: both;"></div>
+		<div style="clear: both;"></div>
+	</div>
+	</section>
+	</section>
+	</div>
 	
 	<jsp:include page="../fragments/footer.jsp" />
 

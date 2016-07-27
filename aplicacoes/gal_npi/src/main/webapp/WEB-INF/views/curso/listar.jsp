@@ -1,8 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -14,67 +16,84 @@
 	<div id="container">
 		<jsp:include page="../fragments/header.jsp" />
 
-		<c:if test="${not empty error}">
-			<div class="alert alert-danger alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert">
-					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-				</button>
-				<c:out value="${error}"></c:out>
-			</div>
-		</c:if>
+		<section id="main-content">
+			<section class="wrapper">
+				<c:if test="${not empty error}">
+					<div class="alert alert-danger alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+						</button>
+						<c:out value="${error}"></c:out>
+					</div>
+				</c:if>
 
-		<c:if test="${not empty info}">
-			<div class="alert alert-info alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert">
-					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-				</button>
-				<c:out value="${info}"></c:out>
-			</div>
-		</c:if>
+				<c:if test="${not empty info}">
+					<div class="alert alert-info alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+						</button>
+						<c:out value="${info}"></c:out>
+					</div>
+				</c:if>
 
-		<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
-			<div id="button-add">
-				<a href="<c:url value="/curso/adicionar" ></c:url>">
-					<button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Adicionar</button>
-				</a>
-			</div>
-		</sec:authorize>
-		
+				<sec:authorize
+					access="hasAnyRole('BIBLIOTECARIO', 'COORDENADOR_CURSO','COORDENACAO_ACADEMICA')">
+					<div id="button-add" style="">
+						<a href="<c:url value="/curso/adicionar" ></c:url>">
+							<button class="btn btn-primary pull-right"
+								style="margin-bottom: 10px;">
+								<span class="glyphicon glyphicon-plus"></span> Adicionar
+							</button>
+						</a>
+					</div>
+				</sec:authorize>
 
-		<div style="text-align: center; margin-bottom: 30px;">
-			<label class="control-label" style="font-size: 20px;">Cursos</label>
-		</div>
+				<div style="text-align: center; margin-bottom: 30px;">
+					<label class="control-label" style="font-size: 20px;">Cursos</label>
+				</div>
 
-		<div class="panel-group" id="accordion">
-			<c:forEach items="${cursos}" var="curso">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<div class="panel-title" style="float: left;">
-							<a  data-parent="#selection" href="<c:url value="/curso/${curso.codigo}/visualizar" ></c:url>">
-								<c:out value="${curso.nome}"></c:out> (<c:out value="${curso.codigo}"></c:out>)
-							</a>
-						</div>
+				<div class="panel-group" id="accordion">
 
-						<div style="float: right;">
-							<a id="visualizar" style="margin-right: 12px" class="btn btn-success" href="<c:url value="/curso/${curso.codigo}/visualizar" ></c:url>">
-								<span class="glyphicon glyphicon-eye-open"></span> Visualizar
-							</a> 
-							<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
-								<div style="float: right;">
-									<a id="excluir" style="float: right;" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/curso/${curso.id}/excluir" ></c:url>">
-										<span class="glyphicon glyphicon-trash"></span> Excluir
-									</a>
-									
-									<a id="editar" href="<c:url value="/curso/${curso.id }/editar" ></c:url>">
-										<button class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Editar</button>
+					<c:forEach items="${cursos}" var="curso">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<div class="panel-title" style="float: left;">
+									<a data-parent="#selection"
+										href="<c:url value="/curso/${curso.codigo}/visualizar" ></c:url>">
+										<c:out value="${curso.nome}"></c:out> (<c:out
+											value="${curso.codigo}"></c:out>)
 									</a>
 								</div>
-							</sec:authorize>
+
+								<div style="float: right;">
+									<a id="visualizar" style="margin-right: 12px"
+										class="btn btn-success btn-xs"
+										href="<c:url value="/curso/${curso.codigo}/visualizar" ></c:url>">
+										<span class="glyphicon glyphicon-eye-open"></span> Visualizar
+									</a>
+									<sec:authorize access="hasAnyRole('COORDENACAO_ACADEMICA')">
+										<div style="float: right;">
+											<a id="excluir" style="float: right;"
+												class="btn btn-danger btn-xs" data-toggle="modal"
+												data-target="#confirm-delete" href="#"
+												data-href="<c:url value="/curso/${curso.id}/excluir" ></c:url>">
+												<span class="glyphicon glyphicon-trash"></span> Excluir
+											</a> <a id="editar"
+												href="<c:url value="/curso/${curso.id }/editar" ></c:url>">
+												<button class="btn btn-primary btn-xs"
+													style="margin-right: 12px;">
+													<span class="glyphicon glyphicon-edit"></span> Editar
+												</button>
+											</a>
+										</div>
+									</sec:authorize>
+								</div>
+							</div>
 						</div>
-					</div>
+					</c:forEach>
 				</div>
-			</c:forEach>				
-		</div>
+			</section>
+		</section>
 	</div>
 
 	<jsp:include page="../fragments/footer.jsp" />
@@ -131,9 +150,9 @@
 							<label for="componente" class="col-sm-2 control-label">Código
 								Componente Curricular</label>
 							<div class="col-sm-10">
-								<form:input  class="form-control"
-									style="width: 150px;" placeholder="Código Componente Curricular"
-									path="componente" required="true" />
+								<form:input class="form-control" style="width: 150px;"
+									placeholder="Código Componente Curricular" path="componente"
+									required="true" />
 								<form:errors path="componente" cssClass="error" />
 							</div>
 						</div>

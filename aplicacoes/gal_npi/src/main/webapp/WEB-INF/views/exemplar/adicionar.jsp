@@ -11,6 +11,10 @@
 <body>
 	<div id="container">
 		<jsp:include page="../fragments/header.jsp" />
+		<section id="main-content">
+          	<section class="wrapper"> 
+          	<div class="col-lg-12">
+          	<div class="form-panel">
 		<form:form servletRelativeAction="/exemplar/${titulo.id}/adicionar" method="post" modelAttribute="exemplar" role="form" class="form-horizontal">
 			<form:input path="id" type="hidden" />
 			<div class="form-group" style="text-align: center;">
@@ -29,6 +33,10 @@
 				<a href="<c:url value="/exemplar/${titulo.id}/listar"></c:url>" class="btn btn-default">Cancelar</a>
 			</div>
 		</form:form>
+		</div>
+		</div>
+		</section>
+		</section>
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
 </body>

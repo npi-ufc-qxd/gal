@@ -12,7 +12,10 @@
 <body>
 	<div id="container">
 		<jsp:include page="../fragments/header.jsp" />
-
+		<section id="main-content">
+          	<section class="wrapper"> 
+          	<div class="col-lg-12">
+          	<div class="form-panel">
 		<form:form servletRelativeAction="/integracao/editar" method="post"
 			modelAttribute="integracao" role="form" class="form-horizontal">
 			
@@ -95,6 +98,10 @@
 				</a>
 			</div>
 		</form:form>
+		</div>
+		</div>
+		</section>
+		</section>
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
 </body>

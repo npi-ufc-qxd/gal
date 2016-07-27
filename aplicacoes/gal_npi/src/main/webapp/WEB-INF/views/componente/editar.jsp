@@ -14,6 +14,10 @@
 <body>
 	<div id="container">
 		<jsp:include page="../fragments/header.jsp" />
+		<section id="main-content">
+          	<section class="wrapper"> 
+          		<div class="col-lg-12">
+        	  	<div class="form-panel">
 
 		<form:form modelAttribute="componente" id="reg" servletRelativeAction="/componente/editar" method="post" role="form" class="form-horizontal">
 			<h4 class="center negrito">Editar Componente Curricular</h4>
@@ -75,6 +79,10 @@
 				<button class="btn btn-default" onclick="goBack()">Cancelar</button>
 			</div>
 		</form:form>
+		</div>
+		</div>
+		</section>
+		</section>
 		<jsp:include page="../fragments/footer.jsp" />
 	</div>
 

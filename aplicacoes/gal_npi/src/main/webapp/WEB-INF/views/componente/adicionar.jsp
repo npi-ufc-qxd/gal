@@ -10,72 +10,80 @@
 <jsp:include page="../fragments/htmlHead.jsp" />
 </head>
 <body>
+	<jsp:include page="../fragments/header.jsp" />
 	<div id="container">
-		<jsp:include page="../fragments/header.jsp" />
-		<form:form servletRelativeAction="/componente/adicionar" method="post"
-			modelAttribute="componente" role="form" class="form-horizontal">
-			<div class="form-group" style="text-align: center;">
-				<label class="control-label" style="font-size: 20px;">Adicionar
-					Componente Curricular</label>
-			</div>
-			<div class="form-group">
-				<label for="codigo" class="col-sm-1 control-label">Código</label>
-				<div class="col-sm-10">
-					<form:input id="codigo" class="form-control" placeholder="Ex.: QXD0000"
-						path="codigo"  />
-					<form:errors path="codigo" cssClass="error" />
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="nome" class="col-sm-1 control-label">Nome</label>
-				<div class="col-sm-10">
-					<form:input id="nome" maxlength="255" class="form-control" placeholder="Nome"
-						path="nome" />
-					<form:errors path="nome" cssClass="error" />
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="tipo" class="col-sm-1 control-label">Tipo</label>
-				<div class="col-sm-10">
-					<form:select path="tipo" class="form-control">
-						<form:option value="DISCIPLINA">Disciplina</form:option>
-						<form:option value="ATIVIDADES COMPLEMENTARES">Atividade Complementar</form:option>
-						<form:option value="TCC">Trabalho de Conclusão de Curso</form:option>
-						<form:option value="ESTAGIO">Estágio</form:option>
-					</form:select>
-					<form:errors path="tipo" cssClass="error" />
-				</div>
-			</div>
+	 <section id="main-content">
+          <section class="wrapper">
+          <div class="col-lg-12">
+          	<div class="form-panel">
+          	<h3><i class="fa fa-angle-right"></i>Adicionar Componente Curricular</h3>
 
-			<div class="form-group">
-				<label for="chPratica" class="col-sm-1 control-label">CH
-					Prática</label>
-				<div class="col-sm-10">
-					<form:input id="chPratica" class="form-control"
-						placeholder="Carga Horária Pŕatica" path="chPratica" />
-					<form:errors path="chPratica" cssClass="error" />
+			<form:form servletRelativeAction="/componente/adicionar" method="post"
+				modelAttribute="componente" role="form" class="form-horizontal">
+			
+				<div class="form-group">
+					<label for="codigo" class="col-sm-1 control-label">Código</label>
+					<div class="col-sm-10">
+						<form:input id="codigo" class="form-control" placeholder="Ex.: QXD0000"
+							path="codigo"  />
+						<form:errors path="codigo" cssClass="error" />
+					</div>
 				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="chTeorica" class="col-sm-1 control-label">CH
-					Teórica</label>
-				<div class="col-sm-10">
-					<form:input id="chTeorica" class="form-control"
-						placeholder="Carga Horária Teórica" path="chTeorica" />
-					<form:errors path="chTeorica" cssClass="error" />
+				<div class="form-group">
+					<label for="nome" class="col-sm-1 control-label">Nome</label>
+					<div class="col-sm-10">
+						<form:input id="nome" maxlength="255" class="form-control" placeholder="Nome"
+							path="nome" />
+						<form:errors path="nome" cssClass="error" />
+					</div>
 				</div>
-			</div>
-
-			<div class="controls">
-				<input id="criar" class="btn btn-primary" type="submit"
-					value="Adicionar" /> <a
-					href="<c:url value="/componente/listar"></c:url>"
-					class="btn btn-default">Cancelar</a>
-			</div>
-
-		</form:form>
-		<jsp:include page="../fragments/footer.jsp" />
+				<div class="form-group">
+					<label for="tipo" class="col-sm-1 control-label">Tipo</label>
+					<div class="col-sm-10">
+						<form:select path="tipo" class="form-control">
+							<form:option value="DISCIPLINA">Disciplina</form:option>
+							<form:option value="ATIVIDADES COMPLEMENTARES">Atividade Complementar</form:option>
+							<form:option value="TCC">Trabalho de Conclusão de Curso</form:option>
+							<form:option value="ESTAGIO">Estágio</form:option>
+						</form:select>
+						<form:errors path="tipo" cssClass="error" />
+					</div>
+				</div>
+	
+				<div class="form-group">
+					<label for="chPratica" class="col-sm-1 control-label">CH
+						Prática</label>
+					<div class="col-sm-10">
+						<form:input id="chPratica" class="form-control"
+							placeholder="Carga Horária Pŕatica" path="chPratica" />
+						<form:errors path="chPratica" cssClass="error" />
+					</div>
+				</div>
+	
+				<div class="form-group">
+					<label for="chTeorica" class="col-sm-1 control-label">CH
+						Teórica</label>
+					<div class="col-sm-10">
+						<form:input id="chTeorica" class="form-control"
+							placeholder="Carga Horária Teórica" path="chTeorica" />
+						<form:errors path="chTeorica" cssClass="error" />
+					</div>
+				</div>
+	
+				<div class="controls">
+					<input id="criar" class="btn btn-primary" type="submit"
+						value="Adicionar" /> <a
+						href="<c:url value="/componente/listar"></c:url>"
+						class="btn btn-default">Cancelar</a>
+				</div>
+	
+			</form:form>
+		
 	</div>
+	</div>
+	</section>
+	</section>
+	<jsp:include page="../fragments/footer.jsp" />
+</div>
 </body>
 </html>

@@ -15,10 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController {
-	
-	@RequestMapping(value = {"/", "/login", ""}, method = RequestMethod.GET)
-	public ModelAndView login(
-			@RequestParam(value = "error", required = false) String error,
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout) {
 
 		ModelAndView model = new ModelAndView();
@@ -41,35 +40,29 @@ public class LoginController {
 		return "login";
 
 	}
-	
-	@RequestMapping(value="/logout", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
-	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    if (auth != null){    
-	        new SecurityContextLogoutHandler().logout(request, response, auth);
-	    }
-	    return "redirect:/login";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null) {
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		return "redirect:/login";
 	}
-	
+
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public String acessoNegado(ModelMap model, Principal user) {
 		if (user != null) {
-			model.addAttribute("message", "Olá, " + user.getName() 
-			+ ", você não tem permissão para acessar essa página!");
+			model.addAttribute("message",
+					"Olá, " + user.getName() + ", você não tem permissão para acessar essa página!");
 		} else {
-			model.addAttribute("message", 
-			"Você não tem permissão para acessar essa página!");
+			model.addAttribute("message", "Você não tem permissão para acessar essa página!");
 		}
 		return "403";
 	}
-	
+
 	@RequestMapping(value = "/contatos", method = RequestMethod.GET)
 	public String contatos(ModelMap model) {
 		return "contatos";
-	}
-	
-	@RequestMapping(value = "/inicio", method = RequestMethod.GET)
-	public String inicio(ModelMap model) {
-		return "index";
 	}
 }

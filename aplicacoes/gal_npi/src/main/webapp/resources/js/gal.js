@@ -206,6 +206,7 @@ $( document ).ready(function() {
 		$(location).attr("href", newUrl);
 	});
 
+	
 	if($('#drag-and-drop .sortable-list').length > 0){
 		var lista_drag_and_drop_basica = $('#drag-and-drop .sortable-list#basica');
 		Sortable.create(lista_drag_and_drop_basica[0], { group: "drag_and_drop" });
