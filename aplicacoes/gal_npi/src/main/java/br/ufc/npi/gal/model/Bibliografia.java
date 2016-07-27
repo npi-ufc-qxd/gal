@@ -8,10 +8,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 
 @Entity
 @Table(name = "bibliografias")
 @IdClass(BibliografiaId.class)
+@Audited
 public class Bibliografia {
 
 	@Id
@@ -68,7 +71,6 @@ public class Bibliografia {
 		
 		 return "Bibliografia [id_componente=" + componente +
 		 ", id_titulo="
-		 + titulo + ", componente=" + getComponenteCurricular() + ", titulo="
-		 + getTitulo() + ", tipoBibliografia=" + tipoBibliografia + "]";
+		 + titulo + "tipoBibliografia=" + tipoBibliografia + "]";
 	}
 }

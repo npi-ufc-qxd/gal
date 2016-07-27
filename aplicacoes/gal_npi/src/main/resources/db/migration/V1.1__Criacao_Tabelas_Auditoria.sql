@@ -1,4 +1,4 @@
-CREATE TABLE revisionauditoriatitulo
+CREATE TABLE IF NOT EXISTS revisionauditoriatitulo
 (
   id integer NOT NULL,
   timestemp bigint NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE revisionauditoriatitulo
   CONSTRAINT revisionauditoriatitulo_pkey PRIMARY KEY (id)
 );
 
-CREATE TABLE titulos_aud
+CREATE TABLE IF NOT EXISTS titulos_aud
 (
   id_t integer NOT NULL,
   rev integer NOT NULL,

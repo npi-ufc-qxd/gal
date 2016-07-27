@@ -109,9 +109,6 @@ public class EstruturaCurricular{
 	private Integer chCompOptLivres;
 	
 	@Transient
-	public static final String NATUREZA = "OBRIGATORIA";
-	
-	@Transient
 	public static final List<String> TIPO_ATV_ESPECIFICA = new ArrayList<String>(
 			Arrays.asList("ESTAGIO", "TCC", "ATIVIDADES COMPLEMENTARES"));
 	
@@ -200,7 +197,15 @@ public class EstruturaCurricular{
 
 	@Override
 	public String toString() {
-		return "EstruturaCurricular [id=" + id + ", codigo=" + codigo + ", curso=" + curso + "]";
+		return "EstruturaCurricular [id=" + id + ", codigo=" + codigo + ", curso=" + curso + ", curriculos="
+				+ curriculos + ", matrizCurricular=" + matrizCurricular + ", unidadeVinculacao=" + unidadeVinculacao
+				+ ", municipio=" + municipio + ", semestreEntradaVigor=" + semestreEntradaVigor + ", chOptMinima="
+				+ chOptMinima + ", prazoConclusaoMinimo=" + prazoConclusaoMinimo + ", prazoConclusaoMedio="
+				+ prazoConclusaoMedio + ", prazoConclusaoMaximo=" + prazoConclusaoMaximo + ", chPeriodoMinimo="
+				+ chPeriodoMinimo + ", chPeriodoMedio=" + chPeriodoMedio + ", chPeriodoMaximo=" + chPeriodoMaximo
+				+ ", chTotalMinima=" + chTotalMinima + ", chObrigatoria=" + chObrigatoria + ", chObgTeorica="
+				+ chObgTeorica + ", chObgPratica=" + chObgPratica + ", chAtvAcademicaEspecifica="
+				+ chAtvAcademicaEspecifica + ", chCompOptLivres=" + chCompOptLivres + "]";
 	}
 
 	public Integer getChOptMinima() {
@@ -304,7 +309,7 @@ public class EstruturaCurricular{
 		calcularChObrigatoria();
 		calcularChTotalMinima();
 		calcularChAtvAcademicaEspecifica();
-		}
+	}
 
 	private void calcularChAtvAcademicaEspecifica() {
 		int contChAtvAcademicaEspecifica = 0;
@@ -328,7 +333,7 @@ public class EstruturaCurricular{
 		int contChObgPratica = 0;
 		
 		for (IntegracaoCurricular curriculo : this.getCurriculos()) {
-			if (NATUREZA.equals(curriculo.getNatureza())) {
+			if (EnumNatureza.OBRIGATORIA.equals(curriculo.getNatureza())) {
 				contChObgPratica += curriculo.getComponente().getChPratica();
 				contChObgTeorica += curriculo.getComponente().getChTeorica();
 			}

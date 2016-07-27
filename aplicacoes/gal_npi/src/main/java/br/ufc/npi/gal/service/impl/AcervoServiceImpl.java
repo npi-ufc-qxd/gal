@@ -8,6 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.ufc.npi.gal.exception.ArquivoNaoSuportadoException;
@@ -58,7 +59,8 @@ public class AcervoServiceImpl extends GenericServiceImpl<ExemplarConflitante> i
 	@Inject
 	private ExemplarRepository exemplarRepository;
 	
-	@Override 
+	@Override
+	@CacheEvict(value="metas", allEntries=true)
 	public void registrarAtualizacao(AcervoDocumento acervoDocumento){
 		acervoDocumentoRepository.save(acervoDocumento);
 	}

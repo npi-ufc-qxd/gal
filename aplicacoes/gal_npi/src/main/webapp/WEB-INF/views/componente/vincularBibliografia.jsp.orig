@@ -69,12 +69,16 @@
 							</div>
 						</div>
 				</div>
-
-				
 			<div class="clearer"></div>
+<<<<<<< HEAD
 		</section>
 	</section>
 	<jsp:include page="../fragments/footer.jsp" />
+=======
+		</div>
+		<jsp:include page="../fragments/footer.jsp" />
+		<script src="<c:url value="/resources/js/componente-vincular.js" />"></script>
+>>>>>>> master
 	</div>
 </body>
 </html>

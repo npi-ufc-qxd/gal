@@ -55,7 +55,7 @@
 		<jquery.version>2.1.0</jquery.version>
 		<jquery-ui.version>1.10.3</jquery-ui.version>
 		<dandelion.datatables.version>0.9.3</dandelion.datatables.version>
-		<datatables.version>1.9.4</datatables.version>
+		<datatables.version>1.10.11</datatables.version>
 
 		<!-- JSP API -->
 		<jsp.version>2.1</jsp.version>

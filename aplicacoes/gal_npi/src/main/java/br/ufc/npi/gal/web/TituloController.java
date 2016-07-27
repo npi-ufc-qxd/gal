@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.npi.gal.model.Bibliografia;
-import br.ufc.npi.gal.model.RevisionAuditoriaTitulo;
+import br.ufc.npi.gal.model.RevisionAuditoria;
 import br.ufc.npi.gal.model.TipoTitulo;
 import br.ufc.npi.gal.model.Titulo;
+import br.ufc.npi.gal.service.RevisionAuditoriaService;
 import br.ufc.npi.gal.service.TituloService;
 
 @Controller
@@ -25,6 +26,9 @@ public class TituloController {
 
 	@Inject
 	private TituloService tituloService;
+	
+	@Inject
+	private RevisionAuditoriaService revisionService;
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(ModelMap modelMap) {
@@ -144,8 +148,8 @@ public class TituloController {
 	@RequestMapping(value = "/{id}/historicoTitulo", method = RequestMethod.GET)
 	public String historicoTitulo(@PathVariable("id") Integer id, ModelMap modelMap) {
 			List<Titulo> titulosAuditoria = this.tituloService.getTitulosAuditoriaById(id);
-			List<RevisionAuditoriaTitulo> revisionsAuditoria = this.tituloService.getRevisionsAuditoriaTituloById(id);
-			List<RevisionAuditoriaTitulo> mudancas = this.tituloService.getAlteracoes(titulosAuditoria,revisionsAuditoria);
+			List<RevisionAuditoria> revisionsAuditoria = this.revisionService.getIdsRevisionsAuditoriaDoTitulo(id);
+			List<RevisionAuditoria> mudancas = this.revisionService.getAlteracoes(titulosAuditoria,revisionsAuditoria);
 			
 			if(!(mudancas.isEmpty()) || mudancas == null)
 				modelMap.addAttribute("tituloMudancas", mudancas);		
