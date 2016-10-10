@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="br.ufc.npi.gal.model.TipoTitulo" %>
 
 <!DOCTYPE html>
 <html>
@@ -19,7 +18,7 @@
 		<form:form servletRelativeAction="/fornecedor/adicionar" method="post" modelAttribute="fornecedor" role="form" class="form-horizontal">
 			
 			<div class="form-group" style="text-align: center;">
-				<label class="control-label" style="font-size: 20px;">Adicionar Título</label>
+				<label class="control-label" style="font-size: 20px;">Adicionar Fornecedor</label>
 			</div>
 			
 			<div class="form-group">
@@ -48,7 +47,7 @@
 			
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit" value="Adicionar"/>
-				<a href="<c:url value="/titulo/listar"></c:url>" class="btn btn-default">Cancelar</a>
+				<a href="<c:url value="/"></c:url>" class="btn btn-default">Cancelar</a>
 			</div>
 		</form:form>
 		</div>
@@ -56,8 +55,6 @@
 		</section>
 		</section>
 		<jsp:include page="../fragments/footer.jsp" />
-		<script src="<c:url value="/resources/js/titulo-adicionar.js" />"></script>
-		<script src="<c:url value="/resources/js/titulo-editar.js" />"></script>
 	</div>
 </body>
 </html>
