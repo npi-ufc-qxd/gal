@@ -56,7 +56,7 @@
 		</c:if>
 
 		<c:if test="${not empty fornecedores}">
-			<datatables:table id="tituloTable" data="${fornecedores}" cdn="false"
+			<datatables:table id="fornecedorTable" data="${fornecedores}" cdn="false"
 				row="fornecedor" theme="bootstrap2" cssClass="table table-bordered table-striped table-orderable"
 				no-sort-fields="" default-sort="0 asc">
 				<datatables:column title="Nome">
