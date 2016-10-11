@@ -47,7 +47,7 @@
 			
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit" value="Adicionar"/>
-				<a href="<c:url value="/"></c:url>" class="btn btn-default">Cancelar</a>
+				<a href="<c:url value="/fornecedor/listar"></c:url>" class="btn btn-default">Cancelar</a>
 			</div>
 		</form:form>
 		</div>
