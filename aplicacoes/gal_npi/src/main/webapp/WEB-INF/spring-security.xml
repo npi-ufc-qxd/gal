@@ -55,9 +55,11 @@
 		<intercept-url pattern="/exemplar/**" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA" />
 		
 
-		<intercept-url pattern="/metas/{id}/detalhe/" access="BIBLIOTERCARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO,DISCENTE,STA,DOCENTE" />
-		<intercept-url pattern="/meta/listar" access="BIBLIOTERCARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO,DISCENTE,STA,DOCENTE" />
-		<intercept-url pattern="/metas/**" access="BIBLIOTERCARIO,COORDENACAO_ACADEMICA" />
+		<intercept-url pattern="/metas/{id}/detalhe/" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO,DISCENTE,STA,DOCENTE" />
+		<intercept-url pattern="/meta/listar" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO,DISCENTE,STA,DOCENTE" />
+		<intercept-url pattern="/metas/**" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA" />
+		
+		<intercept-url pattern="/fornecedor/adicionar" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO" />
 		
 		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
  		 
