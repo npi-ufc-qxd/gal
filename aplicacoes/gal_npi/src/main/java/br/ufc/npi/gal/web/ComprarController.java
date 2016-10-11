@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -52,5 +53,20 @@ public class ComprarController {
 		modelMap.addAttribute("fornecedores", this.fornecedorService.find(Fornecedor.class));
 		return PATH_FORNECEDOR_LISTAR;
 
+	}
+	
+	@RequestMapping(value = "/fornecedor/{id}/excluir", method = RequestMethod.GET)
+	public String excluirFornecedor(@PathVariable("id") Integer id,
+			RedirectAttributes redirectAttributes) {
+		Fornecedor fornecedor  = fornecedorService.find(Fornecedor.class, id);
+		if(fornecedor!=null){
+			fornecedorService.delete(fornecedor);
+			redirectAttributes.addFlashAttribute("info",
+					"Fornecedor removido com sucesso.");
+		} else {
+			redirectAttributes.addFlashAttribute("error",
+					"Fornecedor não existente.");
+		}
+		return PATH_REDIRECT_FORNECEDOR_LISTAR;
 	}
 }
