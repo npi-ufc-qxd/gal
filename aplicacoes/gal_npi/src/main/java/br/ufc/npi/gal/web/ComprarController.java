@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,9 +21,8 @@ public class ComprarController {
 	private FornecedorService fornecedorService;
 	
 	private static final String PATH_FORNECEDOR_ADICIONAR = "fornecedor/adicionar";
-	
-	/* MUDAR QUANDO FOR FEITA A PAGINA DE LISTAR OS FORNECEDORES */
-	private static final String PATH_REDIRECT_FORNECEDOR_LISTAR = "redirect:/";
+	private static final String PATH_FORNECEDOR_LISTAR = "fornecedor/listar";
+	private static final String PATH_REDIRECT_FORNECEDOR_LISTAR = "redirect:/fornecedor/listar";
 	
 	@RequestMapping(value = "/fornecedor/adicionar", method = RequestMethod.GET)
 	public String adicionarFornecedor(Model model) {
@@ -45,5 +45,12 @@ public class ComprarController {
 		fornecedorService.save(fornecedor);
 		redirectAttributes.addFlashAttribute("info", "Fornecedor adicionado com sucesso.");
 		return PATH_REDIRECT_FORNECEDOR_LISTAR;
+	}
+	
+	@RequestMapping(value = "/fornecedor/listar", method = RequestMethod.GET)
+	public String listarFornecedores(ModelMap modelMap) {
+		modelMap.addAttribute("fornecedores", this.fornecedorService.find(Fornecedor.class));
+		return PATH_FORNECEDOR_LISTAR;
+
 	}
 }
