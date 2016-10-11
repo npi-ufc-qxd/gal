@@ -154,7 +154,7 @@
 					<p id="mensagem"></p>
 				</div>
 				<div class="modal-footer">
-					<a href="#" class="btn btn-danger">Excluir</a>
+					<a href="<c:url value="/titulo/${titulo.id}/excluir" ></c:url>" class="btn btn-danger">Excluir</a>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 				</div>
 			</div>
