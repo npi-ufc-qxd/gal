@@ -92,9 +92,9 @@
 				
 					<datatables:column title="Excluir" style="text-align: center;">
 						<a id="excluir" class="open-AddQtdExemplares btn btn-danger btn-xs"
-							data-toggle="modal" data-target="#confirm-delete" href="#"
+							data-toggle="modal" data-target="#confirm-delete" 
 							data-id="${titulo.acervo}"
-							data-href="<c:url value="/titulo/${titulo.id}/excluir" ></c:url>">
+							href="<c:url value="/titulo/${titulo.id}/excluir" ></c:url>">
 							<span class="glyphicon glyphicon-trash"></span>
 						</a>
 					</datatables:column>

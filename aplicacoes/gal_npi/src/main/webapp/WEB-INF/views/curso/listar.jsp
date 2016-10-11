@@ -75,8 +75,8 @@
 										<div style="float: right;">
 											<a id="excluir" style="float: right;"
 												class="btn btn-danger btn-xs" data-toggle="modal"
-												data-target="#confirm-delete" href="#"
-												data-href="<c:url value="/curso/${curso.id}/excluir" ></c:url>">
+												data-target="#confirm-delete" href=
+												"<c:url value="/curso/${curso.id}/excluir" ></c:url>">
 												<span class="glyphicon glyphicon-trash"></span> Excluir
 											</a> <a id="editar"
 												href="<c:url value="/curso/${curso.id }/editar" ></c:url>">
