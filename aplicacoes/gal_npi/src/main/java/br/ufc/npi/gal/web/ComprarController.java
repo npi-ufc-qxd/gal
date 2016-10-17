@@ -24,7 +24,6 @@ public class ComprarController {
 	private static final String PATH_FORNECEDOR_ADICIONAR = "fornecedor/adicionar";
 	private static final String PATH_FORNECEDOR_LISTAR = "fornecedor/listar";
 	private static final String PATH_FORNECEDOR_EDITAR = "fornecedor/editar";
-
 	private static final String PATH_REDIRECT_FORNECEDOR_LISTAR = "redirect:/fornecedor/listar";
 	
 	@RequestMapping(value = "/fornecedor/adicionar", method = RequestMethod.GET)
@@ -74,6 +73,6 @@ public class ComprarController {
 		}
 			
 		redirectAttributes.addFlashAttribute("info", "Fornecedor atualizado com sucesso.");
-		return "redirect:/fornecedor/listar";
+		return PATH_REDIRECT_FORNECEDOR_LISTAR;
 	}
 }
