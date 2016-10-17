@@ -1,10 +1,13 @@
 package br.ufc.npi.gal.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -23,6 +26,9 @@ public class Fornecedor {
 	@Column(unique=true)
 	@NotEmpty(message="Campo obrigatório")
 	private String cnpj;
+	
+	@OneToMany (mappedBy = "fornecedor")
+	private List<Cotacao> cotacoes;
 	
 	public Integer getId(){
 		return id;
@@ -56,6 +62,13 @@ public class Fornecedor {
 		this.cnpj = cnpj;
 	}
 	
-	
+	public List<Cotacao> getCotacoes() {
+		return cotacoes;
+	}
+
+	public void setCotacoes(List<Cotacao> cotacoes) {
+		this.cotacoes = cotacoes;
+	}
+
 	
 }

@@ -76,6 +76,9 @@ public class Titulo {
 	@Column(name = "cadastrado_biblioteca")
 	private Boolean cadastradoBiblioteca;
 	
+	@OneToMany(mappedBy="titulo")
+	private List<Cotacao> cotacoes;
+	
 	@NotAudited
 	@OneToMany(mappedBy = "titulo", targetEntity = Bibliografia.class, fetch = FetchType.EAGER)
 	private List<Bibliografia> bibliografias;
@@ -225,6 +228,14 @@ public class Titulo {
 
 	public void setCadastradoBiblioteca(Boolean cadastradoBiblioteca) {
 		this.cadastradoBiblioteca = cadastradoBiblioteca;
+	}
+	
+	public List<Cotacao> getCotacoes() {
+		return cotacoes;
+	}
+
+	public void setCotacoes(List<Cotacao> cotacoes) {
+		this.cotacoes = cotacoes;
 	}
 
 	@Override
