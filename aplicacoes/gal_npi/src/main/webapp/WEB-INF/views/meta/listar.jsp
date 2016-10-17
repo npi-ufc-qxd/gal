@@ -68,13 +68,17 @@
 				<option value="-1">Todos os Cursos</option>
 				<c:forEach items="${cursos}" var="curso">
 					<option value="${curso.id}">${curso.nome}</option>
+					<c:if test="${curso.id == idCurso}">
+				  	<option selected = "idCurso">${curso.nome}</option>
+				  	</c:if>				
 				</c:forEach>
 			</select>
+			
 			
 			<select id="selecionaComponente" class="select-filter">
 				<option value="-1">Todos os Componentes</option>
 				<c:forEach items="${componentes}" var="componente">
-					<option value="${componente.id}">${componente.nome}</option>
+					<option value="${componente.id}" selected="">${componente.nome}</option>
 				</c:forEach>
 			</select>
 	
