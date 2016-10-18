@@ -58,7 +58,7 @@
 		<c:if test="${not empty fornecedores}">
 			<datatables:table id="fornecedorTable" data="${fornecedores}" cdn="false"
 				row="fornecedor" theme="bootstrap2" cssClass="table table-bordered table-striped table-orderable"
-				no-sort-fields="3" default-sort="0 asc">
+				no-sort-fields="" default-sort="0 asc">
 				<datatables:column title="Nome">
 					<c:out value="${fornecedor.nome}"></c:out>
 				</datatables:column>
@@ -70,14 +70,7 @@
 				<datatables:column title="CNPJ">
 					<c:out value="${fornecedor.cnpj}"></c:out>
 				</datatables:column>
-				<datatables:column title="Excluir" style="text-align: center;">
-					<a id="excluir" class="btn btn-danger btn-xs exlcuir"
-						data-toggle="modal" data-target="#confirm-delete" href="<c:url value="/fornecedor/${fornecedor.id}/excluir" ></c:url>"
-						data-id="${fornecedor.id}"
-						data-href="<c:url value="/fornecedor/${fornecedor.id}/excluir" ></c:url>">
-						<span class="glyphicon glyphicon-trash"></span>
-					</a>
-				</datatables:column>
+				
 			</datatables:table>
 		</c:if>
 		</div>
@@ -86,13 +79,6 @@
 		</section>
 		<jsp:include page="../fragments/footer.jsp" />
 		<script src="<c:url value="/resources/js/tabela.js" />"></script>
-		
-		<!-- Codigos para a tela de confirmação -->
-		<!-- 
-		<script src="<c:url value="/resources/js/fornecedor-listar.js" />"></script>		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		 -->
 	</div>
 	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
@@ -100,10 +86,10 @@
 			<div class="modal-content">
 				<div class="modal-header">Excluir</div>
 				<div class="modal-body">
-					<p id="mensagem">Deseja realmente exluir este fornecedor?</p>
+					<p id="mensagem"></p>
 				</div>
 				<div class="modal-footer">
-					<a id="linkExcluir" href="#" class="btn btn-danger">Excluir</a>
+					<a href="#" class="btn btn-danger">Excluir</a>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 				</div>
 			</div>

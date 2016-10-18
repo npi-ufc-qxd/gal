@@ -92,9 +92,9 @@
 				
 					<datatables:column title="Excluir" style="text-align: center;">
 						<a id="excluir" class="open-AddQtdExemplares btn btn-danger btn-xs"
-							data-toggle="modal" data-target="#confirm-delete" 
+							data-toggle="modal" data-target="#confirm-delete" href="#"
 							data-id="${titulo.acervo}"
-							href="<c:url value="/titulo/${titulo.id}/excluir" ></c:url>">
+							data-href="<c:url value="/titulo/${titulo.id}/excluir" ></c:url>">
 							<span class="glyphicon glyphicon-trash"></span>
 						</a>
 					</datatables:column>
@@ -154,7 +154,7 @@
 					<p id="mensagem"></p>
 				</div>
 				<div class="modal-footer">
-					<a href="<c:url value="/titulo/${titulo.id}/excluir" ></c:url>" class="btn btn-danger">Excluir</a>
+					<a href="#" class="btn btn-danger">Excluir</a>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 				</div>
 			</div>

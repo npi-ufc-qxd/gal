@@ -51,7 +51,7 @@
 				
 				<li><a href="<c:url value='/titulo/listar'/>">Titulos</a></li>
 
-				<li class="sub-menu"><a href="javascript:;"><span>Cálculo de Metas</span></a>
+				<li class="sub-menu"><a href="javascript:;"><span>Caulculo de Metas</span></a>
 					<ul class="sub">
 						<sec:authorize access="hasAnyRole('BIBLIOTECARIO','COORDENACAO_ACADEMICA')">
 							<li><a href="<c:url value='/meta/configurar'/>">Configurar</a></li>

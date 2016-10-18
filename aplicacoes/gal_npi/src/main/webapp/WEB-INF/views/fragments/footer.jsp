@@ -19,7 +19,8 @@
 	<script src="<c:url value="/resources/js/jquery.nicescroll.js" />"></script>
 	<script src="<c:url value="/resources/js/common-scripts.js" />"></script>
 
-    <script class="include" type="text/javascript" src="<c:url value="/resources/js/jquery.dcjqaccordion.2.7.js" />"></script>
+
+    <script class="include" type="text/javascript" src="<c:url value="/resources/bootstrap/js/jquery.dcjqaccordion.2.7.js" />"></script>
 
   <footer>
   	

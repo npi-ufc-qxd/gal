@@ -11,32 +11,8 @@ $( document ).ready(function() {
 		spanError.find("span.error").css("color", "#a94442");
 		spanError.find("span.error").parent().parent().addClass("has-error has-feedback");
 	}
-
-	$("select#selecionaComponente").change(function() { 
-		var option = $(this).val();
-
-		if(option == -1){
-			newUrl = "/" + getAppName() + "/meta/listar";
-		}else{
-			newUrl = "/" + getAppName() + "/meta/componente/"+(option)+"/listar";
-		}
-
-		$(location).attr("href", newUrl);
-	});
 	
-	$("select#selecionaCurso").change(function() { 
-		var option = $(this).val();
-
-		if(option == -1){
-			newUrl = "/" + getAppName() + "/meta/listar";
-		}else{
-			newUrl = "/" + getAppName() + "/meta/"+(option)+"/listar";
-		}
-
-
-		$(location).attr("href", newUrl);
-	});	
-
+	
 });
 
 function goBack() {
@@ -57,8 +33,4 @@ function soNumeros(v){
     return v.replace(/\D/g,"");
 }
 
-function getAppName() {
-	var url = location.pathname;
-	url = url.split("/");
-	return url[1];
-}
+

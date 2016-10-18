@@ -107,8 +107,8 @@
 								</a>
 								
 								<a id="excluir" class="btn btn-danger btn-sm"
-									data-toggle="modal" data-target="#confirm-delete" 
-									href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/excluir" ></c:url>">
+									data-toggle="modal" data-target="#confirm-delete" href="#"
+									data-href="<c:url value="/curso/${curso.codigo}/estrutura/${curriculo.id }/excluir" ></c:url>">
 									<span class="glyphicon glyphicon-trash"></span> Excluir Curriculo
 								</a> 
 							</div>			
@@ -185,8 +185,8 @@
 									</datatables:column >
 									<datatables:column title="Excluir" style="text-align:center;">
 										<a id="excluir" class="btn btn-danger btn-xs" data-toggle="modal"
-											data-target="#confirm-delete" 
-											href="<c:url value="/integracao/${integracao.componente.id}/${curriculo.id}/excluir" ></c:url>">
+											data-target="#confirm-delete" href="#"
+											data-href="<c:url value="/integracao/${integracao.componente.id}/${curriculo.id}/excluir" ></c:url>">
 											<span class="glyphicon glyphicon-trash"></span>
 								
 										</a>

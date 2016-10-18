@@ -93,7 +93,7 @@
 												</a>
 											</td>
 											<td style="text-align:center;">
-												<a id="excluir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#confirm-delete" href="<c:url value="/componente/${componente.id}/excluir" ></c:url>">
+												<a id="excluir" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#confirm-delete" href="#" data-href="<c:url value="/componente/${componente.id}/excluir" ></c:url>">
 													<span class="glyphicon glyphicon-trash"></span>
 												</a>
 											</td>
