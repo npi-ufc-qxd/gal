@@ -71,6 +71,20 @@
 					<c:out value="${fornecedor.cnpj}"></c:out>
 				</datatables:column>
 				
+				<datatables:column title="Editar" style="text-align: center;">
+						<a class="btn btn-primary btn-xs"
+							href="<c:url value = "/fornecedor/${fornecedor.id}/editar"></c:url>">
+							<span class="glyphicon glyphicon-edit"></span>
+						</a>
+				</datatables:column>
+				
+				<datatables:column title="Excluir" style="text-align: center;">
+						<a id="excluir" class="open-AddQtdExemplares btn btn-danger btn-xs"
+							href="<c:url value="/fornecedor/${fornecedor.id}/excluir" ></c:url>">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+				</datatables:column>
+				
 			</datatables:table>
 		</c:if>
 		</div>
