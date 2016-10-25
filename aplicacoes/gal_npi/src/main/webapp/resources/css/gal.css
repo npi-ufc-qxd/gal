@@ -3,7 +3,7 @@
 .dataTables_filter, .dataTables_scroll {
 	margin-bottom: 20px;
 }
-.form-horizontal {
+.form-horizontal .controls{
 	text-align: center;
 }
 

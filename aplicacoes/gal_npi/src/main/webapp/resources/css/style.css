@@ -2239,6 +2239,11 @@ label {
 .site-min-height {
     min-height: 900px;
 }
+
+#select2-select-fornecedor-container{
+	text-align: left !important;
+}
+
 /*responsivo*/
 
 @media (min-width: 980px) {

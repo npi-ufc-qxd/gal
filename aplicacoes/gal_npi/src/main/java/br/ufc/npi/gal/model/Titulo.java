@@ -76,6 +76,7 @@ public class Titulo {
 	@Column(name = "cadastrado_biblioteca")
 	private Boolean cadastradoBiblioteca;
 	
+	@NotAudited
 	@OneToMany(mappedBy="titulo")
 	private List<Cotacao> cotacoes;
 	
