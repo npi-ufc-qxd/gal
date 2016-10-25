@@ -73,7 +73,9 @@
 				<sec:authorize access="hasAnyRole('BIBLIOTECARIO','COORDENACAO_ACADEMICA','COORDENADOR_CURSO')">
 					<li class="sub-menu"><a href="<c:url value="/fornecedor/listar" />">Fornecedores</a></li>
 				</sec:authorize>		
-
+				<sec:authorize access="hasAnyRole('BIBLIOTECARIO','COORDENACAO_ACADEMICA','COORDENADOR_CURSO')">
+					<li class="sub-menu"><a href="<c:url value="/cotacao/listar" />">Cotações</a></li>
+				</sec:authorize>	
 			</ul>
 			<!-- sidebar menu end-->
 		</div>
