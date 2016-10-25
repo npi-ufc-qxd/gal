@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.npi.gal.model.Cotacao;
+import br.ufc.npi.gal.model.Curso;
 import br.ufc.npi.gal.model.Fornecedor;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.CotacaoService;
@@ -96,6 +97,15 @@ public class ComprarController {
 		cotacaoService.save(cotacao);
 		redirectAttributes.addFlashAttribute("info", "Cotação adicionada com sucesso.");
 		return PATH_REDIRECT_COTACAO_LISTAR;
+	}
+	
+	@RequestMapping(value = "/cotacao/listar", method = RequestMethod.GET)
+	public String listarCotacoes(ModelMap modelMap) {
+		modelMap.addAttribute("cotacoes", this.cotacaoService.find(Cotacao.class));
+		modelMap.addAttribute("titulos", tituloService.find(Titulo.class));
+		modelMap.addAttribute("fornecedores", fornecedorService.find(Fornecedor.class));
+		return PATH_COTACAO_LISTAR;
+
 	}
 
 	@RequestMapping(value = "fornecedor/{id}/editar", method = RequestMethod.GET)
