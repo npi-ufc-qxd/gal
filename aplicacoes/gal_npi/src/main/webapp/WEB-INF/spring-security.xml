@@ -61,8 +61,10 @@
 		
 		<intercept-url pattern="/fornecedor/adicionar" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO" />
 		<intercept-url pattern="/fornecedor/listar" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO" />
+		<intercept-url pattern="/fornecedor/{id}/excluir" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO" />
 		
 		<intercept-url pattern="/cotacao/adicionar" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO" />
+		<intercept-url pattern="/cotacao/{id}/excluir" access="BIBLIOTECARIO,COORDENACAO_ACADEMICA,COORDENADOR_CURSO" />
 		
 		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
  		 
