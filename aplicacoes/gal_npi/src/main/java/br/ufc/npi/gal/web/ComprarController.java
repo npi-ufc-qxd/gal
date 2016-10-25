@@ -72,6 +72,39 @@ public class ComprarController {
 		return PATH_FORNECEDOR_LISTAR;
 
 	}
+	
+	@RequestMapping(value = "/fornecedor/{id}/excluir", method = RequestMethod.GET)
+	public String excluirFornecedor(@PathVariable("id") Integer id,
+			RedirectAttributes redirectAttributes) {
+		Fornecedor fornecedor  = fornecedorService.find(Fornecedor.class, id);
+		if(fornecedor!=null){
+			fornecedorService.delete(fornecedor);
+			redirectAttributes.addFlashAttribute("info", "Fornecedor removido com sucesso.");
+		} else {
+			redirectAttributes.addFlashAttribute("error", "Fornecedor não existente.");
+		}
+		return PATH_REDIRECT_FORNECEDOR_LISTAR;
+	}
+	
+	@RequestMapping(value = "fornecedor/{id}/editar", method = RequestMethod.GET)
+	public String editarFornecedor(@PathVariable("id") Integer id, ModelMap modelMap){
+		Fornecedor fornecedor = this.fornecedorService.find(Fornecedor.class,id);
+		
+		modelMap.addAttribute("fornecedor", fornecedor);
+		return PATH_FORNECEDOR_EDITAR;
+	}
+	
+	@RequestMapping(value = "fornecedor/editar", method = RequestMethod.POST)
+	public String atualizarFornecedor(@Valid Fornecedor fornecedor, BindingResult results, RedirectAttributes redirectAttributes){
+		fornecedorService.update(fornecedor);
+		
+		if(results.hasErrors()){
+			return PATH_FORNECEDOR_EDITAR;
+		}
+			
+		redirectAttributes.addFlashAttribute("info", "Fornecedor atualizado com sucesso.");
+		return PATH_REDIRECT_FORNECEDOR_LISTAR;
+	}
 
 	//COTAÇÃO
 	@RequestMapping(value = "/cotacao/adicionar", method = RequestMethod.GET)
@@ -98,23 +131,15 @@ public class ComprarController {
 		return PATH_REDIRECT_COTACAO_LISTAR;
 	}
 
-	@RequestMapping(value = "fornecedor/{id}/editar", method = RequestMethod.GET)
-	public String editarFornecedor(@PathVariable("id") Integer id, ModelMap modelMap){
-		Fornecedor fornecedor = this.fornecedorService.find(Fornecedor.class,id);
-		
-		modelMap.addAttribute("fornecedor", fornecedor);
-		return PATH_FORNECEDOR_EDITAR;
-	}
-	
-	@RequestMapping(value = "fornecedor/editar", method = RequestMethod.POST)
-	public String atualizarFornecedor(@Valid Fornecedor fornecedor, BindingResult results, RedirectAttributes redirectAttributes){
-		fornecedorService.update(fornecedor);
-		
-		if(results.hasErrors()){
-			return PATH_FORNECEDOR_EDITAR;
+	@RequestMapping(value = "/cotacao/{id}/excluir", method = RequestMethod.GET)
+	public String excluirCotacao(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+		Cotacao cotacao = cotacaoService.getCotacaoById(id);
+		if(cotacao!=null){
+			cotacaoService.delete(cotacao);
+			redirectAttributes.addFlashAttribute("info", "Cotação removida com sucesso.");
+		} else {
+			redirectAttributes.addFlashAttribute("error", "Cotação não existente.");
 		}
-			
-		redirectAttributes.addFlashAttribute("info", "Fornecedor atualizado com sucesso.");
 		return PATH_REDIRECT_FORNECEDOR_LISTAR;
 	}
 	
