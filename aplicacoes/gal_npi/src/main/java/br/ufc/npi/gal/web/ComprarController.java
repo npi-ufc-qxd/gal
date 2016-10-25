@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.npi.gal.model.Cotacao;
-import br.ufc.npi.gal.model.Curso;
 import br.ufc.npi.gal.model.Fornecedor;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.CotacaoService;
@@ -147,7 +146,7 @@ public class ComprarController {
 		} else {
 			redirectAttributes.addFlashAttribute("error", "Cotação não existente.");
 		}
-		return PATH_REDIRECT_FORNECEDOR_LISTAR;
+		return PATH_REDIRECT_COTACAO_LISTAR;
 	}
 	
 }
