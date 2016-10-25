@@ -79,7 +79,7 @@ public class ComprarController {
 		Fornecedor fornecedor  = fornecedorService.find(Fornecedor.class, id);
 		if(fornecedor!=null){
 			fornecedorService.delete(fornecedor);
-			redirectAttributes.addFlashAttribute("info", "Fornecedor removido com sucesso.");
+			redirectAttributes.addFlashAttribute("info", "Fornecedor excluído com sucesso.");
 		} else {
 			redirectAttributes.addFlashAttribute("error", "Fornecedor não existente.");
 		}
@@ -136,7 +136,7 @@ public class ComprarController {
 		Cotacao cotacao = cotacaoService.getCotacaoById(id);
 		if(cotacao!=null){
 			cotacaoService.delete(cotacao);
-			redirectAttributes.addFlashAttribute("info", "Cotação removida com sucesso.");
+			redirectAttributes.addFlashAttribute("info", "Cotação excluída com sucesso.");
 		} else {
 			redirectAttributes.addFlashAttribute("error", "Cotação não existente.");
 		}
