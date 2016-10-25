@@ -130,6 +130,12 @@ public class ComprarController {
 		redirectAttributes.addFlashAttribute("info", "Cotação adicionada com sucesso.");
 		return PATH_REDIRECT_COTACAO_LISTAR;
 	}
+	
+	@RequestMapping(value = "/cotacao/listar", method = RequestMethod.GET)
+	public String listarCotacoes(ModelMap modelMap) {
+		modelMap.addAttribute("cotacoes", this.cotacaoService.find(Cotacao.class));
+		return PATH_COTACAO_LISTAR;
+	}
 
 	@RequestMapping(value = "/cotacao/{id}/excluir", method = RequestMethod.GET)
 	public String excluirCotacao(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
@@ -140,7 +146,7 @@ public class ComprarController {
 		} else {
 			redirectAttributes.addFlashAttribute("error", "Cotação não existente.");
 		}
-		return PATH_REDIRECT_FORNECEDOR_LISTAR;
+		return PATH_REDIRECT_COTACAO_LISTAR;
 	}
 	
 }
