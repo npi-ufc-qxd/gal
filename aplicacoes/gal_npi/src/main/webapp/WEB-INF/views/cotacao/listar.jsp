@@ -53,20 +53,6 @@
 			<label class="control-label" style="font-size: 20px;">Cotações</label>
 		</div>
 		
-		<select id="selecionaTitulo" class="select-filter">
-				<option value="-1">Todos os Títulos</option>
-				<c:forEach items="${titulos}" var="titulo">
-					<option value="${titulo.id}">${titulo.nome}</option>
-				</c:forEach>
-		</select>
-		
-		<select id="selecionaFornecedor" class="select-filter">
-				<option value="-1">Todos os Fornecedores</option>
-				<c:forEach items="${fornecedores}" var="fornecedor">
-					<option value="${fornecedor.id}">${fornecedor.nome}</option>
-				</c:forEach>
-		</select>
-
 		<c:if test="${empty cotacoes}">
 			<div class="alert alert-warning" role="alert">Não há cotações
 				cadastradas.</div>
@@ -77,7 +63,7 @@
 			
 				<datatables:table id="cotacoesTable" data="${cotacoes}" cdn="false"
 					row="cotacao" theme="bootstrap2" cssClass="table table-bordered table-striped table-orderable"
-					no-sort-fields="3 4 5" default-sort="0 asc">
+					no-sort-fields="3 4" default-sort="0 asc">
 					<datatables:column title="Nome">
 						<c:out value="${cotacao.fornecedor.nome}"></c:out>
 					</datatables:column>
@@ -111,7 +97,7 @@
 				access="!hasAnyRole('BIBLIOTECARIO','COORDENACAO_ACADEMICA')">
 				<datatables:table id="tituloTable" data="${cotacoes}" cdn="false"
 					row="cotacao" theme="bootstrap2"
-					cssClass="table table-striped table-orderable" no-sort-fields="3"
+					cssClass="table table-striped table-orderable" no-sort-fields=""
 					default-sort="0 asc">
 					<datatables:column title="Fornecedor" style="text-align: center;">
 						<c:out value="${cotacao.fornecedor.nome}"></c:out>

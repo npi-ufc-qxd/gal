@@ -102,10 +102,7 @@ public class ComprarController {
 	@RequestMapping(value = "/cotacao/listar", method = RequestMethod.GET)
 	public String listarCotacoes(ModelMap modelMap) {
 		modelMap.addAttribute("cotacoes", this.cotacaoService.find(Cotacao.class));
-		modelMap.addAttribute("titulos", tituloService.find(Titulo.class));
-		modelMap.addAttribute("fornecedores", fornecedorService.find(Fornecedor.class));
 		return PATH_COTACAO_LISTAR;
-
 	}
 
 	@RequestMapping(value = "fornecedor/{id}/editar", method = RequestMethod.GET)
