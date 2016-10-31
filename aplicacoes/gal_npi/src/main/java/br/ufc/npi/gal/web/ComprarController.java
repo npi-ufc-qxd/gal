@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.ufc.npi.gal.model.Cotacao;
 import br.ufc.npi.gal.model.Fornecedor;
 import br.ufc.npi.gal.model.Titulo;
+import br.ufc.npi.gal.service.CompraService;
 import br.ufc.npi.gal.service.CotacaoService;
 import br.ufc.npi.gal.service.FornecedorService;
 import br.ufc.npi.gal.service.TituloService;
@@ -29,6 +30,8 @@ public class ComprarController {
 	private TituloService tituloService;
 	@Inject
 	private CotacaoService cotacaoService;
+	@Inject
+	private CompraService compraService;
 	
 	@Inject
 	private CotacaoValidator cotacaoValidator;
@@ -41,6 +44,8 @@ public class ComprarController {
 	private static final String PATH_COTACAO_ADICIONAR = "cotacao/adicionar";
 	private static final String PATH_REDIRECT_COTACAO_LISTAR = "redirect:/cotacao/listar";
 	private static final String PATH_COTACAO_LISTAR = "cotacao/listar";
+	
+	private static final String PATH_COMPRA_LISTAR = "compra/listar";
 	
 	//FORNECEDOR
 	@RequestMapping(value = "/fornecedor/adicionar", method = RequestMethod.GET)
@@ -149,4 +154,10 @@ public class ComprarController {
 		return PATH_REDIRECT_COTACAO_LISTAR;
 	}
 	
+	//COMPRA
+	@RequestMapping(value = "/compra/listar", method = RequestMethod.GET)
+	public String listarCompras(ModelMap modelMap) {
+		modelMap.addAttribute("compras", this.compraService.findOrderByCriadaEm());
+		return PATH_COMPRA_LISTAR;
+	}
 }
