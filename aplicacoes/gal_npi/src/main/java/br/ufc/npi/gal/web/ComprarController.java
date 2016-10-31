@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.web;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -41,6 +43,8 @@ public class ComprarController {
 	private static final String PATH_COTACAO_ADICIONAR = "cotacao/adicionar";
 	private static final String PATH_REDIRECT_COTACAO_LISTAR = "redirect:/cotacao/listar";
 	private static final String PATH_COTACAO_LISTAR = "cotacao/listar";
+	private static final String PATH_COTACAO_EDITAR = "cotacao/editar";
+
 	
 	//FORNECEDOR
 	@RequestMapping(value = "/fornecedor/adicionar", method = RequestMethod.GET)
@@ -146,6 +150,30 @@ public class ComprarController {
 		} else {
 			redirectAttributes.addFlashAttribute("error", "Cotação não existente.");
 		}
+		return PATH_REDIRECT_COTACAO_LISTAR;
+	}
+	
+	@RequestMapping(value = "cotacao/{id}/editar", method = RequestMethod.GET)
+	public String editarCotacao(@PathVariable("id") Integer id, ModelMap modelMap) {
+		Cotacao cotacao = this.cotacaoService.find(Cotacao.class, id);
+		
+		if (cotacao == null) {
+			return "redirect:/cotacao/listar";
+		}
+
+		modelMap.addAttribute("cotacao", cotacao);
+		modelMap.addAttribute("fornecedores", this.fornecedorService.find(Fornecedor.class));
+		modelMap.addAttribute("titulos", this.tituloService.find(Titulo.class));
+		
+		return PATH_COTACAO_EDITAR;
+	}
+	
+	@RequestMapping(value = "cotacao/editar", method = RequestMethod.POST)
+	public String atualizarCotacao(@Valid Cotacao cotacao, BindingResult results, RedirectAttributes redirectAttributes) {
+		cotacao.setAdicionadoEm(new Date());
+		cotacaoService.update(cotacao);
+					
+		redirectAttributes.addFlashAttribute("info", "Cotação atualizada com sucesso.");
 		return PATH_REDIRECT_COTACAO_LISTAR;
 	}
 	
