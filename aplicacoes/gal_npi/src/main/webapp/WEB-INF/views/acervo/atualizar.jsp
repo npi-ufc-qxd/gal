@@ -5,6 +5,8 @@
 <%@ taglib prefix="datatables"
 	uri="http://github.com/dandelion/datatables"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -67,14 +69,16 @@
 				<datatables:table id="atualizacao" data="${atualizacoesRealizadas}"
 					cdn="true" row="atualizacao" theme="bootstrap2"
 					cssClass="table table-striped">
+					<fmt:formatDate value="${atualizacao.inicioPeridoDelta}" pattern="dd/MM/yyyy" var="inicioPeridoDelta" />
+					<fmt:formatDate value="${atualizacao.finalPeridoDelta}" pattern="dd/MM/yyyy" var="finalPeridoDelta" />
 					<datatables:column title="Autor">
 						<c:out value="${atualizacao.usuario.nome}"></c:out>
 					</datatables:column>
 					<datatables:column title="Inicio">
-						<c:out value="${atualizacao.inicioPeridoDelta}"></c:out>
+						<c:out value="${inicioPeridoDelta}" ></c:out>
 					</datatables:column>
 					<datatables:column title="Final">
-						<c:out value="${atualizacao.finalPeridoDelta}"></c:out>
+						<c:out value="${finalPeridoDelta}"></c:out>
 					</datatables:column>
 					<datatables:column title="Arquivo">
 						<a href="<c:url value="/acervo/download/${atualizacao.id}"/>">Download
