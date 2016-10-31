@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -17,9 +18,7 @@
           	<div class="form-panel">
 		<form:form servletRelativeAction="/cotacao/editar" method="post" modelAttribute="cotacao" role="form" class="form-horizontal">
 			<form:input path="id" type="hidden" />
-<%-- 		<form:input path="atualizadoEm" type="hidden" value="${adicionadoEm}"/> --%>
-			
-			
+
 			<div class="form-group" style="text-align: center;">
 				<label class="control-label" style="font-size: 20px;">Editar Cotação</label>
 			</div>

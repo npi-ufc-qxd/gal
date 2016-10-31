@@ -1,5 +1,7 @@
 package br.ufc.npi.gal.web;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -168,6 +170,7 @@ public class ComprarController {
 	
 	@RequestMapping(value = "cotacao/editar", method = RequestMethod.POST)
 	public String atualizarCotacao(@Valid Cotacao cotacao, BindingResult results, RedirectAttributes redirectAttributes) {
+		cotacao.setAdicionadoEm(new Date());
 		cotacaoService.update(cotacao);
 					
 		redirectAttributes.addFlashAttribute("info", "Cotação atualizada com sucesso.");
