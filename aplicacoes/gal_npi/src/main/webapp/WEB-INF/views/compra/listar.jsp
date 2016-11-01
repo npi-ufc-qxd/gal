@@ -75,9 +75,9 @@
 					<c:out value="${index}º Carrinho de compras"></c:out>
 				</datatables:column>
 				
-				<datatables:column title="Detalhes"  style="text-align: center;">
+				<datatables:column title="Painel de Compras"  style="text-align: center;">
 					<a class="btn btn-info btn-xs" 
-						href="<c:url value = "/compra/${compra.id}/detalhes"></c:url>">
+						href="<c:url value = "/compra/${compra.id}/painel"></c:url>">
 						<span class="glyphicon glyphicon-eye-open"></span>
 					</a>
 				</datatables:column>

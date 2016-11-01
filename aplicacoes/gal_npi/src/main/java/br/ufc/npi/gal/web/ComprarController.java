@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.ufc.npi.gal.model.Compra;
 import br.ufc.npi.gal.model.Cotacao;
 import br.ufc.npi.gal.model.Fornecedor;
+import br.ufc.npi.gal.model.Item;
 import br.ufc.npi.gal.model.Titulo;
 import br.ufc.npi.gal.service.CompraService;
 import br.ufc.npi.gal.service.CotacaoService;
 import br.ufc.npi.gal.service.FornecedorService;
+import br.ufc.npi.gal.service.ItemService;
 import br.ufc.npi.gal.service.TituloService;
 import br.ufc.npi.gal.validation.CotacaoValidator;
+import br.ufc.npi.gal.validation.ItemValidator;
 
 @Controller
 public class ComprarController {
@@ -34,9 +38,13 @@ public class ComprarController {
 	private CotacaoService cotacaoService;
 	@Inject
 	private CompraService compraService;
+	@Inject
+	private ItemService itemService;
 	
 	@Inject
 	private CotacaoValidator cotacaoValidator;
+	@Inject
+	private ItemValidator itemValidator;
 	
 	private static final String PATH_FORNECEDOR_ADICIONAR = "fornecedor/adicionar";
 	private static final String PATH_FORNECEDOR_LISTAR = "fornecedor/listar";
@@ -49,6 +57,8 @@ public class ComprarController {
 	private static final String PATH_COTACAO_EDITAR = "cotacao/editar";
 	
 	private static final String PATH_COMPRA_LISTAR = "compra/listar";
+	private static final String PATH_REDIRECT_COMPRA_LISTAR = "redirect:/compra/listar";
+	private static final String PATH_COMPRA_PAINEL = "compra/painel";
 
 	
 
@@ -165,7 +175,7 @@ public class ComprarController {
 		Cotacao cotacao = this.cotacaoService.find(Cotacao.class, id);
 		
 		if (cotacao == null) {
-			return "redirect:/cotacao/listar";
+			return PATH_REDIRECT_COTACAO_LISTAR;
 		}
 
 		modelMap.addAttribute("cotacao", cotacao);
@@ -189,6 +199,53 @@ public class ComprarController {
 	public String listarCompras(ModelMap modelMap) {
 		modelMap.addAttribute("compras", this.compraService.findOrderByCriadaEm());
 		return PATH_COMPRA_LISTAR;
+	}
+	
+	@RequestMapping(value = "/compra/adicionar", method = RequestMethod.GET)
+	public String adicionarCompra(final RedirectAttributes redirectAttributes) {
+		Compra compra = new Compra();
+		compra.setAtualizadaEm(new Date());
+		compra.setCriadaEm(new Date());
+		compraService.save(compra);
+		redirectAttributes.addFlashAttribute("info", "Carrinho de compras adicionado com sucesso.");
+		return "redirect:/compra/"+compra.getId()+"/painel";
+	}
+	
+	@RequestMapping(value = "/compra/{id}/painel", method = RequestMethod.GET)
+	public String mostrarPainelCompras(@PathVariable("id") Integer id, ModelMap model, RedirectAttributes redirectAttributes) {
+		
+		Compra compra = compraService.getCompraById(id);
+		if(compra == null) {
+			redirectAttributes.addFlashAttribute("error", "Carrinho de compras não existente.");
+			return PATH_REDIRECT_COMPRA_LISTAR;
+		}
+		model.addAttribute("item", new Item());
+		model.addAttribute("titulos", tituloService.find(Titulo.class));
+		model.addAttribute("compra", compra);
+		return PATH_COMPRA_PAINEL;
+	}
+	
+	@RequestMapping(value = "/compra/{idCompra}/item/adicionar", method = RequestMethod.POST)
+	public String adicionarItem(ModelMap model, @Valid Item item, @PathVariable("idCompra") Integer idCompra, BindingResult result, final RedirectAttributes redirectAttributes) {
+		
+		Compra compra = compraService.getCompraById(idCompra);
+		if(compra == null){
+			redirectAttributes.addFlashAttribute("error", "Compra não existente.");
+			return PATH_REDIRECT_COMPRA_LISTAR;
+		}
+		
+		itemValidator.validate(item, result);
+		if(result.hasErrors()){
+			model.addAttribute("item", item);
+			model.addAttribute("titulos", tituloService.find(Titulo.class));
+			model.addAttribute("compra", compra);
+			return PATH_COMPRA_PAINEL;
+		}
+		
+		item.setCompra(compra);
+		itemService.save(item);
+		redirectAttributes.addFlashAttribute("info", "Item adicionado com sucesso.");
+		return "redirect:/compra/"+compra.getId()+"/painel";
 	}
 	
 }
