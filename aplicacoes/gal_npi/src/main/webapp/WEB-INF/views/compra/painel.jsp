@@ -89,7 +89,7 @@
 				</datatables:column>
 
 				<datatables:column title="Quantidade real">
-					<c:out value="0"></c:out>
+					<c:out value="${item.quantidadeReal}"></c:out>
 				</datatables:column>
 				
 				<datatables:column title="Comprando">
@@ -97,11 +97,11 @@
 				</datatables:column>
 				
 				<datatables:column title="Valor Unitário Médio">
-					<c:out value="0"></c:out>
+					<c:out value="${item.valorUnitarioMedio}"></c:out>
 				</datatables:column>
 				
 				<datatables:column title="Valor Total Médio">
-					<c:out value="0"></c:out>
+					<c:out value="${item.valorTotalMedio}"></c:out>
 				</datatables:column>
 			</datatables:table>
 		</c:if>

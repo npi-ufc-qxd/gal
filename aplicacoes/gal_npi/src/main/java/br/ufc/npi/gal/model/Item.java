@@ -54,6 +54,27 @@ public class Item {
 		this.compra = compra;
 	}
 	
+	public int getQuantidadeReal(){
+		if(titulo!=null && titulo.getExemplares()!=null) {
+			return titulo.getExemplares().size();
+		} else {
+			return 0;
+		}
+	}
 	
+	public double getValorUnitarioMedio(){
+		double res = 0.0;
+		if(titulo!=null && titulo.getCotacoes()!=null && !titulo.getCotacoes().isEmpty()){
+			for(Cotacao cotacao : titulo.getCotacoes()){
+				res += cotacao.getValor();
+			}
+			res /= titulo.getCotacoes().size();
+		}
+		return res;
+	}
+	
+	public double getValorTotalMedio(){
+		return this.getValorUnitarioMedio()*this.quantidade;
+	}
 	
 }
