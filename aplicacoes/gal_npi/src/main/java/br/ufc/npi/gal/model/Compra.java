@@ -24,7 +24,7 @@ public class Compra {
 	@Temporal(TemporalType.DATE)
 	private Date atualizadaEm;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "compra")
 	private List<Item> itens;
 
 	public Integer getId() {
@@ -50,6 +50,16 @@ public class Compra {
 	public void setAtualizadaEm(Date atualizadaEm) {
 		this.atualizadaEm = atualizadaEm;
 	}
+
+	public List<Item> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<Item> itens) {
+		this.itens = itens;
+	}
+	
+	
 	
 	
 }
