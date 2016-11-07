@@ -59,7 +59,7 @@
 			<c:set var="index" value="0" />
 			<datatables:table id="comprasTable" data="${compras}" cdn="false"
 				row="compra" theme="bootstrap2" cssClass="table table-bordered table-striped table-orderable"
-				no-sort-fields="3" default-sort="0 asc">
+				no-sort-fields="4" default-sort="0 asc">
 				<c:set var="index" value="${index + 1}" />
 				<fmt:formatDate value="${compra.criadaEm}" pattern="dd/MM/yyyy" var="criadaEm" />
 				<fmt:formatDate value="${compra.atualizadaEm}" pattern="dd/MM/yyyy" var="atualizadaEm" />
@@ -74,6 +74,11 @@
 				<datatables:column title="Nº do carrinho de compras">
 					<c:out value="${index}º Carrinho de compras"></c:out>
 				</datatables:column>
+				
+				<datatables:column title="Total de Itens">
+					<c:out value="${compra.itens.size()}"></c:out>
+				</datatables:column>
+				
 				
 				<datatables:column title="Painel de Compras"  style="text-align: center;">
 					<a class="btn btn-info btn-xs" 
