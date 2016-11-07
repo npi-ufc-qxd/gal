@@ -57,20 +57,19 @@ public class Item {
 	public int getQuantidadeReal(){
 		if(titulo!=null && titulo.getExemplares()!=null) {
 			return titulo.getExemplares().size();
-		} else {
-			return 0;
 		}
+		return 0;
 	}
 	
 	public double getValorUnitarioMedio(){
-		double res = 0.0;
+		double valorUnitarioMedio = 0.0;
 		if(titulo!=null && titulo.getCotacoes()!=null && !titulo.getCotacoes().isEmpty()){
 			for(Cotacao cotacao : titulo.getCotacoes()){
-				res += cotacao.getValor();
+				valorUnitarioMedio += cotacao.getValor();
 			}
-			res /= titulo.getCotacoes().size();
+			valorUnitarioMedio /= titulo.getCotacoes().size();
 		}
-		return res;
+		return valorUnitarioMedio;
 	}
 	
 	public double getValorTotalMedio(){
