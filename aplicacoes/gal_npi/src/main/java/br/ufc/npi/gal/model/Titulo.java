@@ -9,7 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -21,6 +23,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name="titulos")
 @Audited
+//@NamedQuery(name="Titulo.findWithItensByCompra", query="select t from Titulo t left join fetch t.itens i on i.compra.id = :idCompra")
 public class Titulo {
 
 	@Id
@@ -76,6 +79,10 @@ public class Titulo {
 	@Column(name = "cadastrado_biblioteca")
 	private Boolean cadastradoBiblioteca;
 	
+	@NotAudited
+	@OneToMany(mappedBy="titulo")
+	private List<Item> itens;
+
 	@NotAudited
 	@OneToMany(mappedBy="titulo")
 	private List<Cotacao> cotacoes;
@@ -238,10 +245,19 @@ public class Titulo {
 	public void setCotacoes(List<Cotacao> cotacoes) {
 		this.cotacoes = cotacoes;
 	}
+	
+	public List<Item> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<Item> itens) {
+		this.itens = itens;
+	}
 
 	@Override
 	public String toString() {
 		return "Titulo [id=" + id + ", nome=" + nome + ", tipo=" + tipo + "]";
 	}
+	
 
 }

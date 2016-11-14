@@ -30,4 +30,9 @@ public class CalculoMetaServiceImpl implements CalculoMetaService {
 		return calculadorMeta.calcular(tituloService.find(Titulo.class),metaService.getMeta());
 	}
 
+	@Override
+	public List<ResultadoCalculo> gerarCalculoWithItensByCompra(int idCompra) {
+		return calculadorMeta.calcular(tituloService.getTitulosWithItensByCompra(idCompra),metaService.getMeta());
+	}
+
 }

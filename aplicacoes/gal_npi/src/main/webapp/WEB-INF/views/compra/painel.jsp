@@ -10,10 +10,10 @@
 <html>
 <head>
 	<title>Painel de Compras</title>
-		<jsp:include page="../fragments/htmlHead.jsp" />
+	<jsp:include page="../fragments/htmlHead.jsp" />
 </head>
 <body>
-	<div id="container">
+	<div id="container" >
 		<jsp:include page="../fragments/header.jsp" />
 	
 		<section id="main-content">
@@ -39,7 +39,7 @@
        	<div class="col-lg-12">
        		<div class="form-panel">
        		
-       		<form:form servletRelativeAction="/compra/${compra.id}/item/adicionar" method="post" modelAttribute="item" role="form" class="form-horizontal">
+       		<!--<form:form servletRelativeAction="/compra/${compra.id}/item/adicionar" method="post" modelAttribute="item" role="form" class="form-horizontal">
 			
 			<div class="form-group" style="text-align: center;">
 				<label class="control-label" style="font-size: 20px;">Adicionar Item</label>
@@ -69,40 +69,128 @@
 			<div class="controls">
 				<input id="criar" class="btn btn-primary" type="submit" value="Adicionar"/>
 			</div>
-		</form:form>
+		</form:form>-->
+		
 		<br /><br />
 		<div style="text-align: center;">
 			<label class="control-label" style="font-size: 20px;">Carrinho de compras</label>
 		</div>
 
-		<c:if test="${empty compra.itens}">
-			<div class="alert alert-warning" role="alert">Não há itens cadastrados neste carrinho.</div>
+		<c:if test="${empty resultados}">
+			<div class="alert alert-warning" role="alert">Não há títulos cadastrados neste carrinho.</div>
 		</c:if>
 
-		<c:if test="${not empty compra.itens}">
-			<datatables:table id="itensTable" data="${compra.itens}" cdn="false"
-				row="item" theme="bootstrap2" cssClass="table table-bordered table-striped table-orderable"
+		<c:if test="${not empty resultados}">
+			<datatables:table id="itensTable" data="${resultados}" cdn="false"
+				row="resultado" theme="bootstrap2" cssClass="table table-bordered table-striped table-orderable"
 				no-sort-fields="" default-sort="0 asc">
 				
 				<datatables:column title="Título">
-					<c:out value="${item.titulo.nome}"></c:out>
-				</datatables:column>
-
-				<datatables:column title="Quantidade real">
-					<c:out value="${item.quantidadeReal}"></c:out>
+					<c:out value="${resultado.titulo.nome}"></c:out>
 				</datatables:column>
 				
-				<datatables:column title="Comprando">
-					<c:out value="${item.quantidade}"></c:out>
+				<datatables:column title="Acervo">
+					<c:out value="${resultado.titulo.exemplares.size()}"></c:out>
+				</datatables:column>
+				
+				<c:forEach items="${resultado.metasCalculadas}" var="meta" varStatus="indice">
+					<datatables:column title="Déficit ${meta.nome}" style="text-align: center;">
+							<c:choose>
+								<c:when test="${resultado.titulo.tipo == 'Virtual'}">
+									<c:out value="0"></c:out>
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${(meta.calculo-resultado.titulo.acervo) >= 0}">
+											<fmt:formatNumber type="number" maxFractionDigits="1" value="${meta.calculo-resultado.titulo.acervo}"></fmt:formatNumber>
+										</c:when>
+										<c:otherwise>
+											<c:out value="0"></c:out>
+										</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+							</c:choose>
+						</datatables:column>
+				</c:forEach>
+
+				
+				<datatables:column title="Quantidade">
+					<c:choose>
+						<c:when test="${resultado.titulo.itens.size() > 0}">
+							<input value="${resultado.titulo.itens.get(0).quantidade}" />
+						</c:when>
+						<c:otherwise>
+							<input value="0" />
+						</c:otherwise>
+					</c:choose>
 				</datatables:column>
 				
 				<datatables:column title="Valor Unitário Médio">
-					<c:out value="${item.valorUnitarioMedio}"></c:out>
+					<c:choose>
+						<c:when test="${resultado.titulo.itens.size() > 0}">
+							<c:out value="${resultado.titulo.itens.get(0).valorUnitarioMedio}"></c:out>
+						</c:when>
+						<c:otherwise>
+							<c:out value="0"></c:out>
+						</c:otherwise>
+					</c:choose>
 				</datatables:column>
 				
 				<datatables:column title="Valor Total Médio">
-					<c:out value="${item.valorTotalMedio}"></c:out>
+					<c:choose>
+						<c:when test="${resultado.titulo.itens.size() > 0}">
+							<c:out value="${resultado.titulo.itens.get(0).valorTotalMedio}"></c:out>
+						</c:when>
+						<c:otherwise>
+							<c:out value="0"></c:out>
+						</c:otherwise>
+					</c:choose>
 				</datatables:column>
+				
+				<datatables:column title="Adicionar" style="text-align: center;">
+					<a class="btn btn-primary btn-xs"
+						href="<c:url value = "/compra/${compra.id}/item/adicionar"></c:url>">
+						<span class="glyphicon glyphicon-plus"></span>
+					</a>
+				</datatables:column>
+				
+				<datatables:column title="Editar" style="text-align: center;">
+					<c:choose>
+						<c:when test="${resultado.titulo.itens.size() > 0}">
+							<a class="btn btn-primary btn-xs"
+								href="<c:url value = "/compra/itam/${resultado.titulo.itens.get(0).id}/editar"></c:url>">
+								<span class="glyphicon glyphicon-edit"></span>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a class="btn btn-primary btn-xs"
+								href="<c:url value = "#"></c:url>">
+								<span class="glyphicon glyphicon-edit"></span>
+							</a>
+						</c:otherwise>
+					</c:choose>
+				</datatables:column>
+				
+				<datatables:column title="Excluir" style="text-align: center;">
+					<c:choose>
+						<c:when test="${resultado.titulo.itens.size() > 0}">
+							<a id="excluir" class="open-AddQtdExemplares btn btn-danger btn-xs"
+								data-toggle="modal" data-target="#confirm-delete" href="#"
+								data-id="${resultado.titulo.itens.get(0).id}"
+								data-href="<c:url value="/compra/item/${resultado.titulo.itens.get(0).id}/excluir" ></c:url>">
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a id="excluir" class="open-AddQtdExemplares btn btn-danger btn-xs"
+								data-toggle="modal" data-target="#confirm-delete" href="#"
+								data-id="" data-href="<c:url value="#" ></c:url>">
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>
+						</c:otherwise>
+					</c:choose>
+				</datatables:column>
+				
 			</datatables:table>
 		</c:if>
 		</div>

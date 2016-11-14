@@ -60,4 +60,9 @@ public class TituloServiceImpl extends GenericServiceImpl<Titulo> implements Tit
 	public void delete(Titulo entity) {
 		super.delete(entity);
 	}
+
+	@Override
+	public List<Titulo> getTitulosWithItensByCompra(Integer idCompra) {
+		return tituloRespository.getTitulosWithItensByCompra(idCompra);
+	}
 }

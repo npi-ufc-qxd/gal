@@ -16,4 +16,6 @@ public interface TituloRespository extends GenericRepository<Titulo> {
 	public abstract Titulo getOutroTituloByIsbn(Integer id, String isbn);
 	
 	public abstract List<Titulo> getTitulosAuditoriaById(Integer id);
+	
+	public abstract List<Titulo> getTitulosWithItensByCompra(Integer idCompra);
 }

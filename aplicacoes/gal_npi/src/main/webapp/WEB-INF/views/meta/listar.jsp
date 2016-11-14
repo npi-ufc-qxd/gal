@@ -11,16 +11,14 @@
 <head>
 	<title>Metas</title>
 	<jsp:include page="../fragments/htmlHead.jsp" />
-<style type="text/css">
- #sidebar {
- 		height: 100%;
-        overflow: hidden;
-        z-index: 1001;
-
-    }
-
-</style>
-
+	<style type="text/css">
+	 #sidebar {
+	 		height: 100%;
+	        overflow: hidden;
+	        z-index: 1001;
+	
+	    }
+	</style>
 </head>
 <body>
 	<div id="container" >
