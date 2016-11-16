@@ -99,6 +99,12 @@ public class ComprarController {
 			RedirectAttributes redirectAttributes) {
 		Fornecedor fornecedor  = fornecedorService.find(Fornecedor.class, id);
 		if(fornecedor!=null){
+			
+			if(!fornecedor.getCotacoes().isEmpty()){
+				redirectAttributes.addFlashAttribute("info", "O fornecedor não pode ser excluído pois há cotações cadastras para ele.");
+				return PATH_REDIRECT_FORNECEDOR_LISTAR;
+			}
+			
 			fornecedorService.delete(fornecedor);
 			redirectAttributes.addFlashAttribute("info", "Fornecedor excluído com sucesso.");
 		} else {
