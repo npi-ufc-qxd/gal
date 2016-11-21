@@ -19,6 +19,7 @@ import br.ufc.npi.gal.model.Cotacao;
 import br.ufc.npi.gal.model.Fornecedor;
 import br.ufc.npi.gal.model.Item;
 import br.ufc.npi.gal.model.Titulo;
+import br.ufc.npi.gal.service.CalculoMetaService;
 import br.ufc.npi.gal.service.CompraService;
 import br.ufc.npi.gal.service.CotacaoService;
 import br.ufc.npi.gal.service.FornecedorService;
@@ -40,6 +41,8 @@ public class ComprarController {
 	private CompraService compraService;
 	@Inject
 	private ItemService itemService;
+	@Inject
+	private CalculoMetaService calculoMetaService;
 	
 	@Inject
 	private CotacaoValidator cotacaoValidator;
@@ -203,6 +206,7 @@ public class ComprarController {
 	//COMPRA
 	@RequestMapping(value = "/compra/listar", method = RequestMethod.GET)
 	public String listarCompras(ModelMap modelMap) {
+		modelMap.addAttribute("resultados", calculoMetaService.gerarCalculo());
 		modelMap.addAttribute("compras", this.compraService.findOrderByCriadaEm());
 		return PATH_COMPRA_LISTAR;
 	}
@@ -226,7 +230,7 @@ public class ComprarController {
 			return PATH_REDIRECT_COMPRA_LISTAR;
 		}
 		model.addAttribute("item", new Item());
-		model.addAttribute("titulos", tituloService.find(Titulo.class));
+		model.addAttribute("resultados", calculoMetaService.gerarCalculoWithItensByCompra(id));
 		model.addAttribute("compra", compra);
 		return PATH_COMPRA_PAINEL;
 	}

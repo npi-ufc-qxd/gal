@@ -32,7 +32,7 @@ public class TituloController {
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(ModelMap modelMap) {
-		modelMap.addAttribute("titulos", this.tituloService.find(Titulo.class));
+		modelMap.addAttribute("titulos", tituloService.find(Titulo.class));
 		return "titulo/listar";
 
 	}

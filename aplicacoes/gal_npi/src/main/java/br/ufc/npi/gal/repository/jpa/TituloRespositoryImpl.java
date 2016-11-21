@@ -82,4 +82,14 @@ public class TituloRespositoryImpl extends JpaGenericRepositoryImpl<Titulo> impl
 		}
 		return tituloAuditoria;
 	}
+
+	@Override
+	public List<Titulo> getTitulosWithItensByCompra(Integer idCompra) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("idCompra", idCompra);
+		List<Titulo> result = find(QueryType.JPQL, "SELECT t FROM Titulo t LEFT JOIN t.itens i ON i.compra.id = :idCompra ORDER BY t.id", params);
+		
+		//List<Titulo> result = manager.createNamedQuery("Titulo.findWithItensByCompra", Titulo.class).setParameter("idCompra", idCompra).getResultList();
+		return result;
+	}
 }

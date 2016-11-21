@@ -86,34 +86,25 @@ public class MetaController {
 			for (MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()) {
 				boolean flag = false;
 				for (DetalheMetaCalculada detalhePar : metaCalculada.getDetalhePar()) {
-
 					if (detalhePar.getCurso().equals(curso.getNome())) {
 						flag = true;
 						break;
-
 					}
-
 				}
 				for (DetalheMetaCalculada detalheImpar : metaCalculada.getDetalheImpar()) {
-
 					if (detalheImpar.getCurso().equals(curso.getNome())) {
 						flag = true;
 						break;
-
 					}
-
 				}
 				if (flag) {
 					metasCalculadas.add(metaCalculada);
-
 					flag = false;
-
 				}
 			}
 			if (!metasCalculadas.isEmpty()) {
 				resultadosCurso.add(new ResultadoCalculo(resultadoCalculo.getTitulo(), metasCalculadas));
 			}
-
 		}
 
 		modelMap.addAttribute("idCurso", curso.getId());
@@ -123,7 +114,6 @@ public class MetaController {
 		modelMap.addAttribute("resultados", resultadosCurso);
 
 		return "meta/listar";
-
 	}
 
 	@RequestMapping(value = "/componente/{id}/listar", method = RequestMethod.GET)
@@ -143,34 +133,25 @@ public class MetaController {
 			for (MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()) {
 				boolean flag = false;
 				for (DetalheMetaCalculada detalhePar : metaCalculada.getDetalhePar()) {
-
 					if (detalhePar.getComponente().equals(componenteCurricular.getNome())) {
 						flag = true;
 						break;
-
 					}
-
 				}
 				for (DetalheMetaCalculada detalheImpar : metaCalculada.getDetalheImpar()) {
-
 					if (detalheImpar.getComponente().equals(componenteCurricular.getNome())) {
 						flag = true;
 						break;
-
 					}
-
 				}
 				if (flag) {
 					metasCalculadas.add(metaCalculada);
-
 					flag = false;
-
 				}
 			}
 			if (!metasCalculadas.isEmpty()) {
 				resultadosCurso.add(new ResultadoCalculo(resultadoCalculo.getTitulo(), metasCalculadas));
 			}
-
 		}
 
 		modelMap.addAttribute("idCurso", -1);
@@ -188,29 +169,20 @@ public class MetaController {
 
 		List<ResultadoCalculo> resultados = calculo.gerarCalculo();
 		for (ResultadoCalculo resultadoCalculo : resultados) {
-
 			if (resultadoCalculo.getTitulo().getId().equals(id)) {
-
 				for (MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()) {
-
 					if (metaCalculada.getNome().trim().equals(meta) && metaCalculada.getCalculo() > 0.1) {
-
 						modelMap.addAttribute("titulo", this.tituloService.find(Titulo.class, id));
 						modelMap.addAttribute("metaCalculada", metaCalculada);
 
 						return "meta/detalhe";
-
 					}
-
 				}
-
 			}
-
 		}
 		redirectAttributes.addFlashAttribute("info", "Esse titulo não possui meta.");
 
 		return "redirect:/meta/listar";
-
 	}
 
 	@RequestMapping(value = "/configurar")
@@ -235,9 +207,7 @@ public class MetaController {
 				redirectAttributes.addFlashAttribute("error",
 						"Já existe uma meta com esse nome. Meta não configurada.");
 				return "redirect:/meta/configurar";
-
 			}
-
 		}
 		redirectAttributes.addFlashAttribute("info", "Meta configurada com sucesso.");
 		return "redirect:/meta/listar";
@@ -273,14 +243,11 @@ public class MetaController {
 			is.close();
 			file.delete();
 		} catch (Exception e) {
-
 			redirectAttribute.addFlashAttribute("error", "Problemas ao realizar download. Erro: " + e.getMessage());
 			modelMap.addAttribute("metas", metaService.getMeta());
 			return "redirect:/meta/downloadMetaDetalhada";
 		}
-
 		return null;
-
 	}
 
 	public File criaRelatorioMetaDetalhado(String meta) throws IOException {
@@ -331,7 +298,6 @@ public class MetaController {
 					cria.escreveFile(str, linha);
 				}
 			}
-
 		}
 		cria.fechaFile(str);
 		return cria.getFile();
@@ -341,18 +307,14 @@ public class MetaController {
 		List<ResultadoCalculo> resultados = new ArrayList<ResultadoCalculo>();
 
 		for (ResultadoCalculo resultadoCalculo : calculo.gerarCalculo()) {
-
 			for (MetaCalculada metaCalculada : resultadoCalculo.getMetasCalculadas()) {
 				if (metaCalculada.getNome().trim().equals(nomeMeta)) {
-
 					resultados.add(new ResultadoCalculo(resultadoCalculo.getTitulo(), metaCalculada));
 					break;
 				}
-
 			}
 		}
 		return resultados;
-
 	}
 
 	public CalculoMetaService getCalculo() {
