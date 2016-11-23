@@ -25,15 +25,15 @@ $(document).ready(function(){
 		
 		var response = $.ajax({
 			url,
-			type: 'POST',
+			type: "POST",
 			data : {
-				'quantidade' : quantidade.toString(),
-		    	'tituloId' : tituloId.toString()
+				"quantidade" : quantidade,
+				"tituloId" : tituloId
 			}
 		});
 		
 		response.done(function(message) {
-			$("#input-quantidade-"+tituloId.toString()).prop('disabled', true);
+			$("#input-quantidade-"+tituloId).prop("disabled", true);
 			$(".alert-info").show();
 			botao.hide();
 			$(".alert-info > .alert-content").text(message);
