@@ -27,8 +27,8 @@ $(document).ready(function(){
 			url,
 			type: "POST",
 			data : {
-				"quantidade" : quantidade,
-				"tituloId" : tituloId
+				quantidade,
+				tituloId
 			}
 		});
 		
