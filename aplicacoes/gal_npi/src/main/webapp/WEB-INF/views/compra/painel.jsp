@@ -85,10 +85,10 @@
 				<datatables:column title="Quantidade">
 					<c:choose>
 						<c:when test="${resultado.titulo.itens.size() > 0}">
-							<input class="input-qtd" id="input-qtd-${resultado.titulo.id}" value="${resultado.titulo.itens.get(0).quantidade}" data-titulo-id="${resultado.titulo.id}" type="number" disabled="disabled"/>
+							<input class="input-quantidade" id="input-quantidade-${resultado.titulo.id}" value="${resultado.titulo.itens.get(0).quantidade}" data-titulo-id="${resultado.titulo.id}" type="number" disabled="disabled"/>
 						</c:when>
 						<c:otherwise>
-							<input class="input-qtd" id="input-qtd-${resultado.titulo.id}" value="0" type="number" data-titulo-id="${resultado.titulo.id}" />
+							<input class="input-quantidade" id="input-quantidade-${resultado.titulo.id}" value="0" type="number" data-titulo-id="${resultado.titulo.id}" />
 						</c:otherwise>
 					</c:choose>
 				</datatables:column>
