@@ -33,7 +33,7 @@ public class ItemValidator implements Validator {
 			validateNotNull(errors, item.getTitulo(), "titulo.id", "Título não cadastrado");
 		}
 	}
-
+	
 	private void validateNotNull(Errors erros, Object object, String field, String message){
 		if (object == null) {
 			erros.rejectValue(field, field,message);

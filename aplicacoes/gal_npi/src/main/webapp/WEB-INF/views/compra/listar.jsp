@@ -83,7 +83,7 @@
 				<datatables:column title="Painel de Compras"  style="text-align: center;">
 					<a class="btn btn-info btn-xs" 
 						href="<c:url value = "/compra/${compra.id}/painel"></c:url>">
-						<span class="glyphicon glyphicon-eye-open"></span>
+						<span class="glyphicon glyphicon-edit"></span>
 					</a>
 				</datatables:column>
 			</datatables:table>
