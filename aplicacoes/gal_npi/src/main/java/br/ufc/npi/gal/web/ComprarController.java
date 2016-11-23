@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -12,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufc.npi.gal.model.Compra;
@@ -26,7 +30,6 @@ import br.ufc.npi.gal.service.FornecedorService;
 import br.ufc.npi.gal.service.ItemService;
 import br.ufc.npi.gal.service.TituloService;
 import br.ufc.npi.gal.validation.CotacaoValidator;
-import br.ufc.npi.gal.validation.ItemValidator;
 
 @Controller
 public class ComprarController {
@@ -46,8 +49,6 @@ public class ComprarController {
 	
 	@Inject
 	private CotacaoValidator cotacaoValidator;
-	@Inject
-	private ItemValidator itemValidator;
 	
 	private static final String PATH_FORNECEDOR_ADICIONAR = "fornecedor/adicionar";
 	private static final String PATH_FORNECEDOR_LISTAR = "fornecedor/listar";
@@ -236,26 +237,28 @@ public class ComprarController {
 	}
 	
 	@RequestMapping(value = "/compra/{idCompra}/item/adicionar", method = RequestMethod.POST)
-	public String adicionarItem(ModelMap model, @Valid Item item, @PathVariable("idCompra") Integer idCompra, BindingResult result, final RedirectAttributes redirectAttributes) {
+	public @ResponseBody ResponseEntity<String> adicionarItem(@PathVariable("idCompra") Integer idCompra, @RequestParam("quantidade") Integer quantidade, @RequestParam("tituloId") Integer tituloId, final RedirectAttributes redirectAttributes) {
 		
 		Compra compra = compraService.getCompraById(idCompra);
 		if(compra == null){
-			redirectAttributes.addFlashAttribute("error", "Compra não existente.");
-			return PATH_REDIRECT_COMPRA_LISTAR;
+			return new ResponseEntity<String>("Compra não existente.", HttpStatus.BAD_REQUEST);
 		}
 		
-		itemValidator.validate(item, result);
-		if(result.hasErrors()){
-			model.addAttribute("item", item);
-			model.addAttribute("titulos", tituloService.find(Titulo.class));
-			model.addAttribute("compra", compra);
-			return PATH_COMPRA_PAINEL;
+		Titulo titulo = tituloService.find(Titulo.class, tituloId);
+		if(titulo == null){
+			return new ResponseEntity<String>("Título não existente.", HttpStatus.BAD_REQUEST);
 		}
 		
+		if(itemService.getItemByCompraAndTitulo(idCompra, tituloId)!=null){
+			return new ResponseEntity<String>("Item já cadastrado.", HttpStatus.BAD_REQUEST);
+		}
+		
+		Item item = new Item();
 		item.setCompra(compra);
+		item.setTitulo(titulo);
+		item.setQuantidade(quantidade);
 		itemService.save(item);
-		redirectAttributes.addFlashAttribute("info", "Item adicionado com sucesso.");
-		return "redirect:/compra/"+compra.getId()+"/painel";
+		
+		return new ResponseEntity<String>("Item adicionado com sucesso", HttpStatus.OK);
 	}
-	
 }

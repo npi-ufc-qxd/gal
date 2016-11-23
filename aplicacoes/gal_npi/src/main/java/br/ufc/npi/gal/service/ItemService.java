@@ -7,4 +7,6 @@ public interface ItemService extends GenericService<Item>{
 
 	public abstract Item getItemById(Integer id);
 	
+	public abstract Item getItemByCompraAndTitulo(Integer compraId, Integer tituloId);
+	
 }

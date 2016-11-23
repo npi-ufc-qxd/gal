@@ -19,5 +19,10 @@ public class ItemServiceImpl extends GenericServiceImpl<Item> implements ItemSer
 		return this.itemRepository.getItemById(id);
 	}
 
+	@Override
+	public Item getItemByCompraAndTitulo(Integer compraId, Integer tituloId) {
+		return this.itemRepository.getItemByCompraAndTitulo(compraId, tituloId);
+	}
+
 	
 }

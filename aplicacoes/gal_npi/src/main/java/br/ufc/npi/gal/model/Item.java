@@ -63,19 +63,8 @@ public class Item {
 		return 0;
 	}
 	
-	public double getValorUnitarioMedio(){
-		double valorUnitarioMedio = 0.0;
-		if(titulo!=null && titulo.getCotacoes()!=null && !titulo.getCotacoes().isEmpty()){
-			for(Cotacao cotacao : titulo.getCotacoes()){
-				valorUnitarioMedio += cotacao.getValor();
-			}
-			valorUnitarioMedio /= titulo.getCotacoes().size();
-		}
-		return valorUnitarioMedio;
-	}
-	
 	public double getValorTotalMedio(){
-		return this.getValorUnitarioMedio()*this.quantidade;
+		return titulo.getValorUnitarioMedio()*this.quantidade;
 	}
 	
 }

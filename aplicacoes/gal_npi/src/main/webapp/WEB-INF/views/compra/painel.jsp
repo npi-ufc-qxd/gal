@@ -19,61 +19,29 @@
 		<section id="main-content">
           	<section class="wrapper"> 
           	
-         <c:if test="${not empty error}">
-			<div class="alert alert-danger alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert">
-					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-				</button>
+		<div class="alert alert-danger alert-dismissible" role="alert" ${(empty error) ? 'hidden' : ''} >
+			<button type="button" class="close" data-for="danger">
+				<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+			</button>
+			<span class="alert-content">
 				<c:out value="${error}"></c:out>
-			</div>
-		</c:if>
-		<c:if test="${not empty info}">
-			<div class="alert alert-info alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert">
-					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-				</button>
+			</span>
+		</div>
+		<div class="alert alert-info alert-dismissible" role="alert" ${(empty info) ? 'hidden' : ''} >
+			<button type="button" class="close" data-for="info" >
+				<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+			</button>
+			<span class="alert-content">
 				<c:out value="${info}"></c:out>
-			</div>
-		</c:if>
+			</span>
+		</div>
           	
        	<div class="col-lg-12">
        		<div class="form-panel">
        		
-       		<!--<form:form servletRelativeAction="/compra/${compra.id}/item/adicionar" method="post" modelAttribute="item" role="form" class="form-horizontal">
-			
-			<div class="form-group" style="text-align: center;">
-				<label class="control-label" style="font-size: 20px;">Adicionar Item</label>
-			</div>
-			
-			<div class="form-group">
-				<label for="titulo" class="col-sm-1 control-label">Título</label>
-			    <div class="col-sm-10">
-			    	<form:select path="titulo.id" id="select-titulo" class="form-control">		 
-			    		<form:option value="" selected="selected"> -- Selecione um título -- </form:option>   		
-			    		<c:forEach items="${titulos}" var="titulo">
-			    			<form:option value="${titulo.id}">${titulo.nome}</form:option>
-			    		</c:forEach>
-			    	</form:select>
-			    	<form:errors path="titulo.id" cssClass="error" />
-			    </div>
-			</div>
-			
-			<div class="form-group">
-			    <label for="quantidade" class="col-sm-1 control-label">Quantidade</label>
-			    <div class="col-sm-10">
-			    	<form:input id="quantidade" class="form-control" placeholder="Quantidade" path="quantidade" />
-			    	<form:errors path="quantidade" cssClass="error" />
-			    </div>
-			</div>
-
-			<div class="controls">
-				<input id="criar" class="btn btn-primary" type="submit" value="Adicionar"/>
-			</div>
-		</form:form>-->
-		
 		<br /><br />
 		<div style="text-align: center;">
-			<label class="control-label" style="font-size: 20px;">Carrinho de compras</label>
+			<label class="control-label" style="font-size: 20px;">Painel de compras</label>
 		</div>
 
 		<c:if test="${empty resultados}">
@@ -117,41 +85,43 @@
 				<datatables:column title="Quantidade">
 					<c:choose>
 						<c:when test="${resultado.titulo.itens.size() > 0}">
-							<input value="${resultado.titulo.itens.get(0).quantidade}" />
+							<input class="input-qtd" id="input-qtd-${resultado.titulo.id}" value="${resultado.titulo.itens.get(0).quantidade}" data-titulo-id="${resultado.titulo.id}" type="number" disabled="disabled"/>
 						</c:when>
 						<c:otherwise>
-							<input value="0" />
+							<input class="input-qtd" id="input-qtd-${resultado.titulo.id}" value="0" type="number" data-titulo-id="${resultado.titulo.id}" />
 						</c:otherwise>
 					</c:choose>
 				</datatables:column>
 				
 				<datatables:column title="Valor Unitário Médio">
-					<c:choose>
-						<c:when test="${resultado.titulo.itens.size() > 0}">
-							<c:out value="${resultado.titulo.itens.get(0).valorUnitarioMedio}"></c:out>
-						</c:when>
-						<c:otherwise>
-							<c:out value="0"></c:out>
-						</c:otherwise>
-					</c:choose>
+					<span id="valor-unitario-medio-${resultado.titulo.id}" >
+						<c:out value="${resultado.titulo.valorUnitarioMedio}"></c:out>
+					</span>
 				</datatables:column>
 				
 				<datatables:column title="Valor Total Médio">
-					<c:choose>
-						<c:when test="${resultado.titulo.itens.size() > 0}">
-							<c:out value="${resultado.titulo.itens.get(0).valorTotalMedio}"></c:out>
-						</c:when>
-						<c:otherwise>
-							<c:out value="0"></c:out>
-						</c:otherwise>
-					</c:choose>
+					<span id="valor-total-medio-${resultado.titulo.id}" >
+						<c:choose>
+							<c:when test="${resultado.titulo.itens.size() > 0}">
+								<c:out value="${resultado.titulo.itens.get(0).valorTotalMedio}"></c:out>
+							</c:when>
+							<c:otherwise>
+								<c:out value="0"></c:out>
+							</c:otherwise>
+						</c:choose>
+					</span>
 				</datatables:column>
 				
 				<datatables:column title="Adicionar" style="text-align: center;">
-					<a class="btn btn-primary btn-xs"
-						href="<c:url value = "/compra/${compra.id}/item/adicionar"></c:url>">
-						<span class="glyphicon glyphicon-plus"></span>
-					</a>
+					<c:choose>
+						<c:when test="${resultado.titulo.itens.isEmpty()}">
+							<a class="btn btn-primary btn-xs gal-btn-add-item"
+								data-titulo-id="${resultado.titulo.id}"
+								href="<c:url value = "/compra/${compra.id}/item/adicionar"></c:url>">
+								<span class="glyphicon glyphicon-plus"></span>
+							</a>
+						</c:when>
+					</c:choose>
 				</datatables:column>
 				
 				<datatables:column title="Editar" style="text-align: center;">
