@@ -62,6 +62,8 @@ public class ComprarController {
 	private static final String PATH_COMPRA_LISTAR = "compra/listar";
 	private static final String PATH_REDIRECT_COMPRA_LISTAR = "redirect:/compra/listar";
 	private static final String PATH_COMPRA_PAINEL = "compra/painel";
+	private static final String PATH_CARRINHO = "compra/carrinho";
+
 
 	
 
@@ -256,6 +258,11 @@ public class ComprarController {
 		itemService.save(item);
 		redirectAttributes.addFlashAttribute("info", "Item adicionado com sucesso.");
 		return "redirect:/compra/"+compra.getId()+"/painel";
+	}
+	
+	@RequestMapping(value = "/compra/{idCompra}/detalhes", method = RequestMethod.GET)
+	public String detalhesCarrinho(){
+		return PATH_CARRINHO;
 	}
 	
 }
