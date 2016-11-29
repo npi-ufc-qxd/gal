@@ -9,7 +9,7 @@
 <html>
 <head>
 	<title>Carrinho de Compra</title>
-		<jsp:include page="../fragments/htmlHead.jsp" />
+	<jsp:include page="../fragments/htmlHead.jsp" />
 </head>
 <body>
 	<div id="container">
@@ -41,11 +41,6 @@
 		<div style="text-align: center;">
 			<label class="control-label" style="font-size: 20px;">Carrinho de Compra</label>
 		</div>
-
-<%-- 		<c:if test="${empty titulos}"> --%>
-<!-- 			<div class="alert alert-warning" role="alert">Não há títulos -->
-<!-- 				cadastrados.</div> -->
-<%-- 		</c:if> --%>
 		
 		<table id="example" class="display nowrap" cellspacing="0" width="100%">
 	        <thead>
@@ -79,53 +74,7 @@
 	                <td>San Francisco</td>
 	            </tr>
 		</table>
-<%-- 				<datatables:table id="tituloTable" data="${titulos}" cdn="false" --%>
-<%-- 					row="titulo" theme="bootstrap2" cssClass="table table-bordered table-striped table-orderable" --%>
-<%-- 					no-sort-fields="3 4 5" default-sort="0 asc"> --%>
-<%-- 					<datatables:column title="Nome"> --%>
-<%-- 						<c:out value="${titulo.nome}"></c:out> --%>
-<%-- 					</datatables:column> --%>
-
-<%-- 					<datatables:column title="ISBN"> --%>
-<%-- 						<c:out value="${titulo.isbn}"></c:out> --%>
-<%-- 					</datatables:column> --%>
-
-<%-- 					<datatables:column title="Tipo"> --%>
-<%-- 						<c:out value="${titulo.tipo}"></c:out> --%>
-<%-- 					</datatables:column> --%>
-				
-<%-- 					<datatables:column title="Editar" style="text-align: center;"> --%>
-<!-- 						<a class="btn btn-primary btn-xs" -->
-<%-- 							href="<c:url value = "/titulo/${titulo.id}/editar"></c:url>"> --%>
-<!-- 							<span class="glyphicon glyphicon-edit"></span> -->
-<!-- 						</a> -->
-<%-- 					</datatables:column> --%>
-					
-<%-- 					<datatables:column title="Historico" style="text-align: center;"> --%>
-<!-- 						<a class="btn btn-info btn-xs"  -->
-<%-- 							href="<c:url value = "/titulo/${titulo.id}/historicoTitulo"></c:url>"> --%>
-<!-- 							<span class="glyphicon glyphicon-eye-open"></span> -->
-<!-- 						</a> -->
-<%-- 					</datatables:column> --%>
-				
-<%-- 					<datatables:column title="Excluir" style="text-align: center;"> --%>
-<!-- 						<a id="excluir" class="open-AddQtdExemplares btn btn-danger btn-xs" -->
-<!-- 							data-toggle="modal" data-target="#confirm-delete" href="#" -->
-<%-- 							data-id="${titulo.acervo}" --%>
-<%-- 							data-href="<c:url value="/titulo/${titulo.id}/excluir" ></c:url>"> --%>
-<!-- 							<span class="glyphicon glyphicon-trash"></span> -->
-<!-- 						</a> -->
-<%-- 					</datatables:column> --%>
-
-<%-- 					<datatables:column title="Exemplar" style="text-align: center;"> --%>
-<%-- 						<a href="<c:url value="/exemplar/${titulo.id}/listar" ></c:url>"> --%>
-<!-- 							<button class="btn btn-primary btn-xs"> -->
-<!-- 								<span class="glyphicon glyphicon-list"></span> Exemplares -->
-<!-- 							</button> -->
-<!-- 						</a> -->
-<%-- 					</datatables:column> --%>
-					
-<%-- 				</datatables:table> --%>
+		
 			<sec:authorize
 				access="!hasAnyRole('BIBLIOTECARIO','COORDENACAO_ACADEMICA')">
 				<datatables:table id="tituloTable" data="${titulos}" cdn="false"
@@ -176,5 +125,23 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		    var table = $('#example').DataTable( {
+		    	lengthChange: false,
+		        dom: 'Bfrtip',
+		        buttons: [
+		        	{
+		        		extend : 'excel',
+		        		text : 'Importar para XLS'
+		        	}
+		          
+		        ]
+		    } );
+	
+		    table.buttons().container()
+		        .appendTo( '#example_wrapper .col-sm-6:eq(0)');
+		} );
+	</script>
 </body>
 </html>
