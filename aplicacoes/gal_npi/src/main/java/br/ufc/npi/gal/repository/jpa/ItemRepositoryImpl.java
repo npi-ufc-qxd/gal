@@ -25,4 +25,16 @@ public class ItemRepositoryImpl extends JpaGenericRepositoryImpl<Item> implement
 		return null;
 	}
 
+	@Override
+	public Item getItemByCompraAndTitulo(Integer compraId, Integer tituloId) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("compraId", compraId);
+		params.put("tituloId", tituloId);
+		List<Item> result = find(QueryType.JPQL, "from Item where compra.id = :compraId and titulo.id = :tituloId", params);
+		if(result != null && !result.isEmpty()){
+			return result.get(0);
+		}
+		return null;
+	}
+
 }

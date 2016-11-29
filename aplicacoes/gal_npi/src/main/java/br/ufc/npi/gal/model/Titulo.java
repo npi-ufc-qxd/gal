@@ -252,6 +252,17 @@ public class Titulo {
 		this.itens = itens;
 	}
 
+	public double getValorUnitarioMedio(){
+		double valorUnitarioMedio = 0.0;
+		if(this.getCotacoes()!=null && !this.getCotacoes().isEmpty()){
+			for(Cotacao cotacao : this.getCotacoes()){
+				valorUnitarioMedio += cotacao.getValor();
+			}
+			valorUnitarioMedio /= this.getCotacoes().size();
+		}
+		return valorUnitarioMedio;
+	}
+	
 	@Override
 	public String toString() {
 		return "Titulo [id=" + id + ", nome=" + nome + ", tipo=" + tipo + "]";

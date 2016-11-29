@@ -6,4 +6,6 @@ import br.ufc.quixada.npi.repository.GenericRepository;
 public interface ItemRepository extends GenericRepository<Item> {
 
 	public abstract Item getItemById(Integer id);
+	
+	public abstract Item getItemByCompraAndTitulo(Integer compraId, Integer tituloId);
 }
