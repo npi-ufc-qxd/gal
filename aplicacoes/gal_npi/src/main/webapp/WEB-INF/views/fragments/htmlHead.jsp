@@ -4,12 +4,13 @@
 	
 	
 	<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet" />
+	<link href="<c:url value="/resources/css/dataTables.bootstrap.min.css"/>" rel="stylesheet"/>
+	<link href="<c:url value="/resources/css/buttons.bootstrap.min.css" />" rel="stylesheet" />
 	<link href="<c:url value="/webjars/datatables/1.10.11/css/jquery.dataTables.css" />" rel="stylesheet" />
 	<link href="<c:url value="/resources/css/datepicker3.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/gal.css" />" rel="stylesheet">
 	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet" />
 	<link href="<c:url value="/resources/css/select2.css"/>" rel="stylesheet"/>
-    
     <link href="<c:url value="/resources/font-awesome/css/font-awesome.css" />" rel="stylesheet" />
     <link href="<c:url value="/resources/lineicons/style.css" />" rel="stylesheet" type="text/css" />
     
