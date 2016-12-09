@@ -4,6 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -41,40 +43,40 @@
 		<div style="text-align: center;">
 			<label class="control-label" style="font-size: 20px;">Carrinho de Compra</label>
 		</div>
+
+		<div class="carrinhoInfo">
+			<p><b>Criado em: </b><fmt:formatDate pattern="dd/MM/yyyy" value="${compra.criadaEm}" />, <b>e atualizado em: </b><fmt:formatDate pattern="dd/MM/yyyy" value="${compra.atualizadaEm}" />. <b>Total de itens:</b> ${compra.itens.size()}. <b>Valor Total: </b> R$ ${compra.total}</p>
+		</div>
 		
-		<table id="example" class="display nowrap" cellspacing="0" width="100%">
-	        <thead>
-	            <tr>
-	                <th>Título</th>
-	                <th>Quantidade</th>
-	                <th>Valor Médio</th>
-	            </tr>
-	        </thead>
-	        <tfoot>
-	            <tr>
-	         	   	<th>Título</th>
-	                <th>Quantidade</th>
-	                <th>Valor Médio</th>
-	            </tr>
-	        </tfoot>
-	        <tbody>
-	            <tr>
-	                <td>Tiger Nixon</td>
-	                <td>System Architect</td>
-	                <td>Edinburgh</td>
-	            </tr>
-	            <tr>
-	                <td>Garrett Winters</td>
-	                <td>Accountant</td>
-	                <td>Tokyo</td>
-	            </tr>
-	            <tr>
-	                <td>Ashton Cox</td>
-	                <td>Junior Technical Author</td>
-	                <td>San Francisco</td>
-	            </tr>
-		</table>
+			<c:set var="index" value="0" />
+			<datatables:table id="carrinhoTable" data="${compra.itens}" cdn="false"
+				row="item" theme="bootstrap2" cssClass="table table-bordered table-striped table-orderable"
+				default-sort="0 asc">
+				<datatables:column title="Titulo">
+					<c:out value="${item.titulo.nome}"></c:out>
+				</datatables:column>
+
+				<datatables:column title="Acervo">
+					<c:out value="${item.quantidadeReal}"></c:out>
+				</datatables:column>
+
+				<datatables:column title="Quantidade">
+					<c:out value="${item.quantidade}"></c:out>
+				</datatables:column>
+				
+				<datatables:column title="Valor Unitário Médio">
+					<c:out value="${item.titulo.valorUnitarioMedio}"></c:out>
+				</datatables:column>
+				
+				<datatables:column title="Valor Total Médio">
+					<c:out value="${item.valorTotalMedio}"></c:out>
+				</datatables:column>
+				
+				<datatables:column title="Valor Total Em Dinheiro">
+					R$ <c:out value="${compra.total}"></c:out>
+				</datatables:column>
 		
+			</datatables:table>				
 			<sec:authorize
 				access="!hasAnyRole('BIBLIOTECARIO','COORDENACAO_ACADEMICA')">
 				<datatables:table id="tituloTable" data="${titulos}" cdn="false"

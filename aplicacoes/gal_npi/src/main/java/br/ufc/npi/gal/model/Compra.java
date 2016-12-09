@@ -1,6 +1,7 @@
 package br.ufc.npi.gal.model;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -59,7 +60,14 @@ public class Compra {
 		this.itens = itens;
 	}
 	
-	
+	public double getTotal(){
+		double total = 0.0;
+		for (Item item : itens) {
+			total += item.getValorTotalMedio();
+		}
+		
+		return total;
+	}
 	
 	
 }

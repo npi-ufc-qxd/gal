@@ -265,7 +265,12 @@ public class ComprarController {
 	}
 	
 	@RequestMapping(value = "/compra/{idCompra}/detalhes", method = RequestMethod.GET)
-	public String detalhesCarrinho(){
+	public String detalhesCarrinho(@PathVariable("idCompra") Integer idCompra, ModelMap model){
+		Compra compra = compraService.getCompraById(idCompra);
+		
+		model.addAttribute("compra", compra);
+		System.out.println(compra.getId());
+		
 		return PATH_CARRINHO;
 	}
 }
