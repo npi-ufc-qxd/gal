@@ -79,11 +79,17 @@
 					<c:out value="${compra.itens.size()}"></c:out>
 				</datatables:column>
 				
-				
 				<datatables:column title="Painel de Compras"  style="text-align: center;">
 					<a class="btn btn-info btn-xs" 
 						href="<c:url value = "/compra/${compra.id}/painel"></c:url>">
 						<span class="glyphicon glyphicon-edit"></span>
+					</a>
+				</datatables:column>
+				
+				<datatables:column title="Detalhes"  style="text-align: center;">
+					<a class="btn btn-info btn-xs" 
+						href="<c:url value = "/compra/${compra.id}/detalhes"></c:url>">
+						<span class="glyphicon glyphicon-eye-open"></span>
 					</a>
 				</datatables:column>
 			</datatables:table>

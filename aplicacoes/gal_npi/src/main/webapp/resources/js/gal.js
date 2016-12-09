@@ -12,12 +12,12 @@ $( document ).ready(function() {
 		spanError.find("span.error").parent().parent().addClass("has-error has-feedback");
 	}
 	
-	$('#example').DataTable( {
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    } );
+//	$('#example').DataTable( {
+//        dom: 'Bfrtip',
+//        buttons: [
+//            'copy', 'csv', 'excel', 'pdf', 'print'
+//        ]
+//    } );
 });
 
 function goBack() {
