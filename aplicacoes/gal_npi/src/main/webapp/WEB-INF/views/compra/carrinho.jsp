@@ -38,73 +38,46 @@
 		</c:if>
           	
           	<div class="col-lg-12">
-          	<div class="form-panel">
+          		<div class="form-panel">
           	
-		<div style="text-align: center;">
-			<label class="control-label" style="font-size: 20px;">Carrinho de Compra</label>
-		</div>
+					<div style="text-align: center;">
+						<label class="control-label" style="font-size: 20px;">Carrinho de Compra</label>
+					</div>
 
-		<div class="carrinhoInfo">
-			<p><b>Criado em: </b><fmt:formatDate pattern="dd/MM/yyyy" value="${compra.criadaEm}" />, <b>e atualizado em: </b><fmt:formatDate pattern="dd/MM/yyyy" value="${compra.atualizadaEm}" />. <b>Total de itens:</b> ${compra.itens.size()}. <b>Valor Total: </b> R$ ${compra.total}</p>
-		</div>
+					<div class="carrinhoInfo">
+						<p><b>Criado em: </b><fmt:formatDate pattern="dd/MM/yyyy" value="${compra.criadaEm}" />, <b>e atualizado em: </b><fmt:formatDate pattern="dd/MM/yyyy" value="${compra.atualizadaEm}" />. <b>Total de itens:</b> ${compra.itens.size()}. <b>Valor Total: </b> R$ ${compra.total}</p>
+					</div>
 		
-			<c:set var="index" value="0" />
-			<datatables:table id="carrinhoTable" data="${compra.itens}" cdn="false"
-				row="item" theme="bootstrap2" cssClass="table table-bordered table-striped table-orderable"
-				default-sort="0 asc">
-				<datatables:column title="Titulo">
-					<c:out value="${item.titulo.nome}"></c:out>
-				</datatables:column>
-
-				<datatables:column title="Acervo">
-					<c:out value="${item.quantidadeReal}"></c:out>
-				</datatables:column>
-
-				<datatables:column title="Quantidade">
-					<c:out value="${item.quantidade}"></c:out>
-				</datatables:column>
-				
-				<datatables:column title="Valor Unitário Médio">
-					<c:out value="${item.titulo.valorUnitarioMedio}"></c:out>
-				</datatables:column>
-				
-				<datatables:column title="Valor Total Médio">
-					<c:out value="${item.valorTotalMedio}"></c:out>
-				</datatables:column>
-				
-				<datatables:column title="Valor Total Em Dinheiro">
-					R$ <c:out value="${compra.total}"></c:out>
-				</datatables:column>
-		
-			</datatables:table>				
-			<sec:authorize
-				access="!hasAnyRole('BIBLIOTECARIO','COORDENACAO_ACADEMICA')">
-				<datatables:table id="tituloTable" data="${titulos}" cdn="false"
-					row="titulo" theme="bootstrap2"
-					cssClass="table table-striped table-orderable" no-sort-fields="3"
+				<c:set var="index" value="0" />
+				<datatables:table id="carrinhoTable" data="${compra.itens}" cdn="false"
+					row="item" theme="bootstrap2" cssClass="table table-bordered table-striped table-orderable"
 					default-sort="0 asc">
-					<datatables:column title="Nome" style="text-align: center;">
-						<c:out value="${titulo.nome}"></c:out>
+					<datatables:column title="Titulo">
+						<c:out value="${item.titulo.nome}"></c:out>
 					</datatables:column>
-
-					<datatables:column title="ISBN" style="text-align: center;">
-						<c:out value="${titulo.isbn}"></c:out>
+	
+					<datatables:column title="Acervo">
+						<c:out value="${item.quantidadeReal}"></c:out>
 					</datatables:column>
-
-					<datatables:column title="Tipo" style="text-align: center;">
-						<c:out value="${titulo.tipo}"></c:out>
+	
+					<datatables:column title="Quantidade">
+						<c:out value="${item.quantidade}"></c:out>
 					</datatables:column>
-
-					<datatables:column title="Exemplar" style="text-align: center;">
-						<a href="<c:url value="/exemplar/${titulo.id}/listar" ></c:url>">
-							<button class="btn btn-primary">
-								<span class="glyphicon glyphicon-list"></span> Exemplares
-							</button>
-						</a>
+					
+					<datatables:column title="Valor Unitário Médio">
+						<c:out value="${item.titulo.valorUnitarioMedio}"></c:out>
 					</datatables:column>
-				</datatables:table>
-			</sec:authorize>
-		</div>
+					
+					<datatables:column title="Valor Total Médio">
+						<c:out value="${item.valorTotalMedio}"></c:out>
+					</datatables:column>
+					
+					<datatables:column title="Valor Total Em Dinheiro">
+						R$ <c:out value="${compra.total}"></c:out>
+					</datatables:column>
+			
+				</datatables:table>				
+			</div>
 		</div>
 		</section>
 		</section>
@@ -128,8 +101,8 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		$(document).ready(function() {
-		    var table = $('#example').DataTable( {
+		$(document).ready(function(){
+			var table = $('#carrinhoTable').DataTable( {
 		    	lengthChange: false,
 		        dom: 'Bfrtip',
 		        buttons: [
@@ -143,7 +116,7 @@
 	
 		    table.buttons().container()
 		        .appendTo( '#example_wrapper .col-sm-6:eq(0)');
-		} );
-	</script>
+		});
+ 	</script> 
 </body>
 </html>

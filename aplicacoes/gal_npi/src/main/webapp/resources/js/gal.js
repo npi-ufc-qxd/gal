@@ -1,7 +1,21 @@
 /*eslint-env jquery*/
 $( document ).ready(function() {
-
 	
+	var table = $('#carrinhoTable').DataTable( {
+    	lengthChange: false,
+        dom: 'Bfrtip',
+        buttons: [
+        	{
+        		extend : 'excel',
+        		text : 'Importar para XLS'
+        	}
+          
+        ]
+    } );
+
+    table.buttons().container()
+        .appendTo( '#example_wrapper .col-sm-6:eq(0)');
+    
 	$("#confirm-delete").on("show.bs.modal", function(e) {
 		$(this).find(".btn-danger").attr("href", $(e.relatedTarget).data("href"));
 	});
@@ -12,12 +26,6 @@ $( document ).ready(function() {
 		spanError.find("span.error").parent().parent().addClass("has-error has-feedback");
 	}
 	
-//	$('#example').DataTable( {
-//        dom: 'Bfrtip',
-//        buttons: [
-//            'copy', 'csv', 'excel', 'pdf', 'print'
-//        ]
-//    } );
 });
 
 function goBack() {
@@ -37,8 +45,4 @@ function execmascara(){
 function soNumeros(v){
     return v.replace(/\D/g,"");
 }
-
-$(document).ready(function() {
-  //
-} );
 
